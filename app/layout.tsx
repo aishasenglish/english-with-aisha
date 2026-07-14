@@ -4,6 +4,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import DevClickToComponent from "@/components/DevClickToComponent";
 import { site } from "@/content/site";
 
 const hanken = Hanken_Grotesk({
@@ -49,6 +50,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${hanken.variable} ${playfair.variable}`}>
       <body className="min-h-screen flex flex-col">
+        <DevClickToComponent />
         <Navbar />
         <main className="flex-1">{children}</main>
         <Footer />
