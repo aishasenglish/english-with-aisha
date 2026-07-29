@@ -37,6 +37,7 @@ export function courseLabel(slug: string): string {
     toefl: "TOEFL iBT",
     "english-writing": "English Writing Mastery",
     "spoken-english": "Spoken English & Fluency",
+    "o-a-level-english": "O & A Level English",
   };
   return labels[slug] ?? slug;
 }

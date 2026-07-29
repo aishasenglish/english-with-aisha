@@ -121,7 +121,7 @@ export default function HomePage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <FadeUp>
-            <SectionHeading eyebrow="Courses" title="Five ways I can help you" />
+            <SectionHeading eyebrow="Courses" title="Six ways I can help you" />
           </FadeUp>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
             {courses.map((course, i) => (

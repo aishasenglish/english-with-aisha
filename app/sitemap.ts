@@ -13,6 +13,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "/courses/toefl",
     "/courses/english-writing",
     "/courses/spoken-english",
+    "/courses/o-a-level-english",
     "/how-it-works",
     "/batches",
     "/free-diagnostic-test",

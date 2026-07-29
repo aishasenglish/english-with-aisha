@@ -4,11 +4,13 @@ import { whatsappLink } from "@/lib/whatsapp";
 type Props = {
   title?: string;
   subtitle?: string;
+  whatsappMessage?: string;
 };
 
 export default function CTASection({
   title = "Ready to take English seriously?",
   subtitle = "Start with a free diagnostic test, or message me directly on WhatsApp — I'll help you choose the right course.",
+  whatsappMessage,
 }: Props) {
   return (
     <section className="bg-ink py-20 px-4 relative overflow-hidden">
@@ -44,7 +46,7 @@ export default function CTASection({
             Take the Free Diagnostic Test
           </Button>
           <Button
-            href={whatsappLink()}
+            href={whatsappLink(whatsappMessage)}
             variant="outline"
             size="lg"
             external

@@ -10,6 +10,7 @@ const footerLinks = [
   { label: "TOEFL iBT", href: "/courses/toefl" },
   { label: "English Writing", href: "/courses/english-writing" },
   { label: "Spoken English", href: "/courses/spoken-english" },
+  { label: "O & A Level English", href: "/courses/o-a-level-english" },
   { label: "Batches", href: "/batches" },
   { label: "Free Test", href: "/free-diagnostic-test" },
   { label: "Success Stories", href: "/success-stories" },
