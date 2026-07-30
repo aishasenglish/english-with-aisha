@@ -32,7 +32,7 @@ export default function AboutPage() {
       {/* Hero */}
       <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">
             Meet Aisha — your English coach.
           </h1>
           <p className="text-ink-soft text-lg">{site.credentials} · {site.city}</p>
@@ -46,7 +46,7 @@ export default function AboutPage() {
           {/* About photo — warm seated portrait */}
           <FadeUp>
             <div className="relative">
-              <div className="rounded-3xl overflow-hidden shadow-xl bg-[#c8a882]">
+              <div className="rounded-md overflow-hidden shadow-xl bg-surface-tint">
                 <Image
                   src="/images/aisha-about.jpg"
                   alt="Aisha — MA English Literature, English Coach"
@@ -56,8 +56,8 @@ export default function AboutPage() {
                   sizes="(max-width: 768px) 100vw, 50vw"
                 />
               </div>
-              <div className="absolute -bottom-5 -right-5 bg-gold rounded-2xl px-5 py-3 shadow-lg">
-                <p className="text-white font-bold text-sm">{site.city}</p>
+              <div className="absolute -bottom-5 -right-5 bg-gold rounded-md px-5 py-3 shadow-lg">
+                <p className="text-white font-medium text-sm">{site.city}</p>
                 <p className="text-white/80 text-xs">{site.timezone}</p>
               </div>
             </div>
@@ -96,7 +96,7 @@ export default function AboutPage() {
               </div>
 
               <div>
-                <h3 className="font-serif text-xl font-bold text-ink mb-4">What I bring</h3>
+                <h3 className="font-serif text-xl font-medium text-ink mb-4">What I bring</h3>
                 <ul className="space-y-3">
                   {credentials.map((c, i) => (
                     <li key={i} className="flex items-center gap-3">
@@ -124,7 +124,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
             {galleryPhotos.map((p, i) => (
               <FadeUp key={p.src} delay={i * 80}>
-                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md bg-stone">
+                <div className="aspect-[3/4] rounded-md overflow-hidden shadow-md bg-stone">
                   <Image
                     src={p.src}
                     alt={p.alt}

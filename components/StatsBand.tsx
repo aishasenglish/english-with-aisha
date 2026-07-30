@@ -15,7 +15,7 @@ export default function StatsBand() {
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-px bg-line">
           {stats.map((s) => (
             <div key={s.label} className="bg-surface-tint px-6 py-10">
-              <p className="font-serif font-extrabold text-coral text-4xl sm:text-5xl leading-none">
+              <p className="font-serif font-medium text-coral text-4xl sm:text-5xl leading-none">
                 {s.num}
               </p>
               <p className="text-ink-soft text-sm mt-3 leading-relaxed">{s.label}</p>

@@ -31,10 +31,10 @@ export default function LeadMagnet() {
   return (
     <section className="bg-surface-tint text-ink py-16 px-4" id="lead-magnet">
       <div className="max-w-2xl mx-auto text-center">
-        <p className="text-sea-deep font-semibold text-sm uppercase tracking-widest mb-3">
+        <p className="text-ink-faint font-medium text-xs uppercase tracking-[0.10em] mb-3">
           Free Resource
         </p>
-        <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+        <h2 className="font-serif text-3xl md:text-4xl font-medium mb-4">
           Get the free IELTS Band 7 Checklist.
         </h2>
         <p className="text-ink-soft text-lg mb-8">
@@ -43,8 +43,8 @@ export default function LeadMagnet() {
         </p>
 
         {status === "success" ? (
-          <div className="bg-white border border-line rounded-2xl px-8 py-6">
-            <p className="text-sea-deep font-semibold text-lg">You&apos;re in!</p>
+          <div className="bg-white border border-line rounded-md px-8 py-6">
+            <p className="text-sea-deep font-medium text-lg">You&apos;re in!</p>
             <p className="text-ink-soft mt-1">
               The checklist is on its way to your inbox. Check your email shortly.
             </p>
@@ -61,12 +61,12 @@ export default function LeadMagnet() {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Your email address"
-              className="flex-1 px-5 py-3 rounded-full bg-white border border-line text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-sea text-sm"
+              className="flex-1 px-5 py-3 rounded-sm bg-white border border-line text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-sea text-sm"
             />
             <button
               type="submit"
               disabled={status === "loading"}
-              className="px-6 py-3 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-semibold rounded-full text-sm transition-colors"
+              className="px-6 py-3 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-sm transition-colors"
             >
               {status === "loading" ? "Sending…" : "Send me the checklist"}
             </button>

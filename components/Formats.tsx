@@ -44,23 +44,23 @@ export default function Formats() {
     <section className="py-20 px-4 bg-ivory" id="formats">
       <div className="max-w-7xl mx-auto">
         <FadeUp>
-          <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center gap-3 mb-3">
+          <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
             How you learn
             <span className="h-0.5 w-9 bg-coral" aria-hidden />
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-10 max-w-2xl">
+          <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-10 max-w-2xl">
             Learn from anywhere.
           </h2>
         </FadeUp>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {formats.map((f, i) => (
             <FadeUp key={f.title} delay={i * 80}>
-              <div className="relative bg-white border border-stone p-6 h-full flex flex-col gap-3 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-all duration-200 group">
+              <div className="relative bg-white border border-stone p-6 h-full flex flex-col gap-3 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-[transform,box-shadow] duration-200 group">
                 <span className="absolute top-0 left-0 right-0 h-1 bg-coral scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
-                <div className="w-11 h-11 flex items-center justify-center rounded-[2px] bg-amber-tint text-amber-dark">
+                <div className="w-11 h-11 flex items-center justify-center rounded-sm bg-amber-tint text-amber-dark">
                   {f.icon}
                 </div>
-                <h3 className="font-serif text-base font-bold text-ink">{f.title}</h3>
+                <h3 className="font-serif text-base font-medium text-ink">{f.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{f.body}</p>
               </div>
             </FadeUp>

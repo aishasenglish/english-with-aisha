@@ -37,7 +37,7 @@ export default function CTASection({
         }}
       />
       <div className="relative max-w-2xl mx-auto text-center">
-        <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-4">
+        <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-4">
           {title}
         </h2>
         <p className="text-ink-soft text-lg mb-8">{subtitle}</p>

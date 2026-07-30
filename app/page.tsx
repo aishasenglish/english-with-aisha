@@ -44,8 +44,8 @@ export default function HomePage() {
                   sizes="(max-width: 1024px) 90vw, 45vw"
                 />
               </div>
-              <div className="hidden sm:block absolute -bottom-5 -right-5 bg-coral text-white rounded-[2px] px-5 py-3">
-                <p className="font-serif font-bold text-sm">MA English Literature</p>
+              <div className="hidden sm:block absolute -bottom-5 -right-5 bg-coral text-white rounded-sm px-5 py-3">
+                <p className="font-serif font-medium text-sm">MA English Literature</p>
                 <p className="text-white/70 text-xs">Government College Lecturer</p>
               </div>
             </div>
@@ -53,7 +53,7 @@ export default function HomePage() {
 
           <div className="order-1 lg:order-2 space-y-8">
             <FadeUp>
-              <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center gap-3 mb-3">
+              <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
                 About Aisha
                 <span className="h-0.5 w-9 bg-coral" aria-hidden />
               </p>
@@ -94,12 +94,12 @@ export default function HomePage() {
                 },
               ].map((card, i) => (
                 <FadeUp key={card.title} delay={i * 100}>
-                  <div className="flex gap-4 bg-card rounded-2xl p-4 border border-stone shadow-sm">
-                    <div className="p-2.5 bg-amber-tint text-amber-dark rounded-xl shrink-0 h-fit">
+                  <div className="flex gap-4 bg-card rounded-md p-4 border border-stone shadow-sm">
+                    <div className="p-2.5 bg-amber-tint text-amber-dark rounded-md shrink-0 h-fit">
                       {card.icon}
                     </div>
                     <div>
-                      <h3 className="font-serif text-base font-bold text-ink mb-1">{card.title}</h3>
+                      <h3 className="font-serif text-base font-medium text-ink mb-1">{card.title}</h3>
                       <p className="text-muted text-sm leading-relaxed">{card.desc}</p>
                     </div>
                   </div>
@@ -124,11 +124,11 @@ export default function HomePage() {
         <div className="max-w-5xl mx-auto">
           <FadeUp>
             <div className="text-center mb-12">
-              <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center justify-center gap-3 mb-3">
+              <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center justify-center gap-3 mb-3">
                 The method
                 <span className="h-0.5 w-9 bg-coral" aria-hidden />
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink">
+              <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink">
                 Four steps to fluency and confidence
               </h2>
             </div>
@@ -143,11 +143,11 @@ export default function HomePage() {
           <FadeUp>
             <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
               <div>
-                <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center gap-3 mb-3">
+                <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
                   Dates
                   <span className="h-0.5 w-9 bg-coral" aria-hidden />
                 </p>
-                <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink">
+                <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink">
                   Upcoming batches
                 </h2>
               </div>

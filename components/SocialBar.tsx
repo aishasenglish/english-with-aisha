@@ -69,7 +69,7 @@ export default function SocialBar({ light = false }: Props) {
           target="_blank"
           rel="noopener noreferrer"
           aria-label={p.label}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 ${
+          className={`flex items-center gap-2 px-4 py-2.5 rounded-sm text-sm font-medium transition-colors duration-200 ${
             light
               ? "bg-white/10 text-white hover:bg-white/20"
               : "bg-ink/10 text-ink hover:text-white " + p.color

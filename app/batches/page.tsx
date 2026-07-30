@@ -21,7 +21,7 @@ export default function BatchesPage() {
     <>
       <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">
             Upcoming batches.
           </h1>
           <p className="text-ink-soft text-lg max-w-xl mx-auto">
@@ -42,7 +42,7 @@ export default function BatchesPage() {
       <section className="py-16 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
           <FadeUp>
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink mb-10 text-center">
+            <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-10 text-center">
               How to enroll
             </h2>
           </FadeUp>
@@ -51,7 +51,7 @@ export default function BatchesPage() {
               <FadeUp key={s.step} delay={i * 100}>
                 <div className="text-center">
                   <div className="w-12 h-12 rounded-full bg-coral/10 flex items-center justify-center mx-auto mb-4">
-                    <span className="font-serif text-xl font-bold text-coral">{s.step}</span>
+                    <span className="font-serif text-xl font-medium text-coral">{s.step}</span>
                   </div>
                   <p className="text-charcoal text-sm leading-relaxed">{s.text}</p>
                 </div>

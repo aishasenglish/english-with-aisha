@@ -7,7 +7,7 @@ type Props = {
 
 export default function TestimonialCard({ testimonial }: Props) {
   return (
-    <div className="bg-card rounded-2xl p-6 shadow-sm border border-stone flex flex-col gap-4">
+    <div className="bg-card rounded-md p-6 shadow-sm border border-stone flex flex-col gap-4">
       {/* Stars */}
       <div className="flex gap-1">
         {[...Array(5)].map((_, i) => (
@@ -34,7 +34,7 @@ export default function TestimonialCard({ testimonial }: Props) {
           />
         </div>
         <div>
-          <p className="font-semibold text-ink text-sm">{testimonial.name}</p>
+          <p className="font-medium text-ink text-sm">{testimonial.name}</p>
           <p className="text-muted text-xs">
             {testimonial.result} · {testimonial.course}
           </p>

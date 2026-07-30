@@ -53,13 +53,13 @@ export default function DiagnosticForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
+      <div className="bg-green-50 border border-green-200 rounded-md p-8 text-center">
         <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
           <svg className="w-7 h-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="font-serif text-2xl font-bold text-ink mb-2">Thank you!</h3>
+        <h3 className="font-serif text-2xl font-medium text-ink mb-2">Thank you!</h3>
         <p className="text-muted">
           I&apos;ll review your details and get back to you on WhatsApp with your
           recommended path.
@@ -81,7 +81,7 @@ export default function DiagnosticForm() {
             required
             value={form.name}
             onChange={(e) => update("name", e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
             placeholder="Your full name"
           />
         </div>
@@ -95,7 +95,7 @@ export default function DiagnosticForm() {
             required
             value={form.email}
             onChange={(e) => update("email", e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
             placeholder="you@email.com"
           />
         </div>
@@ -111,7 +111,7 @@ export default function DiagnosticForm() {
           required
           value={form.whatsapp}
           onChange={(e) => update("whatsapp", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
           placeholder="e.g. 0311-2233671"
         />
       </div>
@@ -126,7 +126,7 @@ export default function DiagnosticForm() {
             required
             value={form.course}
             onChange={(e) => update("course", e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
           >
             <option value="">Select a course</option>
             {courses.map((c) => (
@@ -146,7 +146,7 @@ export default function DiagnosticForm() {
             required
             value={form.level}
             onChange={(e) => update("level", e.target.value)}
-            className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
           >
             <option value="">Select your level</option>
             <option value="Beginner">Beginner</option>
@@ -166,7 +166,7 @@ export default function DiagnosticForm() {
           rows={4}
           value={form.goal}
           onChange={(e) => update("goal", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm resize-none"
+          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm resize-none"
           placeholder="Tell me what you're hoping to achieve (e.g. IELTS Band 7 for Canada visa, speak confidently at work…)"
         />
       </div>
@@ -180,7 +180,7 @@ export default function DiagnosticForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-semibold rounded-full text-base transition-colors"
+        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-base transition-colors"
       >
         {status === "loading" ? "Sending…" : "Submit — it's free"}
       </button>

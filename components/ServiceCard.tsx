@@ -37,10 +37,10 @@ export default function ServiceCard({ course }: Props) {
   return (
     <Link
       href={`/courses/${course.slug}`}
-      className="group block bg-card rounded-2xl p-6 shadow-sm border border-stone hover:shadow-md hover:border-teal/40 transition-all duration-200"
+      className="group block bg-card rounded-md p-6 shadow-sm border border-stone hover:shadow-md hover:border-teal/40 transition-[box-shadow,border-color] duration-200"
     >
       <div className="flex items-start gap-4">
-        <div className="p-3 rounded-xl bg-teal/10 text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
+        <div className="p-3 rounded-md bg-teal/10 text-teal group-hover:bg-teal group-hover:text-white transition-colors shrink-0">
           {courseIcons[course.slug] ?? (
             <svg className="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
@@ -49,17 +49,17 @@ export default function ServiceCard({ course }: Props) {
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="font-serif text-lg font-bold text-ink group-hover:text-teal transition-colors">
+            <h3 className="font-serif text-lg font-medium text-ink group-hover:text-teal transition-colors">
               {course.name}
             </h3>
             {course.badge && (
-              <span className="text-xs font-semibold bg-gold/20 text-charcoal px-2 py-0.5 rounded-full">
+              <span className="text-xs font-medium bg-gold/20 text-charcoal px-2 py-0.5 rounded-sm">
                 {course.badge}
               </span>
             )}
           </div>
           <p className="text-muted text-sm leading-relaxed">{course.summary}</p>
-          <span className="inline-flex items-center gap-1 text-teal text-sm font-semibold mt-3 group-hover:gap-2 transition-all">
+          <span className="inline-flex items-center gap-1 text-teal text-sm font-medium tracking-[0.04em] mt-3 group-hover:gap-2 transition-[gap]">
             Learn more
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />

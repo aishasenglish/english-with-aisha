@@ -38,10 +38,10 @@ export default function HowItWorks() {
               <div className="hidden lg:block absolute top-10 left-full w-full h-px bg-stone z-0 -translate-x-6" />
             )}
             <div className="relative z-10">
-              <div className="w-16 h-16 rounded-2xl bg-teal/10 flex items-center justify-center mb-4">
-                <span className="font-serif text-2xl font-bold text-teal">{step.number}</span>
+              <div className="w-16 h-16 rounded-md bg-teal/10 flex items-center justify-center mb-4">
+                <span className="font-serif text-2xl font-medium text-teal">{step.number}</span>
               </div>
-              <h3 className="font-serif text-lg font-bold text-ink mb-2">{step.title}</h3>
+              <h3 className="font-serif text-lg font-medium text-ink mb-2">{step.title}</h3>
               <p className="text-muted text-sm leading-relaxed">{step.description}</p>
             </div>
           </div>

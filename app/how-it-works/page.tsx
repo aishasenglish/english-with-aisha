@@ -72,7 +72,7 @@ export default function HowItWorksPage() {
     <>
       <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+          <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">
             How the coaching works.
           </h1>
           <p className="text-ink-soft text-lg">
@@ -100,12 +100,12 @@ export default function HowItWorksPage() {
           <div className="grid sm:grid-cols-2 gap-6 mt-10">
             {details.map((d, i) => (
               <FadeUp key={d.title} delay={i * 80}>
-                <div className="flex gap-4 p-5 rounded-2xl border border-stone bg-white">
-                  <div className="p-2.5 bg-teal/10 text-teal rounded-xl shrink-0 h-fit">
+                <div className="flex gap-4 p-5 rounded-md border border-stone bg-white">
+                  <div className="p-2.5 bg-teal/10 text-teal rounded-md shrink-0 h-fit">
                     {d.icon}
                   </div>
                   <div>
-                    <h3 className="font-serif text-base font-bold text-ink mb-1">{d.title}</h3>
+                    <h3 className="font-serif text-base font-medium text-ink mb-1">{d.title}</h3>
                     <p className="text-muted text-sm leading-relaxed">{d.desc}</p>
                   </div>
                 </div>

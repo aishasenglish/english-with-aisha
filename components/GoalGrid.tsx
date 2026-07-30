@@ -14,11 +14,11 @@ export default function GoalGrid() {
     <section className="py-20 px-4 bg-ivory">
       <div className="max-w-7xl mx-auto">
         <FadeUp>
-          <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center gap-3 mb-3">
+          <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
             Whatever the goal
             <span className="h-0.5 w-9 bg-coral" aria-hidden />
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-10 max-w-2xl">
+          <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-10 max-w-2xl">
             Six reasons students come to me.
           </h2>
         </FadeUp>
@@ -26,8 +26,8 @@ export default function GoalGrid() {
           {goals.map((g, i) => (
             <FadeUp key={g.n} delay={(i % 3) * 80}>
               <div className="bg-white border border-stone p-6 h-full">
-                <span className="font-serif font-extrabold text-2xl text-line-strong">{g.n}</span>
-                <h3 className="font-serif text-lg font-bold text-ink mt-3 mb-2">{g.title}</h3>
+                <span className="font-serif font-medium text-2xl text-line-strong">{g.n}</span>
+                <h3 className="font-serif text-lg font-medium text-ink mt-3 mb-2">{g.title}</h3>
                 <p className="text-sm text-muted leading-relaxed">{g.body}</p>
               </div>
             </FadeUp>

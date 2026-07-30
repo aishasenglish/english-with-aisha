@@ -64,7 +64,7 @@ export default function Header() {
             <Link href="/" className="flex items-center gap-3 shrink-0">
               <Image src="/logo.svg" alt="" width={40} height={40} className="h-9 w-auto" priority />
               <span className="flex flex-col leading-none">
-                <span className="font-serif font-extrabold text-lg text-ink tracking-tight">
+                <span className="font-serif font-medium text-lg text-ink tracking-tight">
                   English with Aisha
                 </span>
                 <span className="text-[0.65rem] uppercase tracking-[0.13em] text-muted mt-1">
@@ -79,7 +79,7 @@ export default function Header() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="h-full flex items-center px-3 font-serif font-semibold text-sm text-ink hover:text-coral transition-colors"
+                    className="h-full flex items-center px-3 font-serif font-medium text-sm text-ink hover:text-coral transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -96,7 +96,7 @@ export default function Header() {
                     }}
                   >
                     <button
-                      className="h-full flex items-center gap-1.5 px-3 font-serif font-semibold text-sm text-ink hover:text-coral transition-colors relative whitespace-nowrap"
+                      className="h-full flex items-center gap-1.5 px-3 font-serif font-medium text-sm text-ink hover:text-coral transition-colors relative whitespace-nowrap"
                       aria-expanded={open === i}
                       onClick={() => setOpen((o) => (o === i ? null : i))}
                     >
@@ -117,7 +117,7 @@ export default function Header() {
                           <div className="grid grid-cols-3 gap-8">
                             {item.columns!.map((col) => (
                               <div key={col.heading}>
-                                <h4 className="text-xs uppercase tracking-widest text-muted font-semibold mb-3">
+                                <h4 className="text-xs uppercase tracking-[0.10em] text-muted font-medium mb-3">
                                   {col.heading}
                                 </h4>
                                 <ul className="flex flex-col gap-0.5">
@@ -125,7 +125,7 @@ export default function Header() {
                                     <li key={l.label}>
                                       <Link
                                         href={l.href}
-                                        className="block -ml-2.5 px-2.5 py-2 rounded-[2px] hover:bg-amber-tint group"
+                                        className="block -ml-2.5 px-2.5 py-2 rounded-sm hover:bg-amber-tint group"
                                       >
                                         <span className="block text-sm font-medium text-ink group-hover:text-amber-dark">
                                           {l.label}
@@ -143,10 +143,10 @@ export default function Header() {
                             ))}
                             {item.feature && (
                               <div className="bg-ivory p-5 border-l-[3px] border-coral">
-                                <span className="font-serif text-[0.68rem] font-bold uppercase tracking-widest text-amber-dark">
+                                <span className="font-serif text-[0.68rem] font-medium uppercase tracking-[0.10em] text-amber-dark">
                                   {item.feature.tag}
                                 </span>
-                                <h5 className="font-serif text-base font-bold text-ink mt-2 mb-1.5">
+                                <h5 className="font-serif text-base font-medium text-ink mt-2 mb-1.5">
                                   {item.feature.title}
                                 </h5>
                                 <p className="text-sm text-muted mb-3.5 leading-relaxed">
@@ -155,14 +155,14 @@ export default function Header() {
                                 {item.feature.style === "button" ? (
                                   <Link
                                     href={item.feature.cta.href}
-                                    className="inline-flex items-center justify-center rounded-[2px] bg-coral hover:bg-amber-dark text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+                                    className="inline-flex items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
                                   >
                                     {item.feature.cta.label}
                                   </Link>
                                 ) : (
                                   <Link
                                     href={item.feature.cta.href}
-                                    className="inline-flex items-center gap-1.5 text-xs font-serif font-bold uppercase tracking-wide border-b-2 border-coral pb-0.5 hover:text-amber-dark"
+                                    className="inline-flex items-center gap-1.5 text-xs font-serif font-medium uppercase tracking-wide border-b-2 border-coral pb-0.5 hover:text-amber-dark"
                                   >
                                     {item.feature.cta.label}
                                     <ArrowIcon className="w-3.5 h-3.5" />
@@ -182,7 +182,7 @@ export default function Header() {
             <div className="flex items-center gap-3 ml-auto">
               <Link
                 href="/#finder"
-                className="hidden lg:inline-flex items-center rounded-[2px] border-2 border-ink text-ink hover:bg-ink hover:text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+                className="hidden lg:inline-flex items-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
               >
                 Find a course
               </Link>
@@ -190,7 +190,7 @@ export default function Header() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:inline-flex items-center rounded-[2px] bg-coral hover:bg-amber-dark text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+                className="hidden lg:inline-flex items-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
               >
                 Talk to Aisha
               </a>
@@ -198,7 +198,7 @@ export default function Header() {
                 onClick={() => setDrawer(true)}
                 aria-label="Open menu"
                 aria-expanded={drawer}
-                className="lg:hidden p-2.5 border border-line-strong rounded-[2px] text-ink"
+                className="lg:hidden p-2.5 border border-line-strong rounded-sm text-ink"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -218,7 +218,7 @@ export default function Header() {
           />
           <div className="absolute top-0 right-0 bottom-0 w-full max-w-sm bg-white overflow-y-auto">
             <div className="flex items-center justify-between h-16 px-4 border-b border-stone">
-              <span className="font-serif font-bold text-ink">Menu</span>
+              <span className="font-serif font-medium text-ink">Menu</span>
               <button
                 onClick={() => setDrawer(false)}
                 aria-label="Close menu"
@@ -236,7 +236,7 @@ export default function Header() {
                     key={item.label}
                     href={item.href}
                     onClick={() => setDrawer(false)}
-                    className="block py-3 font-serif font-semibold text-ink border-b border-stone"
+                    className="block py-3 font-serif font-medium text-ink border-b border-stone"
                   >
                     {item.label}
                   </Link>
@@ -245,7 +245,7 @@ export default function Header() {
                     <button
                       onClick={() => setDrawerOpen((o) => (o === i ? null : i))}
                       aria-expanded={drawerOpen === i}
-                      className="w-full flex items-center justify-between py-3 font-serif font-semibold text-ink"
+                      className="w-full flex items-center justify-between py-3 font-serif font-medium text-ink"
                     >
                       {item.label}
                       <ChevronIcon
@@ -256,7 +256,7 @@ export default function Header() {
                       <div className="pb-3 space-y-4">
                         {item.columns!.map((col) => (
                           <div key={col.heading}>
-                            <p className="text-xs uppercase tracking-widest text-muted font-semibold mb-1.5">
+                            <p className="text-xs uppercase tracking-[0.10em] text-muted font-medium mb-1.5">
                               {col.heading}
                             </p>
                             <ul>
@@ -283,7 +283,7 @@ export default function Header() {
                 <Link
                   href="/#finder"
                   onClick={() => setDrawer(false)}
-                  className="flex items-center justify-center rounded-[2px] border-2 border-ink text-ink font-serif font-bold uppercase tracking-wide text-xs px-4 py-3"
+                  className="flex items-center justify-center rounded-sm border-2 border-ink text-ink font-serif font-medium uppercase tracking-wide text-xs px-4 py-3"
                 >
                   Find a course
                 </Link>
@@ -291,7 +291,7 @@ export default function Header() {
                   href={whatsappLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center rounded-[2px] bg-coral text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-3"
+                  className="flex items-center justify-center rounded-sm bg-coral text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3"
                 >
                   Talk to Aisha
                 </a>

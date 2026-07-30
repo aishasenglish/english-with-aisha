@@ -11,11 +11,11 @@ export default function CourseHero({ course }: Props) {
     <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
       <div className="max-w-4xl mx-auto text-center">
         {course.badge && (
-          <span className="inline-block bg-sea-wash text-sea-deep text-sm font-semibold px-4 py-1 rounded-full mb-4">
+          <span className="inline-block bg-sea-wash text-sea-deep text-sm font-medium px-4 py-1 rounded-sm mb-4">
             {course.badge}
           </span>
         )}
-        <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 leading-tight">
+        <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4 leading-tight">
           {course.tagline}
         </h1>
         <p className="text-ink-soft text-lg mb-3">Who this is for:</p>

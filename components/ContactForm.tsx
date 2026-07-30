@@ -40,8 +40,8 @@ export default function ContactForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-2xl p-8 text-center">
-        <p className="font-serif text-xl font-bold text-ink mb-2">Message sent!</p>
+      <div className="bg-green-50 border border-green-200 rounded-md p-8 text-center">
+        <p className="font-serif text-xl font-medium text-ink mb-2">Message sent!</p>
         <p className="text-muted">I&apos;ll get back to you shortly on WhatsApp or email.</p>
       </div>
     );
@@ -59,7 +59,7 @@ export default function ContactForm() {
           required
           value={form.name}
           onChange={(e) => update("name", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
           placeholder="Your name"
         />
       </div>
@@ -73,7 +73,7 @@ export default function ContactForm() {
           required
           value={form.email}
           onChange={(e) => update("email", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
           placeholder="you@email.com"
         />
       </div>
@@ -87,7 +87,7 @@ export default function ContactForm() {
           rows={5}
           value={form.message}
           onChange={(e) => update("message", e.target.value)}
-          className="w-full px-4 py-3 rounded-xl border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm resize-none"
+          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm resize-none"
           placeholder="What would you like to know?"
         />
       </div>
@@ -99,7 +99,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-semibold rounded-full text-base transition-colors"
+        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-base transition-colors"
       >
         {status === "loading" ? "Sending…" : "Send message"}
       </button>

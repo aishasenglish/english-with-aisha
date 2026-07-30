@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Button from "./Button";
+import { whatsappLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
 
 const FACTS = [
@@ -37,34 +37,45 @@ export default function Hero() {
         }}
         aria-hidden
       />
-      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 sm:pt-24 pb-32 sm:pb-40">
+      <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-[clamp(5rem,10vw,8rem)]">
         <div className="max-w-2xl">
-          <p className="font-serif text-xs font-bold uppercase tracking-widest text-ink-faint flex items-center gap-3 mb-5">
+          <p className="text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-6">
             {site.credentials}
           </p>
-          <h1 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.05] mb-6">
+          <h1 className="text-[clamp(2.25rem,4.5vw,3.5rem)] font-normal leading-[1.15] tracking-[0.02em] text-ink mb-7">
             Speak and write English
             <br />
             like it belongs to you.
           </h1>
-          <p className="text-ink-soft text-lg leading-relaxed mb-9 max-w-lg">
+          <p className="text-[1.0625rem] font-normal leading-[1.7] tracking-[0.01em] text-ink-soft max-w-[46ch] mb-11">
             Expert live online training for IELTS, PTE, and spoken fluency. Master English
             communication with a Cambridge-certified lecturer and corporate trainer who evaluates
             your progress personally. Every class recorded, every batch capped, every student
             tracked.
           </p>
-          <div className="flex flex-wrap gap-4 mb-10">
-            <Button href="/free-diagnostic-test" variant="coral" size="lg">
-              Take the free diagnostic
-            </Button>
-            <Button
-              href="#courses"
-              variant="outline"
-              size="lg"
-              className="border-ink text-ink hover:bg-ink hover:text-white"
+          <div className="flex flex-wrap gap-3.5 mb-10">
+            <a
+              href="/free-diagnostic-test"
+              className="inline-block rounded-sm border border-sea px-[1.625rem] py-3.5
+                         text-[0.8125rem] font-medium tracking-[0.06em] text-sea
+                         transition-colors duration-[250ms] ease-out
+                         hover:bg-sea hover:text-white
+                         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sea"
             >
-              Browse courses
-            </Button>
+              Take the free diagnostic test
+            </a>
+            <a
+              href={whatsappLink()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block rounded-sm border border-line-strong px-[1.625rem] py-3.5
+                         text-[0.8125rem] font-medium tracking-[0.06em] text-ink
+                         transition-colors duration-[250ms] ease-out
+                         hover:border-ink hover:bg-ink hover:text-white
+                         focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+            >
+              Chat on WhatsApp
+            </a>
           </div>
           <div className="flex flex-wrap gap-x-9 gap-y-3 pt-7 border-t border-line">
             {FACTS.map((f) => (

@@ -47,7 +47,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-line">
           <div className="lg:col-span-1">
-            <p className="font-serif text-xl font-extrabold text-ink mb-2">{site.brandName}</p>
+            <p className="font-serif text-xl font-medium text-ink mb-2">{site.brandName}</p>
             <p className="text-sm mb-6 max-w-xs leading-relaxed">{site.tagline}</p>
             <div className="flex gap-2.5">
               {(Object.entries(site.socials) as [string, string][]).map(([key, url]) =>
@@ -58,7 +58,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={key}
-                    className="w-9 h-9 flex items-center justify-center rounded-[2px] border border-line hover:bg-coral hover:border-coral hover:text-white transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-sm border border-line hover:bg-coral hover:border-coral hover:text-white transition-colors"
                   >
                     {socialIcons[key]}
                   </a>
@@ -68,7 +68,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-ink uppercase tracking-widest mb-4">Courses</p>
+            <p className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">Courses</p>
             <ul className="space-y-2.5">
               {courses.map((c) => (
                 <li key={c.slug}>
@@ -81,7 +81,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-ink uppercase tracking-widest mb-4">How you learn</p>
+            <p className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">How you learn</p>
             <ul className="space-y-2.5">
               {learnLinks.map((l) => (
                 <li key={l.href}>
@@ -94,7 +94,7 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-ink uppercase tracking-widest mb-4">Contact</p>
+            <p className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">Contact</p>
             <ul className="space-y-3 mb-5">
               <li className="text-sm">{site.city}</li>
               <li>
@@ -112,7 +112,7 @@ export default function Footer() {
               href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-[2px] bg-coral hover:bg-amber-dark text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+              className="inline-flex items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
             >
               Talk to Aisha
             </a>

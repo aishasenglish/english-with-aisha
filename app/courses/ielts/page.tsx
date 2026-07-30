@@ -26,7 +26,7 @@ export default function IELTSPage() {
 
       <section className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink mb-8">
+          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
             Upcoming IELTS batches
           </h2>
           <BatchTable />
@@ -35,7 +35,7 @@ export default function IELTSPage() {
 
       <section className="py-16 px-4 bg-ivory">
         <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink mb-8">
+          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
             Common questions about IELTS coaching
           </h2>
           <FAQAccordion />

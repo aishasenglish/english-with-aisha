@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Archivo, Inter } from "next/font/google";
+import { Outfit } from "next/font/google";
 import "./globals.css";
 import UtilityBar from "@/components/UtilityBar";
 import Header from "@/components/Header";
@@ -8,18 +8,11 @@ import WhatsAppFloat from "@/components/WhatsAppFloat";
 import DevClickToComponent from "@/components/DevClickToComponent";
 import { site } from "@/content/site";
 
-const inter = Inter({
-  variable: "--font-inter",
+const outfit = Outfit({
+  variable: "--font-outfit",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600"],
-});
-
-const archivo = Archivo({
-  variable: "--font-archivo",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["500", "600", "700", "800"],
+  weight: ["300", "400", "500"],
 });
 
 export const metadata: Metadata = {
@@ -50,7 +43,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${archivo.variable}`}>
+    <html lang="en" className={outfit.variable}>
       <body className="min-h-screen flex flex-col">
         <DevClickToComponent />
         <UtilityBar />

@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 
 function Placeholder({ children }: { children: string }) {
   return (
-    <span className="inline-flex items-center rounded border border-dashed border-coral bg-coral/10 px-1.5 py-0.5 font-mono text-[0.8em] font-semibold text-coral align-baseline">
+    <span className="inline-flex items-center rounded border border-dashed border-coral bg-coral/10 px-1.5 py-0.5 font-mono text-[0.8em] font-medium text-coral align-baseline">
       {"{{"}
       {children}
       {"}}"}
@@ -59,7 +59,7 @@ function CheckIcon({ className = "w-5 h-5" }: { className?: string }) {
 
 function HeroPhotoPlaceholder() {
   return (
-    <div className="max-w-sm mx-auto lg:max-w-none aspect-[4/5] rounded-3xl border-2 border-dashed border-line-strong bg-surface-tint flex items-center justify-center p-6 text-center">
+    <div className="max-w-sm mx-auto lg:max-w-none aspect-[4/5] rounded-md border-2 border-dashed border-line-strong bg-surface-tint flex items-center justify-center p-6 text-center">
       <p className="text-ink-faint text-sm font-mono">
         HERO PHOTO — /images/aisha-o-a-level.jpg
       </p>
@@ -76,13 +76,13 @@ function SyllabusTable({
 }) {
   return (
     <div>
-      <h3 className="font-serif text-xl font-bold text-ink mb-4">{title}</h3>
-      <div className="overflow-x-auto rounded-2xl border border-stone">
+      <h3 className="font-serif text-xl font-medium text-ink mb-4">{title}</h3>
+      <div className="overflow-x-auto rounded-md border border-stone">
         <table className="w-full text-sm">
           <thead className="bg-sea text-white">
             <tr>
-              <th className="text-left px-5 py-3 font-semibold">Syllabus</th>
-              <th className="text-left px-5 py-3 font-semibold">Code</th>
+              <th className="text-left px-5 py-3 font-medium">Syllabus</th>
+              <th className="text-left px-5 py-3 font-medium">Code</th>
             </tr>
           </thead>
           <tbody>
@@ -428,10 +428,10 @@ export default function OALevelEnglishPage() {
       <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-24 px-4 border-b border-line">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           <div className="order-2 lg:order-1 text-center lg:text-left">
-            <span className="inline-block bg-sea-wash text-sea-deep text-sm font-semibold px-4 py-1 rounded-full mb-4">
+            <span className="inline-block bg-sea-wash text-sea-deep text-sm font-medium px-4 py-1 rounded-sm mb-4">
               New · Cambridge & Edexcel
             </span>
-            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 leading-tight">
+            <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4 leading-tight">
               {course.tagline}
             </h1>
             <p className="text-ink-soft text-lg mb-6 leading-relaxed">
@@ -439,7 +439,7 @@ export default function OALevelEnglishPage() {
               IGCSE through to AS and A2. {YEARS_EXPERIENCE} years in a real classroom,
               distilled into small live batches for students in Pakistan and across the world.
             </p>
-            <p className="text-ink-faint text-base mb-3 font-semibold">Who this is for:</p>
+            <p className="text-ink-faint text-base mb-3 font-medium">Who this is for:</p>
             <ul className="text-ink-soft text-base space-y-2 mb-8 inline-block text-left">
               {course.whoFor.map((w, i) => (
                 <li key={i} className="flex items-start gap-2">
@@ -485,7 +485,7 @@ export default function OALevelEnglishPage() {
       <section className="py-20 px-4 bg-ivory">
         <FadeUp>
           <div className="max-w-3xl mx-auto text-center">
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-6">
               Fluency is not the same as a grade.
             </h2>
             <p className="text-charcoal leading-relaxed mb-4">
@@ -509,8 +509,8 @@ export default function OALevelEnglishPage() {
         <div className="max-w-5xl mx-auto grid sm:grid-cols-3 gap-6 mt-14">
           {hookCards.map((card, i) => (
             <FadeUp key={card.title} delay={i * 80}>
-              <div className="bg-white rounded-2xl p-6 border border-stone h-full">
-                <h3 className="font-serif text-lg font-bold text-ink mb-2">{card.title}</h3>
+              <div className="bg-white rounded-md p-6 border border-stone h-full">
+                <h3 className="font-serif text-lg font-medium text-ink mb-2">{card.title}</h3>
                 <p className="text-muted text-sm leading-relaxed">{card.body}</p>
               </div>
             </FadeUp>
@@ -522,7 +522,7 @@ export default function OALevelEnglishPage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-4 text-center">
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-4 text-center">
               Every English paper, both boards.
             </h2>
             <p className="text-muted text-center max-w-2xl mx-auto mb-12">
@@ -549,20 +549,20 @@ export default function OALevelEnglishPage() {
       <section className="py-20 px-4 bg-ivory">
         <div className="max-w-6xl mx-auto">
           <FadeUp>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink text-center mb-12">
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink text-center mb-12">
               Two tracks. Pick the one your child is sitting.
             </h2>
           </FadeUp>
           <div className="grid md:grid-cols-2 gap-8">
             {tracks.map((track, i) => (
               <FadeUp key={track.title} delay={i * 100}>
-                <div className="bg-white rounded-2xl border border-stone p-8 h-full flex flex-col">
-                  <p className="text-teal text-sm font-semibold uppercase tracking-wide mb-1">
+                <div className="bg-white rounded-md border border-stone p-8 h-full flex flex-col">
+                  <p className="text-teal text-sm font-medium uppercase tracking-wide mb-1">
                     {track.ageRange}
                   </p>
-                  <h3 className="font-serif text-2xl font-bold text-ink mb-4">{track.title}</h3>
+                  <h3 className="font-serif text-2xl font-medium text-ink mb-4">{track.title}</h3>
                   <p className="text-muted leading-relaxed mb-6">{track.intro}</p>
-                  <p className="font-semibold text-ink mb-3">We work on:</p>
+                  <p className="font-medium text-ink mb-3">We work on:</p>
                   <ul className="space-y-2 mb-6">
                     {track.bullets.map((b) => (
                       <li key={b} className="flex items-start gap-2 text-sm text-charcoal">
@@ -572,7 +572,7 @@ export default function OALevelEnglishPage() {
                     ))}
                   </ul>
                   <p className="text-sm text-muted leading-relaxed mt-auto pt-4 border-t border-stone">
-                    <span className="font-semibold text-ink">You should expect: </span>
+                    <span className="font-medium text-ink">You should expect: </span>
                     {track.expect}
                   </p>
                 </div>
@@ -587,7 +587,7 @@ export default function OALevelEnglishPage() {
         <div className="max-w-5xl mx-auto">
           <FadeUp>
             <div className="max-w-2xl mx-auto text-center mb-12">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-6">
+              <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-6">
                 This is what a lesson actually looks like.
               </h2>
               <p className="text-charcoal leading-relaxed">
@@ -601,7 +601,7 @@ export default function OALevelEnglishPage() {
 
           <FadeUp>
             <div className="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-10 items-start">
-              <div className="lg:col-span-3 bg-card border border-stone rounded-2xl p-6 sm:p-8">
+              <div className="lg:col-span-3 bg-card border border-stone rounded-md p-6 sm:p-8">
                 <p className="font-mono text-sm sm:text-base leading-relaxed text-charcoal">
                   {passageSegments.map((seg, i) =>
                     seg.noteId ? (
@@ -612,7 +612,7 @@ export default function OALevelEnglishPage() {
                         className="bg-gold/25 rounded px-0.5"
                       >
                         {seg.text}
-                        <sup className="ml-0.5 text-teal font-sans font-bold not-italic">
+                        <sup className="ml-0.5 text-teal font-sans font-medium not-italic">
                           {seg.noteId}
                         </sup>
                       </span>
@@ -627,11 +627,11 @@ export default function OALevelEnglishPage() {
                 <ol className="space-y-4">
                   {examinerNotes.map((n) => (
                     <li key={n.id} id={`note-${n.id}`} className="flex gap-3">
-                      <span className="shrink-0 w-6 h-6 rounded-full bg-teal text-white text-xs font-bold flex items-center justify-center mt-0.5">
+                      <span className="shrink-0 w-6 h-6 rounded-full bg-teal text-white text-xs font-medium flex items-center justify-center mt-0.5">
                         {n.id}
                       </span>
                       <div>
-                        <p className="text-sm font-semibold text-ink">{n.phrase}</p>
+                        <p className="text-sm font-medium text-ink">{n.phrase}</p>
                         <p className="text-sm text-muted leading-relaxed">{n.note}</p>
                       </div>
                     </li>
@@ -663,19 +663,19 @@ export default function OALevelEnglishPage() {
       <section className="py-20 px-4 bg-ivory">
         <div className="max-w-4xl mx-auto">
           <FadeUp>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-10 text-center">
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-10 text-center">
               How the course works
             </h2>
           </FadeUp>
           <div className="space-y-6">
             {methodSteps.map((step, i) => (
               <FadeUp key={step.title} delay={i * 70}>
-                <div className="flex gap-5 bg-white rounded-2xl p-6 border border-stone">
-                  <span className="font-serif text-2xl font-bold text-teal/40 shrink-0">
+                <div className="flex gap-5 bg-white rounded-md p-6 border border-stone">
+                  <span className="font-serif text-2xl font-medium text-teal/40 shrink-0">
                     {step.number}
                   </span>
                   <div>
-                    <h3 className="font-serif text-lg font-bold text-ink mb-1">{step.title}</h3>
+                    <h3 className="font-serif text-lg font-medium text-ink mb-1">{step.title}</h3>
                     <p className="text-muted text-sm leading-relaxed">{step.body}</p>
                   </div>
                 </div>
@@ -690,10 +690,10 @@ export default function OALevelEnglishPage() {
 
       <section className="py-16 px-4 bg-ivory">
         <div className="max-w-md mx-auto">
-          <div className="bg-white border border-line rounded-2xl p-8 shadow-sm">
+          <div className="bg-white border border-line rounded-md p-8 shadow-sm">
             <div className="mb-6">
               <p className="text-ink-faint text-sm uppercase tracking-wider mb-1">Group batch</p>
-              <p className="font-serif text-2xl font-bold text-ink">
+              <p className="font-serif text-2xl font-medium text-ink">
                 PKR <Placeholder>GROUP_FEE_PKR</Placeholder> / month
               </p>
               <p className="text-ink-faint text-sm mt-1">
@@ -702,7 +702,7 @@ export default function OALevelEnglishPage() {
             </div>
             <div className="mb-8 pt-6 border-t border-line">
               <p className="text-ink-faint text-sm uppercase tracking-wider mb-1">One-to-one</p>
-              <p className="font-serif text-2xl font-bold text-ink">
+              <p className="font-serif text-2xl font-medium text-ink">
                 PKR <Placeholder>ONE_TO_ONE_FEE_PKR</Placeholder> / month
               </p>
               <p className="text-ink-faint text-sm mt-1">
@@ -715,7 +715,7 @@ export default function OALevelEnglishPage() {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-coral hover:bg-amber-dark text-white px-6 py-4 rounded-full font-semibold text-base transition-colors mb-4"
+              className="w-full flex items-center justify-center gap-2 bg-coral hover:bg-amber-dark text-white px-6 py-4 rounded-sm font-medium text-base transition-colors mb-4"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -734,7 +734,7 @@ export default function OALevelEnglishPage() {
       <section className="py-20 px-4 bg-teal text-white">
         <div className="max-w-3xl mx-auto">
           <FadeUp>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-center">
+            <h2 className="font-serif text-3xl md:text-4xl font-medium mb-6 text-center">
               A note for parents.
             </h2>
             <p className="text-white/85 leading-relaxed mb-3">
@@ -747,8 +747,8 @@ export default function OALevelEnglishPage() {
           <div className="grid sm:grid-cols-2 gap-6 mb-10">
             {parentItems.map((item, i) => (
               <FadeUp key={item.title} delay={i * 80}>
-                <div className="bg-white/10 rounded-2xl p-6 h-full">
-                  <h3 className="font-serif text-lg font-bold mb-2">{item.title}</h3>
+                <div className="bg-white/10 rounded-md p-6 h-full">
+                  <h3 className="font-serif text-lg font-medium mb-2">{item.title}</h3>
                   <p className="text-white/80 text-sm leading-relaxed">{item.body}</p>
                 </div>
               </FadeUp>
@@ -780,7 +780,7 @@ export default function OALevelEnglishPage() {
       <section className="py-20 px-4 bg-white">
         <div className="max-w-3xl mx-auto text-center">
           <FadeUp>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-6">
               Studying outside Pakistan?
             </h2>
             <p className="text-muted leading-relaxed mb-10">
@@ -792,12 +792,12 @@ export default function OALevelEnglishPage() {
           </FadeUp>
         </div>
         <FadeUp>
-          <div className="max-w-2xl mx-auto overflow-x-auto rounded-2xl border border-stone">
+          <div className="max-w-2xl mx-auto overflow-x-auto rounded-md border border-stone">
             <table className="w-full text-sm">
               <thead className="bg-sea text-white">
                 <tr>
-                  <th className="text-left px-5 py-3 font-semibold">Region</th>
-                  <th className="text-left px-5 py-3 font-semibold">Local time</th>
+                  <th className="text-left px-5 py-3 font-medium">Region</th>
+                  <th className="text-left px-5 py-3 font-medium">Local time</th>
                 </tr>
               </thead>
               <tbody>
@@ -827,7 +827,7 @@ export default function OALevelEnglishPage() {
         <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
           <FadeUp>
             <div className="relative max-w-sm mx-auto lg:mx-0">
-              <div className="rounded-3xl overflow-hidden shadow-xl bg-white">
+              <div className="rounded-md overflow-hidden shadow-xl bg-white">
                 <Image
                   src="/images/aisha-thoughtful.jpg"
                   alt="Aisha teaching an O and A Level English class"
@@ -840,7 +840,7 @@ export default function OALevelEnglishPage() {
             </div>
           </FadeUp>
           <FadeUp delay={100}>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-6">
+            <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-6">
               The person who will be teaching your child.
             </h2>
             <p className="text-charcoal leading-relaxed mb-4">
@@ -870,7 +870,7 @@ export default function OALevelEnglishPage() {
       {/* Upcoming batches */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink mb-8">
+          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
             Upcoming O & A Level batches
           </h2>
           <BatchTable />
@@ -885,7 +885,7 @@ export default function OALevelEnglishPage() {
       <section className="py-20 px-4 bg-ivory">
         <div className="max-w-2xl mx-auto">
           <FadeUp>
-            <h2 className="font-serif text-2xl md:text-3xl font-bold text-ink mb-8">
+            <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
               Common questions
             </h2>
             <GroupedFAQAccordion groups={faqGroups} />

@@ -5,7 +5,7 @@
   --color-surface: #FFFFFF;
   --color-surface-tint: #F7FAFB;
   --color-line: #E8E8E8;
-  --color-line-strong: #BDBDBD;
+  --color-line-strong: #D8D8D8;
   --color-ink: #1A1A1A;
   --color-ink-soft: #5A5A5A;
   --color-ink-faint: #6E6E6E;
@@ -13,6 +13,7 @@
   --color-sea-deep: #1F616E;
   --color-sea-wash: #E7F1F4;
   --color-sea-edge: #CDE3E9;
+  --color-on-sea: #FFFFFF;
 
   /* Legacy token names, repointed at the new palette so existing utility
      classes (bg-teal, bg-coral, bg-ivory, text-muted, etc.) render it
@@ -30,10 +31,16 @@
   --color-stone: #E8E8E8;
   --color-white: #ffffff;
 
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 
   --radius-brand: 2px;
+  --radius-sm: 2px;
+  --radius-md: 4px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root { color-scheme: light; }
 }
 
 body {
@@ -52,8 +59,6 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   line-height: 1.1;
-  letter-spacing: -0.02em;
-  font-weight: 700;
 }
 
 /* Floating blob animations — from HTML template */
@@ -68,7 +73,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  * { animation: none !important; }
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
 
 /* Scroll reveal */

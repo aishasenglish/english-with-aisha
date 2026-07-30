@@ -42,7 +42,7 @@ export default function Button({
   disabled,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-[2px] font-serif font-bold uppercase tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-60 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 rounded-sm font-serif font-medium uppercase tracking-wide transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-60 disabled:pointer-events-none";
   const classes = `${base} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
 
   if (href) {

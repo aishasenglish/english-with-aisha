@@ -19,7 +19,7 @@ export default function GroupedFAQAccordion({ groups }: Props) {
     <div className="space-y-10">
       {groups.map((group) => (
         <div key={group.label}>
-          <p className="text-sm font-semibold uppercase tracking-widest text-teal mb-4">
+          <p className="text-xs font-medium uppercase tracking-[0.10em] text-ink-faint mb-4">
             {group.label}
           </p>
           <div className="space-y-3">
@@ -29,14 +29,14 @@ export default function GroupedFAQAccordion({ groups }: Props) {
               return (
                 <div
                   key={key}
-                  className="bg-white rounded-2xl border border-stone overflow-hidden"
+                  className="bg-white rounded-md border border-stone overflow-hidden"
                 >
                   <button
                     onClick={() => setOpen(isOpen ? null : key)}
                     className="w-full flex items-center justify-between px-6 py-5 text-left"
                     aria-expanded={isOpen}
                   >
-                    <span className="font-semibold text-ink pr-4">{faq.question}</span>
+                    <span className="font-medium text-ink pr-4">{faq.question}</span>
                     <span
                       className={`shrink-0 text-teal transition-transform duration-200 ${isOpen ? "rotate-45" : ""}`}
                     >
