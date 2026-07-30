@@ -43,11 +43,11 @@ export default function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="bg-ink text-[#9AA3AD]">
+    <footer className="bg-surface-tint text-ink-soft border-t border-line">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-line">
           <div className="lg:col-span-1">
-            <p className="font-serif text-xl font-extrabold text-white mb-2">{site.brandName}</p>
+            <p className="font-serif text-xl font-extrabold text-ink mb-2">{site.brandName}</p>
             <p className="text-sm mb-6 max-w-xs leading-relaxed">{site.tagline}</p>
             <div className="flex gap-2.5">
               {(Object.entries(site.socials) as [string, string][]).map(([key, url]) =>
@@ -58,7 +58,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={key}
-                    className="w-9 h-9 flex items-center justify-center rounded-[2px] border border-white/20 hover:bg-coral hover:border-coral hover:text-ink transition-colors"
+                    className="w-9 h-9 flex items-center justify-center rounded-[2px] border border-line hover:bg-coral hover:border-coral hover:text-white transition-colors"
                   >
                     {socialIcons[key]}
                   </a>
@@ -68,11 +68,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-white uppercase tracking-widest mb-4">Courses</p>
+            <p className="text-xs font-semibold text-ink uppercase tracking-widest mb-4">Courses</p>
             <ul className="space-y-2.5">
               {courses.map((c) => (
                 <li key={c.slug}>
-                  <Link href={`/courses/${c.slug}`} className="text-sm hover:text-coral transition-colors">
+                  <Link href={`/courses/${c.slug}`} className="text-sm hover:text-sea-deep transition-colors">
                     {c.name}
                   </Link>
                 </li>
@@ -81,11 +81,11 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-white uppercase tracking-widest mb-4">How you learn</p>
+            <p className="text-xs font-semibold text-ink uppercase tracking-widest mb-4">How you learn</p>
             <ul className="space-y-2.5">
               {learnLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm hover:text-coral transition-colors">
+                  <Link href={l.href} className="text-sm hover:text-sea-deep transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -94,16 +94,16 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-xs font-semibold text-white uppercase tracking-widest mb-4">Contact</p>
+            <p className="text-xs font-semibold text-ink uppercase tracking-widest mb-4">Contact</p>
             <ul className="space-y-3 mb-5">
               <li className="text-sm">{site.city}</li>
               <li>
-                <a href={`tel:+${site.whatsapp.intl}`} className="text-sm hover:text-coral transition-colors">
+                <a href={`tel:+${site.whatsapp.intl}`} className="text-sm hover:text-sea-deep transition-colors">
                   {site.whatsapp.display}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`} className="text-sm hover:text-coral transition-colors">
+                <a href={`mailto:${site.email}`} className="text-sm hover:text-sea-deep transition-colors">
                   {site.email}
                 </a>
               </li>
@@ -112,7 +112,7 @@ export default function Footer() {
               href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-[2px] bg-coral hover:bg-amber-dark hover:text-white text-ink font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+              className="inline-flex items-center justify-center rounded-[2px] bg-coral hover:bg-amber-dark text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
             >
               Talk to Aisha
             </a>
@@ -120,7 +120,7 @@ export default function Footer() {
         </div>
 
         <div className="pt-6 text-center sm:text-left">
-          <p className="text-xs text-white/40">
+          <p className="text-xs text-ink-faint">
             © {year} {site.brandName}. All rights reserved.
           </p>
         </div>

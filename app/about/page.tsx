@@ -30,12 +30,12 @@ export default function AboutPage() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-ink text-white pt-28 pb-16 lg:pt-36 lg:pb-20 px-4">
+      <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
             Meet Aisha — your English coach.
           </h1>
-          <p className="text-white/70 text-lg">{site.credentials} · {site.city}</p>
+          <p className="text-ink-soft text-lg">{site.credentials} · {site.city}</p>
         </div>
       </section>
 
@@ -57,8 +57,8 @@ export default function AboutPage() {
                 />
               </div>
               <div className="absolute -bottom-5 -right-5 bg-gold rounded-2xl px-5 py-3 shadow-lg">
-                <p className="text-charcoal font-bold text-sm">{site.city}</p>
-                <p className="text-charcoal text-xs">{site.timezone}</p>
+                <p className="text-white font-bold text-sm">{site.city}</p>
+                <p className="text-white/80 text-xs">{site.timezone}</p>
               </div>
             </div>
           </FadeUp>

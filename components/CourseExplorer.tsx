@@ -99,7 +99,7 @@ export default function CourseExplorer() {
             </label>
             <button
               type="submit"
-              className="rounded-[2px] bg-coral hover:bg-amber-dark hover:text-white text-ink font-serif font-bold uppercase tracking-wide text-sm px-6 py-3.5 transition-colors"
+              className="rounded-[2px] bg-coral hover:bg-amber-dark text-white font-serif font-bold uppercase tracking-wide text-sm px-6 py-3.5 transition-colors"
             >
               Show courses
             </button>
@@ -139,7 +139,7 @@ export default function CourseExplorer() {
               >
                 <div className="relative aspect-[16/10] bg-ivory overflow-hidden">
                   {c.badge && (
-                    <span className="absolute top-0 left-0 z-10 bg-coral text-ink font-serif text-xs font-bold uppercase tracking-widest px-3 py-1.5">
+                    <span className="absolute top-0 left-0 z-10 bg-coral text-white font-serif text-xs font-bold uppercase tracking-widest px-3 py-1.5">
                       {c.badge}
                     </span>
                   )}

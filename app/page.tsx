@@ -44,9 +44,9 @@ export default function HomePage() {
                   sizes="(max-width: 1024px) 90vw, 45vw"
                 />
               </div>
-              <div className="hidden sm:block absolute -bottom-5 -right-5 bg-coral text-ink rounded-[2px] px-5 py-3">
+              <div className="hidden sm:block absolute -bottom-5 -right-5 bg-coral text-white rounded-[2px] px-5 py-3">
                 <p className="font-serif font-bold text-sm">MA English Literature</p>
-                <p className="text-ink/70 text-xs">Government College Lecturer</p>
+                <p className="text-white/70 text-xs">Government College Lecturer</p>
               </div>
             </div>
           </FadeUp>

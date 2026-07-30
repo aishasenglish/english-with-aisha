@@ -17,7 +17,7 @@ type ButtonProps = {
 
 const variantClasses: Record<Variant, string> = {
   coral:
-    "bg-coral text-ink hover:bg-amber-dark hover:text-white focus-visible:ring-coral shadow-sm",
+    "bg-coral text-white hover:bg-amber-dark focus-visible:ring-coral shadow-sm",
   outline:
     "border-2 border-ink text-ink hover:bg-ink hover:text-white focus-visible:ring-ink",
   teal: "bg-teal text-white hover:bg-ink focus-visible:ring-teal shadow-sm",

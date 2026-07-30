@@ -14,12 +14,12 @@ export const metadata: Metadata = {
 export default function ContactPage() {
   return (
     <>
-      <section className="bg-ink text-white pt-28 pb-16 lg:pt-36 lg:pb-20 px-4">
+      <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
             Let&apos;s talk.
           </h1>
-          <p className="text-white/70 text-lg">
+          <p className="text-ink-soft text-lg">
             The fastest way to reach me is WhatsApp. Message me with your goal and I&apos;ll
             guide you to the right course.
           </p>

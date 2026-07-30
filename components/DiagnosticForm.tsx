@@ -180,7 +180,7 @@ export default function DiagnosticForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-ink hover:text-white font-semibold rounded-full text-base transition-colors"
+        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-semibold rounded-full text-base transition-colors"
       >
         {status === "loading" ? "Sending…" : "Submit — it's free"}
       </button>

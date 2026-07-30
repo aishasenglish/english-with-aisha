@@ -13,7 +13,7 @@ export default function CTASection({
   whatsappMessage,
 }: Props) {
   return (
-    <section className="bg-ink py-20 px-4 relative overflow-hidden">
+    <section className="bg-surface-tint py-20 px-4 relative overflow-hidden">
       <div
         className="absolute pointer-events-none rounded-full"
         style={{
@@ -21,7 +21,7 @@ export default function CTASection({
           left: "-60px",
           width: "320px",
           height: "320px",
-          background: "radial-gradient(circle, rgba(156,48,72,0.35), transparent 70%)",
+          background: "radial-gradient(circle, rgba(42,127,143,0.16), transparent 70%)",
           animation: "floatA 14s ease-in-out infinite",
         }}
       />
@@ -32,15 +32,15 @@ export default function CTASection({
           right: "-40px",
           width: "280px",
           height: "280px",
-          background: "radial-gradient(circle, rgba(199,162,78,0.18), transparent 70%)",
+          background: "radial-gradient(circle, rgba(42,127,143,0.1), transparent 70%)",
           animation: "floatB 11s ease-in-out infinite",
         }}
       />
       <div className="relative max-w-2xl mx-auto text-center">
-        <h2 className="font-serif text-3xl md:text-4xl font-bold text-white mb-4">
+        <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink mb-4">
           {title}
         </h2>
-        <p className="text-white/70 text-lg mb-8">{subtitle}</p>
+        <p className="text-ink-soft text-lg mb-8">{subtitle}</p>
         <div className="flex flex-wrap gap-4 justify-center">
           <Button href="/free-diagnostic-test" variant="coral" size="lg">
             Take the Free Diagnostic Test
@@ -50,7 +50,7 @@ export default function CTASection({
             variant="outline"
             size="lg"
             external
-            className="border-white/40 text-white hover:bg-white/10 hover:border-white"
+            className="border-ink text-ink hover:bg-ink hover:text-white"
           >
             Chat on WhatsApp
           </Button>

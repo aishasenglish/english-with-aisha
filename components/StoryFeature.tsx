@@ -22,9 +22,9 @@ export default function StoryFeature() {
   if (!story) return null;
 
   return (
-    <section className="bg-ink">
+    <section className="bg-surface-tint">
       <div className="max-w-7xl mx-auto grid lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="relative min-h-[280px] lg:min-h-[440px] bg-white/5">
+        <div className="relative min-h-[280px] lg:min-h-[440px] bg-line">
           <Image
             src={BACKDROP[story.course] ?? "/images/aisha-teal.jpg"}
             alt=""
@@ -34,14 +34,14 @@ export default function StoryFeature() {
           />
         </div>
         <div className="px-6 py-14 sm:px-12 sm:py-16 flex flex-col justify-center">
-          <span className="font-serif text-5xl font-extrabold text-coral leading-none mb-3">
+          <span className="font-serif text-5xl font-extrabold text-sea-edge leading-none mb-3">
             &ldquo;
           </span>
-          <p className="font-serif text-xl sm:text-2xl font-semibold text-white leading-snug tracking-tight mb-7 max-w-xl">
+          <p className="font-serif text-xl sm:text-2xl font-semibold text-ink leading-snug tracking-tight mb-7 max-w-xl">
             {story.quote}
           </p>
-          <div className="flex items-center gap-3.5 pt-5 border-t border-white/15">
-            <div className="relative w-12 h-12 rounded-full overflow-hidden bg-white/10 shrink-0">
+          <div className="flex items-center gap-3.5 pt-5 border-t border-line">
+            <div className="relative w-12 h-12 rounded-full overflow-hidden bg-line shrink-0">
               <Image
                 src={`/images/testimonials/${story.image}`}
                 alt=""
@@ -51,8 +51,8 @@ export default function StoryFeature() {
               />
             </div>
             <div>
-              <p className="font-serif font-bold text-white text-sm">{story.name}</p>
-              <p className="text-coral text-xs mt-0.5">
+              <p className="font-serif font-bold text-ink text-sm">{story.name}</p>
+              <p className="text-sea-deep text-xs mt-0.5">
                 {story.result} · {story.course}
               </p>
             </div>
@@ -64,7 +64,7 @@ export default function StoryFeature() {
                 onClick={() => setActive(i)}
                 aria-label={`Show ${s.name}'s story`}
                 aria-current={active === i}
-                className={`h-1 w-9 transition-colors ${active === i ? "bg-coral" : "bg-white/25"}`}
+                className={`h-1 w-9 transition-colors ${active === i ? "bg-coral" : "bg-line-strong"}`}
               />
             ))}
           </div>

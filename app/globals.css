@@ -1,19 +1,33 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #15181C;
-  --color-teal: #0F6E7B;
-  --color-coral: #F5821F;
-  --color-gold: #F5821F;
-  --color-amber-dark: #D96A0B;
-  --color-amber-tint: #FFF3E6;
-  --color-ivory: #F3F5F7;
-  --color-card: #FAFBFC;
-  --color-border: #E2E6EA;
-  --color-line-strong: #C8CFD6;
-  --color-charcoal: #15181C;
-  --color-muted: #5C646E;
-  --color-stone: #E2E6EA;
+  /* Minimal palette — white base, charcoal type, sea-blue accent */
+  --color-surface: #FFFFFF;
+  --color-surface-tint: #F7FAFB;
+  --color-line: #E8E8E8;
+  --color-line-strong: #BDBDBD;
+  --color-ink: #1A1A1A;
+  --color-ink-soft: #5A5A5A;
+  --color-ink-faint: #6E6E6E;
+  --color-sea: #2A7F8F;
+  --color-sea-deep: #1F616E;
+  --color-sea-wash: #E7F1F4;
+  --color-sea-edge: #CDE3E9;
+
+  /* Legacy token names, repointed at the new palette so existing utility
+     classes (bg-teal, bg-coral, bg-ivory, text-muted, etc.) render it
+     without every call site needing to be renamed */
+  --color-teal: #2A7F8F;
+  --color-coral: #2A7F8F;
+  --color-gold: #2A7F8F;
+  --color-amber-dark: #1F616E;
+  --color-amber-tint: #E7F1F4;
+  --color-ivory: #F7FAFB;
+  --color-card: #FFFFFF;
+  --color-border: #E8E8E8;
+  --color-charcoal: #1A1A1A;
+  --color-muted: #5A5A5A;
+  --color-stone: #E8E8E8;
   --color-white: #ffffff;
 
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
@@ -23,11 +37,16 @@
 }
 
 body {
-  background-color: var(--color-ivory);
-  color: var(--color-charcoal);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sea);
+  outline-offset: 2px;
 }
 
 h1, h2, h3, h4, h5, h6 {

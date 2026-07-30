@@ -155,7 +155,7 @@ export default function Header() {
                                 {item.feature.style === "button" ? (
                                   <Link
                                     href={item.feature.cta.href}
-                                    className="inline-flex items-center justify-center rounded-[2px] bg-coral hover:bg-amber-dark hover:text-white text-ink font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+                                    className="inline-flex items-center justify-center rounded-[2px] bg-coral hover:bg-amber-dark text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
                                   >
                                     {item.feature.cta.label}
                                   </Link>
@@ -190,7 +190,7 @@ export default function Header() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:inline-flex items-center rounded-[2px] bg-coral hover:bg-amber-dark hover:text-white text-ink font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+                className="hidden lg:inline-flex items-center rounded-[2px] bg-coral hover:bg-amber-dark text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
               >
                 Talk to Aisha
               </a>
@@ -291,7 +291,7 @@ export default function Header() {
                   href={whatsappLink()}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center justify-center rounded-[2px] bg-coral text-ink font-serif font-bold uppercase tracking-wide text-xs px-4 py-3"
+                  className="flex items-center justify-center rounded-[2px] bg-coral text-white font-serif font-bold uppercase tracking-wide text-xs px-4 py-3"
                 >
                   Talk to Aisha
                 </a>

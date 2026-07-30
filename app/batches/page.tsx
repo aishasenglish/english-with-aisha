@@ -19,12 +19,12 @@ const enrollSteps = [
 export default function BatchesPage() {
   return (
     <>
-      <section className="bg-ink text-white pt-28 pb-16 lg:pt-36 lg:pb-20 px-4">
+      <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
             Upcoming batches.
           </h1>
-          <p className="text-white/70 text-lg max-w-xl mx-auto">
+          <p className="text-ink-soft text-lg max-w-xl mx-auto">
             A new batch begins every 15 days, so you&apos;re never far from a fresh start. Seats are
             limited to keep each batch focused.
           </p>

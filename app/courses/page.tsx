@@ -15,12 +15,12 @@ export const metadata: Metadata = {
 export default function CoursesPage() {
   return (
     <>
-      <section className="bg-ink text-white pt-28 pb-16 lg:pt-36 lg:pb-20 px-4">
+      <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
             Courses designed to get you results.
           </h1>
-          <p className="text-white/70 text-lg max-w-2xl mx-auto">
+          <p className="text-ink-soft text-lg max-w-2xl mx-auto">
             Every course runs as live online classes on Zoom, fully recorded, with regular tests and
             mock exams. Choose the path that fits your goal.
           </p>

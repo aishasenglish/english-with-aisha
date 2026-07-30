@@ -27,7 +27,7 @@ export default function BatchTable() {
   return (
     <div className="overflow-x-auto rounded-2xl border border-stone">
       <table className="w-full text-sm">
-        <thead className="bg-ink text-white">
+        <thead className="bg-sea text-white">
           <tr>
             <th className="text-left px-6 py-4 font-semibold">Course</th>
             <th className="text-left px-6 py-4 font-semibold">Start Date</th>
