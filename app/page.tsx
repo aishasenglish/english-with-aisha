@@ -1,19 +1,18 @@
 import type { Metadata } from "next";
 import Image from "next/image";
 import Hero from "@/components/Hero";
-import TrustStrip from "@/components/TrustStrip";
+import CourseExplorer from "@/components/CourseExplorer";
+import Formats from "@/components/Formats";
+import StatsBand from "@/components/StatsBand";
 import SectionHeading from "@/components/SectionHeading";
-import ServiceCard from "@/components/ServiceCard";
 import HowItWorks from "@/components/HowItWorks";
-import TestimonialGrid from "@/components/TestimonialGrid";
+import GoalGrid from "@/components/GoalGrid";
+import StoryFeature from "@/components/StoryFeature";
+import BatchTable from "@/components/BatchTable";
 import LeadMagnet from "@/components/LeadMagnet";
-import SocialBar from "@/components/SocialBar";
 import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
 import Button from "@/components/Button";
-import Link from "next/link";
-import { courses } from "@/content/courses";
-import { nextBatch, courseLabel } from "@/content/batches";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
@@ -23,21 +22,19 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const batch = nextBatch();
-
   return (
     <>
       <Hero />
-      <TrustStrip />
+      <CourseExplorer />
+      <Formats />
+      <StatsBand />
 
-      {/* Why learn with Aisha — split layout with Home 1 photo */}
-      <section className="py-20 px-4 bg-ivory">
+      {/* About Aisha */}
+      <section className="py-20 px-4 bg-white">
         <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
-
-          {/* Photo — Home 1 (contemplative pose, white bg) */}
           <FadeUp className="order-2 lg:order-1">
             <div className="relative max-w-md mx-auto lg:mx-0">
-              <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
+              <div className="bg-white border border-stone overflow-hidden">
                 <Image
                   src="/images/aisha-home.jpg"
                   alt="Aisha — English coach and MA English Literature"
@@ -47,17 +44,19 @@ export default function HomePage() {
                   sizes="(max-width: 1024px) 90vw, 45vw"
                 />
               </div>
-              {/* Accent badge */}
-              <div className="hidden sm:block absolute -bottom-5 -right-5 bg-teal text-white rounded-2xl px-5 py-3 shadow-lg">
-                <p className="font-bold text-sm">MA English Literature</p>
-                <p className="text-white/70 text-xs">Government College Lecturer</p>
+              <div className="hidden sm:block absolute -bottom-5 -right-5 bg-coral text-ink rounded-[2px] px-5 py-3">
+                <p className="font-serif font-bold text-sm">MA English Literature</p>
+                <p className="text-ink/70 text-xs">Government College Lecturer</p>
               </div>
             </div>
           </FadeUp>
 
-          {/* Text + 3 feature cards */}
           <div className="order-1 lg:order-2 space-y-8">
             <FadeUp>
+              <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center gap-3 mb-3">
+                About Aisha
+                <span className="h-0.5 w-9 bg-coral" aria-hidden />
+              </p>
               <SectionHeading
                 title="Learn from someone who has spent her life inside the English language"
                 subtitle="Aisha holds a Master's in English Literature and teaches at a government college. She doesn't just know English — she understands how it works and how to teach it. Her coaching turns rules into habits and nerves into fluency, with a method built for real exam scores and real-world confidence."
@@ -96,7 +95,7 @@ export default function HomePage() {
               ].map((card, i) => (
                 <FadeUp key={card.title} delay={i * 100}>
                   <div className="flex gap-4 bg-card rounded-2xl p-4 border border-stone shadow-sm">
-                    <div className="p-2.5 bg-teal/10 text-teal rounded-xl shrink-0 h-fit">
+                    <div className="p-2.5 bg-amber-tint text-amber-dark rounded-xl shrink-0 h-fit">
                       {card.icon}
                     </div>
                     <div>
@@ -117,120 +116,48 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Services */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <FadeUp>
-            <SectionHeading eyebrow="Courses" title="Six ways I can help you" />
-          </FadeUp>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 mt-10">
-            {courses.map((course, i) => (
-              <FadeUp key={course.slug} delay={i * 60}>
-                <ServiceCard course={course} />
-              </FadeUp>
-            ))}
-          </div>
-          <div className="mt-8 text-center">
-            <Button href="/courses" variant="teal">
-              View all courses
-            </Button>
-          </div>
-        </div>
-      </section>
+      <GoalGrid />
+      <StoryFeature />
 
-      {/* How It Works — with a photo accent */}
-      <section className="py-20 px-4 bg-ivory">
-        <div className="max-w-7xl mx-auto">
+      {/* Method */}
+      <section className="py-20 px-4 bg-white">
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
             <div className="text-center mb-12">
-              <SectionHeading eyebrow="The process" title="How it works" centered />
+              <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center justify-center gap-3 mb-3">
+                The method
+                <span className="h-0.5 w-9 bg-coral" aria-hidden />
+              </p>
+              <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink">
+                Four steps to fluency and confidence
+              </h2>
             </div>
           </FadeUp>
           <HowItWorks />
-
-          {/* Photo strip below the steps */}
-          <div className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
-            {[
-              { src: "/images/aisha-teal.jpg",        alt: "Aisha coaching session" },
-              { src: "/images/aisha-thoughtful.jpg",  alt: "Aisha preparing a lesson" },
-              { src: "/images/aisha-warm.jpg",        alt: "Aisha in a teaching setting" },
-              { src: "/images/aisha-professional.jpg",alt: "Aisha — English coach" },
-            ].map((img) => (
-              <FadeUp key={img.src}>
-                <div className="aspect-[3/4] rounded-2xl overflow-hidden shadow-md">
-                  <Image
-                    src={img.src}
-                    alt={img.alt}
-                    width={300}
-                    height={400}
-                    className="w-full h-full object-cover"
-                    sizes="(max-width: 768px) 45vw, 25vw"
-                  />
-                </div>
-              </FadeUp>
-            ))}
-          </div>
         </div>
       </section>
 
-      {/* Next batch teaser */}
-      {batch && (
-        <section className="py-12 px-4 bg-teal text-white">
-          <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div>
-              <p className="text-white/70 text-sm uppercase tracking-wider mb-1">Upcoming batch</p>
-              <p className="font-serif text-2xl font-bold">
-                {courseLabel(batch.courseSlug)} ·{" "}
-                {new Date(batch.startDate).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric",
-                })}
-              </p>
-              <p className="text-white/70 text-sm mt-1">
-                A new batch begins every 15 days — seats are limited.
-              </p>
-            </div>
-            <Button href="/batches" variant="coral" size="lg">
-              See upcoming batches
-            </Button>
-          </div>
-        </section>
-      )}
-
-      {/* Testimonials */}
-      <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
+      {/* Batch table */}
+      <section className="py-20 px-4 bg-ivory">
+        <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mb-10">
-              <SectionHeading title="Students who took the leap." />
-              <Link
-                href="/success-stories"
-                className="text-teal font-semibold hover:text-ink transition-colors text-sm shrink-0"
-              >
-                Read all success stories →
-              </Link>
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+              <div>
+                <p className="font-serif text-xs font-bold uppercase tracking-widest text-coral flex items-center gap-3 mb-3">
+                  Dates
+                  <span className="h-0.5 w-9 bg-coral" aria-hidden />
+                </p>
+                <h2 className="font-serif text-3xl md:text-4xl font-bold text-ink">
+                  Upcoming batches
+                </h2>
+              </div>
             </div>
+            <BatchTable />
           </FadeUp>
-          <TestimonialGrid />
         </div>
       </section>
 
-      {/* Lead Magnet */}
       <LeadMagnet />
-
-      {/* Social Bar */}
-      <section className="py-16 px-4 bg-ivory">
-        <div className="max-w-2xl mx-auto text-center">
-          <FadeUp>
-            <SectionHeading title="Follow along for daily English tips." centered />
-          </FadeUp>
-          <div className="mt-8">
-            <SocialBar />
-          </div>
-        </div>
-      </section>
-
       <CTASection />
     </>
   );

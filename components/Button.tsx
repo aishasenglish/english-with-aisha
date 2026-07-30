@@ -17,7 +17,7 @@ type ButtonProps = {
 
 const variantClasses: Record<Variant, string> = {
   coral:
-    "bg-coral text-ink hover:bg-[#B8923C] focus-visible:ring-coral shadow-sm",
+    "bg-coral text-ink hover:bg-amber-dark hover:text-white focus-visible:ring-coral shadow-sm",
   outline:
     "border-2 border-ink text-ink hover:bg-ink hover:text-white focus-visible:ring-ink",
   teal: "bg-teal text-white hover:bg-ink focus-visible:ring-teal shadow-sm",
@@ -42,7 +42,7 @@ export default function Button({
   disabled,
 }: ButtonProps) {
   const base =
-    "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-60 disabled:pointer-events-none";
+    "inline-flex items-center justify-center gap-2 rounded-[2px] font-serif font-bold uppercase tracking-wide transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-60 disabled:pointer-events-none";
   const classes = `${base} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
 
   if (href) {

@@ -1,23 +1,25 @@
 import type { Metadata } from "next";
-import { Hanken_Grotesk, Playfair_Display } from "next/font/google";
+import { Archivo, Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import UtilityBar from "@/components/UtilityBar";
+import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
 import DevClickToComponent from "@/components/DevClickToComponent";
 import { site } from "@/content/site";
 
-const hanken = Hanken_Grotesk({
-  variable: "--font-hanken",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
 });
 
-const playfair = Playfair_Display({
-  variable: "--font-playfair",
+const archivo = Archivo({
+  variable: "--font-archivo",
   subsets: ["latin"],
   display: "swap",
+  weight: ["500", "600", "700", "800"],
 });
 
 export const metadata: Metadata = {
@@ -48,10 +50,11 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${hanken.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${inter.variable} ${archivo.variable}`}>
       <body className="min-h-screen flex flex-col">
         <DevClickToComponent />
-        <Navbar />
+        <UtilityBar />
+        <Header />
         <main className="flex-1">{children}</main>
         <Footer />
         <WhatsAppFloat />

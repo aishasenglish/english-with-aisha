@@ -1,20 +1,25 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #2A1518;
-  --color-teal: #9C3048;
-  --color-coral: #C7A24E;
-  --color-gold: #C7A24E;
-  --color-ivory: #F7F1E7;
-  --color-card: #FBF6EE;
-  --color-border: #EADFCE;
-  --color-charcoal: #2E2428;
-  --color-muted: #7A6B62;
-  --color-stone: #EADFCE;
+  --color-ink: #15181C;
+  --color-teal: #0F6E7B;
+  --color-coral: #F5821F;
+  --color-gold: #F5821F;
+  --color-amber-dark: #D96A0B;
+  --color-amber-tint: #FFF3E6;
+  --color-ivory: #F3F5F7;
+  --color-card: #FAFBFC;
+  --color-border: #E2E6EA;
+  --color-line-strong: #C8CFD6;
+  --color-charcoal: #15181C;
+  --color-muted: #5C646E;
+  --color-stone: #E2E6EA;
   --color-white: #ffffff;
 
-  --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
-  --font-serif: var(--font-playfair), ui-serif, Georgia, serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-archivo), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-brand: 2px;
 }
 
 body {
@@ -27,8 +32,9 @@ body {
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
-  line-height: 1.12;
-  letter-spacing: -0.01em;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 700;
 }
 
 /* Floating blob animations — from HTML template */

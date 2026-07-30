@@ -29,7 +29,7 @@ export default function LeadMagnet() {
   }
 
   return (
-    <section className="bg-ink text-white py-16 px-4">
+    <section className="bg-ink text-white py-16 px-4" id="lead-magnet">
       <div className="max-w-2xl mx-auto text-center">
         <p className="text-gold font-semibold text-sm uppercase tracking-widest mb-3">
           Free Resource
@@ -66,7 +66,7 @@ export default function LeadMagnet() {
             <button
               type="submit"
               disabled={status === "loading"}
-              className="px-6 py-3 bg-coral hover:bg-[#B8923C] disabled:opacity-60 text-ink font-semibold rounded-full text-sm transition-colors"
+              className="px-6 py-3 bg-coral hover:bg-amber-dark disabled:opacity-60 text-ink hover:text-white font-semibold rounded-full text-sm transition-colors"
             >
               {status === "loading" ? "Sending…" : "Send me the checklist"}
             </button>
