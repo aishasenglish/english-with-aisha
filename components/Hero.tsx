@@ -48,9 +48,10 @@ export default function Hero() {
             like it belongs to you.
           </h1>
           <p className="text-white/80 text-lg leading-relaxed mb-9 max-w-lg">
-            Live online training for IELTS, PTE, TOEFL, writing, and spoken fluency — taught by
-            one lecturer who marks your work herself. Every class recorded, every batch capped,
-            every student tracked.
+            Expert live online training for IELTS, PTE, and spoken fluency. Master English
+            communication with a Cambridge-certified lecturer and corporate trainer who evaluates
+            your progress personally. Every class recorded, every batch capped, every student
+            tracked.
           </p>
           <div className="flex flex-wrap gap-4 mb-10">
             <Button href="/free-diagnostic-test" variant="coral" size="lg">

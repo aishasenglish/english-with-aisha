@@ -3,7 +3,7 @@ export const site = {
   domain: "aishasenglish.com",
   tagline: "Master English. Open the world.",
   founder: "Aisha",
-  credentials: "MA English Literature · College Lecturer",
+  credentials: "MPhil English Literature · Cambridge Certified · Corporate Trainer",
   city: "Lahore, Pakistan",
   timezone: "PKT (GMT+5)",
   whatsapp: {
