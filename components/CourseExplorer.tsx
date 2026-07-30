@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { courses } from "@/content/courses";
 import { whatsappLink } from "@/lib/whatsapp";
@@ -9,13 +8,13 @@ import { whatsappLink } from "@/lib/whatsapp";
 type Goal = "exam" | "write" | "speak";
 type Format = "batch" | "private";
 
-const COURSE_META: Record<string, { image: string; duration: string; target: string; goals: Goal[]; formats: Format[] }> = {
-  ielts: { image: "/images/aisha-teal.jpg", duration: "Live online · recorded", target: "Target Band 7+", goals: ["exam"], formats: ["batch", "private"] },
-  pte: { image: "/images/aisha-professional.jpg", duration: "Live online · recorded", target: "Target 79+", goals: ["exam"], formats: ["batch", "private"] },
-  toefl: { image: "/images/aisha-thoughtful.jpg", duration: "Live online · recorded", target: "Target 100+", goals: ["exam"], formats: ["batch", "private"] },
-  "english-writing": { image: "/images/aisha-home.jpg", duration: "Live online · recorded", target: "Weekly marked work", goals: ["write"], formats: ["batch", "private"] },
-  "spoken-english": { image: "/images/aisha-warm.jpg", duration: "Live online · recorded", target: "Small groups", goals: ["speak"], formats: ["batch", "private"] },
-  "o-a-level-english": { image: "/images/aisha-headshot.jpg", duration: "Live online · recorded", target: "Cambridge & Edexcel", goals: ["exam"], formats: ["batch", "private"] },
+const COURSE_META: Record<string, { duration: string; target: string; goals: Goal[]; formats: Format[] }> = {
+  ielts: { duration: "Live online · recorded", target: "Target Band 7+", goals: ["exam"], formats: ["batch", "private"] },
+  pte: { duration: "Live online · recorded", target: "Target 79+", goals: ["exam"], formats: ["batch", "private"] },
+  toefl: { duration: "Live online · recorded", target: "Target 100+", goals: ["exam"], formats: ["batch", "private"] },
+  "english-writing": { duration: "Live online · recorded", target: "Weekly marked work", goals: ["write"], formats: ["batch", "private"] },
+  "spoken-english": { duration: "Live online · recorded", target: "Small groups", goals: ["speak"], formats: ["batch", "private"] },
+  "o-a-level-english": { duration: "Live online · recorded", target: "Cambridge & Edexcel", goals: ["exam"], formats: ["batch", "private"] },
 };
 
 const EXPLORER_COURSES = courses
@@ -135,32 +134,25 @@ export default function CourseExplorer() {
               <Link
                 href={`/courses/${c.slug}`}
                 key={c.slug}
-                className="group bg-white border border-stone hover:border-line-strong hover:-translate-y-1 hover:shadow-xl transition-[transform,box-shadow,border-color] duration-200 flex flex-col"
+                className={`rounded-md border border-stone hover:border-line-strong hover:-translate-y-1 transition-[transform,border-color] duration-200 flex flex-col p-8 ${c.cardTint}`}
               >
-                <div className="relative aspect-[16/10] bg-ivory overflow-hidden">
-                  {c.badge && (
-                    <span className="absolute top-0 left-0 z-10 bg-coral text-white font-serif text-xs font-medium uppercase tracking-[0.10em] px-3 py-1.5">
-                      {c.badge}
-                    </span>
-                  )}
-                  <Image
-                    src={c.image}
-                    alt=""
-                    width={640}
-                    height={400}
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
-                </div>
-                <div className="p-6 flex flex-col flex-1 gap-2.5">
-                  <span className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-muted">
-                    {c.goals.includes("exam") ? "Exam preparation" : c.goals.includes("write") ? "Skills training" : "Skills training"}
+                {c.badge && (
+                  <span
+                    className={`inline-block self-start rounded-sm border px-2.5 py-1 mb-4
+                                text-[0.6875rem] font-medium uppercase tracking-[0.10em]
+                                ${c.badgeBorder} ${c.badgeText}`}
+                  >
+                    {c.badge}
                   </span>
-                  <h3 className="font-serif text-lg font-medium text-ink">{c.name}</h3>
-                  <p className="text-sm text-muted leading-relaxed flex-1">{c.summary}</p>
-                  <div className="flex items-center justify-between gap-3 pt-4 mt-1 border-t border-stone text-sm text-muted">
-                    <span>{c.duration}</span>
-                    <strong className="font-serif text-ink text-xs">{c.target}</strong>
-                  </div>
+                )}
+                <span className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint mb-2">
+                  {c.goals.includes("exam") ? "Exam preparation" : c.goals.includes("write") ? "Skills training" : "Skills training"}
+                </span>
+                <h3 className="text-xl font-medium tracking-[0.01em] text-ink mb-3">{c.name}</h3>
+                <p className="text-[0.9375rem] font-normal leading-[1.7] text-ink-soft flex-1">{c.summary}</p>
+                <div className="flex items-center justify-between gap-3 pt-4 mt-4 border-t border-stone text-sm text-ink-soft">
+                  <span>{c.duration}</span>
+                  <strong className="font-serif text-ink text-xs">{c.target}</strong>
                 </div>
               </Link>
             ))}

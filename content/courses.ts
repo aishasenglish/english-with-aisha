@@ -8,6 +8,10 @@ export type Course = {
   includes: string[];
   price: number;
   badge?: string;
+  /** Complete Tailwind class strings, stored literally so the purge scanner can see them. */
+  cardTint: string;
+  badgeBorder: string;
+  badgeText: string;
 };
 
 export const courses: Course[] = [
@@ -39,6 +43,9 @@ export const courses: Course[] = [
     ],
     price: 10000,
     badge: "Most Popular",
+    cardTint: "bg-yellow-50",
+    badgeBorder: "border-yellow-200",
+    badgeText: "text-yellow-800",
   },
   {
     slug: "pte",
@@ -66,6 +73,9 @@ export const courses: Course[] = [
       "1-on-1 consultation option",
     ],
     price: 10000,
+    cardTint: "bg-green-50",
+    badgeBorder: "border-green-200",
+    badgeText: "text-green-800",
   },
   {
     slug: "toefl",
@@ -93,6 +103,9 @@ export const courses: Course[] = [
       "1-on-1 consultation option",
     ],
     price: 10000,
+    cardTint: "bg-pink-50",
+    badgeBorder: "border-pink-200",
+    badgeText: "text-pink-800",
   },
   {
     slug: "english-writing",
@@ -121,6 +134,9 @@ export const courses: Course[] = [
     ],
     price: 10000,
     badge: "New",
+    cardTint: "bg-blue-50",
+    badgeBorder: "border-blue-200",
+    badgeText: "text-blue-800",
   },
   {
     slug: "o-a-level-english",
@@ -156,6 +172,9 @@ export const courses: Course[] = [
     ],
     price: 0,
     badge: "New",
+    cardTint: "bg-purple-50",
+    badgeBorder: "border-purple-200",
+    badgeText: "text-purple-800",
   },
   {
     slug: "spoken-english",
@@ -182,5 +201,8 @@ export const courses: Course[] = [
       "Individual practice session option",
     ],
     price: 10000,
+    cardTint: "bg-orange-50",
+    badgeBorder: "border-orange-200",
+    badgeText: "text-orange-800",
   },
 ];

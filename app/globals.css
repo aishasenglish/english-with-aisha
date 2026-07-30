@@ -43,29 +43,6 @@
   :root { color-scheme: light; }
 }
 
-:root {
-  /* Course card tints — categorical, ~96% luminance so they read as tone not colour.
-     Consumed via [data-course] below, not exposed as Tailwind utilities. */
-  --card-ielts:   #FFFBEB;  --edge-ielts:   #F0E0B8;  --mark-ielts:   #92400E;
-  --card-pte:     #F0FFF4;  --edge-pte:     #C6E9CF;  --mark-pte:     #166534;
-  --card-toefl:   #FFF5F7;  --edge-toefl:   #F2D3DC;  --mark-toefl:   #9D174D;
-  --card-writing: #F5F9FC;  --edge-writing: #CFE0EC;  --mark-writing: #1F4E79;
-  --card-spoken:  #F9F6FD;  --edge-spoken:  #DDD4EE;  --mark-spoken:  #5B21B6;
-}
-
-.course-card {
-  background-color: var(--card-bg, var(--color-surface));
-  border: 1px solid var(--color-line);
-  border-radius: var(--radius-md);
-  padding: clamp(1.75rem, 3vw, 2.5rem);
-}
-
-[data-course="ielts"]   { --card-bg: var(--card-ielts);   --card-edge: var(--edge-ielts);   --card-mark: var(--mark-ielts); }
-[data-course="pte"]     { --card-bg: var(--card-pte);     --card-edge: var(--edge-pte);     --card-mark: var(--mark-pte); }
-[data-course="toefl"]   { --card-bg: var(--card-toefl);   --card-edge: var(--edge-toefl);   --card-mark: var(--mark-toefl); }
-[data-course="writing"] { --card-bg: var(--card-writing); --card-edge: var(--edge-writing); --card-mark: var(--mark-writing); }
-[data-course="spoken"]  { --card-bg: var(--card-spoken);  --card-edge: var(--edge-spoken);  --card-mark: var(--mark-spoken); }
-
 body {
   background-color: var(--color-surface);
   color: var(--color-ink);
