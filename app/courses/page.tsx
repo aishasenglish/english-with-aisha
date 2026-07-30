@@ -29,7 +29,7 @@ export default function CoursesPage() {
 
       <section className="py-20 px-4 bg-ivory">
         <div className="max-w-5xl mx-auto">
-          <div className="grid sm:grid-cols-2 gap-6">
+          <div className="grid grid-cols-[repeat(auto-fit,minmax(17.5rem,1fr))] gap-5">
             {courses.map((course, i) => (
               <FadeUp key={course.slug} delay={i * 80}>
                 <ServiceCard course={course} />

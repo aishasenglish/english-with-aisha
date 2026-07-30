@@ -94,7 +94,7 @@ export default function HomePage() {
                 },
               ].map((card, i) => (
                 <FadeUp key={card.title} delay={i * 100}>
-                  <div className="flex gap-4 bg-card rounded-md p-4 border border-stone shadow-sm">
+                  <div className="flex gap-4 bg-card rounded-md p-4 border border-stone">
                     <div className="p-2.5 bg-amber-tint text-amber-dark rounded-md shrink-0 h-fit">
                       {card.icon}
                     </div>

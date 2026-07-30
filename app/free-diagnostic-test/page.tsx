@@ -24,7 +24,7 @@ export default function FreeDiagnosticPage() {
 
       <section className="py-20 px-4 bg-ivory">
         <div className="max-w-2xl mx-auto">
-          <div className="bg-white rounded-md p-8 shadow-sm border border-stone">
+          <div className="bg-white rounded-md p-8 border border-stone">
             <DiagnosticForm />
           </div>
         </div>

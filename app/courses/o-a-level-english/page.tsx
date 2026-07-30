@@ -690,7 +690,7 @@ export default function OALevelEnglishPage() {
 
       <section className="py-16 px-4 bg-ivory">
         <div className="max-w-md mx-auto">
-          <div className="bg-white border border-line rounded-md p-8 shadow-sm">
+          <div className="bg-white border border-line rounded-md p-8">
             <div className="mb-6">
               <p className="text-ink-faint text-sm uppercase tracking-wider mb-1">Group batch</p>
               <p className="font-serif text-2xl font-medium text-ink">

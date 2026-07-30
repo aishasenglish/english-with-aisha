@@ -10,7 +10,7 @@ export default function PricingCard({ course }: Props) {
   return (
     <section className="py-16 px-4">
       <div className="max-w-md mx-auto">
-        <div className="bg-white border border-line rounded-md p-8 text-center shadow-sm">
+        <div className="bg-white border border-line rounded-md p-8 text-center">
           <p className="text-ink-faint text-sm uppercase tracking-wider mb-2">One-time fee</p>
           {site.showPrices ? (
             <p className="font-serif text-5xl font-medium text-ink mb-1">
