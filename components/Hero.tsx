@@ -74,7 +74,14 @@ export default function Hero() {
             </div>
           </div>
 
-          <div className="col-span-12 lg:col-span-4 w-full min-h-[500px] bg-gray-100 rounded-lg" />
+          <div className="col-span-12 lg:col-span-4 relative flex h-full w-full items-end justify-center min-h-[500px]">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[120%] w-[120%] -z-10 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-50 via-transparent to-transparent opacity-70" />
+            <img
+              src="/images/aisha-placeholder.png"
+              alt=""
+              className="relative z-10 w-full max-w-lg object-contain object-bottom drop-shadow-2xl"
+            />
+          </div>
         </div>
       </div>
     </section>
