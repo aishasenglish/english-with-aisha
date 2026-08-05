@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Hero from "@/components/Hero";
 import CourseExplorer from "@/components/CourseExplorer";
 import Formats from "@/components/Formats";
@@ -31,27 +30,8 @@ export default function HomePage() {
 
       {/* About Aisha */}
       <section className="py-20 px-4 bg-white">
-        <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-14 items-center">
-          <FadeUp className="order-2 lg:order-1">
-            <div className="relative max-w-md mx-auto lg:mx-0">
-              <div className="bg-white border border-stone overflow-hidden">
-                <Image
-                  src="/images/aisha-home.jpg"
-                  alt="Aisha — English coach and MA English Literature"
-                  width={480}
-                  height={560}
-                  className="w-full h-auto object-contain"
-                  sizes="(max-width: 1024px) 90vw, 45vw"
-                />
-              </div>
-              <div className="hidden sm:block absolute -bottom-5 -right-5 bg-coral text-white rounded-sm px-5 py-3">
-                <p className="font-serif font-medium text-sm">MA English Literature</p>
-                <p className="text-white/70 text-xs">Government College Lecturer</p>
-              </div>
-            </div>
-          </FadeUp>
-
-          <div className="order-1 lg:order-2 space-y-8">
+        <div className="max-w-3xl mx-auto">
+          <div className="space-y-8">
             <FadeUp>
               <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
                 About Aisha

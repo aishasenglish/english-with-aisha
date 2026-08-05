@@ -6,13 +6,6 @@ import { testimonials } from "@/content/testimonials";
 
 const FEATURED_NAMES = ["Sara Ahmed", "Usman Tariq", "Zara Siddiqui", "Ali Raza"];
 
-const BACKDROP: Record<string, string> = {
-  "IELTS Preparation": "/images/aisha-teal.jpg",
-  "PTE Academic": "/images/aisha-professional.jpg",
-  "Spoken English & Fluency": "/images/aisha-warm.jpg",
-  "TOEFL iBT": "/images/aisha-thoughtful.jpg",
-};
-
 const stories = testimonials.filter((t) => FEATURED_NAMES.includes(t.name));
 
 export default function StoryFeature() {
@@ -23,17 +16,8 @@ export default function StoryFeature() {
 
   return (
     <section className="bg-surface-tint">
-      <div className="max-w-7xl mx-auto grid lg:grid-cols-[0.85fr_1.15fr]">
-        <div className="relative min-h-[280px] lg:min-h-[440px] bg-line">
-          <Image
-            src={BACKDROP[story.course] ?? "/images/aisha-teal.jpg"}
-            alt=""
-            fill
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 40vw"
-          />
-        </div>
-        <div className="px-6 py-14 sm:px-12 sm:py-16 flex flex-col justify-center">
+      <div className="max-w-3xl mx-auto">
+        <div className="px-6 py-14 sm:px-12 sm:py-16 flex flex-col justify-center items-center text-center">
           <span className="font-serif text-5xl font-medium text-sea-edge leading-none mb-3">
             &ldquo;
           </span>
