@@ -65,7 +65,7 @@ export default function Header() {
               <Image src="/AA.png" alt="" width={40} height={40} className="h-10 w-auto" priority />
               <span className="flex flex-col leading-none">
                 <span className="font-serif font-medium text-lg text-ink tracking-tight">
-                  English with Aisha
+                  Aishasenglish
                 </span>
                 <span className="text-[0.65rem] uppercase tracking-[0.13em] text-muted mt-1">
                   Professional English Training
