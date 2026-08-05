@@ -79,7 +79,7 @@ export default function Header() {
                   <Link
                     key={item.label}
                     href={item.href}
-                    className="h-full flex items-center px-3 font-serif font-medium text-sm text-ink hover:text-coral transition-colors"
+                    className="h-full flex items-center px-3 font-serif font-normal uppercase tracking-wider text-sm text-ink hover:text-coral transition-colors"
                   >
                     {item.label}
                   </Link>
@@ -96,13 +96,13 @@ export default function Header() {
                     }}
                   >
                     <button
-                      className="h-full flex items-center gap-1.5 px-3 font-serif font-medium text-sm text-ink hover:text-coral transition-colors relative whitespace-nowrap"
+                      className="h-full flex items-center gap-1.5 px-3 font-serif font-normal uppercase tracking-wider text-sm text-ink hover:text-coral transition-colors relative whitespace-nowrap"
                       aria-expanded={open === i}
                       onClick={() => setOpen((o) => (o === i ? null : i))}
                     >
                       {item.label}
                       <ChevronIcon
-                        className={`w-3.5 h-3.5 shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`}
+                        className={`w-4 h-4 shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`}
                       />
                       <span
                         className={`absolute left-3 right-3 bottom-0 h-[3px] bg-coral origin-left transition-transform duration-200 ${
