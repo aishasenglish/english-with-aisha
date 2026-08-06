@@ -31,6 +31,7 @@ export default function BatchTable() {
           <tr>
             <th className="text-left px-6 py-4 font-medium">Course</th>
             <th className="text-left px-6 py-4 font-medium">Start Date</th>
+            <th className="text-left px-6 py-4 font-medium">Duration</th>
             <th className="text-left px-6 py-4 font-medium">Status</th>
             <th className="text-left px-6 py-4 font-medium">Enroll</th>
           </tr>
@@ -45,6 +46,7 @@ export default function BatchTable() {
                 {courseLabel(batch.courseSlug)}
               </td>
               <td className="px-6 py-4 text-muted">{formatDate(batch.startDate)}</td>
+              <td className="px-6 py-4 text-muted">{batch.duration}</td>
               <td className="px-6 py-4">
                 <span
                   className={`inline-block px-3 py-1 rounded-sm text-xs font-medium ${statusClasses[batch.status]}`}

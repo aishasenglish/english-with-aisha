@@ -8,6 +8,18 @@ export type Course = {
   includes: string[];
   price: number;
   badge?: string;
+  /** Optional limited-time discount shown on the pricing card in place of the plain price. */
+  discount?: {
+    badgeLabel: string;
+    originalPrice: string;
+    discountedPrice: string;
+    subtitle: string;
+    /** Optional secondary-currency line shown below the primary price (e.g. local PKR alongside USD). */
+    secondary?: {
+      originalPrice: string;
+      discountedPrice: string;
+    };
+  };
   /** Complete Tailwind class strings, stored literally so the purge scanner can see them. */
   cardTint: string;
   badgeBorder: string;
@@ -29,8 +41,8 @@ export const courses: Course[] = [
     modules: [
       "Listening strategies",
       "Reading speed & accuracy",
-      "Writing Task 1 & Task 2 (with model answers)",
-      "Speaking fluency & confidence",
+      "Writing Task 1 & 2 (Cambridge-Aligned Frameworks)",
+      "Speaking Fluency (Official IDP-Trained Strategies)",
       "Understanding the band descriptors",
       "Time management under pressure",
     ],
@@ -43,6 +55,16 @@ export const courses: Course[] = [
     ],
     price: 10000,
     badge: "Most Popular",
+    discount: {
+      badgeLabel: "LIMITED TIME: 40% OFF",
+      originalPrice: "$75",
+      discountedPrice: "$45",
+      subtitle: "Full course access for the upcoming batch",
+      secondary: {
+        originalPrice: "PKR 20,000",
+        discountedPrice: "PKR 12,000",
+      },
+    },
     cardTint: "bg-yellow-50",
     badgeBorder: "border-yellow-200",
     badgeText: "text-yellow-800",

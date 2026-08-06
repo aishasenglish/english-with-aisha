@@ -36,8 +36,9 @@ export default function Hero() {
               className={`${montserrat.className} text-[1.0625rem] font-normal leading-relaxed tracking-[0.01em] text-gray-600 mb-11`}
             >
               Personalised live online training for IELTS, PTE, O/A Levels, spoken and written
-              English, and corporate communication. Learn from a Cambridge-certified lecturer
-              through expert mentoring, personalised feedback, and continuous progress tracking.
+              English, and corporate communication. Learn from a university lecturer and
+              IDP-trained expert through Cambridge-aligned mentoring, personalised feedback, and
+              continuous progress tracking.
             </p>
             <div className="flex flex-wrap gap-3.5 mb-10">
               <a

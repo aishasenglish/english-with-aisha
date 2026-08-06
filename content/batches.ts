@@ -5,6 +5,7 @@ export type Batch = {
   courseSlug: string; // use "all" for all courses
   startDate: string;  // ISO date string
   status: BatchStatus;
+  duration: string; // TODO: placeholder — confirm actual batch length per course
 };
 
 // Add a new object here every 15 days when a new batch opens.
@@ -14,18 +15,21 @@ export const batches: Batch[] = [
     courseSlug: "all",
     startDate: "2026-07-05",
     status: "Open",
+    duration: "6 Weeks",
   },
   {
     id: "batch-002",
     courseSlug: "ielts",
     startDate: "2026-07-20",
     status: "Open",
+    duration: "8 Weeks",
   },
   {
     id: "batch-003",
     courseSlug: "all",
     startDate: "2026-08-04",
     status: "Open",
+    duration: "6 Weeks",
   },
 ];
 

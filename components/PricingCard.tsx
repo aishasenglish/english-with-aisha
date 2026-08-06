@@ -12,17 +12,47 @@ export default function PricingCard({ course }: Props) {
       <div className="max-w-md mx-auto">
         <div className="bg-white border border-line rounded-md p-8 text-center">
           <p className="text-ink-faint text-sm uppercase tracking-wider mb-2">One-time fee</p>
-          {site.showPrices ? (
-            <p className="font-serif text-5xl font-medium text-ink mb-1">
-              {site.currency}{" "}
-              <span>{course.price.toLocaleString()}</span>
-            </p>
+          {site.showPrices && course.discount ? (
+            <>
+              <span className="bg-green-100 text-green-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide mb-2 inline-block">
+                {course.discount.badgeLabel}
+              </span>
+              <p className="mb-1">
+                <span className="text-gray-400 line-through text-3xl font-medium mr-3">
+                  {course.discount.originalPrice}
+                </span>
+                <span className="text-5xl font-extrabold text-gray-900">
+                  {course.discount.discountedPrice}
+                </span>
+              </p>
+              {course.discount.secondary && (
+                <div className="flex items-center justify-center text-sm mt-2">
+                  <span className="text-gray-400 line-through mr-2 font-medium">
+                    {course.discount.secondary.originalPrice}
+                  </span>
+                  <span className="text-gray-600 font-semibold tracking-wide">
+                    {course.discount.secondary.discountedPrice}
+                  </span>
+                </div>
+              )}
+              <p className="text-sm text-gray-500 mt-3 mb-8">{course.discount.subtitle}</p>
+            </>
+          ) : site.showPrices ? (
+            <>
+              <p className="font-serif text-5xl font-medium text-ink mb-1">
+                {site.currency}{" "}
+                <span>{course.price.toLocaleString()}</span>
+              </p>
+              <p className="text-ink-faint text-sm mb-8">per course</p>
+            </>
           ) : (
-            <p className="font-serif text-2xl font-medium text-sea-deep mb-1">
-              Message for current fee
-            </p>
+            <>
+              <p className="font-serif text-2xl font-medium text-sea-deep mb-1">
+                Message for current fee
+              </p>
+              <p className="text-ink-faint text-sm mb-8">per course</p>
+            </>
           )}
-          <p className="text-ink-faint text-sm mb-8">per course</p>
 
           <a
             href={courseEnrollLink(course.name)}
