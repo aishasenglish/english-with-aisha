@@ -106,7 +106,7 @@ export default function CourseExplorer() {
         </form>
       </div>
 
-      <section className="pt-16 sm:pt-20 pb-20 px-4" id="courses">
+      <section className="pt-10 sm:pt-12 pb-10 sm:pb-12 px-4" id="courses">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
             <div>
@@ -129,28 +129,28 @@ export default function CourseExplorer() {
             </Link>
           </div>
 
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {visible.map((c) => (
               <Link
                 href={`/courses/${c.slug}`}
                 key={c.slug}
-                className={`rounded-md border border-stone hover:border-line-strong hover:-translate-y-1 transition-[transform,border-color] duration-200 flex flex-col p-8 ${c.cardTint}`}
+                className="rounded-md border border-stone hover:border-line-strong hover:-translate-y-1 transition-[transform,border-color] duration-200 flex flex-col p-5 bg-[rgba(240,240,240,0.4)]"
               >
                 {c.badge && (
                   <span
-                    className={`inline-block self-start rounded-sm border px-2.5 py-1 mb-4
+                    className={`inline-block self-start rounded-sm border px-2.5 py-1 mb-2
                                 text-[0.6875rem] font-medium uppercase tracking-[0.10em]
                                 ${c.badgeBorder} ${c.badgeText}`}
                   >
                     {c.badge}
                   </span>
                 )}
-                <span className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint mb-2">
+                <span className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint mb-1.5">
                   {c.goals.includes("exam") ? "Exam preparation" : c.goals.includes("write") ? "Skills training" : "Skills training"}
                 </span>
-                <h3 className="text-xl font-medium tracking-[0.01em] text-ink mb-3">{c.name}</h3>
+                <h3 className="text-xl font-medium tracking-[0.01em] text-ink mb-2">{c.name}</h3>
                 <p className="text-[0.9375rem] font-normal leading-[1.7] text-ink-soft flex-1">{c.summary}</p>
-                <div className="flex items-center justify-between gap-3 pt-4 mt-4 border-t border-stone text-sm text-ink-soft">
+                <div className="flex items-center justify-between gap-3 pt-3 mt-3 border-t border-stone text-sm text-ink-soft">
                   <span>{c.duration}</span>
                   <strong className="font-serif text-ink text-xs">{c.target}</strong>
                 </div>
