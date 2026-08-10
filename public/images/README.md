@@ -5,6 +5,7 @@ Drop your photos into this folder. The website references these filenames:
 | Filename | Used on | Recommended size |
 |---|---|---|
 | `aisha-hero.jpg` | Home page hero | 800×1067px (portrait, 3:4) |
+| `aisha-cutout-placeholder.png` | Home page hero (right-column cutout portrait) | Transparent-background PNG, portrait, ~1000px tall |
 | `aisha-about.jpg` | About page | 800×1000px (portrait, 4:5) |
 | `og-image.jpg` | Open Graph / social previews | 1200×630px (landscape) |
 
