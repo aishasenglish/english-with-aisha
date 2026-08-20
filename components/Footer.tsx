@@ -41,16 +41,19 @@ const socialIcons: Record<string, React.ReactNode> = {
 
 export default function Footer() {
   const year = new Date().getFullYear();
+  const realSocials = (Object.entries(site.socials) as [string, string][]).filter(
+    ([, url]) => url && url !== "#"
+  );
 
   return (
     <footer className="bg-surface-tint text-ink-soft border-t border-line">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 pb-12 border-b border-line">
-          <div className="lg:col-span-1">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 sm:gap-10 pb-10 sm:pb-12 border-b border-line">
+          <div className="col-span-2 md:col-span-1 lg:col-span-1">
             <p className="font-serif text-xl font-medium text-ink mb-2">{site.brandName}</p>
             <p className="text-sm mb-6 max-w-xs leading-relaxed">{site.tagline}</p>
-            <div className="flex gap-2.5">
-              {(Object.entries(site.socials) as [string, string][]).map(([key, url]) =>
+            {realSocials.length > 0 && <div className="flex gap-2.5">
+              {realSocials.map(([key, url]) =>
                 socialIcons[key] ? (
                   <a
                     key={key}
@@ -58,13 +61,13 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={key}
-                    className="w-9 h-9 flex items-center justify-center rounded-sm border border-line hover:bg-coral hover:border-coral hover:text-white transition-colors"
+                    className="w-11 h-11 flex items-center justify-center rounded-sm border border-line hover:bg-coral hover:border-coral hover:text-white transition-colors"
                   >
                     {socialIcons[key]}
                   </a>
                 ) : null
               )}
-            </div>
+            </div>}
           </div>
 
           <div>
@@ -72,7 +75,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {courses.map((c) => (
                 <li key={c.slug}>
-                  <Link href={`/courses/${c.slug}`} className="text-sm hover:text-sea-deep transition-colors">
+                  <Link href={`/courses/${c.slug}`} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors">
                     {c.name}
                   </Link>
                 </li>
@@ -85,7 +88,7 @@ export default function Footer() {
             <ul className="space-y-2.5">
               {learnLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm hover:text-sea-deep transition-colors">
+                  <Link href={l.href} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -93,17 +96,17 @@ export default function Footer() {
             </ul>
           </div>
 
-          <div>
+          <div className="col-span-2 md:col-span-1">
             <p className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">Contact</p>
             <ul className="space-y-3 mb-5">
               <li className="text-sm">{site.city}</li>
               <li>
-                <a href={`tel:+${site.whatsapp.intl}`} className="text-sm hover:text-sea-deep transition-colors">
+                <a href={`tel:+${site.whatsapp.intl}`} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors">
                   {site.whatsapp.display}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`} className="text-sm hover:text-sea-deep transition-colors">
+                <a href={`mailto:${site.email}`} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors break-all">
                   {site.email}
                 </a>
               </li>
@@ -112,7 +115,7 @@ export default function Footer() {
               href={whatsappLink()}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+              className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3 transition-colors"
             >
               Talk to Aisha
             </a>

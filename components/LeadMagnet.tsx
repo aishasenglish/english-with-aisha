@@ -34,10 +34,10 @@ export default function LeadMagnet() {
         <p className="text-ink-faint font-medium text-xs uppercase tracking-[0.10em] mb-3">
           Free Resource
         </p>
-        <h2 className="font-serif text-3xl md:text-4xl font-medium mb-4">
+        <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium mb-4 leading-tight">
           Get the free IELTS Band 7 Checklist.
         </h2>
-        <p className="text-ink-soft text-lg mb-8">
+        <p className="text-ink-soft text-base sm:text-lg mb-7 sm:mb-8">
           The exact things examiners look for — in one simple PDF. Enter your
           email and it&apos;s yours.
         </p>
@@ -57,16 +57,18 @@ export default function LeadMagnet() {
             <input
               id="checklist-email"
               type="email"
+              autoComplete="email"
+              inputMode="email"
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Your email address"
-              className="flex-1 px-5 py-3 rounded-sm bg-white border border-line text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-sea text-sm"
+              className="flex-1 min-h-12 px-5 py-3 rounded-sm bg-white border border-line text-ink placeholder-ink-faint focus:outline-none focus:ring-2 focus:ring-sea text-base sm:text-sm"
             />
             <button
               type="submit"
               disabled={status === "loading"}
-              className="px-6 py-3 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-sm transition-colors"
+              className="min-h-12 px-6 py-3 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-sm transition-colors"
             >
               {status === "loading" ? "Sending…" : "Send me the checklist"}
             </button>

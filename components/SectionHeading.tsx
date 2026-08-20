@@ -25,11 +25,11 @@ export default function SectionHeading({
           {eyebrow}
         </p>
       )}
-      <h2 className={`font-serif text-3xl md:text-4xl font-medium leading-tight mb-4 ${titleColor}`}>
+      <h2 className={`font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium leading-tight mb-4 ${titleColor}`}>
         {title}
       </h2>
       {subtitle && (
-        <p className={`text-lg leading-relaxed ${subtitleColor}`}>{subtitle}</p>
+        <p className={`text-base sm:text-lg leading-relaxed ${subtitleColor}`}>{subtitle}</p>
       )}
     </div>
   );

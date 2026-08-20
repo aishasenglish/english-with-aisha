@@ -7,7 +7,7 @@ type Props = {
 
 export default function ServiceCard({ course }: Props) {
   return (
-    <article className={`flex flex-col rounded-md border border-line p-8 ${course.cardTint}`}>
+    <article className={`flex flex-col rounded-md border border-line p-5 sm:p-6 lg:p-8 ${course.cardTint}`}>
       {course.badge && (
         <span
           className={`inline-block self-start rounded-sm border px-2.5 py-1 mb-4
@@ -25,7 +25,7 @@ export default function ServiceCard({ course }: Props) {
       </p>
       <Link
         href={`/courses/${course.slug}`}
-        className="inline-flex items-center gap-1 mt-6 text-[0.8125rem] font-medium tracking-[0.06em] text-sea-deep hover:gap-2 transition-[gap] w-fit"
+        className="inline-flex min-h-11 items-center gap-1 mt-4 text-[0.8125rem] font-medium tracking-[0.06em] text-sea-deep hover:gap-2 transition-[gap] w-fit"
       >
         Learn more
         <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>

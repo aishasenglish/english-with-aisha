@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import Image from "next/image";
 import { testimonials } from "@/content/testimonials";
 
 const FEATURED_NAMES = ["Sara Ahmed", "Usman Tariq", "Zara Siddiqui", "Ali Raza"];
@@ -17,22 +16,16 @@ export default function StoryFeature() {
   return (
     <section className="bg-surface-tint">
       <div className="max-w-3xl mx-auto">
-        <div className="px-6 py-14 sm:px-12 sm:py-16 flex flex-col justify-center items-center text-center">
+        <div className="px-4 py-12 sm:px-12 sm:py-16 flex flex-col justify-center items-center text-center">
           <span className="font-serif text-5xl font-medium text-sea-edge leading-none mb-3">
             &ldquo;
           </span>
-          <p className="font-serif text-xl sm:text-2xl font-medium text-ink leading-snug tracking-tight mb-7 max-w-xl">
+          <p className="font-serif text-lg sm:text-2xl font-medium text-ink leading-snug tracking-tight mb-7 max-w-xl">
             {story.quote}
           </p>
           <div className="flex items-center gap-3.5 pt-5 border-t border-line">
-            <div className="relative w-12 h-12 rounded-full overflow-hidden bg-line shrink-0">
-              <Image
-                src={`/images/testimonials/${story.image}`}
-                alt=""
-                fill
-                className="object-cover"
-                sizes="48px"
-              />
+            <div className="w-12 h-12 rounded-full bg-sea-wash text-sea-deep shrink-0 flex items-center justify-center font-medium" aria-hidden="true">
+              {story.name.split(" ").map((part) => part[0]).join("").slice(0, 2)}
             </div>
             <div>
               <p className="font-serif font-medium text-ink text-sm">{story.name}</p>
@@ -41,15 +34,17 @@ export default function StoryFeature() {
               </p>
             </div>
           </div>
-          <div className="flex gap-2.5 mt-7">
+          <div className="flex mt-5" role="group" aria-label="Choose a success story">
             {stories.map((s, i) => (
               <button
                 key={s.name}
                 onClick={() => setActive(i)}
                 aria-label={`Show ${s.name}'s story`}
                 aria-current={active === i}
-                className={`h-1 w-9 transition-colors ${active === i ? "bg-coral" : "bg-line-strong"}`}
-              />
+                className="w-11 h-11 flex items-center justify-center"
+              >
+                <span className={`block h-1 w-8 transition-colors ${active === i ? "bg-coral" : "bg-line-strong"}`} />
+              </button>
             ))}
           </div>
         </div>

@@ -5,7 +5,7 @@ export default function TestimonialGrid() {
   if (testimonials.length === 0) {
     return (
       <p className="text-muted text-center py-8">
-        Testimonials coming soon. Check back after the first batches complete!
+        Verified student stories will be published here with the student&apos;s permission.
       </p>
     );
   }

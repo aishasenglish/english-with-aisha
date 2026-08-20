@@ -16,17 +16,70 @@ function formatDate(iso: string): string {
 }
 
 export default function BatchTable() {
-  if (batches.length === 0) {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const upcomingBatches = batches.filter(
+    (batch) => batch.status !== "Closed" && new Date(batch.startDate) >= today
+  );
+
+  if (upcomingBatches.length === 0) {
     return (
-      <p className="text-muted text-center py-8">
-        No batches listed yet. Check back soon or message on WhatsApp.
-      </p>
+      <div className="bg-white border border-stone rounded-md p-6 sm:p-8 text-center">
+        <h3 className="font-serif text-xl font-medium text-ink mb-2">Next intake is being scheduled</h3>
+        <p className="text-muted text-sm sm:text-base mb-5">
+          Ask Aisha for the next available batch and a time that works in your location.
+        </p>
+        <a
+          href={whatsappLink("Hi Aisha! Could you share the next available batch dates and timings?")}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-medium px-5 py-3 transition-colors"
+        >
+          Ask about the next batch
+        </a>
+      </div>
     );
   }
 
   return (
-    <div className="overflow-x-auto rounded-md border border-stone">
-      <table className="w-full text-sm">
+    <>
+      <div className="grid gap-4 md:hidden">
+        {upcomingBatches.map((batch) => (
+          <article key={batch.id} className="bg-white border border-stone rounded-md p-5">
+            <div className="flex items-start justify-between gap-3 mb-4">
+              <h3 className="font-serif text-lg font-medium text-ink">
+                {courseLabel(batch.courseSlug)}
+              </h3>
+              <span className={`shrink-0 inline-block px-2.5 py-1 rounded-sm text-xs font-medium ${statusClasses[batch.status]}`}>
+                {batch.status}
+              </span>
+            </div>
+            <dl className="grid grid-cols-2 gap-3 text-sm mb-5">
+              <div>
+                <dt className="text-ink-faint text-xs uppercase tracking-wide mb-1">Starts</dt>
+                <dd className="text-ink font-medium">{formatDate(batch.startDate)}</dd>
+              </div>
+              <div>
+                <dt className="text-ink-faint text-xs uppercase tracking-wide mb-1">Duration</dt>
+                <dd className="text-ink font-medium">{batch.duration}</dd>
+              </div>
+            </dl>
+            <a
+              href={whatsappLink(
+                `Hi Aisha! I'd like to enroll in the ${courseLabel(batch.courseSlug)} batch starting ${formatDate(batch.startDate)}. Could you share the details?`
+              )}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex min-h-12 w-full items-center justify-center gap-2 rounded-sm bg-coral text-white font-medium px-4 py-3"
+            >
+              Enrol on WhatsApp
+            </a>
+          </article>
+        ))}
+      </div>
+
+      <div className="hidden md:block overflow-x-auto rounded-md border border-stone">
+      <table className="w-full text-sm min-w-[720px]">
         <thead className="bg-sea text-white">
           <tr>
             <th className="text-left px-6 py-4 font-medium">Course</th>
@@ -37,7 +90,7 @@ export default function BatchTable() {
           </tr>
         </thead>
         <tbody>
-          {batches.map((batch, i) => (
+          {upcomingBatches.map((batch, i) => (
             <tr
               key={batch.id}
               className={`border-t border-stone ${i % 2 === 0 ? "bg-white" : "bg-ivory"}`}
@@ -73,6 +126,7 @@ export default function BatchTable() {
           ))}
         </tbody>
       </table>
-    </div>
+      </div>
+    </>
   );
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { NAV } from "@/content/nav";
@@ -27,6 +27,7 @@ export default function Header() {
   const [stuck, setStuck] = useState(false);
   const [drawer, setDrawer] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState<number | null>(null);
+  const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const onScroll = () => setStuck(window.scrollY > 8);
@@ -38,12 +39,15 @@ export default function Header() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         setOpen(null);
-        setDrawer(false);
+        if (drawer) {
+          setDrawer(false);
+          menuButtonRef.current?.focus();
+        }
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, []);
+  }, [drawer]);
 
   useEffect(() => {
     document.body.style.overflow = drawer ? "hidden" : "";
@@ -60,25 +64,26 @@ export default function Header() {
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-6 h-20">
-            <Link href="/" className="flex items-center gap-3 shrink-0">
-              <Image src="/AA.png" alt="" width={40} height={40} className="h-10 w-auto" priority />
+          <div className="flex items-center gap-4 lg:gap-6 h-16 sm:h-[4.5rem] lg:h-20">
+            <Link href="/" className="flex items-center gap-2.5 sm:gap-3 min-w-0 shrink">
+              <Image src="/AA.png" alt="" width={40} height={40} className="h-9 sm:h-10 w-auto shrink-0" priority />
               <span className="flex flex-col leading-none">
-                <span className="font-serif font-medium text-lg text-ink tracking-tight">
+                <span className="font-serif font-medium text-base sm:text-lg text-ink tracking-tight whitespace-nowrap">
                   Aishasenglish
                 </span>
-                <span className="text-[0.65rem] uppercase tracking-[0.13em] text-muted mt-1">
+                <span className="hidden min-[360px]:block text-[0.58rem] sm:text-[0.65rem] uppercase tracking-[0.10em] sm:tracking-[0.13em] text-muted mt-1 whitespace-nowrap">
                   Professional English Training
                 </span>
               </span>
             </Link>
 
-            <nav className="hidden lg:flex items-center gap-1 ml-4 h-full" aria-label="Main">
+            <nav className="hidden xl:flex items-center gap-1 ml-4 h-full" aria-label="Main">
               {NAV.map((item, i) =>
                 item.href ? (
                   <Link
                     key={item.label}
                     href={item.href}
+                    onClick={() => setOpen(null)}
                     className="h-full flex items-center px-3 font-serif font-normal uppercase tracking-wider text-sm text-ink hover:text-coral transition-colors"
                   >
                     {item.label}
@@ -125,6 +130,7 @@ export default function Header() {
                                     <li key={l.label}>
                                       <Link
                                         href={l.href}
+                                        onClick={() => setOpen(null)}
                                         className="block -ml-2.5 px-2.5 py-2 rounded-sm hover:bg-amber-tint group"
                                       >
                                         <span className="block text-sm font-medium text-ink group-hover:text-amber-dark">
@@ -155,6 +161,7 @@ export default function Header() {
                                 {item.feature.style === "button" ? (
                                   <Link
                                     href={item.feature.cta.href}
+                                    onClick={() => setOpen(null)}
                                     className="inline-flex items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
                                   >
                                     {item.feature.cta.label}
@@ -162,6 +169,7 @@ export default function Header() {
                                 ) : (
                                   <Link
                                     href={item.feature.cta.href}
+                                    onClick={() => setOpen(null)}
                                     className="inline-flex items-center gap-1.5 text-xs font-serif font-medium uppercase tracking-wide border-b-2 border-coral pb-0.5 hover:text-amber-dark"
                                   >
                                     {item.feature.cta.label}
@@ -182,7 +190,7 @@ export default function Header() {
             <div className="flex items-center gap-3 ml-auto">
               <Link
                 href="/#finder"
-                className="hidden lg:inline-flex items-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+                className="hidden xl:inline-flex items-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
               >
                 Find a course
               </Link>
@@ -190,15 +198,17 @@ export default function Header() {
                 href={whatsappLink()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="hidden lg:inline-flex items-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
+                className="hidden xl:inline-flex items-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
               >
                 Talk to Aisha
               </a>
               <button
+                ref={menuButtonRef}
                 onClick={() => setDrawer(true)}
                 aria-label="Open menu"
                 aria-expanded={drawer}
-                className="lg:hidden p-2.5 border border-line-strong rounded-sm text-ink"
+                aria-controls="mobile-navigation"
+                className="xl:hidden w-11 h-11 flex items-center justify-center border border-line-strong rounded-sm text-ink shrink-0"
               >
                 <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
@@ -210,33 +220,36 @@ export default function Header() {
       </header>
 
       {drawer && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div id="mobile-navigation" className="fixed inset-0 z-50 xl:hidden" role="dialog" aria-modal="true" aria-label="Site navigation">
           <div
             className="absolute inset-0 bg-ink/60"
             onClick={() => setDrawer(false)}
             aria-hidden
           />
-          <div className="absolute top-0 right-0 bottom-0 w-full max-w-sm bg-white overflow-y-auto">
+          <div className="absolute top-0 right-0 bottom-0 w-[min(100%,22rem)] bg-white overflow-y-auto overscroll-contain shadow-2xl">
             <div className="flex items-center justify-between h-16 px-4 border-b border-stone">
               <span className="font-serif font-medium text-ink">Menu</span>
               <button
-                onClick={() => setDrawer(false)}
+                onClick={() => {
+                  setDrawer(false);
+                  menuButtonRef.current?.focus();
+                }}
                 aria-label="Close menu"
-                className="p-2 text-ink"
+                className="w-11 h-11 flex items-center justify-center text-ink"
               >
                 <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </button>
             </div>
-            <nav className="px-4 py-4">
+            <nav className="px-4 pt-2 pb-[max(1.25rem,env(safe-area-inset-bottom))]" aria-label="Mobile">
               {NAV.map((item, i) =>
                 item.href ? (
                   <Link
                     key={item.label}
                     href={item.href}
                     onClick={() => setDrawer(false)}
-                    className="block py-3 font-serif font-medium text-ink border-b border-stone"
+                    className="flex items-center min-h-12 font-serif font-medium text-ink border-b border-stone"
                   >
                     {item.label}
                   </Link>
@@ -245,7 +258,7 @@ export default function Header() {
                     <button
                       onClick={() => setDrawerOpen((o) => (o === i ? null : i))}
                       aria-expanded={drawerOpen === i}
-                      className="w-full flex items-center justify-between py-3 font-serif font-medium text-ink"
+                      className="w-full flex items-center justify-between min-h-12 font-serif font-medium text-ink"
                     >
                       {item.label}
                       <ChevronIcon
@@ -265,7 +278,7 @@ export default function Header() {
                                   <Link
                                     href={l.href}
                                     onClick={() => setDrawer(false)}
-                                    className="block py-1.5 text-sm text-ink"
+                                    className="flex items-center min-h-11 text-sm text-ink pl-2"
                                   >
                                     {l.label}
                                   </Link>

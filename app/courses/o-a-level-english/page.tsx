@@ -39,16 +39,6 @@ export const metadata: Metadata = {
   },
 };
 
-function Placeholder({ children }: { children: string }) {
-  return (
-    <span className="inline-flex items-center rounded border border-dashed border-coral bg-coral/10 px-1.5 py-0.5 font-mono text-[0.8em] font-medium text-coral align-baseline">
-      {"{{"}
-      {children}
-      {"}}"}
-    </span>
-  );
-}
-
 function CheckIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -57,12 +47,17 @@ function CheckIcon({ className = "w-5 h-5" }: { className?: string }) {
   );
 }
 
-function HeroPhotoPlaceholder() {
+function HeroPhoto() {
   return (
-    <div className="max-w-sm mx-auto lg:max-w-none aspect-[4/5] rounded-md border-2 border-dashed border-line-strong bg-surface-tint flex items-center justify-center p-6 text-center">
-      <p className="text-ink-faint text-sm font-mono">
-        HERO PHOTO — /images/aisha-o-a-level.jpg
-      </p>
+    <div className="max-w-xs sm:max-w-sm mx-auto lg:max-w-none aspect-[4/5] rounded-md overflow-hidden bg-surface-tint shadow-xl relative">
+      <Image
+        src="/images/aisha-hero.jpg"
+        alt="Aisha, specialist online O and A Level English teacher"
+        fill
+        priority
+        sizes="(max-width: 639px) 82vw, (max-width: 1023px) 384px, 42vw"
+        className="object-cover object-top"
+      />
     </div>
   );
 }
@@ -78,11 +73,11 @@ function SyllabusTable({
     <div>
       <h3 className="font-serif text-xl font-medium text-ink mb-4">{title}</h3>
       <div className="overflow-x-auto rounded-md border border-stone">
-        <table className="w-full text-sm">
+        <table className="w-full text-sm table-fixed">
           <thead className="bg-sea text-white">
             <tr>
-              <th className="text-left px-5 py-3 font-medium">Syllabus</th>
-              <th className="text-left px-5 py-3 font-medium">Code</th>
+              <th className="w-2/3 text-left px-3 sm:px-5 py-3 font-medium">Syllabus</th>
+              <th className="w-1/3 text-left px-3 sm:px-5 py-3 font-medium">Code</th>
             </tr>
           </thead>
           <tbody>
@@ -91,8 +86,8 @@ function SyllabusTable({
                 key={row.name}
                 className={`border-t border-stone ${i % 2 === 0 ? "bg-white" : "bg-ivory"}`}
               >
-                <td className="px-5 py-3 text-charcoal">{row.name}</td>
-                <td className="px-5 py-3 font-mono text-charcoal">{row.code}</td>
+                <td className="px-3 sm:px-5 py-3 text-charcoal break-words">{row.name}</td>
+                <td className="px-3 sm:px-5 py-3 font-mono text-charcoal break-words">{row.code}</td>
               </tr>
             ))}
           </tbody>
@@ -116,8 +111,6 @@ const edexcelSyllabuses: { name: string; code: React.ReactNode }[] = [
   { name: "International GCSE English Language A", code: "4EA1" },
   { name: "International GCSE English Language B", code: "4EB1" },
   { name: "International GCSE English Literature", code: "4ET1" },
-  { name: "International A Level English Language", code: <Placeholder>CONFIRM CODE</Placeholder> },
-  { name: "International A Level English Literature", code: <Placeholder>CONFIRM CODE</Placeholder> },
 ];
 
 const hookCards = [
@@ -257,15 +250,6 @@ const parentItems = [
     title: "Fee clarity, in your currency",
     body: "No enrolment fee, no materials fee, no surprises mid-term. Everything is quoted upfront in PKR or USD, with international payment options confirmed before you commit.",
   },
-];
-
-const internationalRows = [
-  { region: "Pakistan (PKT)", placeholder: "TIME_PKT" },
-  { region: "UAE / Oman (GST)", placeholder: "TIME_GST" },
-  { region: "Saudi Arabia / Qatar / Bahrain (AST)", placeholder: "TIME_AST" },
-  { region: "United Kingdom (GMT/BST)", placeholder: "TIME_UK" },
-  { region: "Kenya / Tanzania (EAT)", placeholder: "TIME_EAT" },
-  { region: "Malaysia / Singapore (MYT/SGT)", placeholder: "TIME_MYT" },
 ];
 
 const faqGroups: FAQGroup[] = [
@@ -425,16 +409,16 @@ export default function OALevelEnglishPage() {
       />
 
       {/* Hero */}
-      <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-24 px-4 border-b border-line">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          <div className="order-2 lg:order-1 text-center lg:text-left">
+      <section className="bg-white text-ink py-12 sm:py-16 lg:py-20 px-4 border-b border-line">
+        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-10 lg:gap-12 items-center">
+          <div className="text-center lg:text-left">
             <span className="inline-block bg-sea-wash text-sea-deep text-sm font-medium px-4 py-1 rounded-sm mb-4">
               New · Cambridge & Edexcel
             </span>
-            <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4 leading-tight">
+            <h1 className="font-serif text-[2rem] sm:text-4xl md:text-5xl font-medium mb-4 leading-[1.08] tracking-[-0.02em]">
               {course.tagline}
             </h1>
-            <p className="text-ink-soft text-lg mb-6 leading-relaxed">
+            <p className="text-ink-soft text-base sm:text-lg mb-6 leading-relaxed">
               Specialist online coaching for Cambridge and Edexcel English, from O Level and
               IGCSE through to AS and A2. {YEARS_EXPERIENCE} years in a real classroom,
               distilled into small live batches for students in Pakistan and across the world.
@@ -448,8 +432,8 @@ export default function OALevelEnglishPage() {
                 </li>
               ))}
             </ul>
-            <div className="flex flex-wrap gap-4 justify-center lg:justify-start">
-              <Button href="/free-diagnostic-test" variant="coral" size="lg">
+            <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start">
+              <Button href="/free-diagnostic-test" variant="coral" size="lg" className="w-full sm:w-auto">
                 Book a Free Assessment
               </Button>
               <Button
@@ -459,14 +443,14 @@ export default function OALevelEnglishPage() {
                 variant="outline"
                 size="lg"
                 external
-                className="border-ink text-ink hover:bg-ink hover:text-white"
+                className="border-ink text-ink hover:bg-ink hover:text-white w-full sm:w-auto"
               >
                 Chat on WhatsApp
               </Button>
             </div>
           </div>
-          <div className="order-1 lg:order-2">
-            <HeroPhotoPlaceholder />
+          <div>
+            <HeroPhoto />
           </div>
         </div>
       </section>
@@ -506,10 +490,11 @@ export default function OALevelEnglishPage() {
             </p>
           </div>
         </FadeUp>
-        <div className="max-w-5xl mx-auto grid sm:grid-cols-3 gap-6 mt-14">
+        <p className="sm:hidden text-xs text-ink-faint max-w-5xl mx-auto mt-8 mb-3">Swipe through the three key differences</p>
+        <div className="mobile-card-rail max-w-5xl mx-auto flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory gap-4 pb-3 sm:grid sm:grid-cols-3 sm:gap-6 sm:mt-14">
           {hookCards.map((card, i) => (
-            <FadeUp key={card.title} delay={i * 80}>
-              <div className="bg-white rounded-md p-6 border border-stone h-full">
+            <FadeUp key={card.title} delay={i * 80} className="w-[82vw] max-w-[300px] shrink-0 snap-start sm:w-auto sm:max-w-none">
+              <div className="bg-white rounded-md p-5 sm:p-6 border border-stone h-full">
                 <h3 className="font-serif text-lg font-medium text-ink mb-2">{card.title}</h3>
                 <p className="text-muted text-sm leading-relaxed">{card.body}</p>
               </div>
@@ -690,24 +675,16 @@ export default function OALevelEnglishPage() {
 
       <section className="py-16 px-4 bg-ivory">
         <div className="max-w-md mx-auto">
-          <div className="bg-white border border-line rounded-md p-8">
+          <div className="bg-white border border-line rounded-md p-5 sm:p-8">
             <div className="mb-6">
               <p className="text-ink-faint text-sm uppercase tracking-wider mb-1">Group batch</p>
-              <p className="font-serif text-2xl font-medium text-ink">
-                PKR <Placeholder>GROUP_FEE_PKR</Placeholder> / month
-              </p>
-              <p className="text-ink-faint text-sm mt-1">
-                International: USD <Placeholder>GROUP_FEE_USD</Placeholder> / month
-              </p>
+              <p className="font-serif text-2xl font-medium text-ink">Ask for the current fee</p>
+              <p className="text-ink-faint text-sm mt-1">Pakistan and international payment options available.</p>
             </div>
             <div className="mb-8 pt-6 border-t border-line">
               <p className="text-ink-faint text-sm uppercase tracking-wider mb-1">One-to-one</p>
-              <p className="font-serif text-2xl font-medium text-ink">
-                PKR <Placeholder>ONE_TO_ONE_FEE_PKR</Placeholder> / month
-              </p>
-              <p className="text-ink-faint text-sm mt-1">
-                International: USD <Placeholder>ONE_TO_ONE_FEE_USD</Placeholder> / month
-              </p>
+              <p className="font-serif text-2xl font-medium text-ink">Ask for the current fee</p>
+              <p className="text-ink-faint text-sm mt-1">Pricing depends on level, syllabus and schedule.</p>
             </div>
             <a
               href={whatsappLink(
@@ -715,7 +692,7 @@ export default function OALevelEnglishPage() {
               )}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 bg-coral hover:bg-amber-dark text-white px-6 py-4 rounded-sm font-medium text-base transition-colors mb-4"
+              className="w-full min-h-12 flex items-center justify-center gap-2 bg-coral hover:bg-amber-dark text-white px-4 sm:px-6 py-3.5 rounded-sm font-medium text-base transition-colors mb-4"
             >
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
@@ -744,10 +721,11 @@ export default function OALevelEnglishPage() {
             </p>
             <p className="text-white/85 leading-relaxed mb-10">So here is exactly what you get.</p>
           </FadeUp>
-          <div className="grid sm:grid-cols-2 gap-6 mb-10">
+          <p className="sm:hidden text-xs text-white/70 mb-3">Swipe to see what parents receive</p>
+          <div className="mobile-card-rail flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory gap-4 pb-3 sm:grid sm:grid-cols-2 sm:gap-6 mb-10">
             {parentItems.map((item, i) => (
-              <FadeUp key={item.title} delay={i * 80}>
-                <div className="bg-white/10 rounded-md p-6 h-full">
+              <FadeUp key={item.title} delay={i * 80} className="w-[82vw] max-w-[300px] shrink-0 snap-start sm:w-auto sm:max-w-none">
+                <div className="bg-white/10 rounded-md p-5 sm:p-6 h-full">
                   <h3 className="font-serif text-lg font-medium mb-2">{item.title}</h3>
                   <p className="text-white/80 text-sm leading-relaxed">{item.body}</p>
                 </div>
@@ -768,6 +746,7 @@ export default function OALevelEnglishPage() {
                 variant="coral"
                 size="lg"
                 external
+                className="w-full sm:w-auto"
               >
                 Message Aisha directly
               </Button>
@@ -792,34 +771,21 @@ export default function OALevelEnglishPage() {
           </FadeUp>
         </div>
         <FadeUp>
-          <div className="max-w-2xl mx-auto overflow-x-auto rounded-md border border-stone">
-            <table className="w-full text-sm">
-              <thead className="bg-sea text-white">
-                <tr>
-                  <th className="text-left px-5 py-3 font-medium">Region</th>
-                  <th className="text-left px-5 py-3 font-medium">Local time</th>
-                </tr>
-              </thead>
-              <tbody>
-                {internationalRows.map((row, i) => (
-                  <tr
-                    key={row.region}
-                    className={`border-t border-stone ${i % 2 === 0 ? "bg-white" : "bg-ivory"}`}
-                  >
-                    <td className="px-5 py-3 text-charcoal">{row.region}</td>
-                    <td className="px-5 py-3">
-                      <Placeholder>{row.placeholder}</Placeholder>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="max-w-2xl mx-auto rounded-md border border-stone bg-surface-tint p-5 sm:p-6 text-center">
+            <h3 className="font-serif text-xl font-medium text-ink mb-2">Timings that work across time zones</h3>
+            <p className="text-muted text-sm sm:text-base leading-relaxed mb-5">
+              Current batch times change by intake. Message your country or time zone and Aisha will confirm the live options in your local time.
+            </p>
+            <Button
+              href={whatsappLink("Hi Aisha! I am enquiring from outside Pakistan. Could you share the current O/A Level batch times in my local time zone?")}
+              variant="outline"
+              external
+              className="w-full sm:w-auto"
+            >
+              Check my local time
+            </Button>
           </div>
         </FadeUp>
-        <p className="max-w-2xl mx-auto text-center text-muted mt-8">
-          Payment from abroad is straightforward — international transfer options are confirmed
-          before enrolment, in your own currency.
-        </p>
       </section>
 
       {/* Meet Aisha */}

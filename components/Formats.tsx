@@ -41,20 +41,21 @@ const formats = [
 
 export default function Formats() {
   return (
-    <section className="py-10 px-4 bg-ivory" id="formats">
+    <section className="py-12 sm:py-14 px-4 bg-ivory" id="formats">
       <div className="max-w-7xl mx-auto">
         <FadeUp>
           <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
             How you learn
             <span className="h-0.5 w-9 bg-coral" aria-hidden />
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-6 max-w-2xl">
+          <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink mb-6 max-w-2xl">
             Learn from anywhere.
           </h2>
         </FadeUp>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <p className="sm:hidden text-xs text-ink-faint mb-3">Swipe to see every learning option</p>
+        <div className="mobile-card-rail flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory gap-4 pb-3 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-5" aria-label="Learning formats">
           {formats.map((f, i) => (
-            <FadeUp key={f.title} delay={i * 80}>
+            <FadeUp key={f.title} delay={i * 80} className="w-[82vw] max-w-[300px] shrink-0 snap-start sm:w-auto sm:max-w-none">
               <div className="relative bg-white border border-stone p-5 h-full flex flex-col gap-2 overflow-hidden hover:-translate-y-1 hover:shadow-lg transition-[transform,box-shadow] duration-200 group">
                 <span className="absolute top-0 left-0 right-0 h-1 bg-coral scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300" />
                 <div className="w-11 h-11 flex items-center justify-center rounded-sm bg-amber-tint text-amber-dark">

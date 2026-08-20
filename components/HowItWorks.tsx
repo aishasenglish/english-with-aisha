@@ -29,10 +29,10 @@ const steps = [
 
 export default function HowItWorks() {
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <div className="mobile-card-rail flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory gap-4 pb-3 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-6" aria-label="Four-step learning process">
       {steps.map((step, i) => (
-        <FadeUp key={step.number} delay={i * 100}>
-          <div className="relative">
+        <FadeUp key={step.number} delay={i * 100} className="w-[82vw] max-w-[300px] shrink-0 snap-start sm:w-auto sm:max-w-none">
+          <div className="relative bg-surface-tint sm:bg-transparent border border-line sm:border-0 p-5 sm:p-0 h-full">
             {/* Connector line */}
             {i < steps.length - 1 && (
               <div className="hidden lg:block absolute top-10 left-full w-full h-px bg-stone z-0 -translate-x-6" />

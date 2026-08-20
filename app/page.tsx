@@ -29,7 +29,7 @@ export default function HomePage() {
       <StatsBand />
 
       {/* About Aisha */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-14 sm:py-16 lg:py-20 px-4 bg-white">
         <div className="max-w-3xl mx-auto">
           <div className="space-y-8">
             <FadeUp>
@@ -88,7 +88,7 @@ export default function HomePage() {
             </div>
 
             <FadeUp delay={300}>
-              <Button href="/about" variant="teal">
+              <Button href="/about" variant="teal" className="w-full sm:w-auto">
                 More about Aisha
               </Button>
             </FadeUp>
@@ -100,34 +100,35 @@ export default function HomePage() {
       <StoryFeature />
 
       {/* Method */}
-      <section className="py-20 px-4 bg-white">
+      <section className="py-14 sm:py-16 lg:py-20 px-4 bg-white">
         <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <div className="text-center mb-12">
+            <div className="text-center mb-7 sm:mb-12">
               <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center justify-center gap-3 mb-3">
                 The method
                 <span className="h-0.5 w-9 bg-coral" aria-hidden />
               </p>
-              <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink">
+              <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink">
                 Four steps to fluency and confidence
               </h2>
             </div>
           </FadeUp>
+          <p className="sm:hidden text-xs text-ink-faint mb-3">Swipe through the four steps</p>
           <HowItWorks />
         </div>
       </section>
 
       {/* Batch table */}
-      <section className="py-20 px-4 bg-ivory">
+      <section className="py-14 sm:py-16 lg:py-20 px-4 bg-ivory">
         <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
+            <div className="flex flex-wrap items-end justify-between gap-4 mb-7 sm:mb-10">
               <div>
                 <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
                   Dates
                   <span className="h-0.5 w-9 bg-coral" aria-hidden />
                 </p>
-                <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink">
+                <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink">
                   Upcoming batches
                 </h2>
               </div>

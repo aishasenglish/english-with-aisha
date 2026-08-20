@@ -45,10 +45,16 @@ export default function RootLayout({
   return (
     <html lang="en" className={outfit.variable}>
       <body className="min-h-screen flex flex-col">
-        <DevClickToComponent />
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[100] focus:bg-ink focus:text-white focus:px-4 focus:py-3 focus:rounded-sm"
+        >
+          Skip to content
+        </a>
+        {process.env.NODE_ENV === "development" && <DevClickToComponent />}
         <UtilityBar />
         <Header />
-        <main className="flex-1">{children}</main>
+        <main id="main-content" className="flex-1">{children}</main>
         <Footer />
         <WhatsAppFloat />
       </body>

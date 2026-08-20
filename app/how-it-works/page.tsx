@@ -86,7 +86,8 @@ export default function HowItWorksPage() {
           <FadeUp>
             <SectionHeading eyebrow="The process" title="Four steps to fluency and confidence" centered />
           </FadeUp>
-          <div className="mt-12">
+          <p className="sm:hidden text-xs text-ink-faint mt-8 mb-3">Swipe through the four steps</p>
+          <div className="mt-0 sm:mt-12">
             <HowItWorks />
           </div>
         </div>

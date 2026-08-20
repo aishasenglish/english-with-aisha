@@ -49,6 +49,26 @@ body {
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
+  min-width: 320px;
+  overflow-x: clip;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 7rem;
+  overflow-x: clip;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+a, button, input, select, textarea {
+  touch-action: manipulation;
+}
+
+img, svg {
+  max-width: 100%;
 }
 
 :focus-visible {
@@ -90,4 +110,40 @@ h1, h2, h3, h4, h5, h6 {
 .fade-up.visible {
   opacity: 1;
   transform: none;
+}
+
+/* Compact, swipeable card rails keep long marketing pages scannable on phones. */
+.mobile-card-rail {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.mobile-card-rail::-webkit-scrollbar {
+  display: none;
+}
+
+@media (max-width: 639px) {
+  html {
+    scroll-padding-top: 6.25rem;
+  }
+
+  .mobile-card-rail {
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+  }
+
+  /* Existing long-form pages use desktop-scale spacing utilities. */
+  .py-20 { padding-block: 3.5rem; }
+  .py-16 { padding-block: 3rem; }
+  .pt-28 { padding-top: 3rem; }
+  .pb-16 { padding-bottom: 3rem; }
+  .p-10 { padding: 1.5rem; }
+  .p-8 { padding: 1.25rem; }
+  .text-4xl { font-size: 2rem; }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .py-20 { padding-block: 4rem; }
+  .pt-28 { padding-top: 4rem; }
+  .pb-16 { padding-bottom: 4rem; }
 }

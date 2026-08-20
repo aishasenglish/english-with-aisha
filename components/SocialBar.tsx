@@ -59,17 +59,23 @@ const platforms = [
 
 export default function SocialBar({ light = false }: Props) {
   const socials = site.socials as Record<string, string>;
+  const realPlatforms = platforms.filter((platform) => {
+    const url = socials[platform.key];
+    return url && url !== "#";
+  });
+
+  if (realPlatforms.length === 0) return null;
 
   return (
     <div className="flex flex-wrap gap-3 justify-center">
-      {platforms.map((p) => (
+      {realPlatforms.map((p) => (
         <a
           key={p.key}
           href={socials[p.key] ?? "#"}
           target="_blank"
           rel="noopener noreferrer"
           aria-label={p.label}
-          className={`flex items-center gap-2 px-4 py-2.5 rounded-sm text-sm font-medium transition-colors duration-200 ${
+          className={`flex min-h-11 items-center gap-2 px-4 py-2.5 rounded-sm text-sm font-medium transition-colors duration-200 ${
             light
               ? "bg-white/10 text-white hover:bg-white/20"
               : "bg-ink/10 text-ink hover:text-white " + p.color

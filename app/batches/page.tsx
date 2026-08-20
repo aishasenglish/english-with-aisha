@@ -59,7 +59,7 @@ export default function BatchesPage() {
             ))}
           </div>
           <div className="text-center">
-            <Button href={whatsappLink()} variant="coral" size="lg" external>
+            <Button href={whatsappLink()} variant="coral" size="lg" external className="w-full sm:w-auto">
               Chat on WhatsApp
             </Button>
           </div>

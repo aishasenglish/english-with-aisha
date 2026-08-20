@@ -13,7 +13,7 @@ export default function CTASection({
   whatsappMessage,
 }: Props) {
   return (
-    <section className="bg-surface-tint py-20 px-4 relative overflow-hidden">
+    <section className="bg-surface-tint py-14 sm:py-16 lg:py-20 px-4 relative overflow-hidden">
       <div
         className="absolute pointer-events-none rounded-full"
         style={{
@@ -37,12 +37,12 @@ export default function CTASection({
         }}
       />
       <div className="relative max-w-2xl mx-auto text-center">
-        <h2 className="font-serif text-3xl md:text-4xl font-medium text-ink mb-4">
+        <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink mb-4 leading-tight">
           {title}
         </h2>
-        <p className="text-ink-soft text-lg mb-8">{subtitle}</p>
-        <div className="flex flex-wrap gap-4 justify-center">
-          <Button href="/free-diagnostic-test" variant="coral" size="lg">
+        <p className="text-ink-soft text-base sm:text-lg mb-7 sm:mb-8">{subtitle}</p>
+        <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center">
+          <Button href="/free-diagnostic-test" variant="coral" size="lg" className="w-full sm:w-auto">
             Take the Free Diagnostic Test
           </Button>
           <Button
@@ -50,7 +50,7 @@ export default function CTASection({
             variant="outline"
             size="lg"
             external
-            className="border-ink text-ink hover:bg-ink hover:text-white"
+            className="border-ink text-ink hover:bg-ink hover:text-white w-full sm:w-auto"
           >
             Chat on WhatsApp
           </Button>

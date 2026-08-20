@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import SectionHeading from "@/components/SectionHeading";
 import ServiceCard from "@/components/ServiceCard";
 import LeadMagnet from "@/components/LeadMagnet";
 import CTASection from "@/components/CTASection";

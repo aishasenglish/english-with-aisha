@@ -78,10 +78,11 @@ export default function DiagnosticForm() {
           <input
             id="diag-name"
             type="text"
+            autoComplete="name"
             required
             value={form.name}
             onChange={(e) => update("name", e.target.value)}
-            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm"
             placeholder="Your full name"
           />
         </div>
@@ -92,10 +93,12 @@ export default function DiagnosticForm() {
           <input
             id="diag-email"
             type="email"
+            autoComplete="email"
+            inputMode="email"
             required
             value={form.email}
             onChange={(e) => update("email", e.target.value)}
-            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm"
             placeholder="you@email.com"
           />
         </div>
@@ -108,10 +111,12 @@ export default function DiagnosticForm() {
         <input
           id="diag-wa"
           type="tel"
+          autoComplete="tel"
+          inputMode="tel"
           required
           value={form.whatsapp}
           onChange={(e) => update("whatsapp", e.target.value)}
-          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+          className="w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm"
           placeholder="e.g. 0311-2233671"
         />
       </div>
@@ -126,7 +131,7 @@ export default function DiagnosticForm() {
             required
             value={form.course}
             onChange={(e) => update("course", e.target.value)}
-            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm"
           >
             <option value="">Select a course</option>
             {courses.map((c) => (
@@ -146,7 +151,7 @@ export default function DiagnosticForm() {
             required
             value={form.level}
             onChange={(e) => update("level", e.target.value)}
-            className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+            className="w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm"
           >
             <option value="">Select your level</option>
             <option value="Beginner">Beginner</option>
@@ -166,7 +171,7 @@ export default function DiagnosticForm() {
           rows={4}
           value={form.goal}
           onChange={(e) => update("goal", e.target.value)}
-          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm resize-none"
+          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm resize-y"
           placeholder="Tell me what you're hoping to achieve (e.g. IELTS Band 7 for Canada visa, speak confidently at work…)"
         />
       </div>
@@ -180,7 +185,7 @@ export default function DiagnosticForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-base transition-colors"
+        className="w-full min-h-12 py-3.5 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-base transition-colors"
       >
         {status === "loading" ? "Sending…" : "Submit — it's free"}
       </button>

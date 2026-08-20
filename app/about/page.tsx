@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import SectionHeading from "@/components/SectionHeading";
 import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
@@ -19,13 +18,6 @@ const credentials = [
   "Recorded classes + regular mock exams",
 ];
 
-const galleryPhotos = [
-  { src: "/images/aisha-cafe.jpg",      alt: "Aisha at a meeting" },
-  { src: "/images/aisha-pensive.jpg",   alt: "Aisha in thought" },
-  { src: "/images/aisha-studio.jpg",    alt: "Aisha in studio" },
-  { src: "/images/aisha-headshot.jpg",  alt: "Aisha — professional photo" },
-];
-
 export default function AboutPage() {
   return (
     <>
@@ -41,27 +33,7 @@ export default function AboutPage() {
 
       {/* Main content */}
       <section className="py-20 px-4 bg-ivory">
-        <div className="max-w-5xl mx-auto grid lg:grid-cols-2 gap-16 items-start">
-
-          {/* About photo — warm seated portrait */}
-          <FadeUp>
-            <div className="relative">
-              <div className="rounded-md overflow-hidden shadow-xl bg-surface-tint">
-                <Image
-                  src="/images/aisha-about.jpg"
-                  alt="Aisha — MA English Literature, English Coach"
-                  width={520}
-                  height={680}
-                  className="w-full h-auto object-cover"
-                  sizes="(max-width: 768px) 100vw, 50vw"
-                />
-              </div>
-              <div className="absolute -bottom-5 -right-5 bg-gold rounded-md px-5 py-3 shadow-lg">
-                <p className="text-white font-medium text-sm">{site.city}</p>
-                <p className="text-white/80 text-xs">{site.timezone}</p>
-              </div>
-            </div>
-          </FadeUp>
+        <div className="max-w-3xl mx-auto">
 
           {/* Text */}
           <FadeUp delay={100}>
@@ -112,31 +84,6 @@ export default function AboutPage() {
               </div>
             </div>
           </FadeUp>
-        </div>
-      </section>
-
-      {/* Photo gallery */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <FadeUp>
-            <SectionHeading eyebrow="Behind the coaching" title="A few more moments with Aisha" centered />
-          </FadeUp>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-10">
-            {galleryPhotos.map((p, i) => (
-              <FadeUp key={p.src} delay={i * 80}>
-                <div className="aspect-[3/4] rounded-md overflow-hidden shadow-md bg-stone">
-                  <Image
-                    src={p.src}
-                    alt={p.alt}
-                    width={280}
-                    height={370}
-                    className="w-full h-full object-cover"
-                    sizes="(max-width: 768px) 45vw, 24vw"
-                  />
-                </div>
-              </FadeUp>
-            ))}
-          </div>
         </div>
       </section>
 

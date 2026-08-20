@@ -33,7 +33,7 @@ export default function GroupedFAQAccordion({ groups }: Props) {
                 >
                   <button
                     onClick={() => setOpen(isOpen ? null : key)}
-                    className="w-full flex items-center justify-between px-6 py-5 text-left"
+                    className="w-full min-h-14 flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 text-left"
                     aria-expanded={isOpen}
                   >
                     <span className="font-medium text-ink pr-4">{faq.question}</span>
@@ -46,7 +46,7 @@ export default function GroupedFAQAccordion({ groups }: Props) {
                     </span>
                   </button>
                   {isOpen && (
-                    <div className="px-6 pb-5">
+                    <div className="px-4 sm:px-6 pb-5">
                       <p className="text-muted leading-relaxed">{faq.answer}</p>
                     </div>
                   )}

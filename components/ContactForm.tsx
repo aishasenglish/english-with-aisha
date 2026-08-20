@@ -56,10 +56,11 @@ export default function ContactForm() {
         <input
           id="contact-name"
           type="text"
+          autoComplete="name"
           required
           value={form.name}
           onChange={(e) => update("name", e.target.value)}
-          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+          className="w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm"
           placeholder="Your name"
         />
       </div>
@@ -70,10 +71,12 @@ export default function ContactForm() {
         <input
           id="contact-email"
           type="email"
+          autoComplete="email"
+          inputMode="email"
           required
           value={form.email}
           onChange={(e) => update("email", e.target.value)}
-          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm"
+          className="w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm"
           placeholder="you@email.com"
         />
       </div>
@@ -87,7 +90,7 @@ export default function ContactForm() {
           rows={5}
           value={form.message}
           onChange={(e) => update("message", e.target.value)}
-          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-sm resize-none"
+          className="w-full px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm resize-y"
           placeholder="What would you like to know?"
         />
       </div>
@@ -99,7 +102,7 @@ export default function ContactForm() {
       <button
         type="submit"
         disabled={status === "loading"}
-        className="w-full py-4 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-base transition-colors"
+        className="w-full min-h-12 py-3.5 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-base transition-colors"
       >
         {status === "loading" ? "Sending…" : "Send message"}
       </button>
