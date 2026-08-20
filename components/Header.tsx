@@ -65,21 +65,21 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-4 lg:gap-6 h-16 sm:h-[4.5rem] lg:h-20">
-            <Link href="/" className="flex flex-row items-center gap-2.5 shrink-0">
+            <Link href="/" className="flex flex-row items-center gap-3.5 shrink-0">
               <Image
                 src="/images/logo-mark.png"
                 alt=""
                 width={580}
                 height={400}
-                className="h-8 sm:h-9 w-auto"
+                className="h-[26px] sm:h-[28px] w-auto"
                 priority
               />
               <span className="flex flex-col justify-center leading-tight">
                 <span className="font-sans font-bold text-sm text-charcoal tracking-wider whitespace-nowrap">
                   AISHAS ENGLISH
                 </span>
-                <span className="text-[10px] font-medium text-muted tracking-widest whitespace-nowrap">
-                  Professional English Training
+                <span className="text-[9px] font-medium text-muted tracking-widest whitespace-nowrap">
+                  PROFESSIONAL ENGLISH TRAINING
                 </span>
               </span>
             </Link>
