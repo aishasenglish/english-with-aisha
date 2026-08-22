@@ -1,8 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { site } from "@/content/site";
 import { courses } from "@/content/courses";
+import { whatsappLink } from "@/lib/whatsapp";
 
 type FormData = {
   name: string;
@@ -22,9 +23,12 @@ const initialData: FormData = {
   goal: "",
 };
 
+const ENDPOINT_READY = Boolean(site.formspreeEndpoint) && !site.formspreeEndpoint.includes("PLACEHOLDER");
+
 export default function DiagnosticForm() {
   const [form, setForm] = useState<FormData>(initialData);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const gotchaRef = useRef<HTMLInputElement>(null);
 
   function update(field: keyof FormData, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -32,13 +36,29 @@ export default function DiagnosticForm() {
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (!ENDPOINT_READY) {
+      if (process.env.NODE_ENV === "development") {
+        console.warn(
+          "DiagnosticForm: NEXT_PUBLIC_FORMSPREE_ENDPOINT is not set — skipping submit. See .env.example."
+        );
+      }
+      setStatus("error");
+      return;
+    }
+
     setStatus("loading");
 
     try {
       const res = await fetch(site.formspreeEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...form, _subject: "Free Diagnostic Test Request" }),
+        body: JSON.stringify({
+          ...form,
+          _subject: "Free Diagnostic Test Request",
+          _replyto: form.email,
+          _gotcha: gotchaRef.current?.value ?? "",
+        }),
       });
       if (res.ok) {
         setStatus("success");
@@ -176,10 +196,31 @@ export default function DiagnosticForm() {
         />
       </div>
 
+      {/* Honeypot — real visitors never see or fill this; Formspree drops submissions where it's filled */}
+      <input
+        ref={gotchaRef}
+        type="text"
+        name="_gotcha"
+        tabIndex={-1}
+        autoComplete="off"
+        className="sr-only"
+        aria-hidden="true"
+      />
+
       {status === "error" && (
-        <p className="text-red-600 text-sm">
-          Something went wrong. Please try again or reach me on WhatsApp.
-        </p>
+        <div className="rounded-md border border-red-200 bg-red-50 p-4 text-sm">
+          <p className="text-red-700 mb-2">
+            Something went wrong sending that. Message me on WhatsApp instead — I&apos;ll reply either way.
+          </p>
+          <a
+            href={whatsappLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center font-medium text-red-700 underline underline-offset-2 hover:text-red-800"
+          >
+            Message Aisha on WhatsApp
+          </a>
+        </div>
       )}
 
       <button

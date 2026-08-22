@@ -5,6 +5,16 @@ type Props = {
   testimonial: Testimonial;
 };
 
+function initials(name: string): string {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .map((part) => part[0])
+    .slice(0, 2)
+    .join("")
+    .toUpperCase();
+}
+
 export default function TestimonialCard({ testimonial }: Props) {
   return (
     <div className="bg-card rounded-md p-6 border border-stone flex flex-col gap-4">
@@ -24,19 +34,26 @@ export default function TestimonialCard({ testimonial }: Props) {
 
       {/* Author */}
       <div className="flex items-center gap-3">
-        <div className="relative w-10 h-10 rounded-full overflow-hidden bg-teal/20 shrink-0">
-          <Image
-            src={`/images/testimonials/${testimonial.image}`}
-            alt={testimonial.name}
-            fill
-            className="object-cover"
-            sizes="40px"
-          />
-        </div>
+        {testimonial.image ? (
+          <div className="relative w-10 h-10 rounded-full overflow-hidden bg-teal/20 shrink-0">
+            <Image
+              src={`/images/testimonials/${testimonial.image}`}
+              alt={testimonial.name}
+              fill
+              className="object-cover"
+              sizes="40px"
+            />
+          </div>
+        ) : (
+          <div className="w-10 h-10 rounded-full bg-teal/20 text-teal flex items-center justify-center shrink-0 font-medium text-sm">
+            {initials(testimonial.name)}
+          </div>
+        )}
         <div>
           <p className="font-medium text-ink text-sm">{testimonial.name}</p>
           <p className="text-muted text-xs">
             {testimonial.result} · {testimonial.course}
+            {testimonial.date ? ` · ${testimonial.date}` : ""}
           </p>
         </div>
       </div>

@@ -10,6 +10,10 @@ import { courses } from "@/content/courses";
 
 const course = courses.find((c) => c.slug === "english-writing")!;
 
+// Re-run the past-date filter in BatchTable/nextBatch() periodically rather
+// than freezing it at build time (see the note atop content/batches.ts).
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "English Writing Mastery Course",
   description:

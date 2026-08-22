@@ -1,5 +1,5 @@
 export const site = {
-  brandName: "English with Aisha",
+  brandName: "Aishas English",
   domain: "aishasenglish.com",
   tagline: "Master English. Open the world.",
   founder: "Aisha",
@@ -12,16 +12,16 @@ export const site = {
     defaultMessage:
       "Hi Aisha! I'm interested in your English coaching. Could you share the batch and fee details?",
   },
-  email: "hello@englishwithaisha.com",
+  // TODO(aisha): create this mailbox on the aishasenglish.com domain.
+  email: "hello@aishasenglish.com",
   showPrices: true,
   currency: "PKR",
   batchCadenceDays: 15,
-  formspreeEndpoint: "https://formspree.io/f/PLACEHOLDER",
-  socials: {
-    youtube: "#",
-    instagram: "#",
-    tiktok: "#",
-    facebook: "#",
-    linkedin: "#",
-  },
+  // TODO(aisha): create a Formspree form and set NEXT_PUBLIC_FORMSPREE_ENDPOINT
+  // (see .env.example) — every form on the site silently fails without it.
+  formspreeEndpoint: process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT ?? "",
+  // Add real profile URLs here as they go live; omit a platform entirely
+  // rather than leaving a "#" placeholder — Footer/SocialBar already skip
+  // any platform not present in this object.
+  socials: {},
 } as const;

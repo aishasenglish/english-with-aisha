@@ -14,10 +14,14 @@ import FadeUp from "@/components/FadeUp";
 import Button from "@/components/Button";
 import { site } from "@/content/site";
 
+// Re-run the past-date filter in BatchTable/nextBatch() periodically rather
+// than freezing it at build time (see the note atop content/batches.ts).
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: `${site.brandName} — ${site.tagline}`,
   description:
-    "Expert online English coaching for IELTS, PTE, TOEFL, Writing & Spoken English. Guided by Aisha — MA English Literature, College Lecturer. Live on Zoom, classes recorded.",
+    "Expert online English coaching for IELTS, PTE, TOEFL, Writing & Spoken English. Guided by Aisha — MPhil in English Literature, College Lecturer. Live on Zoom, classes recorded.",
 };
 
 export default function HomePage() {
@@ -39,7 +43,7 @@ export default function HomePage() {
               </p>
               <SectionHeading
                 title="Learn from someone who has spent her life inside the English language"
-                subtitle="Aisha holds a Master's in English Literature and teaches at a government college. She doesn't just know English — she understands how it works and how to teach it. Her coaching turns rules into habits and nerves into fluency, with a method built for real exam scores and real-world confidence."
+                subtitle="Aisha holds an MPhil in English Literature and teaches at a government college. She doesn't just know English — she understands how it works and how to teach it. Her coaching turns rules into habits and nerves into fluency, with a method built for real exam scores and real-world confidence."
               />
             </FadeUp>
 

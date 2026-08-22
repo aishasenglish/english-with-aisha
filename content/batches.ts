@@ -8,26 +8,33 @@ export type Batch = {
   duration: string; // TODO: placeholder — confirm actual batch length per course
 };
 
-// Add a new object here every 15 days when a new batch opens.
+// ⚠️ Add the next batch on the 1st and 15th of every month, then redeploy.
+// The "new batch every 15 days" claim on the homepage depends on this file
+// being current. BatchTable/nextBatch() already filter out past dates, but
+// on a statically-built page that filter only re-runs when the page
+// revalidates (see `export const revalidate` on pages that render
+// <BatchTable />) — so stale entries can still show as "Open" between
+// deploys if this file isn't kept ahead of the calendar.
+// TODO(aisha): confirm these placeholder dates/durations are correct.
 export const batches: Batch[] = [
   {
-    id: "batch-001",
+    id: "batch-004",
     courseSlug: "all",
-    startDate: "2026-07-05",
+    startDate: "2026-09-01",
     status: "Open",
     duration: "6 Weeks",
   },
   {
-    id: "batch-002",
+    id: "batch-005",
     courseSlug: "ielts",
-    startDate: "2026-07-20",
+    startDate: "2026-09-15",
     status: "Open",
     duration: "8 Weeks",
   },
   {
-    id: "batch-003",
+    id: "batch-006",
     courseSlug: "all",
-    startDate: "2026-08-04",
+    startDate: "2026-10-01",
     status: "Open",
     duration: "6 Weeks",
   },

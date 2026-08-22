@@ -37,7 +37,7 @@ export default function PricingCard({ course }: Props) {
               )}
               <p className="text-sm text-gray-500 mt-3 mb-8">{course.discount.subtitle}</p>
             </>
-          ) : site.showPrices ? (
+          ) : site.showPrices && course.price > 0 ? (
             <>
               <p className="font-serif text-4xl sm:text-5xl font-medium text-ink mb-1 break-words">
                 {site.currency}{" "}

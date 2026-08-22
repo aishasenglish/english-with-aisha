@@ -30,7 +30,7 @@ export default function Hero() {
             </h1>
             <p className="text-base sm:text-[1.0625rem] font-normal leading-relaxed text-ink-soft mb-7 sm:mb-9">
               Personalised live online training for IELTS, PTE, O/A Levels, spoken and written
-              English, and corporate communication. Learn from a university lecturer and
+              English, and corporate communication. Learn from a college lecturer and
               IDP-trained expert through Cambridge-aligned mentoring, personalised feedback, and
               continuous progress tracking.
             </p>

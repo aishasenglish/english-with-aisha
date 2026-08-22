@@ -21,7 +21,7 @@ export const faqs: FAQ[] = [
   {
     question: "What does it cost?",
     answer:
-      "Courses are a one-time fee. Message me on WhatsApp for the current fee and payment details.",
+      "Courses are a one-time fee, shown on each course page — some run at a limited-time rate right now. I'll confirm the exact amount and payment options with you personally on WhatsApp before you commit to anything.",
   },
   {
     question: "How do I pay?",

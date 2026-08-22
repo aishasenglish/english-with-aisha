@@ -7,11 +7,11 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "About Aisha",
   description:
-    "Meet Aisha — MA English Literature, college lecturer, and your online English coach. Based in Lahore, Pakistan.",
+    "Meet Aisha — MPhil in English Literature, college lecturer, and your online English coach. Based in Lahore, Pakistan.",
 };
 
 const credentials = [
-  "MA English Literature",
+  "MPhil in English Literature",
   "Government college lecturer",
   "Exam-focused coaching for IELTS, PTE & TOEFL",
   "Personal feedback on writing & speaking",
@@ -40,7 +40,7 @@ export default function AboutPage() {
             <div className="space-y-8">
               <div>
                 <p className="text-lg text-charcoal leading-relaxed">
-                  I&apos;m Aisha, a Master&apos;s in English Literature and a lecturer at a
+                  I&apos;m Aisha, an MPhil in English Literature and a lecturer at a
                   government college in Lahore. For years I&apos;ve taught English to students
                   from every kind of background — and I&apos;ve seen the same thing again and
                   again: bright, capable people held back not by ability, but by the way

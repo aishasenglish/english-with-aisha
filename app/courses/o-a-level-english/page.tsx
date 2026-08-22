@@ -18,22 +18,29 @@ const CLASS_SIZE_MAX = 8;
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses/o-a-level-english`;
 
+// Re-run the past-date filter in BatchTable/nextBatch() periodically rather
+// than freezing it at build time (see the note atop content/batches.ts).
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "O & A Level English Tuition Online",
   description:
-    "Expert online O Level, IGCSE and A Level English coaching. Cambridge & Edexcel, live on Zoom, examiner-style marking. Taught by an MA English Literature lecturer.",
+    "Expert online O Level, IGCSE and A Level English coaching. Cambridge & Edexcel, live on Zoom, examiner-style marking. Taught by an MPhil English Literature lecturer.",
   alternates: { canonical: "/courses/o-a-level-english" },
   openGraph: {
-    title: "O & A Level English Tuition Online | English with Aisha",
+    title: "O & A Level English Tuition Online | Aishas English",
     description:
       "Expert online O Level, IGCSE and A Level English coaching. Cambridge & Edexcel, live on Zoom, examiner-style marking.",
     url: pageUrl,
+    // TODO(aisha): supply a real 1200×630 image at public/images/og-o-a-level.jpg
+    // and switch the url below back to it — falling back to the site-wide OG
+    // image for now so WhatsApp/social shares of this page aren't broken.
     images: [
       {
-        url: "/images/og-o-a-level.jpg",
+        url: "/images/og-image.jpg",
         width: 1200,
         height: 630,
-        alt: "O & A Level English — English with Aisha",
+        alt: "O & A Level English — Aishas English",
       },
     ],
   },
@@ -361,7 +368,7 @@ const courseJsonLd = {
     instructor: {
       "@type": "Person",
       name: site.founder,
-      jobTitle: "College Lecturer, MA English Literature",
+      jobTitle: "College Lecturer, MPhil English Literature",
     },
   },
   inLanguage: "en",
@@ -459,7 +466,7 @@ export default function OALevelEnglishPage() {
       <section className="bg-white border-b border-stone">
         <div className="max-w-7xl mx-auto px-4 py-5">
           <p className="text-center text-sm sm:text-base font-medium text-charcoal">
-            MA English Literature · Government College Lecturer · {YEARS_EXPERIENCE} years
+            MPhil English Literature · Government College Lecturer · {YEARS_EXPERIENCE} years
             teaching · Cambridge (CAIE) & Edexcel
           </p>
         </div>
@@ -810,7 +817,7 @@ export default function OALevelEnglishPage() {
               The person who will be teaching your child.
             </h2>
             <p className="text-charcoal leading-relaxed mb-4">
-              I hold a Master&apos;s in English Literature and I teach at a government college in
+              I hold an MPhil in English Literature and I teach at a government college in
               Lahore. For {YEARS_EXPERIENCE} years I have taught English across every level a
               student can be at — from teenagers who could not construct a paragraph to A Level
               candidates arguing about Shakespeare with more conviction than some of my

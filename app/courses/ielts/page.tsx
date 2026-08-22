@@ -10,10 +10,14 @@ import { courses } from "@/content/courses";
 
 const course = courses.find((c) => c.slug === "ielts")!;
 
+// Re-run the past-date filter in BatchTable/nextBatch() periodically rather
+// than freezing it at build time (see the note atop content/batches.ts).
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "IELTS Preparation Course",
   description:
-    "Target IELTS Band 7+ with expert coaching. Live Zoom classes, recorded, mock exams, and personal feedback from Aisha — MA English Literature.",
+    "Target IELTS Band 7+ with expert coaching. Live Zoom classes, recorded, mock exams, and personal feedback from Aisha — MPhil in English Literature.",
 };
 
 export default function IELTSPage() {

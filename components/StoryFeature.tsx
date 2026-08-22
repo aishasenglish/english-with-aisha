@@ -3,9 +3,8 @@
 import { useState } from "react";
 import { testimonials } from "@/content/testimonials";
 
-const FEATURED_NAMES = ["Sara Ahmed", "Usman Tariq", "Zara Siddiqui", "Ali Raza"];
-
-const stories = testimonials.filter((t) => FEATURED_NAMES.includes(t.name));
+// Feature the four most recently added verified testimonials.
+const stories = testimonials.slice(0, 4);
 
 export default function StoryFeature() {
   const [active, setActive] = useState(0);

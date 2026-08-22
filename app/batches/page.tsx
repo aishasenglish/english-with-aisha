@@ -4,6 +4,10 @@ import Button from "@/components/Button";
 import FadeUp from "@/components/FadeUp";
 import { whatsappLink } from "@/lib/whatsapp";
 
+// Re-run the past-date filter in BatchTable/nextBatch() periodically rather
+// than freezing it at build time (see the note atop content/batches.ts).
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Upcoming Batches",
   description:
