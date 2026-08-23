@@ -1,20 +1,23 @@
-"use client";
-
-import { useState } from "react";
-import type { FAQ } from "@/content/faqs";
+export type FAQItem = {
+  /** Stable, meaningful — used as the React key. Never an array index. */
+  id: string;
+  question: string;
+  answer: string;
+};
 
 export type FAQGroup = {
   label: string;
-  faqs: FAQ[];
+  faqs: FAQItem[];
 };
 
 type Props = {
   groups: FAQGroup[];
 };
 
+// Native <details>/<summary> — same accessible, JS-free pattern as FAQAccordion. This
+// component stays separate because its groups (page-specific, e.g. "For parents" /
+// "For students") aren't part of the canonical content/faqs.ts collection.
 export default function GroupedFAQAccordion({ groups }: Props) {
-  const [open, setOpen] = useState<string | null>(null);
-
   return (
     <div className="space-y-10">
       {groups.map((group) => (
@@ -23,36 +26,26 @@ export default function GroupedFAQAccordion({ groups }: Props) {
             {group.label}
           </p>
           <div className="space-y-3">
-            {group.faqs.map((faq, i) => {
-              const key = `${group.label}-${i}`;
-              const isOpen = open === key;
-              return (
-                <div
-                  key={key}
-                  className="bg-white rounded-md border border-stone overflow-hidden"
+            {group.faqs.map((faq) => (
+              <details key={faq.id} className="group bg-white rounded-md border border-stone overflow-hidden">
+                <summary
+                  className="min-h-12 flex items-center justify-between gap-4 px-4 sm:px-6 py-4 sm:py-5 cursor-pointer list-none [&::-webkit-details-marker]:hidden"
                 >
-                  <button
-                    onClick={() => setOpen(isOpen ? null : key)}
-                    className="w-full min-h-14 flex items-center justify-between px-4 sm:px-6 py-4 sm:py-5 text-left"
-                    aria-expanded={isOpen}
+                  <span className="font-medium text-ink">{faq.question}</span>
+                  <span
+                    className="shrink-0 text-teal transition-transform duration-200 group-open:rotate-45"
+                    aria-hidden="true"
                   >
-                    <span className="font-medium text-ink pr-4">{faq.question}</span>
-                    <span
-                      className={`shrink-0 text-teal transition-transform duration-200 ${isOpen ? "rotate-45" : ""}`}
-                    >
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-                      </svg>
-                    </span>
-                  </button>
-                  {isOpen && (
-                    <div className="px-4 sm:px-6 pb-5">
-                      <p className="text-muted leading-relaxed">{faq.answer}</p>
-                    </div>
-                  )}
+                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
+                    </svg>
+                  </span>
+                </summary>
+                <div className="px-4 sm:px-6 pb-5">
+                  <p className="text-muted leading-relaxed">{faq.answer}</p>
                 </div>
-              );
-            })}
+              </details>
+            ))}
           </div>
         </div>
       ))}

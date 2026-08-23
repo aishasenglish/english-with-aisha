@@ -261,41 +261,49 @@ const faqGroups: FAQGroup[] = [
     label: "For parents",
     faqs: [
       {
+        id: "oal-parent-why-already-good-marks",
         question: "My child already gets good marks in school English. Why would they need this?",
         answer:
           "School marks and board marks are set against different standards. Teachers assess against the class; examiners assess against a national mark scheme. The most common conversation I have is with a parent whose child had never scored below an A in school and came out of the board exam with a B. If your child is already scoring well, this course is about protecting that — and converting it into the top band.",
       },
       {
+        id: "oal-parent-how-will-i-know",
         question: "How will I know it is working?",
         answer:
           "You receive a written progress report each cycle containing your child's current working grade, their marked scripts, and a specific list of what is improving and what is not. If the grade is not moving, you will hear that from me before you have to ask.",
       },
       {
+        id: "oal-parent-classes-safe",
         question: "Are the classes safe?",
         answer:
           "Yes. Classes run on Zoom at fixed scheduled times, attendance is registered, and sessions are recorded. There are no unscheduled one-to-one calls with group students. Parents are welcome to attend any class.",
       },
       {
+        id: "oal-parent-outside-pakistan",
         question: "We are not in Pakistan. Does that work?",
         answer:
           "It works well — a significant share of students join from outside Pakistan. Batch times are set to suit the Gulf, the UK and East Africa, and every class is recorded, so a difficult time zone never means a missed lesson. Fees can be paid internationally in USD.",
       },
       {
+        id: "oal-parent-cost-and-pay-abroad",
         question: "What does it cost, and how do we pay from abroad?",
         answer:
           "Group and one-to-one rates are listed above. International payment options are confirmed before you commit, quoted in your currency. There is no enrolment fee and no separate charge for materials.",
       },
       {
+        id: "oal-parent-try-before-committing",
         question: "Can we try before committing?",
         answer:
           "Yes. Start with the free assessment — your child completes a short written task, I mark it properly, and you receive an honest read on where they currently stand and whether I can genuinely help. There is no obligation attached to it.",
       },
       {
+        id: "oal-parent-retaking",
         question: "My child is retaking. Is it too late?",
         answer:
           "Retakers are often the fastest to improve, because the problem is usually specific rather than general. Send me the previous script or statement of results and I will tell you honestly what is recoverable in the time available.",
       },
       {
+        id: "oal-parent-guarantee-a-star",
         question: "Can you guarantee an A*?",
         answer:
           "No — and I would be cautious of anyone who does. What I can guarantee is that your child will understand precisely what the examiner is rewarding, will have written and had marked more practice papers than their school will set, and will walk in knowing exactly what they are doing. The grade follows from that; it cannot be promised in advance of it.",
@@ -306,39 +314,47 @@ const faqGroups: FAQGroup[] = [
     label: "For students",
     faqs: [
       {
+        id: "oal-student-papers-covered",
         question: "Which papers do you cover?",
         answer:
           "Cambridge O Level English Language (1123), IGCSE First Language and Second Language English, IGCSE and A Level Literature in English, AS & A Level English Language (9093), and the General Paper (8021). Edexcel International GCSE and International A Level English are also covered.",
       },
       {
+        id: "oal-student-edexcel-and-cambridge",
         question: "Do you teach Edexcel as well as Cambridge?",
         answer:
           "Yes. Both boards, with the differences in mark scheme taught explicitly — because they matter, and mixing them up costs marks.",
       },
       {
+        id: "oal-student-class-size",
         question: "How big are the classes?",
         answer: `A maximum of ${CLASS_SIZE_MAX}. That limit exists so every student's written work is actually read and annotated each week, which is the part that changes grades.`,
       },
       {
+        id: "oal-student-missed-class",
         question: "What if I miss a class?",
         answer:
           "Every class is recorded and available to rewatch. If you miss written work, send it in late — it still gets marked.",
       },
       {
+        id: "oal-student-homework-amount",
         question: "How much homework is there?",
         answer:
           "One substantial piece of written work per week, plus timed practice as the exam approaches. It is not enormous, but it is not optional either — the marking of your own writing is where the improvement happens.",
       },
       {
+        id: "oal-student-set-texts",
         question: "Do you help with specific set texts?",
         answer:
           "Yes. Tell me the texts on your syllabus and teaching is built around them, including quotation banks and essay plans specific to those texts.",
       },
       {
+        id: "oal-student-general-paper",
         question: "Do you cover the General Paper (8021)?",
         answer: "Yes — argument structure, use of evidence, balance, and timing.",
       },
       {
+        id: "oal-student-when-to-start",
         question: "When should I start?",
         answer:
           "Ideally at the beginning of the academic year, so there is time to rebuild technique before mocks. Realistically, three months before the paper is enough to make a meaningful difference if the work is done. Under six weeks, message me and I will tell you honestly whether it is worth your money.",

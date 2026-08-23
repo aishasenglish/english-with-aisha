@@ -16,7 +16,9 @@ export const site = {
     defaultMessage:
       "Hi Aisha! I'm interested in your English coaching. Could you share the batch and fee details?",
   },
-  email: "hello@englishwithaisha.com",
+  // Owner-confirmed canonical public address (Step 12) — build every rendered email link
+  // and mailto: from this value rather than repeating the address in components.
+  email: "aishasenglish@gmail.com",
   showPrices: true,
   currency: "PKR",
   /**
@@ -26,11 +28,13 @@ export const site = {
    * through a variable) so Next.js can inline it into the client bundle at build time.
    */
   formspreeEndpoint: process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT?.trim() ?? "",
+  // Leave empty until a real, owner-supplied profile URL exists — never a "#" placeholder.
+  // See lib/social.ts for the validation every rendered icon is checked against.
   socials: {
-    youtube: "#",
-    instagram: "#",
-    tiktok: "#",
-    facebook: "#",
-    linkedin: "#",
+    youtube: "",
+    instagram: "",
+    tiktok: "",
+    facebook: "",
+    linkedin: "",
   },
 } as const;

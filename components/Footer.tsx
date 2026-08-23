@@ -1,15 +1,25 @@
 import Link from "next/link";
 import { site } from "@/content/site";
 import { courses } from "@/content/courses";
+import { HOME_COURSES } from "@/content/homeCourses";
 import { whatsappLink } from "@/lib/whatsapp";
+import { isValidSocialUrl, socialAccessibleName } from "@/lib/social";
 
-const learnLinks = [
-  { label: "How it works", href: "/how-it-works" },
-  { label: "Upcoming batches", href: "/batches" },
-  { label: "Free course recommendation", href: "/free-diagnostic-test" },
-  { label: "Success stories", href: "/success-stories" },
-  { label: "FAQ", href: "/faq" },
+// Preserve the approved homepage course ordering from Step 5 rather than content/courses.ts's
+// own declaration order.
+const programmeLinks = HOME_COURSES.map((home) => courses.find((c) => c.slug === home.slug)).filter(
+  (course): course is NonNullable<typeof course> => Boolean(course)
+);
+
+const exploreLinks = [
+  { label: "About Aisha", href: "/about" },
+  { label: "How lessons work", href: "/how-it-works" },
+  { label: "Current availability", href: "/batches" },
+  { label: "Frequently asked questions", href: "/faq" },
+  { label: "Contact", href: "/contact" },
 ];
+
+const linkItemClasses = "inline-flex min-h-11 items-center text-sm hover:text-sea-deep transition-colors";
 
 const socialIcons: Record<string, React.ReactNode> = {
   youtube: (
@@ -41,85 +51,104 @@ const socialIcons: Record<string, React.ReactNode> = {
 
 export default function Footer() {
   const year = new Date().getFullYear();
-  const realSocials = (Object.entries(site.socials) as [string, string][]).filter(
-    ([, url]) => url && url !== "#"
+  const realSocials = (Object.entries(site.socials) as [string, string][]).filter(([key, url]) =>
+    isValidSocialUrl(key, url)
   );
 
   return (
     <footer className="bg-surface-tint text-ink-soft border-t border-line">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-[max(2.5rem,env(safe-area-inset-bottom))]">
-        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 sm:gap-10 pb-10 sm:pb-12 border-b border-line">
-          <div className="col-span-2 md:col-span-1 lg:col-span-1">
+      {/* Extra bottom clearance on phones so the fixed WhatsApp float (bottom-right, ~64px
+          tall including its margin) never sits on top of the copyright line below, which is
+          centred (full-width) below the sm breakpoint. */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 sm:pt-16 pb-[max(5rem,calc(env(safe-area-inset-bottom)+4.5rem))] sm:pb-[max(2.5rem,env(safe-area-inset-bottom))]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-10 sm:gap-10 pb-10 sm:pb-12 border-b border-line">
+          {/* Brand summary */}
+          <div className="md:col-span-2 lg:col-span-1">
             <p className="font-serif text-xl font-medium text-ink mb-2">{site.brandName}</p>
-            <p className="text-sm mb-6 max-w-xs leading-relaxed">{site.tagline}</p>
-            {realSocials.length > 0 && <div className="flex gap-2.5">
-              {realSocials.map(([key, url]) =>
-                socialIcons[key] ? (
-                  <a
-                    key={key}
-                    href={url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    aria-label={key}
-                    className="w-11 h-11 flex items-center justify-center rounded-sm border border-line hover:bg-coral hover:border-coral hover:text-white transition-colors"
-                  >
-                    {socialIcons[key]}
-                  </a>
-                ) : null
-              )}
-            </div>}
+            <p className="text-sm mb-2 max-w-xs leading-relaxed">
+              Live online English tutoring for school examinations, international language
+              tests, speaking and writing.
+            </p>
+            <p className="text-sm mb-6 max-w-xs leading-relaxed">
+              Professional and corporate English training is also available on request.
+            </p>
+            {realSocials.length > 0 && (
+              <ul className="flex flex-wrap gap-2.5">
+                {realSocials.map(([key, url]) => (
+                  <li key={key}>
+                    <a
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={socialAccessibleName(key)}
+                      className="w-11 h-11 flex items-center justify-center rounded-sm border border-line hover:bg-coral hover:border-coral hover:text-white transition-colors"
+                    >
+                      {socialIcons[key]}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
 
-          <div>
-            <p className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">Courses</p>
+          {/* Programmes */}
+          <nav aria-labelledby="footer-programmes-heading">
+            <p id="footer-programmes-heading" className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">
+              Programmes
+            </p>
             <ul className="space-y-2.5">
-              {courses.map((c) => (
-                <li key={c.slug}>
-                  <Link href={`/courses/${c.slug}`} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors">
-                    {c.name}
+              {programmeLinks.map((course) => (
+                <li key={course.slug}>
+                  <Link href={`/courses/${course.slug}`} className={`${linkItemClasses} break-words`}>
+                    {course.name}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div>
-            <p className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">How you learn</p>
+          {/* Explore */}
+          <nav aria-labelledby="footer-explore-heading">
+            <p id="footer-explore-heading" className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">
+              Explore
+            </p>
             <ul className="space-y-2.5">
-              {learnLinks.map((l) => (
+              {exploreLinks.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors">
+                  <Link href={l.href} className={linkItemClasses}>
                     {l.label}
                   </Link>
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
 
-          <div className="col-span-2 md:col-span-1">
-            <p className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">Contact</p>
-            <ul className="space-y-3 mb-5">
-              <li className="text-sm">{site.city}</li>
+          {/* Start here / contact */}
+          <nav aria-labelledby="footer-start-heading">
+            <p id="footer-start-heading" className="text-xs font-medium text-ink uppercase tracking-[0.10em] mb-4">
+              Start here
+            </p>
+            <ul className="space-y-2.5 mb-5">
               <li>
-                <a href={`tel:+${site.whatsapp.intl}`} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors">
-                  {site.whatsapp.display}
+                <Link href="/free-diagnostic-test" className={linkItemClasses}>
+                  Request a Free Course Recommendation
+                </Link>
+              </li>
+              <li>
+                <a href={whatsappLink()} target="_blank" rel="noopener noreferrer" className={linkItemClasses}>
+                  WhatsApp — {site.whatsapp.display}
                 </a>
               </li>
               <li>
-                <a href={`mailto:${site.email}`} className="inline-flex min-h-10 items-center text-sm hover:text-sea-deep transition-colors break-all">
+                <a href={`mailto:${site.email}`} className={`${linkItemClasses} break-all`}>
                   {site.email}
                 </a>
               </li>
+              <li className="min-h-11 flex items-center text-sm">
+                {site.city} · {site.timezone}
+              </li>
             </ul>
-            <a
-              href={whatsappLink()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex min-h-12 w-full sm:w-auto items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3 transition-colors"
-            >
-              Talk to Aisha
-            </a>
-          </div>
+          </nav>
         </div>
 
         <div className="pt-6 text-center sm:text-left">

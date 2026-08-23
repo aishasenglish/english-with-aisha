@@ -31,6 +31,11 @@
   --color-stone: #E8E8E8;
   --color-white: #ffffff;
 
+  /* WhatsApp's own brand colour — defined once so WhatsAppFloat and every WhatsApp CTA
+     reference the same token instead of repeating the raw hex value. */
+  --color-whatsapp: #25D366;
+  --color-whatsapp-dark: #1EBE5D;
+
   --font-sans: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
   --font-serif: var(--font-outfit), ui-sans-serif, system-ui, sans-serif;
 
@@ -79,17 +84,6 @@ img, svg {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
   line-height: 1.1;
-}
-
-/* Floating blob animations — from HTML template */
-@keyframes floatA {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(26px, 30px); }
-}
-
-@keyframes floatB {
-  0%, 100% { transform: translate(0, 0); }
-  50% { transform: translate(-30px, -22px); }
 }
 
 @media (prefers-reduced-motion: reduce) {

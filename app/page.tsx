@@ -9,6 +9,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import CoachingProcess from "@/components/CoachingProcess";
 import BatchTable from "@/components/BatchTable";
 import LeadCaptureSection from "@/components/LeadCaptureSection";
+import HomeFAQ from "@/components/HomeFAQ";
 import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
 import { site } from "@/content/site";
@@ -61,7 +62,8 @@ export default function HomePage() {
       </section>
 
       <LeadCaptureSection />
-      <CTASection />
+      <HomeFAQ />
+      <CTASection eyebrow="Your next step" />
     </>
   );
 }

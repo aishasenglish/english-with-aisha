@@ -77,7 +77,8 @@ anywhere — see `lib/forms.ts` for the validation that decides this. Never past
 into `content/site.ts` directly, and never commit `.env.local`.
 
 ### Add social media links
-Open `content/site.ts` and replace `"#"` with your real URLs in the `socials` object:
+Open `content/site.ts` and replace the empty string for a platform with your real profile URL in
+the `socials` object:
 ```ts
 socials: {
   youtube: "https://youtube.com/@yourhandle",
@@ -87,9 +88,17 @@ socials: {
   linkedin: "https://linkedin.com/in/yourprofile",
 },
 ```
+Leave a platform as `""` (never `"#"`) until you have a real URL — `lib/social.ts` only renders
+an icon for a value that's a genuine `https://` link on that platform's own domain, so a footer
+icon never points nowhere.
 
 ### Add photos
 Drop your photos into `/public/images/`. See `/public/images/README.md` for the required filenames and sizes.
+
+### Before running paid ads or collecting emails for a list
+See `docs/launch-verification.md` — it tracks the items that need Aisha's or a legal reviewer's
+direct sign-off (privacy/terms content, confirming contact details, social profile URLs) rather
+than an implementation agent's judgement.
 
 ---
 
