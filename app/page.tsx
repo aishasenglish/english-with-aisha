@@ -3,8 +3,7 @@ import Hero from "@/components/Hero";
 import AudiencePathways from "@/components/AudiencePathways";
 import ProgrammeMatcher from "@/components/ProgrammeMatcher";
 import CourseExplorer from "@/components/CourseExplorer";
-import Formats from "@/components/Formats";
-import StatsBand from "@/components/StatsBand";
+import LearningFormats from "@/components/LearningFormats";
 import SectionHeading from "@/components/SectionHeading";
 import HowItWorks from "@/components/HowItWorks";
 import GoalGrid from "@/components/GoalGrid";
@@ -29,8 +28,7 @@ export default function HomePage() {
       <AudiencePathways />
       <ProgrammeMatcher />
       <CourseExplorer />
-      <Formats />
-      <StatsBand />
+      <LearningFormats />
 
       {/* About Aisha */}
       <section className="py-14 sm:py-16 lg:py-20 px-4 bg-white">
