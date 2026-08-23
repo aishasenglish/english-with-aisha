@@ -7,7 +7,7 @@ import FadeUp from "@/components/FadeUp";
 export const metadata: Metadata = {
   title: "How It Works",
   description:
-    "A simple, structured path from where you are now to ready and confident. Live Zoom classes, recorded, with personal feedback and mock exams.",
+    "A simple, structured path from where you are now to ready and confident. Live Zoom classes, recorded, with personal feedback and relevant practice.",
 };
 
 const details = [
@@ -30,8 +30,8 @@ const details = [
     ),
   },
   {
-    title: "Regular tests & full mock exams",
-    desc: "Track your progress and remove exam-day surprises. Weekly tests keep you sharp; full-length mock exams get you fully comfortable with the real format.",
+    title: "Relevant practice and progress checks",
+    desc: "Practice reflects the programme: this may include marked writing, speaking tasks, syllabus work, timed test practice or mock examinations where appropriate.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -56,15 +56,6 @@ const details = [
       </svg>
     ),
   },
-  {
-    title: "New batch every 15 days",
-    desc: "Never wait long to start. There's always a fresh batch around the corner. Seats are limited to keep each batch focused and personal.",
-    icon: (
-      <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-      </svg>
-    ),
-  },
 ];
 
 export default function HowItWorksPage() {
@@ -84,10 +75,9 @@ export default function HowItWorksPage() {
       <section className="py-20 px-4 bg-ivory">
         <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <SectionHeading eyebrow="The process" title="Four steps to fluency and confidence" centered />
+            <SectionHeading eyebrow="The process" title="From your first question to focused progress" centered />
           </FadeUp>
-          <p className="sm:hidden text-xs text-ink-faint mt-8 mb-3">Swipe through the four steps</p>
-          <div className="mt-0 sm:mt-12">
+          <div className="mt-8 sm:mt-12">
             <HowItWorks />
           </div>
         </div>

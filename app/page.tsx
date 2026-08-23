@@ -6,7 +6,7 @@ import CourseExplorer from "@/components/CourseExplorer";
 import LearningFormats from "@/components/LearningFormats";
 import AboutAisha from "@/components/AboutAisha";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import HowItWorks from "@/components/HowItWorks";
+import CoachingProcess from "@/components/CoachingProcess";
 import BatchTable from "@/components/BatchTable";
 import LeadMagnet from "@/components/LeadMagnet";
 import CTASection from "@/components/CTASection";
@@ -32,24 +32,7 @@ export default function HomePage() {
 
       <TestimonialsSection />
 
-      {/* Method */}
-      <section className="py-14 sm:py-16 lg:py-20 px-4 bg-white">
-        <div className="max-w-5xl mx-auto">
-          <FadeUp>
-            <div className="text-center mb-7 sm:mb-12">
-              <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center justify-center gap-3 mb-3">
-                The method
-                <span className="h-0.5 w-9 bg-coral" aria-hidden />
-              </p>
-              <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink">
-                Four steps to fluency and confidence
-              </h2>
-            </div>
-          </FadeUp>
-          <p className="sm:hidden text-xs text-ink-faint mb-3">Swipe through the four steps</p>
-          <HowItWorks />
-        </div>
-      </section>
+      <CoachingProcess />
 
       {/* Batch table */}
       <section className="py-14 sm:py-16 lg:py-20 px-4 bg-ivory">
