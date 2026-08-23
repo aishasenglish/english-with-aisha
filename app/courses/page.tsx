@@ -46,12 +46,18 @@ const GOAL_CHOICES: GoalChoice[] = [
 
 // Layout per category — the single School English programme gets a constrained "featured"
 // width instead of stretching one card across a full grid; the two test-prep/communication
-// groups use a real grid whose column count matches how many cards they actually hold.
+// groups use a real grid whose column count matches how many cards they actually hold. At the
+// 640-1023px "two-plus-one" width, language-tests' third (odd) card is centred and widened
+// instead of sitting orphaned in an otherwise-empty row.
 const CATEGORY_GRID_CLASSES: Record<CourseCategoryId, string> = {
-  "school-english": "grid grid-cols-1 max-w-md mx-auto",
-  "language-tests": "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6",
+  "school-english": "grid grid-cols-1 max-w-2xl mx-auto",
+  "language-tests":
+    "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 [&>*:last-child]:sm:col-span-2 [&>*:last-child]:sm:max-w-md [&>*:last-child]:sm:mx-auto [&>*:last-child]:lg:col-span-1 [&>*:last-child]:lg:max-w-none [&>*:last-child]:lg:mx-0",
   "communication-skills": "grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6",
 };
+
+const LANGUAGE_TESTS_NOTE =
+  "Choose the test required by the organisation receiving your score. If more than one test is accepted, ask Aisha which preparation route best matches your current skills and timeline.";
 
 const CTA_WHATSAPP_MESSAGE =
   "Hi Aisha! I am comparing your English programmes. My goal is [goal or exam], my current situation is [details], and I hope to begin by [date]. Which programme would you recommend?";
@@ -123,6 +129,12 @@ export default function CoursesPage() {
                   <ServiceCard key={course.slug} course={course} />
                 ))}
               </div>
+
+              {category.id === "language-tests" && (
+                <p className="text-sm text-ink-faint leading-relaxed mt-6 sm:mt-8 max-w-2xl">
+                  {LANGUAGE_TESTS_NOTE}
+                </p>
+              )}
             </div>
           </section>
         );

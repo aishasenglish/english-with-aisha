@@ -1,22 +1,24 @@
 import Link from "next/link";
 import { courses } from "@/content/courses";
-import { HOME_COURSES, DEFAULT_DELIVERY_LINE, corporatePanel } from "@/content/homeCourses";
+import { getCoursePresentation } from "@/content/coursePresentation";
+import { HOME_COURSE_ORDER, HOME_COURSE_DELIVERY, DEFAULT_DELIVERY_LINE, corporatePanel } from "@/content/homeCourses";
 import { whatsappLink } from "@/lib/whatsapp";
 
-const CARDS = HOME_COURSES.map((meta) => {
-  const course = courses.find((c) => c.slug === meta.slug)!;
+const CARDS = HOME_COURSE_ORDER.map((slug) => {
+  const course = courses.find((c) => c.slug === slug)!;
+  const presentation = getCoursePresentation(slug);
   return {
-    slug: meta.slug,
-    category: meta.category,
+    slug,
+    category: presentation.typeLabel,
     name: course.name,
     href: `/courses/${course.slug}`,
-    description: meta.description,
-    bestFor: meta.bestFor,
-    feature: meta.feature,
-    ctaLabel: meta.ctaLabel,
-    delivery: meta.delivery ?? DEFAULT_DELIVERY_LINE,
+    description: presentation.shortDescription,
+    bestFor: presentation.bestFor,
+    feature: presentation.focus,
+    ctaLabel: presentation.ctaLabel,
+    delivery: HOME_COURSE_DELIVERY[slug] ?? DEFAULT_DELIVERY_LINE,
     whatsappMessage:
-      meta.whatsappMessageOverride ??
+      presentation.whatsappMessage ??
       `Hi Aisha! I'm interested in the ${course.name} programme. Could you share the current schedule, format and fee details?`,
   };
 });

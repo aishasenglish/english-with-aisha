@@ -10,11 +10,6 @@ export default function CourseHero({ course }: Props) {
   return (
     <section className="bg-white text-ink py-12 sm:py-16 lg:py-20 px-4 border-b border-line">
       <div className="max-w-4xl mx-auto text-center">
-        {course.badge && (
-          <span className="inline-block bg-sea-wash text-sea-deep text-sm font-medium px-4 py-1 rounded-sm mb-4">
-            {course.badge}
-          </span>
-        )}
         <h1 className="font-serif text-[2rem] sm:text-4xl md:text-5xl font-medium mb-4 leading-[1.08] tracking-[-0.02em]">
           {course.tagline}
         </h1>

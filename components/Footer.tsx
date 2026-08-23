@@ -1,13 +1,13 @@
 import Link from "next/link";
 import { site } from "@/content/site";
 import { courses } from "@/content/courses";
-import { HOME_COURSES } from "@/content/homeCourses";
+import { HOME_COURSE_ORDER } from "@/content/homeCourses";
 import { whatsappLink } from "@/lib/whatsapp";
 import { isValidSocialUrl, socialAccessibleName } from "@/lib/social";
 
 // Preserve the approved homepage course ordering from Step 5 rather than content/courses.ts's
 // own declaration order.
-const programmeLinks = HOME_COURSES.map((home) => courses.find((c) => c.slug === home.slug)).filter(
+const programmeLinks = HOME_COURSE_ORDER.map((slug) => courses.find((c) => c.slug === slug)).filter(
   (course): course is NonNullable<typeof course> => Boolean(course)
 );
 
