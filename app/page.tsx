@@ -4,7 +4,7 @@ import AudiencePathways from "@/components/AudiencePathways";
 import ProgrammeMatcher from "@/components/ProgrammeMatcher";
 import CourseExplorer from "@/components/CourseExplorer";
 import LearningFormats from "@/components/LearningFormats";
-import SectionHeading from "@/components/SectionHeading";
+import AboutAisha from "@/components/AboutAisha";
 import HowItWorks from "@/components/HowItWorks";
 import GoalGrid from "@/components/GoalGrid";
 import StoryFeature from "@/components/StoryFeature";
@@ -12,13 +12,12 @@ import BatchTable from "@/components/BatchTable";
 import LeadMagnet from "@/components/LeadMagnet";
 import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
-import Button from "@/components/Button";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
   title: `${site.brandName} — ${site.tagline}`,
   description:
-    "Expert English coaching for O/A Levels, IGCSE, IELTS, PTE and TOEFL, plus Spoken English and Professional English for adults. Personalised live online teaching with Aisha — MA English Literature, College Lecturer.",
+    "Expert English coaching for O/A Levels, IGCSE, IELTS, PTE and TOEFL, plus Spoken English and Professional English for adults. Personalised live online teaching with Aisha — MPhil in English Literature, Government College Lecturer.",
 };
 
 export default function HomePage() {
@@ -30,73 +29,7 @@ export default function HomePage() {
       <CourseExplorer />
       <LearningFormats />
 
-      {/* About Aisha */}
-      <section className="py-14 sm:py-16 lg:py-20 px-4 bg-white">
-        <div className="max-w-3xl mx-auto">
-          <div className="space-y-8">
-            <FadeUp>
-              <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
-                About Aisha
-                <span className="h-0.5 w-9 bg-coral" aria-hidden />
-              </p>
-              <SectionHeading
-                title="Learn from someone who has spent her life inside the English language"
-                subtitle="Aisha holds a Master's in English Literature and teaches at a government college. She doesn't just know English — she understands how it works and how to teach it. Her coaching turns rules into habits and nerves into fluency, with a method built for real exam scores and real-world confidence."
-              />
-            </FadeUp>
-
-            <div className="space-y-4">
-              {[
-                {
-                  title: "A scholar's command of English",
-                  desc: "Grammar, vocabulary, and style explained with the depth of a literature specialist, in plain language you can actually use.",
-                  icon: (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                    </svg>
-                  ),
-                },
-                {
-                  title: "Built for results",
-                  desc: "Exam-focused strategies, weekly tests, and full mock exams so you walk into your test prepared, not hopeful.",
-                  icon: (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                    </svg>
-                  ),
-                },
-                {
-                  title: "You're never on your own",
-                  desc: "Live classes, recordings to rewatch anytime, and personal feedback on your writing and speaking.",
-                  icon: (
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
-                  ),
-                },
-              ].map((card, i) => (
-                <FadeUp key={card.title} delay={i * 100}>
-                  <div className="flex gap-4 bg-card rounded-md p-4 border border-stone">
-                    <div className="p-2.5 bg-amber-tint text-amber-dark rounded-md shrink-0 h-fit">
-                      {card.icon}
-                    </div>
-                    <div>
-                      <h3 className="font-serif text-base font-medium text-ink mb-1">{card.title}</h3>
-                      <p className="text-muted text-sm leading-relaxed">{card.desc}</p>
-                    </div>
-                  </div>
-                </FadeUp>
-              ))}
-            </div>
-
-            <FadeUp delay={300}>
-              <Button href="/about" variant="teal" className="w-full sm:w-auto">
-                More about Aisha
-              </Button>
-            </FadeUp>
-          </div>
-        </div>
-      </section>
+      <AboutAisha />
 
       <GoalGrid />
       <StoryFeature />
