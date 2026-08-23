@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
+import CourseChoiceGuide from "@/components/CourseChoiceGuide";
+import CorporateEnquiryPanel from "@/components/CorporateEnquiryPanel";
 import CTASection from "@/components/CTASection";
 import { courseCategories, coursesForCategory, type CourseCategoryId } from "@/content/courseCategories";
 
 export const metadata: Metadata = {
   title: "Online English Courses and Tutoring",
   description:
-    "Compare live online English support for O Level, IGCSE and A Level students, IELTS, PTE and TOEFL candidates, and learners improving speaking or writing.",
+    "Compare live online English support for school exams, IELTS, PTE, TOEFL, speaking, writing and workplace communication.",
 };
 
 type GoalChoice = {
@@ -139,6 +141,9 @@ export default function CoursesPage() {
           </section>
         );
       })}
+
+      <CourseChoiceGuide />
+      <CorporateEnquiryPanel />
 
       {/* What varies by programme */}
       <section className="py-12 sm:py-14 px-4 bg-white border-y border-line">

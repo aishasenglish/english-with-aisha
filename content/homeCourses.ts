@@ -27,11 +27,8 @@ export const HOME_COURSE_DELIVERY: Partial<Record<CourseSlug, string>> = {
   "o-a-level-english": "Live online · Small-group classes · Recordings included",
 };
 
-export const corporatePanel = {
-  eyebrow: "Need training for a workplace or team?",
-  heading: "Ask about professional and corporate English training.",
-  body: "Share the roles, team size and communication goals. Aisha can recommend an individual or group format for meetings, presentations, interviews, reports or client communication.",
-  ctaLabel: "Discuss Corporate Training",
-  whatsappMessage:
-    "Hi Aisha! I'm interested in professional or corporate English training. The role or team, number of learners and main communication goals are:",
-};
+// The homepage's compact corporate-training panel reuses the same shared, deliberately-hedged
+// enquiry copy as the Courses hub's fuller CorporateEnquiryPanel — see content/courseGuidance.ts.
+// Re-exported here under the name this file's existing consumer (CourseExplorer.tsx) already
+// imports, so its own compact single-row layout didn't need to change.
+export { corporateEnquiry as corporatePanel } from "@/content/courseGuidance";
