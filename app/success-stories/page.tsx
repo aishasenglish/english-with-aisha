@@ -6,7 +6,7 @@ import FadeUp from "@/components/FadeUp";
 export const metadata: Metadata = {
   title: "Success Stories",
   description:
-    "Verified testimonials and results from students who completed English coaching with Aisha.",
+    "Student and parent experiences shared with permission from learners who worked with Aisha.",
 };
 
 export default function SuccessStoriesPage() {
@@ -18,7 +18,8 @@ export default function SuccessStoriesPage() {
             Student progress, shared responsibly.
           </h1>
           <p className="text-ink-soft text-lg">
-            Verified testimonials and results will be published here with each student&apos;s permission.
+            Learner and parent experiences are shared with permission from those who worked with
+            Aisha.
           </p>
         </div>
       </section>

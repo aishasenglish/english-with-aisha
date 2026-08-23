@@ -11,18 +11,11 @@ Drop your photos into this folder. The website references these filenames:
 
 ## Testimonial Photos
 
-Drop student photos in a subfolder `images/testimonials/`:
-
-| Filename | For |
-|---|---|
-| `testimonial-sara.jpg` | Sara Ahmed |
-| `testimonial-usman.jpg` | Usman Tariq |
-| `testimonial-hira.jpg` | Hira Malik |
-| `testimonial-bilal.jpg` | Bilal Khan |
-| `testimonial-zara.jpg` | Zara Siddiqui |
-| `testimonial-ali.jpg` | Ali Raza |
-
-All testimonial photos should be square (1:1 ratio), minimum 80×80px. They render at 40×40px.
+There are no testimonials in the codebase yet — see `docs/testimonial-content-intake.md` for
+how Aisha adds one. Once a specific person has approved their photo for publication, drop it
+into a subfolder `images/testimonials/` and reference its filename in that person's `image`
+field in `content/testimonials.ts`. There is no fixed filename list — each entry names its own
+file. Photos should be square (1:1 ratio), minimum 88×88px. They render at 44×44px.
 
 ## Tips
 

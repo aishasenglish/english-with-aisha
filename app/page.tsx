@@ -5,9 +5,8 @@ import ProgrammeMatcher from "@/components/ProgrammeMatcher";
 import CourseExplorer from "@/components/CourseExplorer";
 import LearningFormats from "@/components/LearningFormats";
 import AboutAisha from "@/components/AboutAisha";
+import TestimonialsSection from "@/components/TestimonialsSection";
 import HowItWorks from "@/components/HowItWorks";
-import GoalGrid from "@/components/GoalGrid";
-import StoryFeature from "@/components/StoryFeature";
 import BatchTable from "@/components/BatchTable";
 import LeadMagnet from "@/components/LeadMagnet";
 import CTASection from "@/components/CTASection";
@@ -31,8 +30,7 @@ export default function HomePage() {
 
       <AboutAisha />
 
-      <GoalGrid />
-      <StoryFeature />
+      <TestimonialsSection />
 
       {/* Method */}
       <section className="py-14 sm:py-16 lg:py-20 px-4 bg-white">
