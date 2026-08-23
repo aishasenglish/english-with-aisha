@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import AudiencePathways from "@/components/AudiencePathways";
+import ProgrammeMatcher from "@/components/ProgrammeMatcher";
 import CourseExplorer from "@/components/CourseExplorer";
 import Formats from "@/components/Formats";
 import StatsBand from "@/components/StatsBand";
@@ -26,6 +27,7 @@ export default function HomePage() {
     <>
       <Hero />
       <AudiencePathways />
+      <ProgrammeMatcher />
       <CourseExplorer />
       <Formats />
       <StatsBand />
