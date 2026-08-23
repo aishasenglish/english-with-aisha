@@ -4,6 +4,8 @@ export const site = {
   tagline: "Master English. Open the world.",
   founder: "Aisha",
   credentials: "MPhil in English Literature • IDP-Certified IELTS Trainer • Corporate Trainer",
+  /** Same credentials as `credentials`, split for layouts that render them as compact wrapping items. */
+  credentialsList: ["MPhil in English Literature", "IDP-Certified IELTS Trainer", "Corporate Trainer"],
   city: "Lahore, Pakistan",
   timezone: "PKT (GMT+5)",
   whatsapp: {
