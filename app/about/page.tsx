@@ -7,13 +7,14 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: "About Aisha",
   description:
-    "Meet Aisha — MPhil in English Literature, government college lecturer, and your online English coach. Based in Lahore, Pakistan.",
+    `Meet Aisha — ${site.qualification}, ${site.professionalRole}, and your online English coach. Based in Lahore, Pakistan.`,
 };
 
-// Reuse the canonical qualification wording from content/site.ts instead of a second hard-coded copy.
+// Reuse the canonical qualification and role wording from content/site.ts instead of a second
+// hard-coded copy.
 const credentials = [
-  site.credentialsList[0], // "MPhil in English Literature"
-  "Government College Lecturer",
+  site.qualification,
+  site.professionalRole,
   "Exam-focused coaching for IELTS, PTE & TOEFL",
   "Personal feedback on writing & speaking",
   "Recorded classes for later review",
@@ -41,11 +42,10 @@ export default function AboutPage() {
             <div className="space-y-8">
               <div>
                 <p className="text-lg text-charcoal leading-relaxed">
-                  I&apos;m Aisha, an MPhil in English Literature and a lecturer at a
-                  government college in Lahore. For years I&apos;ve taught English to students
-                  from every kind of background — and I&apos;ve seen the same thing again and
-                  again: bright, capable people held back not by ability, but by the way
-                  English was taught to them.
+                  I&apos;m Aisha, a {site.professionalRole} in Lahore with an {site.qualification}.
+                  For years I&apos;ve taught English to students from every kind of background —
+                  and I&apos;ve seen the same thing again and again: bright, capable people held
+                  back not by ability, but by the way English was taught to them.
                 </p>
               </div>
 

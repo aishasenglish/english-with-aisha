@@ -45,8 +45,13 @@ add both routes to `app/sitemap.ts`.
   number to publish before launch.
 - **City / time zone**: `Lahore, Pakistan` / `PKT (GMT+5)` — likewise pre-existing and left
   unchanged.
-- **Credentials**: `MPhil in English Literature`, `IDP-Certified IELTS Trainer`,
-  `Corporate Trainer` — pre-existing, left unchanged. Confirm these remain accurate.
+- **Qualification / role**: owner-confirmed as `MPhil in English Literature` and
+  `College Lecturer` — now the two canonical `content/site.ts` fields (`qualification`,
+  `professionalRole`) every credential string on the site is built from. `IDP-Certified IELTS
+  Trainer` and `Corporate Trainer` are pre-existing, left unchanged — confirm these remain
+  accurate. Note "College Lecturer" is deliberately not "Government College Lecturer" — that
+  extra distinction hasn't been separately confirmed as public; add it back only if Aisha
+  explicitly asks for it everywhere.
 
 ## Social accounts
 
@@ -75,8 +80,9 @@ handle; never fill these with placeholder or invented links.
   `enrollSteps`/"How to enroll", `README.md`'s "enrollment"). Left untouched by Step 12 — renaming
   a shared function identifier and its call sites is a larger refactor than the "small correction"
   scope this step allows.
-- **O & A Level page**: `app/courses/o-a-level-english/page.tsx` still describes the founder as
-  "MA English Literature" (metadata, JSON-LD `jobTitle`, visible copy) and an unverified "10+
-  years" of experience — flagged already in Step 7, still outstanding.
-- **`app/courses/ielts/page.tsx`** metadata description also still says "MA English Literature" —
-  also flagged in Step 7.
+- **O & A Level page**: `app/courses/o-a-level-english/page.tsx` still carries an unverified "10+
+  years" of experience claim (`YEARS_EXPERIENCE` in that file) — flagged in Step 7, still
+  outstanding. (Its "MA English Literature" wording — metadata, JSON-LD `jobTitle`, visible
+  copy — was corrected in the qualification/role standardisation pass; it and
+  `app/courses/ielts/page.tsx` now consistently read `site.qualification` /
+  `site.professionalRole`.)

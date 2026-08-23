@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: `%s | ${site.brandName}`,
   },
   description:
-    "Live online English coaching for IELTS, PTE, TOEFL, English Writing, and Spoken English. Expert-led by Aisha — MPhil in English Literature, Government College Lecturer. Classes recorded.",
+    `Live online English coaching for IELTS, PTE, TOEFL, English Writing, and Spoken English. Expert-led by Aisha — ${site.qualification}, ${site.professionalRole}. Classes recorded.`,
   openGraph: {
     type: "website",
     locale: "en_GB",

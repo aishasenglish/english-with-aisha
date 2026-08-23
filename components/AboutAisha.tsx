@@ -4,23 +4,26 @@ import FadeUp from "./FadeUp";
 import { whatsappLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
 
-// Titles reuse the canonical wording from site.credentialsList where it already exists there,
-// so the qualification text has one source of truth instead of drifting across the site.
+// Titles reuse the canonical wording from content/site.ts — named fields for the two owner-
+// confirmed facts, and the fixed tail of site.credentialsList for the other two credentials
+// (site.credentialsList is always [qualification, professionalRole, "IDP-Certified IELTS
+// Trainer", "Corporate Trainer"], so indices 2 and 3 are stable) — rather than a positional
+// index into every slot, which silently breaks if the array's shape ever changes again.
 const CREDENTIALS = [
   {
-    title: site.credentialsList[0], // "MPhil in English Literature"
+    title: site.qualification,
     copy: "Advanced study of language, literature, analysis and written expression.",
   },
   {
-    title: "Government College Lecturer",
+    title: site.professionalRole,
     copy: "Classroom teaching experience grounded in clear explanation, structured practice and academic standards.",
   },
   {
-    title: site.credentialsList[1], // "IDP-Certified IELTS Trainer"
+    title: site.credentialsList[2], // "IDP-Certified IELTS Trainer"
     copy: "Focused preparation informed by IELTS task requirements and assessment criteria.",
   },
   {
-    title: site.credentialsList[2], // "Corporate Trainer"
+    title: site.credentialsList[3], // "Corporate Trainer"
     copy: "Practical English support for interviews, presentations, professional writing and workplace communication.",
   },
 ];
@@ -73,10 +76,10 @@ export default function AboutAisha() {
           <FadeUp delay={100}>
             <div className="space-y-4">
               <p className="text-base sm:text-lg text-charcoal leading-relaxed">
-                I&apos;m Aisha, an English Literature specialist, government college lecturer and
-                IDP-certified IELTS trainer based in Lahore. I teach school students, examination
-                candidates and professionals through live online coaching that turns complex
-                language rules into clear, practical skills.
+                I&apos;m Aisha, a {site.professionalRole.toLowerCase()} with an {site.qualification}{" "}
+                and an IDP-certified IELTS trainer, based in Lahore. I teach school students,
+                examination candidates and professionals through live online coaching that turns
+                complex language rules into clear, practical skills.
               </p>
               <p className="text-base text-ink-soft leading-relaxed">
                 My approach combines subject knowledge with structured practice and specific

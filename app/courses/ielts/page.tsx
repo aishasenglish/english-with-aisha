@@ -7,6 +7,7 @@ import BatchTable from "@/components/BatchTable";
 import FAQAccordion from "@/components/FAQAccordion";
 import CTASection from "@/components/CTASection";
 import { courses } from "@/content/courses";
+import { site } from "@/content/site";
 
 const course = courses.find((c) => c.slug === "ielts")!;
 
@@ -17,7 +18,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "IELTS Preparation Course",
   description:
-    "Target IELTS Band 7+ with expert coaching. Live Zoom classes, recorded, mock exams, and personal feedback from Aisha — MA English Literature.",
+    `Target IELTS Band 7+ with expert coaching. Live Zoom classes, recorded, mock exams, and personal feedback from Aisha — ${site.qualification}.`,
 };
 
 export default function IELTSPage() {

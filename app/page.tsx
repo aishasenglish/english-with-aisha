@@ -21,7 +21,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: `${site.brandName} — ${site.tagline}`,
   description:
-    "Expert English coaching for O/A Levels, IGCSE, IELTS, PTE and TOEFL, plus Spoken English and Professional English for adults. Personalised live online teaching with Aisha — MPhil in English Literature, Government College Lecturer.",
+    `Expert English coaching for O/A Levels, IGCSE, IELTS, PTE and TOEFL, plus Spoken English and Professional English for adults. Personalised live online teaching with Aisha — ${site.qualification}, ${site.professionalRole}.`,
 };
 
 export default function HomePage() {

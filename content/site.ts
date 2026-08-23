@@ -1,11 +1,20 @@
+// Owner-confirmed canonical facts — the only public qualification and role. Every credential
+// string elsewhere in the site is built from these two, not repeated as a separate literal.
+// Do not append "Government" to professionalRole unless the owner separately confirms that
+// distinction should be public everywhere.
+const qualification = "MPhil in English Literature";
+const professionalRole = "College Lecturer";
+
 export const site = {
   brandName: "Aisha's English",
   domain: "aishasenglish.com",
   tagline: "Master English. Open the world.",
   founder: "Aisha",
-  credentials: "MPhil in English Literature • IDP-Certified IELTS Trainer • Corporate Trainer",
+  qualification,
+  professionalRole,
+  credentials: `${qualification} • ${professionalRole} • IDP-Certified IELTS Trainer • Corporate Trainer`,
   /** Same credentials as `credentials`, split for layouts that render them as compact wrapping items. */
-  credentialsList: ["MPhil in English Literature", "IDP-Certified IELTS Trainer", "Corporate Trainer"],
+  credentialsList: [qualification, professionalRole, "IDP-Certified IELTS Trainer", "Corporate Trainer"],
   city: "Lahore, Pakistan",
   timezone: "PKT (GMT+5)",
   /** Canonical business timezone for batch-date comparison/formatting — see lib/batches.ts. */
