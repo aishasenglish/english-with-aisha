@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     "Expert online O Level, IGCSE and A Level English coaching. Cambridge & Edexcel, live on Zoom, examiner-style marking. Taught by an MA English Literature lecturer.",
   alternates: { canonical: "/courses/o-a-level-english" },
   openGraph: {
-    title: "O & A Level English Tuition Online | English with Aisha",
+    title: `O & A Level English Tuition Online | ${site.brandName}`,
     description:
       "Expert online O Level, IGCSE and A Level English coaching. Cambridge & Edexcel, live on Zoom, examiner-style marking.",
     url: pageUrl,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
         url: "/images/og-o-a-level.jpg",
         width: 1200,
         height: 630,
-        alt: "O & A Level English — English with Aisha",
+        alt: `O & A Level English — ${site.brandName}`,
       },
     ],
   },

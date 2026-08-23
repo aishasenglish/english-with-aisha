@@ -1,5 +1,5 @@
 export const site = {
-  brandName: "English with Aisha",
+  brandName: "Aisha's English",
   domain: "aishasenglish.com",
   tagline: "Master English. Open the world.",
   founder: "Aisha",

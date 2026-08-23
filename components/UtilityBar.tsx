@@ -1,38 +1,43 @@
 import Link from "next/link";
 import { site } from "@/content/site";
-import { nextBatch } from "@/content/batches";
 
 export default function UtilityBar() {
-  const batch = nextBatch();
-
   return (
-    <div className="bg-sea-wash text-sea-deep text-xs sm:text-sm">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-10 flex items-center justify-center min-[430px]:justify-between gap-3">
-        <div className="hidden min-[430px]:flex items-center gap-3 sm:gap-5 min-w-0">
-          <span className="hidden sm:inline font-medium whitespace-nowrap">
-            {site.timezone}
-          </span>
-          {batch && (
-            <>
-              <span className="hidden sm:block w-px h-4 bg-sea-edge" aria-hidden />
-              <Link href="/batches" className="hidden min-[430px]:block hover:text-ink transition-colors truncate py-2">
-                Next batch:{" "}
-                {new Date(batch.startDate).toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "long",
-                })}
-              </Link>
-            </>
-          )}
-        </div>
-        <div className="flex items-center gap-3 sm:gap-5 shrink-0">
-          <Link href="/free-diagnostic-test" className="inline-flex min-h-10 items-center hover:text-ink transition-colors whitespace-nowrap">
-            Free diagnostic test
+    <div className="bg-sea-wash text-sea-deep text-[13px] sm:text-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-11 flex items-center justify-center md:justify-between gap-3">
+        {/* Phones below 768px: a single centred link, nothing else. */}
+        <Link
+          href="/#choose-your-path"
+          className="md:hidden inline-flex min-h-11 items-center text-center hover:text-ink transition-colors"
+        >
+          Get a free course recommendation
+        </Link>
+
+        {/* Tablets and desktops from 768px upward. */}
+        <div className="hidden md:flex items-center gap-3 lg:gap-5 min-w-0">
+          <span className="font-medium whitespace-nowrap">{site.timezone}</span>
+          <span className="w-px h-4 bg-sea-edge" aria-hidden />
+          <Link
+            href="/batches"
+            className="inline-flex min-h-11 items-center hover:text-ink transition-colors whitespace-nowrap"
+          >
+            Ask about the next batch
           </Link>
-          <span className="hidden sm:block w-px h-4 bg-sea-edge" aria-hidden />
-          <a href={`tel:+${site.whatsapp.intl}`} className="hidden sm:inline hover:text-ink transition-colors">
+        </div>
+        <div className="hidden md:flex items-center gap-3 lg:gap-5 shrink-0">
+          <a
+            href={`tel:+${site.whatsapp.intl}`}
+            className="inline-flex min-h-11 items-center hover:text-ink transition-colors whitespace-nowrap"
+          >
             {site.whatsapp.display}
           </a>
+          <span className="w-px h-4 bg-sea-edge" aria-hidden />
+          <Link
+            href="/#choose-your-path"
+            className="inline-flex min-h-11 items-center hover:text-ink transition-colors whitespace-nowrap"
+          >
+            Free course recommendation
+          </Link>
         </div>
       </div>
     </div>

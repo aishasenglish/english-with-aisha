@@ -6,7 +6,11 @@ const linkClass =
 
 export default function AudiencePathways() {
   return (
-    <section className="bg-ivory py-14 sm:py-16 lg:py-20 px-4" aria-labelledby="audience-pathways-heading">
+    <section
+      id="choose-your-path"
+      className="bg-ivory py-14 sm:py-16 lg:py-20 px-4"
+      aria-labelledby="audience-pathways-heading"
+    >
       <div className="max-w-6xl mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
           <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center justify-center gap-3 mb-3">
