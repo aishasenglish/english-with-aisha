@@ -9,7 +9,7 @@ type Props = {
 
 export default function CTASection({
   title = "Ready to take English seriously?",
-  subtitle = "Start with a free diagnostic test, or message me directly on WhatsApp — I'll help you choose the right course.",
+  subtitle = "Start with a free course recommendation, or message me directly on WhatsApp — I'll help you choose the right course.",
   whatsappMessage,
 }: Props) {
   return (
@@ -43,7 +43,7 @@ export default function CTASection({
         <p className="text-ink-soft text-base sm:text-lg mb-7 sm:mb-8">{subtitle}</p>
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center">
           <Button href="/free-diagnostic-test" variant="coral" size="lg" className="w-full sm:w-auto">
-            Take the Free Diagnostic Test
+            Request a Free Recommendation
           </Button>
           <Button
             href={whatsappLink(whatsappMessage)}

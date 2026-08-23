@@ -8,7 +8,7 @@ import AboutAisha from "@/components/AboutAisha";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import CoachingProcess from "@/components/CoachingProcess";
 import BatchTable from "@/components/BatchTable";
-import LeadMagnet from "@/components/LeadMagnet";
+import LeadCaptureSection from "@/components/LeadCaptureSection";
 import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
 import { site } from "@/content/site";
@@ -60,7 +60,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <LeadMagnet />
+      <LeadCaptureSection />
       <CTASection />
     </>
   );

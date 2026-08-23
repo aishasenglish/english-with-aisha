@@ -31,7 +31,7 @@ export default function CourseHero({ course }: Props) {
         </ul>
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center">
           <Button href="/free-diagnostic-test" variant="coral" size="lg" className="w-full sm:w-auto">
-            Take the Free Diagnostic Test
+            Request a Free Recommendation
           </Button>
           <Button
             href={courseEnrollLink(course.name)}

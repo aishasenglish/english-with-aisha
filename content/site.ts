@@ -19,7 +19,13 @@ export const site = {
   email: "hello@englishwithaisha.com",
   showPrices: true,
   currency: "PKR",
-  formspreeEndpoint: "https://formspree.io/f/PLACEHOLDER",
+  /**
+   * Read from NEXT_PUBLIC_FORMSPREE_ENDPOINT (see .env.example) rather than a literal
+   * placeholder — see lib/forms.ts for the validation every form checks before it will
+   * render. This must stay a direct `process.env.NEXT_PUBLIC_...` reference (not routed
+   * through a variable) so Next.js can inline it into the client bundle at build time.
+   */
+  formspreeEndpoint: process.env.NEXT_PUBLIC_FORMSPREE_ENDPOINT?.trim() ?? "",
   socials: {
     youtube: "#",
     instagram: "#",

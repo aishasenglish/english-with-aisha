@@ -68,8 +68,13 @@ Open `content/testimonials.ts` and replace (or add to) the placeholder objects:
 
 ### Set the Formspree endpoint
 1. Go to [formspree.io](https://formspree.io) and create a free account
-2. Create a new form and copy the endpoint URL
-3. Open `content/site.ts` and replace `formspreeEndpoint` with your real URL
+2. Create a new form and copy the endpoint URL (it looks like `https://formspree.io/f/xxxxxxxx`)
+3. Copy `.env.example` to `.env.local` and paste it into `NEXT_PUBLIC_FORMSPREE_ENDPOINT`
+
+Until a valid endpoint is set, every form on the site (the request-a-recommendation form and
+the contact form) shows a WhatsApp fallback instead of rendering a form that can't submit
+anywhere — see `lib/forms.ts` for the validation that decides this. Never paste a real endpoint
+into `content/site.ts` directly, and never commit `.env.local`.
 
 ### Add social media links
 Open `content/site.ts` and replace `"#"` with your real URLs in the `socials` object:

@@ -6,7 +6,7 @@ import { whatsappLink } from "@/lib/whatsapp";
 const learnLinks = [
   { label: "How it works", href: "/how-it-works" },
   { label: "Upcoming batches", href: "/batches" },
-  { label: "Free diagnostic test", href: "/free-diagnostic-test" },
+  { label: "Free course recommendation", href: "/free-diagnostic-test" },
   { label: "Success stories", href: "/success-stories" },
   { label: "FAQ", href: "/faq" },
 ];

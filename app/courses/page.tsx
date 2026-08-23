@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import ServiceCard from "@/components/ServiceCard";
-import LeadMagnet from "@/components/LeadMagnet";
+import LeadCaptureSection from "@/components/LeadCaptureSection";
 import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
 import { courses } from "@/content/courses";
@@ -38,7 +38,7 @@ export default function CoursesPage() {
         </div>
       </section>
 
-      <LeadMagnet />
+      <LeadCaptureSection />
       <CTASection />
     </>
   );
