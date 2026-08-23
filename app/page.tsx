@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/Hero";
+import AudiencePathways from "@/components/AudiencePathways";
 import CourseExplorer from "@/components/CourseExplorer";
 import Formats from "@/components/Formats";
 import StatsBand from "@/components/StatsBand";
@@ -17,13 +18,14 @@ import { site } from "@/content/site";
 export const metadata: Metadata = {
   title: `${site.brandName} — ${site.tagline}`,
   description:
-    "Expert online English coaching for IELTS, PTE, TOEFL, Writing & Spoken English. Guided by Aisha — MA English Literature, College Lecturer. Live on Zoom, classes recorded.",
+    "Expert English coaching for O/A Levels, IGCSE, IELTS, PTE and TOEFL, plus Spoken English and Professional English for adults. Personalised live online teaching with Aisha — MA English Literature, College Lecturer.",
 };
 
 export default function HomePage() {
   return (
     <>
       <Hero />
+      <AudiencePathways />
       <CourseExplorer />
       <Formats />
       <StatsBand />

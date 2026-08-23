@@ -26,12 +26,11 @@ export default function Hero() {
               {site.credentials}
             </p>
             <h1 className="font-serif text-[2rem] sm:text-4xl lg:text-[2.75rem] font-medium leading-[1.08] tracking-[-0.025em] text-ink mb-5 sm:mb-6">
-              Master English to Advance Your Career and Pass with Confidence.
+              Expert English Coaching for Exams, School and Confident Communication.
             </h1>
             <p className="text-base sm:text-[1.0625rem] font-normal leading-relaxed text-ink-soft mb-7 sm:mb-9">
-              Personalised, live online training for IELTS, PTE, O/A Levels, and corporate
-              communication. Get Cambridge-aligned mentoring and continuous progress tracking
-              from a government college lecturer.
+              Prepare for IELTS, PTE, TOEFL and O/A Level English, or improve your spoken,
+              written and professional communication through personalised live online teaching.
             </p>
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 mb-8 sm:mb-9">
               <a
