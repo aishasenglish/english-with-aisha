@@ -1,74 +1,116 @@
 import Link from "next/link";
 import { courses } from "@/content/courses";
+import { HOME_COURSES, DEFAULT_DELIVERY_LINE, corporatePanel } from "@/content/homeCourses";
+import { whatsappLink } from "@/lib/whatsapp";
 
-type Goal = "exam" | "write" | "speak";
-
-const COURSE_META: Record<string, { duration: string; target: string; goals: Goal[] }> = {
-  ielts: { duration: "Live online · recorded", target: "Target Band 7+", goals: ["exam"] },
-  pte: { duration: "Live online · recorded", target: "Target 79+", goals: ["exam"] },
-  toefl: { duration: "Live online · recorded", target: "Target 100+", goals: ["exam"] },
-  "english-writing": { duration: "Live online · recorded", target: "Weekly marked work", goals: ["write"] },
-  "spoken-english": { duration: "Live online · recorded", target: "Small groups", goals: ["speak"] },
-  "o-a-level-english": { duration: "Live online · recorded", target: "Cambridge & Edexcel", goals: ["exam"] },
-};
-
-const EXPLORER_COURSES = courses
-  .filter((c) => COURSE_META[c.slug])
-  .map((c) => ({ ...c, ...COURSE_META[c.slug] }));
+const CARDS = HOME_COURSES.map((meta) => {
+  const course = courses.find((c) => c.slug === meta.slug)!;
+  return {
+    slug: meta.slug,
+    category: meta.category,
+    name: course.name,
+    href: `/courses/${course.slug}`,
+    description: meta.description,
+    bestFor: meta.bestFor,
+    feature: meta.feature,
+    ctaLabel: meta.ctaLabel,
+    delivery: meta.delivery ?? DEFAULT_DELIVERY_LINE,
+    whatsappMessage:
+      meta.whatsappMessageOverride ??
+      `Hi Aisha! I'm interested in the ${course.name} programme. Could you share the current schedule, format and fee details?`,
+  };
+});
 
 export default function CourseExplorer() {
   return (
     <section className="pt-12 sm:pt-16 lg:pt-20 pb-14 sm:pb-16 lg:pb-20 px-4" id="courses">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4 mb-7 sm:mb-10">
-          <div>
+        <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-5 mb-3">
+          <div className="max-w-2xl">
             <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
-              Courses
+              English programmes
               <span className="h-0.5 w-9 bg-coral" aria-hidden />
             </p>
-            <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink leading-tight">
-              Six ways to get your English where it needs to be
+            <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink leading-tight mb-3">
+              Choose the programme that fits your goal.
             </h2>
+            <p className="text-ink-soft text-base sm:text-lg leading-relaxed">
+              Every programme is taught live online and includes recordings, guided practice and
+              personal feedback. Select a programme to see the complete syllabus and ask about the
+              available schedule.
+            </p>
           </div>
           <Link
             href="/courses"
-            className="font-serif text-sm font-medium uppercase tracking-wide border-b-2 border-coral min-h-11 hover:text-amber-dark inline-flex items-center gap-2 self-start"
+            className="font-serif text-sm font-medium uppercase tracking-wide border-b-2 border-coral min-h-11 hover:text-amber-dark inline-flex items-center gap-2 self-start shrink-0"
           >
-            All courses
+            View All Programme Details
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" />
             </svg>
           </Link>
         </div>
 
-        <p className="sm:hidden text-xs text-ink-faint mb-3">Swipe to compare courses</p>
-        <div className="mobile-card-rail flex overflow-x-auto overscroll-x-contain snap-x snap-mandatory gap-4 pb-3 sm:grid sm:grid-cols-2 lg:grid-cols-3 sm:gap-6" aria-label="Course options">
-          {EXPLORER_COURSES.map((c) => (
-            <Link
-              href={`/courses/${c.slug}`}
-              key={c.slug}
-              className="w-[84vw] max-w-[320px] shrink-0 snap-start sm:w-auto sm:max-w-none rounded-md border border-stone hover:border-line-strong sm:hover:-translate-y-1 transition-[transform,border-color] duration-200 flex flex-col p-5 sm:p-6 lg:p-8 bg-[rgba(240,240,240,0.4)]"
-            >
-              {c.badge && (
-                <span
-                  className={`inline-block self-start rounded-sm border px-2.5 py-1 mb-4
-                              text-[0.6875rem] font-medium uppercase tracking-[0.10em]
-                              ${c.badgeBorder} ${c.badgeText}`}
-                >
-                  {c.badge}
-                </span>
-              )}
-              <span className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint mb-2">
-                {c.goals.includes("exam") ? "Exam preparation" : "Skills training"}
+        <p className="text-sm text-ink-faint mb-8 sm:mb-10">
+          Not sure?{" "}
+          <Link href="/#finder" className="underline underline-offset-2 hover:text-coral">
+            Use the programme matcher above
+          </Link>
+          .
+        </p>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          {CARDS.map((c) => (
+            <article key={c.slug} className="flex flex-col rounded-md border border-stone hover:border-line-strong transition-colors p-5 sm:p-6 bg-white">
+              <span className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-teal mb-2">
+                {c.category}
               </span>
-              <h3 className="text-xl font-medium tracking-[0.01em] text-ink mb-3">{c.name}</h3>
-              <p className="text-[0.9375rem] font-normal leading-[1.7] text-ink-soft flex-1">{c.summary}</p>
-              <div className="flex flex-col items-start sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-3 pt-4 mt-4 border-t border-stone text-sm text-ink-soft">
-                <span>{c.duration}</span>
-                <strong className="font-serif text-ink text-xs">{c.target}</strong>
+              <h3 className="text-xl font-medium tracking-[0.01em] text-ink mb-2">{c.name}</h3>
+              <p className="text-base text-ink-soft leading-relaxed mb-4">{c.description}</p>
+
+              <p className="text-sm text-ink-soft mb-2">
+                <span className="font-medium text-ink">Best for:</span> {c.bestFor}
+              </p>
+              <p className="text-sm text-ink-soft mb-4">{c.feature}</p>
+
+              <p className="text-xs text-muted pt-4 mb-5 border-t border-stone">{c.delivery}</p>
+
+              <div className="mt-auto flex flex-col gap-3">
+                <Link
+                  href={c.href}
+                  className="w-full min-h-12 inline-flex items-center justify-center text-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3 transition-colors"
+                >
+                  {c.ctaLabel}
+                </Link>
+                <a
+                  href={whatsappLink(c.whatsappMessage)}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full min-h-12 inline-flex items-center justify-center text-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3 transition-colors"
+                >
+                  Ask About This Programme
+                </a>
               </div>
-            </Link>
+            </article>
           ))}
+        </div>
+
+        <div className="mt-8 sm:mt-10 rounded-md border border-stone bg-ivory p-6 sm:p-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">
+          <div className="flex-1">
+            <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint mb-2">
+              {corporatePanel.eyebrow}
+            </p>
+            <h3 className="font-serif text-lg sm:text-xl font-medium text-ink mb-2">{corporatePanel.heading}</h3>
+            <p className="text-sm text-ink-soft leading-relaxed">{corporatePanel.body}</p>
+          </div>
+          <a
+            href={whatsappLink(corporatePanel.whatsappMessage)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="shrink-0 w-full md:w-auto min-h-12 inline-flex items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-5 py-3 transition-colors"
+          >
+            {corporatePanel.ctaLabel}
+          </a>
         </div>
       </div>
     </section>
