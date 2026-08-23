@@ -4,10 +4,14 @@ import Button from "@/components/Button";
 import FadeUp from "@/components/FadeUp";
 import { whatsappLink } from "@/lib/whatsapp";
 
+// Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
+// daily so a page built once doesn't keep showing an intake after its date has passed.
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Upcoming Batches",
   description:
-    "New English coaching batches start every 15 days. IELTS, PTE, TOEFL, Writing, Spoken English — enroll on WhatsApp.",
+    "Confirmed English coaching intake dates for IELTS, PTE, TOEFL, Writing, Spoken English and O/A Level English — ask Aisha on WhatsApp.",
 };
 
 const enrollSteps = [
@@ -25,8 +29,8 @@ export default function BatchesPage() {
             Upcoming batches.
           </h1>
           <p className="text-ink-soft text-lg max-w-xl mx-auto">
-            A new batch begins every 15 days, so you&apos;re never far from a fresh start. Seats are
-            limited to keep each batch focused.
+            Group dates are published after schedules are confirmed. One-to-one availability is
+            arranged separately.
           </p>
         </div>
       </section>
@@ -34,7 +38,7 @@ export default function BatchesPage() {
       <section className="py-20 px-4 bg-ivory">
         <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <BatchTable />
+            <BatchTable hideViewAllLink />
           </FadeUp>
         </div>
       </section>

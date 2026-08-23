@@ -16,7 +16,8 @@ export const faqs: FAQ[] = [
   },
   {
     question: "How often do new batches start?",
-    answer: "A new batch begins every 15 days.",
+    answer:
+      "New groups open regularly. Ask about the next confirmed intake, or check current availability on the batches page.",
   },
   {
     question: "What does it cost?",

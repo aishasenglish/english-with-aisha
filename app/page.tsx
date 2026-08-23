@@ -13,6 +13,10 @@ import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
 import { site } from "@/content/site";
 
+// Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
+// daily so a page built once doesn't keep showing an intake after its date has passed.
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: `${site.brandName} — ${site.tagline}`,
   description:
@@ -34,22 +38,24 @@ export default function HomePage() {
 
       <CoachingProcess />
 
-      {/* Batch table */}
+      {/* Availability */}
       <section className="py-14 sm:py-16 lg:py-20 px-4 bg-ivory">
         <div className="max-w-5xl mx-auto">
           <FadeUp>
-            <div className="flex flex-wrap items-end justify-between gap-4 mb-7 sm:mb-10">
-              <div>
-                <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
-                  Dates
-                  <span className="h-0.5 w-9 bg-coral" aria-hidden />
-                </p>
-                <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink">
-                  Upcoming batches
-                </h2>
-              </div>
+            <div className="mb-7 sm:mb-10 max-w-2xl">
+              <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
+                Current availability
+                <span className="h-0.5 w-9 bg-coral" aria-hidden />
+              </p>
+              <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink mb-3">
+                Upcoming live online intakes
+              </h2>
+              <p className="text-ink-soft leading-relaxed">
+                Confirmed dates are listed in Pakistan Standard Time. If your programme is not
+                shown, ask Aisha about the next suitable group or one-to-one opening.
+              </p>
             </div>
-            <BatchTable />
+            <BatchTable limit={3} />
           </FadeUp>
         </div>
       </section>

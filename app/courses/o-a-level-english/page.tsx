@@ -12,6 +12,10 @@ import { whatsappLink } from "@/lib/whatsapp";
 
 const course = courses.find((c) => c.slug === "o-a-level-english")!;
 
+// Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
+// daily so a page built once doesn't keep showing an intake after its date has passed.
+export const revalidate = 3600;
+
 const YEARS_EXPERIENCE = "10+";
 const CLASS_SIZE_MAX = 8;
 
@@ -839,7 +843,7 @@ export default function OALevelEnglishPage() {
           <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
             Upcoming O & A Level batches
           </h2>
-          <BatchTable />
+          <BatchTable courseSlug="o-a-level-english" />
           <p className="text-muted text-sm mt-6 text-center">
             Batches are kept small deliberately — {CLASS_SIZE_MAX} students, so every script gets
             marked properly. Places for a given exam session close once teaching is underway.

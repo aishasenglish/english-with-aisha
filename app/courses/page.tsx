@@ -8,7 +8,7 @@ import { courses } from "@/content/courses";
 export const metadata: Metadata = {
   title: "Courses",
   description:
-    "Online English courses for IELTS, PTE, TOEFL, English Writing, and Spoken English. Live on Zoom, classes recorded, new batch every 15 days.",
+    "Online English courses for IELTS, PTE, TOEFL, English Writing, and Spoken English. Live on Zoom, classes recorded.",
 };
 
 export default function CoursesPage() {

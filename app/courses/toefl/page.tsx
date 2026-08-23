@@ -10,6 +10,10 @@ import { courses } from "@/content/courses";
 
 const course = courses.find((c) => c.slug === "toefl")!;
 
+// Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
+// daily so a page built once doesn't keep showing an intake after its date has passed.
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "TOEFL iBT Course",
   description:
@@ -29,7 +33,7 @@ export default function TOEFLPage() {
           <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
             Upcoming TOEFL batches
           </h2>
-          <BatchTable />
+          <BatchTable courseSlug="toefl" />
         </div>
       </section>
 

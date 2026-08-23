@@ -38,13 +38,19 @@ Edit `content/site.ts`:
 In `content/site.ts`, set `showPrices: false` to replace all prices with "Message for current fee". Set `true` to show the price from `courses.ts`.
 
 ### Add a new batch
-Open `content/batches.ts` and add a new object to the array:
+See `docs/updating-batches.md` for the full process (publication rules, the Pakistan-timezone
+requirement, and how past dates get excluded automatically). In short, open `content/batches.ts`
+and add a new object to the array:
 ```ts
 {
   id: "batch-004",
-  courseSlug: "ielts",  // or "all", "pte", "toefl", "english-writing", "spoken-english"
-  startDate: "2026-09-01",
-  status: "Open",       // "Open" | "Filling Fast" | "Closed"
+  courseSlugs: ["ielts"],   // one or more slugs from content/courses.ts
+  startDate: "2026-09-01",  // "YYYY-MM-DD", a confirmed Pakistan calendar date
+  status: "Open",           // "Open" | "Filling Fast" | "Closed"
+  format: "Live Online Group", // or "One-to-One"
+  timezone: "Asia/Karachi",
+  published: true,          // only once the date is actually confirmed
+  verifiedAt: "2026-09-01", // today's date, when you checked this is accurate
 },
 ```
 

@@ -8,6 +8,8 @@ export const site = {
   credentialsList: ["MPhil in English Literature", "IDP-Certified IELTS Trainer", "Corporate Trainer"],
   city: "Lahore, Pakistan",
   timezone: "PKT (GMT+5)",
+  /** Canonical business timezone for batch-date comparison/formatting — see lib/batches.ts. */
+  ianaTimezone: "Asia/Karachi",
   whatsapp: {
     display: "0311-2233671",
     intl: "923112233671",
@@ -17,7 +19,6 @@ export const site = {
   email: "hello@englishwithaisha.com",
   showPrices: true,
   currency: "PKR",
-  batchCadenceDays: 15,
   formspreeEndpoint: "https://formspree.io/f/PLACEHOLDER",
   socials: {
     youtube: "#",
