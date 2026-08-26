@@ -58,6 +58,9 @@ export default function IELTSFinalCTA() {
             href={whatsappLink(ieltsFinalEnquiry.whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="final_enquiry"
+            data-analytics-intent="discuss_goal"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
           >
             {finalCta.primaryLabel}
@@ -66,6 +69,10 @@ export default function IELTSFinalCTA() {
           {formConfigured ? (
             <Link
               href="/free-diagnostic-test?programme=ielts&source=ielts-page"
+              data-analytics-event="assessment_cta_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="request_assessment"
+              data-analytics-source="ielts-page"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.formCtaLabel}
@@ -74,6 +81,9 @@ export default function IELTSFinalCTA() {
             <a
               href={emailLink(ieltsFinalEnquiry.emailSubject, ieltsFinalEnquiry.emailBody, site.email)}
               aria-label={finalCta.emailAccessibleLabel}
+              data-analytics-event="email_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="send_email"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.emailCtaLabel}

@@ -7,6 +7,8 @@ import { formsAreConfigured, getFormEndpoint } from "@/lib/forms";
 import { leadCapture } from "@/content/leadCapture";
 import { ieltsFinalEnquiry, ieltsFormVariant } from "@/content/ieltsEnquiry";
 import type { EnquirySource, EnquiryVariant } from "@/lib/enquiryQuery";
+import { track } from "@/lib/analytics/track";
+import type { AnalyticsErrorType, AnalyticsSource } from "@/lib/analytics/events";
 
 type FormData = {
   name: string;
@@ -56,6 +58,14 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
   const submittingRef = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
   const isIelts = variant === "ielts";
+  // IELTS Step 12: fires assessment_form_start at most once per mount, on the first meaningful
+  // edit -- never on load, on the preselected/locked programme field's initial render, or on
+  // every keystroke thereafter. Analytics events only ever fire for the "ielts" variant, since
+  // AnalyticsProgramme only has one allowed value.
+  const formStartTrackedRef = useRef(false);
+  // Only "ielts-page" or "general" reach analytics -- the broader EnquirySource values
+  // ("homepage", "courses-hub") collapse to "general" for this narrower, allowlisted field.
+  const analyticsSource: AnalyticsSource = source === "ielts-page" ? "ielts-page" : "general";
 
   useEffect(() => {
     if (status === "error") {
@@ -64,7 +74,25 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
   }, [status]);
 
   function update(field: keyof FormData, value: string) {
+    if (isIelts && !formStartTrackedRef.current) {
+      formStartTrackedRef.current = true;
+      track("assessment_form_start", {
+        programme: "ielts",
+        page_path: "/free-diagnostic-test",
+        source: analyticsSource,
+      });
+    }
     setForm((prev) => ({ ...prev, [field]: value }));
+  }
+
+  function trackFormError(errorType: AnalyticsErrorType) {
+    if (!isIelts) return;
+    track("assessment_form_error", {
+      programme: "ielts",
+      page_path: "/free-diagnostic-test",
+      source: analyticsSource,
+      error_type: errorType,
+    });
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -75,6 +103,7 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
     if (!endpoint) {
       // The unconfigured fallback below renders instead of this form, so this
       // shouldn't be reachable — but fail closed rather than fetching "".
+      trackFormError("configuration");
       setStatus("error");
       return;
     }
@@ -95,8 +124,21 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
           ...(form.email ? { _replyto: form.email } : {}),
         }),
       });
-      setStatus(res.ok ? "success" : "error");
+      if (res.ok) {
+        setStatus("success");
+        if (isIelts) {
+          track("assessment_form_submit", {
+            programme: "ielts",
+            page_path: "/free-diagnostic-test",
+            source: analyticsSource,
+          });
+        }
+      } else {
+        trackFormError("provider");
+        setStatus("error");
+      }
     } catch {
+      trackFormError("network");
       setStatus("error");
     } finally {
       submittingRef.current = false;

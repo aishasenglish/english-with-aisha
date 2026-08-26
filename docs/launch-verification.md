@@ -21,9 +21,9 @@ is the third-party processor — before:
 - running paid advertising that sends traffic to a form,
 - collecting for a mailing list or newsletter (none exists yet — see `content/leadCapture.ts`'s
   note that Step 11 deliberately did not add one),
-- adding any analytics or tracking script (see `.env.example` — `NEXT_PUBLIC_GA_ID`,
-  `NEXT_PUBLIC_CLARITY_ID`, `NEXT_PUBLIC_META_PIXEL_ID` are all currently unset placeholders for
-  future services, not yet wired up).
+- adding any analytics or tracking script (see the "Analytics activation checklist" below — the
+  event contract and instrumentation exist as of IELTS Step 12, but every event resolves to a
+  no-op until this checklist is complete).
 
 Once approved pages exist at `/privacy` and `/terms`, link them from `components/Footer.tsx` and
 add both routes to `app/sitemap.ts`.
@@ -33,6 +33,70 @@ add both routes to `app/sitemap.ts`.
 - **Formspree** (`formspreeEndpoint` in `content/site.ts`, validated by `lib/forms.ts`) — receives
   whatever a visitor submits through the contact or recommendation-request form. No endpoint is
   currently configured (see `.env.example`), so no data is actually being sent anywhere yet.
+
+### Analytics activation checklist (IELTS Step 12)
+
+`lib/analytics/` implements a strict, typed event contract for the IELTS enquiry journey (see
+`docs/analytics-event-map.md` for the full funnel and per-action instrumentation table) —
+`components/analytics/AnalyticsListener.tsx` (one delegated click listener, mounted once in
+`app/layout.tsx`), `components/analytics/IELTSPageViewTracker.tsx` (fires `programme_view` once
+per navigation to `/courses/ielts`), and `components/DiagnosticForm.tsx`'s IELTS-variant
+form-lifecycle events. **All of it is currently inert.**
+`lib/analytics/config.ts`'s `analyticsIsApproved()` is hard-coded `false`, so
+`lib/analytics/track.ts`'s `track()` never dispatches anything beyond an opt-in local
+`console.debug` (itself off by default, and never active in a production build regardless of the
+opt-in flag).
+
+| Requirement | Status |
+|---|---|
+| Chosen provider | **Not yet approved** |
+| Purpose of collection | Not yet documented |
+| Consent approach | Unresolved |
+| Approved privacy notice (and cookie notice if required) | Missing — see the privacy/terms section above |
+| Data-retention setting | Unresolved |
+| Account access and ownership | Unconfirmed |
+| Advertising features / remarketing / signals / session recording | Disabled — and explicitly out of scope for this launch (see below) |
+| Production measurement ID | Not committed to source; `NEXT_PUBLIC_GA_ID` remains empty in every environment file checked into this repository |
+| Session recording (Microsoft Clarity) | **Disabled, not wired up.** Deliberately deferred — needs its own separate purpose/consent/disclosure decision. `NEXT_PUBLIC_CLARITY_ID` existing in `.env.example` is not permission to add it. |
+| Advertising pixel (Meta Pixel) | **Disabled, not wired up.** Same reasoning as Clarity, plus advertising-specific consent requirements. `NEXT_PUBLIC_META_PIXEL_ID` existing in `.env.example` is not permission to add it. |
+
+**To activate GA4 once every row above is genuinely resolved:** change
+`lib/analytics/config.ts`'s `analyticsIsApproved()` to return `true` (a deliberate, reviewed
+source edit — never inferred from an environment variable alone), set a real `NEXT_PUBLIC_GA_ID`
+matching the approved property, implement the actual provider dispatch call inside
+`lib/analytics/track.ts`'s `dispatch()` function (currently an intentionally empty, commented
+placeholder), and re-run the disabled-state network test below to confirm the *new* active state
+behaves as documented (fires only the approved events, no more).
+
+#### Analytics testing evidence (IELTS Step 12)
+
+- `npm run test:analytics` (`scripts/analytics-selftest.mts`, a dependency-free Node script — the
+  project has no test runner) — 12/12 checks passed: event-name allowlisting, payload
+  sanitisation (unrecognised programme/page_path/section/intent/source/error_type values are
+  dropped, and a payload with `name`/`email`/`whatsapp`/`href`/`message` keys added has every one
+  of those keys stripped), GA measurement-ID shape validation (valid ID accepted; empty,
+  `PLACEHOLDER`, `EXAMPLE` and legacy Universal Analytics shapes rejected), and confirmation that
+  `analyticsIsActive()` stays `false` even with a valid-shaped measurement ID present in the
+  environment.
+- A live Playwright pass against both the dev server and a local production build
+  (`npm run build && npm run start`) with no `.env.local` present (i.e. the exact shipped
+  configuration) confirmed: zero requests to any Google Analytics/Tag Manager/DoubleClick/Meta/
+  Clarity/Plausible/Umami/PostHog domain while browsing `/courses/ielts` and
+  `/free-diagnostic-test?programme=ielts&source=ielts-page` (including scrolling and opening an
+  FAQ item); zero analytics cookies or `localStorage` identifiers created; zero console errors;
+  zero dev-debug console output (the opt-in flag was unset); every documented CTA carries its
+  correct `data-analytics-*` attributes with no nested duplicate-firing elements; clicking an
+  instrumented CTA neither throws nor delays navigation; and cross-route regressions (homepage,
+  Courses hub, the WhatsApp float correctly present site-wide but still suppressed specifically on
+  `/courses/ielts` per Step 11, and the IELTS diagnostic-form variant) all still behave exactly as
+  the steps that built them left them.
+- Separately, with a temporary, non-committed `.env.local` setting only
+  `NEXT_PUBLIC_ANALYTICS_DEBUG=1` (deleted before this step's commit), a live click on the hero
+  WhatsApp CTA was confirmed to produce exactly one `[analytics:dev-only] whatsapp_click
+  {programme: ielts, page_path: /courses/ielts, section: hero, intent: discuss_goal}` console
+  line, and page load produced exactly one `programme_view` line — proving the full instrumentation
+  path (server-rendered `data-*` attributes → delegated click listener → sanitiser → dispatch)
+  works correctly end-to-end when explicitly opted in, while remaining silent by default.
 
 ### IELTS enquiry handoff (IELTS Step 9)
 

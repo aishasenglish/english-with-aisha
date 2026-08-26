@@ -5,6 +5,7 @@ import UtilityBar from "@/components/UtilityBar";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import WhatsAppFloat from "@/components/WhatsAppFloat";
+import AnalyticsListener from "@/components/analytics/AnalyticsListener";
 import DevClickToComponent from "@/components/DevClickToComponent";
 import { site } from "@/content/site";
 
@@ -68,6 +69,9 @@ export default function RootLayout({
         <main id="main-content" className="flex-1">{children}</main>
         <Footer />
         <WhatsAppFloat />
+        {/* IELTS Step 12: the one delegated click listener for the whole site — see its own
+            comment for why this stays inert (a no-op) until analytics is explicitly approved. */}
+        <AnalyticsListener />
       </body>
     </html>
   );
