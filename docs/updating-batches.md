@@ -86,13 +86,58 @@ the next one must be..."). Every `startDate` must come from a real, confirmed sc
 confirmed date exists yet, leave the array without an upcoming entry for that course — the
 website's fallback ("Ask about the next available intake") is the honest state, not a guess.
 
-## 9. Keep `verifiedAt` current
+## 9. IELTS-specific publication rules (Step 7)
+
+`/courses/ielts` no longer uses the shared `<BatchTable>` fallback —
+`components/ielts/IELTSAvailability.tsx` reads `getPublishedUpcomingBatches("ielts")` directly and
+applies stricter rules on top of the general ones above:
+
+- **`duration` and `schedule` are required, not optional, for an IELTS record to display.** A
+  record missing either is filtered out by `isCompleteIeltsIntake()` and never rendered — not
+  shown with a "TBA" or "To be confirmed" placeholder. If you don't yet know the schedule, leave
+  the record unpublished (or `duration`/`schedule` empty); the page will correctly show its
+  no-intake enquiry state instead of an incomplete card.
+- **`Filling Fast` requires `statusVerifiedAt`.** Set this to today's date whenever you manually
+  confirm that remaining capacity genuinely justifies the scarcity wording — never infer it from
+  how close the start date is. If `statusVerifiedAt` is missing, `IELTSAvailability` silently
+  displays the record as the neutral `Open` instead of an unverified scarcity claim. Re-verify and
+  update `statusVerifiedAt` periodically — there's no automatic expiry, so it's on you (or
+  whoever maintains this data) to keep it current and downgrade the status manually once
+  capacity is no longer tight.
+- **No future date may be inferred from previous dates.** Do not add a new IELTS batch by
+  extrapolating from the spacing between the closed historical records already in this file —
+  every `startDate` must come from a real, confirmed schedule (this restates rule 8 above, which
+  applies to every course, not just IELTS).
+- **One-to-one availability is not modelled by this file.** `content/batches.ts`'s `Batch` type
+  and `IELTSAvailability` only ever represent scheduled group intakes. Do not add a batch record
+  to imply one-to-one IELTS coaching is available — that would need a separate, explicitly
+  owner-confirmed data source (format availability, scheduling method, fee, capacity) that
+  doesn't exist yet. See `docs/ielts-offer-verification.md`.
+- **No published intake means the enquiry state renders, and that state does not link to
+  `/batches`.** A link to another page showing the same "nothing scheduled" information would
+  send the candidate in a conversion loop. `IELTSAvailability` only links to `/batches` when more
+  than 3 complete, published, non-past IELTS records genuinely exist, so a visitor is never sent
+  to a page with no additional relevant IELTS information.
+- **Sending an enquiry is never described as a reservation.** Both the no-intake and scheduled
+  states are careful not to imply "join the next batch," "reserve my seat," or a waitlist — none
+  of those exist as real, consent-managed systems on this site.
+- **Same-day starts:** this codebase does not automatically treat a batch starting today as still
+  open. `isPubliclyVisible()` in `lib/batches.ts` only excludes a batch once its `startDate` is
+  strictly *before* today in Pakistan time, so a same-day batch would still show unless you
+  manually set `status: "Closed"` or `published: false` once same-day enrolment is no longer
+  accepted. There is no automated same-day cutoff — treat this as a manual daily check on the
+  morning of a start date, not a rule the code enforces for you.
+- **Expired records are not duplicated with a guessed follow-up date.** Once a batch's date
+  passes, leave it in the array (unpublished, closed, for history — as the three existing
+  examples already are) rather than replacing it with a new record with an invented date.
+
+## 10. Keep `verifiedAt` current
 
 Update `verifiedAt` to today's date whenever you check that a record's information (date, status,
 format, duration, schedule) is still accurate — not just when you first create it. A stale
 `verifiedAt` is a signal to double-check the entry before trusting it.
 
-## 10. Commands
+## 11. Commands
 
 ```bash
 npm run lint
@@ -122,3 +167,8 @@ The following is a fully worked example for reference only. **Do not add this ob
   verifiedAt: "2026-08-24",
 }
 ```
+
+To mark a genuinely verified "Filling Fast" IELTS record, also set `statusVerifiedAt` (see rule 9
+above and the field comment in `content/batches.ts`) — e.g. `status: "Filling Fast"` alongside
+`statusVerifiedAt: "2026-08-24"`. Without `statusVerifiedAt`, `IELTSAvailability` displays the
+record as `Open` regardless of what `status` says.

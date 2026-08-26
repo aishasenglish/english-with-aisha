@@ -18,6 +18,14 @@ export type Batch = {
   published: boolean;
   /** "YYYY-MM-DD" — when this record was last checked against reality. Update it when you verify. */
   verifiedAt: string;
+  /**
+   * "YYYY-MM-DD" — required alongside `status: "Filling Fast"` on any IELTS-published record (see
+   * components/ielts/IELTSAvailability.tsx). "Filling Fast" is a scarcity claim, so it must carry
+   * its own recent, manual verification date separate from `verifiedAt`'s general accuracy check —
+   * never inferred from proximity to `startDate`. If absent, IELTSAvailability displays the record
+   * as the neutral "Open" instead of rendering an unverified scarcity claim.
+   */
+  statusVerifiedAt?: string;
 };
 
 // See docs/updating-batches.md for how to add, publish, or close a batch record.

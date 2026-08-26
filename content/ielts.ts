@@ -64,6 +64,15 @@ type IeltsEnrolmentDetail = {
   label: string;
 };
 
+/** One item in the "include these details" checklist shown in the no-intake availability state
+ *  (components/ielts/IELTSAvailability.tsx) — informational guidance for what to send Aisha, not
+ *  a question about an uncertain inclusion, so it's kept as its own type rather than reusing
+ *  IeltsEnrolmentDetail's similar shape. */
+type IeltsAvailabilityChecklistItem = {
+  id: string;
+  label: string;
+};
+
 export const ieltsPage = {
   hero: {
     eyebrow: "Live online IELTS preparation",
@@ -421,6 +430,40 @@ export const ieltsPage = {
       validUntilLabel: "Valid until",
       ctaLabel: "Ask About Enrolling",
     },
+  },
+
+  // IELTS Step 7: copy for components/ielts/IELTSAvailability.tsx. Keep `id` stable -- finalCta's
+  // secondaryHref links to "#ielts-availability" below. Both the no-intake enquiry state and the
+  // verified scheduled state share the section id and eyebrow; only one H2 renders per state.
+  availability: {
+    id: "ielts-availability",
+    eyebrow: "Current availability",
+
+    // No-intake enquiry state (the one currently shown -- see content/batches.ts, which has no
+    // published future IELTS record).
+    enquiryHeading: "Ask about the next suitable IELTS start.",
+    enquiryBody:
+      "No future IELTS start date is currently confirmed on this page. Share your test type, required scores, deadline, time zone and usual availability so Aisha can confirm whether a suitable option is currently available.",
+    checklistHeading: "Include these details",
+    checklistItems: [
+      { id: "test-type", label: "Academic or General Training" },
+      { id: "scores", label: "Required overall and component scores" },
+      { id: "deadline", label: "Test or application deadline" },
+      { id: "location", label: "Country and time zone" },
+      { id: "schedule-fit", label: "Days and times that usually suit you" },
+    ] as IeltsAvailabilityChecklistItem[],
+    enquiryCtaLabel: "Check IELTS Availability",
+    enquiryMessage:
+      "Hi Aisha! I would like to ask about current IELTS availability. I need [Academic or General Training], my required overall and component scores are [scores], my test or application deadline is [date], my country/time zone is [details], and the days or times that usually suit me are [details].",
+    reservationNote: "Sending an enquiry does not reserve a place, and no payment is required to ask.",
+
+    // Verified scheduled state (renders only once getPublishedUpcomingBatches("ielts") returns at
+    // least one complete record -- see components/ielts/IELTSAvailability.tsx's isCompleteIeltsIntake).
+    scheduledHeading: "Review the confirmed IELTS intake details.",
+    scheduledBody: "Check the start date, schedule, format and time zone before asking about this intake.",
+    timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
+    intakeCtaLabel: "Ask About This IELTS Intake",
+    moreAvailabilityLabel: "View all IELTS availability",
   },
 
   finalCta: {

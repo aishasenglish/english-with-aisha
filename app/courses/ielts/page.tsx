@@ -9,7 +9,7 @@ import IELTSFeedbackDemo from "@/components/ielts/IELTSFeedbackDemo";
 import IELTSVerifiedEvidence from "@/components/ielts/IELTSVerifiedEvidence";
 import IELTSLearningFormat from "@/components/ielts/IELTSLearningFormat";
 import IELTSPricing from "@/components/ielts/IELTSPricing";
-import BatchTable from "@/components/BatchTable";
+import IELTSAvailability from "@/components/ielts/IELTSAvailability";
 import IELTSFinalCTA from "@/components/ielts/IELTSFinalCTA";
 import { site } from "@/content/site";
 
@@ -49,15 +49,7 @@ export default function IELTSPage() {
       <IELTSVerifiedEvidence />
       <IELTSLearningFormat />
       <IELTSPricing />
-
-      <section id="ielts-availability" className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
-            Upcoming IELTS batches
-          </h2>
-          <BatchTable courseSlug="ielts" />
-        </div>
-      </section>
+      <IELTSAvailability />
 
       {/* The generic 15-question global FAQ is intentionally removed from this page (IELTS
           Step 1) — an IELTS-specific curated FAQ is added in a later step rather than repeating

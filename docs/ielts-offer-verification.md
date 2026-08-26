@@ -5,7 +5,44 @@ Internal record of what the current IELTS offer can and cannot claim publicly on
 rendered on the public page, and nothing here should be read as legal advice or as an answer on
 Aisha's behalf.
 
-**Last reviewed:** IELTS Step 6.
+**Last reviewed:** IELTS Step 7.
+
+## Availability state (IELTS Step 7)
+
+`components/ielts/IELTSAvailability.tsx` reads `getPublishedUpcomingBatches("ielts")` from
+`lib/batches.ts`/`content/batches.ts` directly — not the shared `<BatchTable>` fallback — and
+additionally requires `duration` and `schedule` before a record can render as a confirmed intake
+card (see `isCompleteIeltsIntake()` in that component).
+
+| Field | Current value |
+|---|---|
+| Published future IELTS intake | **None** — `content/batches.ts` has three historical records, all `status: "Closed"` and `published: false` |
+| Confirmed next start date | Not applicable — no record to confirm |
+| Confirmed schedule | Not applicable |
+| Verified seat count | Not applicable — this site never publishes a seat count |
+| Verified application/enrolment deadline | Not applicable |
+| One-to-one availability | **Not modelled** — no separate record exists; see "One-to-one availability" below |
+| Rendered page state | No-intake enquiry state (eyebrow "Current availability", heading "Ask about the next suitable IELTS start.") |
+
+Until a real intake is published, `IELTSAvailability` shows the enquiry checklist (test type,
+scores, deadline, country/time zone, usual availability) and one WhatsApp CTA. It does not link to
+`/batches`, since that page currently has no additional IELTS availability either — doing so would
+send a candidate in a conversion loop between two empty states.
+
+### One-to-one availability
+
+Not currently confirmed. Per the implementation prompt's Part F, publishing a one-to-one
+"available" state requires separate owner confirmation of: whether the option is currently
+offered, how scheduling is arranged, whether it has a distinct fee, whether there's a capacity
+limit, and whether a start date is required. None of this exists yet — the no-intake enquiry may
+ask a candidate's preferred format, but the page must not claim either format is actually
+available until this is confirmed.
+
+### Publishing a future IELTS batch
+
+See `docs/updating-batches.md` section 9 for the IELTS-specific rules on top of the general batch
+rules — in short: `duration` and `schedule` are required (not optional) for IELTS display, and
+`status: "Filling Fast"` requires a `statusVerifiedAt` date or it displays as the neutral `Open`.
 
 ## Pricing state (IELTS Step 6)
 
