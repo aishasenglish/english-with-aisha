@@ -5,7 +5,7 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 3.
+**Last reviewed:** PTE Step 5.
 
 ## Allowed internal states
 
@@ -19,6 +19,11 @@ on Aisha's behalf.
 
 | Item | State | Notes |
 |---|---|---|
+| Online delivery | **Owner confirmed** | "PTE Academic coaching is delivered online." — based on the owner-confirmed business purpose (the whole site markets online English tutoring). Exact public wording used by `components/pte/PTELearningFormat.tsx`'s `body`: "PTE Academic coaching is delivered online. The exact format, schedule, feedback, practice access and fee should be confirmed for the currently available option before payment." (PTE Step 5) |
+| Teacher-led explanation (method only) | **Owner confirmed** | Describes the teaching method already approved in Steps 2-4, not an operational quantity/platform — "Teacher-led explanation" (not "Live"), since synchronous delivery is separately unconfirmed (PTE Step 5). |
+| Focused PTE practice (method only) | **Owner confirmed** | Same basis as above (PTE Step 5). |
+| Response review (method only) | **Owner confirmed** | Reflects the Step 3 coaching-process cycle, not a submission quantity, channel or turnaround (PTE Step 5). |
+| Computer-test routines (method only) | **Owner confirmed** | Describes the teaching goal, not an official Pearson interface, simulator or scoring platform (PTE Step 5). |
 | Delivery platform | Needs owner confirmation | Not confirmed as Zoom or any other named platform. |
 | Live/asynchronous format | Needs owner confirmation | — |
 | Group availability | Needs owner confirmation | — |
@@ -63,7 +68,7 @@ on Aisha's behalf.
 | Quotation validity date | Needs owner confirmation | — |
 | Owner verification date | Not applicable | No record has been verified yet. |
 
-## What the public page currently says instead (as of PTE Step 3)
+## What the public page currently says instead (as of PTE Step 5)
 
 `/courses/pte` shows only:
 
@@ -76,6 +81,12 @@ on Aisha's behalf.
   (`components/pte/PTECoachingProcess.tsx` — PTE Step 3), describing the teaching cycle without
   asserting any unconfirmed quantity, platform, frequency or turnaround, and without claiming a
   guaranteed score or a reproduction of Pearson's scoring system;
+- an illustrative feedback demonstration and a conditional verified-evidence section
+  (`components/pte/PTEFeedbackDemo.tsx`, `PTEVerifiedEvidence.tsx` — PTE Step 4), the latter
+  rendering nothing while `content/testimonials.ts` has no PTE-tagged, consent-confirmed entry;
+- a learning-format section separating the stable, already-approved teaching method from the
+  operational details a candidate must confirm before paying
+  (`components/pte/PTELearningFormat.tsx` — PTE Step 5), with one contextual WhatsApp CTA;
 - the shared, fail-closed availability fallback (`components/BatchTable.tsx`) at
   `id="pte-availability"`, correctly showing "ask about the next available intake" since no PTE
   batch is published, with a PTE-specific WhatsApp fallback message requesting the exact test,
@@ -83,11 +94,10 @@ on Aisha's behalf.
 - a PTE-specific final CTA (`components/pte/PTEFinalCTA.tsx`) with a single WhatsApp action.
 
 It still does not show: `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely),
-or the generic 17-item `<FAQAccordion />` (removed entirely). None of these render "coming soon"
-or an empty heading in their place — they are simply absent until their own verified replacement
-step. Sample feedback artefacts, testimonials, verified evidence, learning format, pricing,
-availability redesign and a specialist FAQ are all deliberately deferred to their own later PTE
-steps, not added here.
+`<LearningFormats>` (never rendered on this page), or the generic 17-item `<FAQAccordion />`
+(removed entirely). None of these render "coming soon" or an empty heading in their place — they
+are simply absent until their own verified replacement step. Pricing, availability redesign and a
+specialist FAQ remain deliberately deferred to their own later PTE steps, not added here.
 
 ## Global FAQ audit (PTE Step 1)
 

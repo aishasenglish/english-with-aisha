@@ -45,6 +45,22 @@ type PTEImprovementPoint = {
   body: string;
 };
 
+/** One stable, already-approved (Steps 2-4) learning-experience item — never an unverified
+ *  frequency or quantity claim (components/pte/PTELearningFormat.tsx). */
+type PTELearningSupport = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+/** One operational detail a candidate should confirm before paying. This is a question to ask,
+ *  never an inclusion — see docs/pte-offer-verification.md for why each one is still unconfirmed
+ *  (components/pte/PTELearningFormat.tsx). */
+type PTEEnrolmentDetail = {
+  id: string;
+  label: string;
+};
+
 /** One score-profile observation card (components/pte/PTEScoreProfile.tsx). */
 type PteScoreObservation = {
   id: string;
@@ -422,6 +438,66 @@ export const ptePage = {
     heading: "Preparation described by learners who completed the work.",
     contextNote:
       "Experiences are individual. Progress depends on the candidate's starting point, required score, preparation time and consistent practice.",
+  },
+
+  // PTE Step 5: replaces the removed shared IncludedList/LearningFormats renders on this page.
+  // Describes only the stable teaching method already approved in Steps 2-4, plus a checklist of
+  // operational questions a candidate should confirm before paying -- never presents an
+  // unconfirmed detail (format, platform, group size, recordings, feedback frequency, mock count,
+  // fee) as an inclusion. See docs/pte-offer-verification.md for the confirmation status behind
+  // every claim here, and content/courses.ts's pte entry for why its `includes` field is no
+  // longer this page's source.
+  delivery: {
+    id: "pte-learning-format",
+    eyebrow: "Programme delivery",
+    heading: "Know how the current PTE option works before you enrol.",
+    body: "PTE Academic coaching is delivered online. The exact format, schedule, feedback, practice access and fee should be confirmed for the currently available option before payment.",
+    supportHeading: "The learning experience",
+    supportItems: [
+      {
+        id: "explanation",
+        // "Teacher-led online" rather than "Live online" -- synchronous delivery is not yet
+        // confirmed as standard to every current PTE option (see docs/pte-offer-verification.md).
+        title: "Teacher-led explanation",
+        body: "Understand the task demand, response process and relevant language skill through online instruction, with space to clarify misunderstandings.",
+      },
+      {
+        id: "practice",
+        title: "Focused PTE practice",
+        body: "Apply the lesson through relevant spoken, typed or selected-answer work before broader timed practice is introduced.",
+      },
+      {
+        id: "response-review",
+        title: "Response review",
+        body: "Identify what affected a response or answer and carry one manageable priority into the next attempt.",
+      },
+      {
+        id: "computer-test-routines",
+        title: "Computer-test routines",
+        body: "Develop the timing, attention, note-taking and response-handling routines needed for computer-based tasks where appropriate.",
+      },
+    ] as PTELearningSupport[],
+    confirmHeading: "Confirm these details for the current option",
+    confirmBody: "Ask Aisha to confirm the complete offer that applies to the current intake or private-coaching arrangement.",
+    detailsToConfirm: [
+      { id: "test-support", label: "PTE Academic or PTE Academic UKVI support" },
+      { id: "format", label: "Group or one-to-one availability" },
+      { id: "platform-schedule", label: "Class platform, days, time and time zone" },
+      { id: "frequency-duration", label: "Lesson frequency and programme duration" },
+      { id: "group-size", label: "Current group-size limit, if applicable" },
+      { id: "recordings", label: "Recording availability and access period" },
+      { id: "speaking-writing-feedback", label: "Speaking and Writing feedback method, frequency and turnaround" },
+      { id: "reading-listening-review", label: "Reading and Listening review approach" },
+      { id: "practice-mocks", label: "Timed-practice and full-mock inclusions" },
+      { id: "practice-platform", label: "Practice platform, estimated-score source and access period, if applicable" },
+      { id: "materials", label: "Official Pearson-licensed or teacher-created material" },
+      { id: "fee-policy", label: "Current fee, billing basis and relevant policies" },
+    ] as PTEEnrolmentDetail[],
+    cta: {
+      label: "Ask About the Current PTE Format",
+      message:
+        "Hi Aisha! I am interested in PTE coaching. Please confirm the current PTE Academic or PTE Academic UKVI options, group or one-to-one availability, platform, schedule and time zone, duration, recordings, feedback, practice and mock inclusions, any practice-platform access, and the current fee. My exact test, required overall and skill scores, previous result and deadline are: [details].",
+    },
   },
 
   // PTE Step 1: no confirmed PTE intake exists yet (content/batches.ts). The shared BatchTable's
