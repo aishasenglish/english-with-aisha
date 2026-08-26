@@ -150,6 +150,29 @@ Speaking entry are current, not stale content from before the format update.
 - **A complete official Skills Profile / enabling-skills breakdown.** Mentioned in passing by
   Pearson's scoring page but not detailed enough to publish a specific claim about it; not used.
 
+## PTE Step 8: FAQ fact recheck (27 August 2026)
+
+Rechecked before writing `content/pteFaqs.ts`'s "tutor feedback vs official scoring" answer
+(`feedback-vs-official-scoring`) and its use of the automated-scoring-plus-human-review claim:
+
+- `https://www.pearsonpte.com/pte-academic/scoring/` still confirms, verbatim in substance: "Institutions
+  set their own minimum scores" (receiving organisations set their own requirement — supports the
+  `required-score` FAQ answer directing candidates to the receiving organisation); an overall score
+  plus individual communicative-skill scores are reported; the test is scored by an "AI scoring
+  system"; and "some responses are also reviewed by a human expert before the automated score is
+  finalised." All four claims match what `content/pte.ts`'s `curriculum.integritySecondSentence`
+  and `content/pteFaqs.ts`'s `feedback-vs-official-scoring` answer already state — no wording
+  change was needed as a result of this recheck.
+- `https://www.pearsonpte.com/pte-academic/test-format/speaking-writing/`,
+  `.../test-format/reading/` and `.../test-format/listening/` were not re-fetched for this step —
+  no FAQ answer restates specific task names, counts or timings (Part F explicitly prohibits
+  repeating the complete task curriculum in the FAQ), so nothing from those pages needed
+  rechecking here.
+- Google's structured-data guidance was also rechecked for this step (Search appearance gallery
+  and structured-data policies pages) — the supported gallery still does not list a general FAQ
+  rich-result feature for a tutoring portfolio. No `FAQPage` JSON-LD was added to `/courses/pte`
+  as a result; see `docs/pte-offer-verification.md`'s Step 8 notes for the full reasoning.
+
 ## Recheck requirement
 
 Recheck the PTE Academic task list and public scoring facts against Pearson's current format and

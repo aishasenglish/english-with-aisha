@@ -20,10 +20,15 @@ export type FAQ = {
 export const faqs: FAQ[] = [
   // --- Homepage closing FAQ: the six questions most likely to stop an enrolment ---
   {
+    // Corrected (PTE Step 8): "live online" asserted synchronous delivery across every named
+    // programme, but live/synchronous delivery is not owner-confirmed for PTE (see
+    // docs/pte-offer-verification.md's "Delivery platform" / "Live/asynchronous format" rows,
+    // both "Needs owner confirmation"). Removed "live" rather than leaving an unconfirmed
+    // universal claim this global answer can't back up for every programme it names.
     id: "programmes-taught",
     question: "Which learners and programmes do you teach?",
     answer:
-      "Aisha teaches live online English across school examinations, IELTS and related tests, spoken English, English writing and professional communication. Choose a programme from the website or send your goal if you are unsure where it fits.",
+      "Aisha teaches online English across school examinations, IELTS and related tests, spoken English, English writing and professional communication. Choose a programme from the website or send your goal if you are unsure where it fits.",
     published: true,
     homepage: true,
   },
@@ -44,10 +49,14 @@ export const faqs: FAQ[] = [
     homepage: true,
   },
   {
+    // Corrected (PTE Step 8): "can differ by programme, learning format and intake" asserted a
+    // specific, unconfirmed reason for price variation. Rewritten to state only what's actually
+    // confirmed — Aisha confirms the complete current fee before enrolment — without asserting
+    // why it might vary.
     id: "fees-and-schedules",
     question: "How are course fees confirmed?",
     answer:
-      "Fees can differ by programme, learning format and intake. Aisha will share the current fee and payment details before you decide whether to enrol.",
+      "Aisha confirms the complete current fee, billing basis and payment details for your specific programme and option before you decide whether to enrol.",
     published: true,
     homepage: true,
   },
@@ -103,10 +112,12 @@ export const faqs: FAQ[] = [
     published: true,
   },
   {
+    // Corrected (PTE Step 8): same issue as fees-and-schedules above — "differ by programme,
+    // format and intake" asserted a specific, unconfirmed reason for price variation.
     id: "fees-payment",
     question: "What does it cost, and how do I pay?",
     answer:
-      "Fees differ by programme, format and intake, and are confirmed directly with you. Message Aisha on WhatsApp for the current fee and payment options before you enrol.",
+      "The current fee, billing basis and payment options are confirmed directly with you for your specific programme before you enrol. Message Aisha on WhatsApp to ask.",
     published: true,
   },
   {
@@ -149,13 +160,16 @@ export const faqs: FAQ[] = [
     published: true,
   },
   {
-    // Reviewed, not changed (Step 8): unlike its neighbours above, this doesn't assert an
-    // unconfirmed frequency, turnaround time or delivery method — it's consistent with the
-    // IELTS page's own feedback description (Steps 3-4) and every other programme's teaching
-    // approach, so it was left as-is.
+    // Corrected (PTE Step 8): "reviews your writing and speaking" universally promised both
+    // skills to every visitor, but PTE's feedback method and frequency remain unconfirmed (see
+    // docs/pte-offer-verification.md's "Speaking and writing feedback method/frequency" row,
+    // "Needs owner confirmation") — an IELTS-safe answer at Step 8 (IELTS) is no longer safe once
+    // PTE relies on this same shared entry. Rewritten so focus, submission method, frequency and
+    // delivery are confirmed per programme rather than assumed universal.
     id: "personal-feedback",
     question: "Do I get personal feedback?",
-    answer: "Yes — Aisha reviews your writing and speaking and gives specific, actionable feedback.",
+    answer:
+      "Feedback focus, submission method, frequency and delivery are confirmed for your specific programme and current option — ask Aisha what to expect before you enrol.",
     published: true,
   },
 

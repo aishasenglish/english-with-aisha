@@ -10,6 +10,7 @@ import PTEVerifiedEvidence from "@/components/pte/PTEVerifiedEvidence";
 import PTELearningFormat from "@/components/pte/PTELearningFormat";
 import PTEPricing from "@/components/pte/PTEPricing";
 import PTEAvailability from "@/components/pte/PTEAvailability";
+import PTEFAQ from "@/components/pte/PTEFAQ";
 import PTEFinalCTA from "@/components/pte/PTEFinalCTA";
 import { site } from "@/content/site";
 
@@ -54,6 +55,7 @@ export default function PTEPage() {
       <PTELearningFormat />
       <PTEPricing />
       <PTEAvailability />
+      <PTEFAQ />
       <PTEFinalCTA />
     </>
   );

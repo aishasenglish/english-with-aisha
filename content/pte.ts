@@ -569,6 +569,17 @@ export const ptePage = {
     moreAvailabilityLabel: "View all PTE availability",
   },
 
+  // PTE Step 8: heading copy for components/pte/PTEFAQ.tsx. The eight question/answer pairs
+  // themselves live in the dedicated content/pteFaqs.ts, independent of content/faqs.ts's
+  // generalFaqs.
+  faq: {
+    id: "pte-faq",
+    eyebrow: "PTE questions",
+    heading: "What to confirm before you begin.",
+    introduction:
+      "These answers cover test choice, score requirements, preparation, feedback and the current coaching offer. Ask Aisha if your deadline or requirement needs a more specific answer.",
+  },
+
   // PTE Step 1: a single strong WhatsApp action only — the configured-form/email dual-path
   // DiagnosticForm.tsx supports for IELTS (Step 9) needs its own dedicated PTE enquiry-handoff
   // step (its own field labels, success copy and submission subject), not a Step-1 addition.

@@ -5,7 +5,7 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 7.
+**Last reviewed:** PTE Step 8.
 
 ## Availability state (PTE Step 7)
 
@@ -181,13 +181,17 @@ applies, a payment note and a policy note.
   since no complete future PTE record is published, with its own WhatsApp CTA requesting the
   exact test, required overall and skill scores, previous result, deadline, time zone and usual
   availability, and a note that an enquiry does not reserve a place;
+- a PTE-specific eight-question FAQ (`components/pte/PTEFAQ.tsx`, `content/pteFaqs.ts` — PTE
+  Step 8), addressing exact-test choice, required score, information to share, tutor feedback vs.
+  official scoring, preparation time, guarantees/shortcuts, the current offer (linking to the
+  verified learning-format, pricing and availability sections) and international candidates;
 - a PTE-specific final CTA (`components/pte/PTEFinalCTA.tsx`) with a single WhatsApp action.
 
 It still does not show: `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely),
-`<LearningFormats>` (never rendered on this page), or the generic 17-item `<FAQAccordion />`
-(removed entirely). None of these render "coming soon" or an empty heading in their place — they
-are simply absent until their own verified replacement step. Pricing, availability redesign and a
-specialist FAQ remain deliberately deferred to their own later PTE steps, not added here.
+`<LearningFormats>` (never rendered on this page), or the generic 17-item `<FAQAccordion />` with
+its default `generalFaqs` (removed entirely — the page now uses `<FAQAccordion items={pteFaqs} />`
+via `PTEFAQ` instead). None of these render "coming soon" or an empty heading in their place —
+they are simply absent until their own verified replacement step.
 
 ## Global FAQ audit (PTE Step 1)
 
@@ -196,6 +200,36 @@ The IELTS Step 8 corrections to `content/faqs.ts`'s shared entries (`live-or-rec
 unconfirmed universal claims in favour of "confirmed per programme/current option" wording — this
 already protects PTE too, since those answers no longer assert anything specific to any one
 programme. No further correction was needed for PTE in this step.
+
+## Global FAQ audit (PTE Step 8)
+
+A second audit found four more shared `content/faqs.ts` entries that still contradicted this
+page's own verification state, corrected in this step (see that file for the full before/after
+comments):
+
+| ID | Problem found | Correction |
+|---|---|---|
+| `programmes-taught` | Asserted "live online" delivery across every named programme, including PTE, where live/synchronous delivery is "Needs owner confirmation" (see Operational facts above). | Removed "live"; now reads "teaches online English." |
+| `personal-feedback` | Universally promised "reviews your writing and speaking" to every visitor, while PTE's feedback method and frequency remain "Needs owner confirmation." | Rewritten so feedback focus, submission method, frequency and delivery are confirmed per programme rather than assumed. |
+| `fees-and-schedules` | Asserted fees "can differ by programme, learning format and intake" — a specific, unconfirmed reason for variation. | Rewritten to state only that Aisha confirms the complete current fee, billing basis and payment details before enrolment, without asserting why it might vary. |
+| `fees-payment` | Same issue as `fees-and-schedules`. | Same correction pattern. |
+
+The remaining audited IDs (`international-students`, `live-or-recorded`, `missed-class`,
+`new-batches`, `mock-exams`, `one-to-one-help`, `platform`, `choosing-language-test`) were
+re-reviewed against the current PTE Steps 1–7 state and found not to contradict it — no further
+change was needed for those in this step.
+
+## PTE-specific FAQ (PTE Step 8)
+
+`components/pte/PTEFAQ.tsx` renders exactly eight PTE-specific questions from
+`content/pteFaqs.ts` — independent of `content/faqs.ts`'s `generalFaqs`, so this page never
+inherits an unrelated or newly-added global entry automatically. No `FAQPage` JSON-LD was added to
+`/courses/pte`: current official Google Search-appearance gallery guidance (rechecked 27 August
+2026 — see `docs/pte-content-sources.md`) does not list a general FAQ rich-result feature for a
+tutoring portfolio, so adding markup here would carry maintenance risk without a supported
+benefit. The current-offer answer links to the verified `#pte-learning-format`, `#pte-pricing` and
+`#pte-availability` sections rather than duplicating their changing fee, date or schedule details
+in FAQ text.
 
 ## Open questions for Aisha
 
