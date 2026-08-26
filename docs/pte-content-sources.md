@@ -173,6 +173,42 @@ Rechecked before writing `content/pteFaqs.ts`'s "tutor feedback vs official scor
   rich-result feature for a tutoring portfolio. No `FAQPage` JSON-LD was added to `/courses/pte`
   as a result; see `docs/pte-offer-verification.md`'s Step 8 notes for the full reasoning.
 
+## Social image and technical SEO (PTE Step 10)
+
+`/courses/pte`'s Open Graph/Twitter image is `public/images/social/pte-academic-preparation.jpg`
+— a genuine `1200×630` file (declared dimensions match the actual pixels, confirmed via `sharp`
+metadata inspection). It was composed from the same site-approved portrait already used for IELTS
+(`public/images/og-image.jpg`, itself `960×1280`, portrait orientation) by resizing it to fill the
+canvas height (`473×630`) and centring it on a plain `#F7FAFB` (ivory/`--color-surface-tint`)
+background — padding, not cropping or stretching, following the exact IELTS Step 10 approach. No
+AI generation, retouching or identity change was applied; the photo itself is unmodified other
+than a resize. No Pearson/PTE logo, score badge, visa graphic or provider branding was added. File
+size is 53 KB (reasonable; no visible degradation at the composed resolution).
+
+This was necessary because the source portrait's aspect ratio (`0.75`, tall) cannot honestly fill
+a `1200×630` (`1.9:1`, wide) frame without either cropping off Aisha's face/body or stretching the
+image — both of which the implementation prompt explicitly disallows. Padding on a brand-neutral
+background was the only option left that keeps the photo genuine and undistorted while still
+declaring truthful dimensions.
+
+### Google Search Central guidance rechecked (27 August 2026)
+
+Confirmed via direct fetch of the current pages before implementing:
+
+- `search-gallery`: the supported rich-result gallery does not list a general `FAQPage` rich
+  result for a tutoring portfolio (also separately confirmed for PTE Step 8) — no `FAQPage`,
+  `QAPage`, `Offer`, `AggregateRating`, `Review` or `CourseInstance` markup was added to
+  `/courses/pte`. `BreadcrumbList` remains a supported, genuinely applicable type and is the only
+  structured-data addition in this step.
+- `sd-policies` / `breadcrumb`: current guidance still emphasises that structured data must
+  describe visible page content — the `BreadcrumbList` JSON-LD added to
+  `app/courses/pte/page.tsx` is generated from the exact same `ptePage.breadcrumb` array
+  `components/pte/PTEBreadcrumb.tsx` renders visibly, so the two can never disagree.
+- `title-link` / `snippet`: current guidance favours concise, descriptive, non-stuffed titles and
+  unique, accurate descriptions — the new absolute title (`Online PTE Academic Preparation |
+  Aisha's English`) and description avoid score, price, recording or availability promises per
+  Steps 2-9's own safeguards.
+
 ## Recheck requirement
 
 Recheck the PTE Academic task list and public scoring facts against Pearson's current format and

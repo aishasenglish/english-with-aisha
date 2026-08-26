@@ -43,12 +43,17 @@ export const coursePresentations: CoursePresentation[] = [
     ctaLabel: "View IELTS Programme",
   },
   {
+    // PTE Step 10: aligned with the verified /courses/pte content (Steps 1-9) after an audit
+    // found the previous copy still overstated things -- "task strategy" read like the same
+    // algorithm-shortcut marketing the page's own evidence-led positioning explicitly rejects
+    // (see content/pte.ts's curriculum.integrityHeading), and "requires PTE Academic" implied a
+    // universal acceptance claim rather than one confirmed per receiving organisation.
     slug: "pte",
     typeLabel: "English test preparation",
     shortDescription:
-      "Learn the task types, timing and communication skills required for the computer-based PTE Academic test.",
-    bestFor: "Learners whose university, migration route or professional body requires PTE Academic",
-    focus: "Computer-based task strategy and timed practice",
+      "Prepare for current PTE Academic task demands through four-skill development and timed computer-based practice.",
+    bestFor: "Candidates whose receiving organisation has confirmed PTE Academic and supplied the required score.",
+    focus: "Current task demands and timed computer-based practice",
     ctaLabel: "View PTE Programme",
   },
   {

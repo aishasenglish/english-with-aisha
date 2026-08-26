@@ -25,6 +25,12 @@ export const HOME_COURSE_DELIVERY: Partial<Record<CourseSlug, string>> = {
   // Course data lists small-group batches only (max 8 students) with no individual option, so
   // the shared "Group or one-to-one" line would overstate the current offering for this course.
   "o-a-level-english": "Live online · Small-group classes · Recordings included",
+  // PTE Step 10: the shared default line claims live delivery, group/one-to-one availability and
+  // recordings, none of which is owner-confirmed for PTE (see docs/pte-offer-verification.md's
+  // "Delivery platform" / "Live/asynchronous format" / "Group availability" / "Recording
+  // availability" rows, all "Needs owner confirmation"). Overridden with wording consistent with
+  // the verified Step 5 learning-format section instead of asserting an unconfirmed format.
+  pte: "Online coaching · Confirm current format and support",
 };
 
 // The homepage's compact corporate-training panel reuses the same shared, deliberately-hedged

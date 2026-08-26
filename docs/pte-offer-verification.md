@@ -5,7 +5,7 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 9.
+**Last reviewed:** PTE Step 10.
 
 ## Availability state (PTE Step 7)
 
@@ -209,6 +209,37 @@ Formspree endpoint is configured, otherwise a `mailto:aishasenglish@gmail.com` l
 falls back to the general form. No PTE `data-analytics-*` attributes were added (PTE conversion
 measurement remains deferred to a later step); the existing IELTS `assessment_form_*` analytics
 events remain scoped to `variant === "ielts"` only.
+
+## Technical SEO, metadata and internal linking (PTE Step 10)
+
+`app/courses/pte/page.tsx` now declares an absolute page title (`Online PTE Academic Preparation
+| Aisha's English`, bypassing the root `%s | Aisha's English` template), a page-specific
+description, page-specific Open Graph/Twitter metadata, and the new dedicated
+`public/images/social/pte-academic-preparation.jpg` social image (`1200×630`, replacing the
+inherited portrait `og-image.jpg`) — see `docs/pte-content-sources.md`'s "Social image and
+technical SEO" section for the composition method and rationale. A visible
+`components/pte/PTEBreadcrumb.tsx` (Home / Courses / PTE Academic Preparation) and a matching
+`BreadcrumbList` JSON-LD were added, both built from the same `content/pte.ts` `breadcrumb` array
+so they can never disagree. No `Offer`, `AggregateRating`, `Review`, `FAQPage`, `QAPage` or
+`CourseInstance` markup was added — current official Google guidance was rechecked and does not
+support adding any of those for this page's current state.
+
+Two cross-site contradictions were corrected as part of this step:
+
+- `content/homeCourses.ts`'s `HOME_COURSE_DELIVERY` default line ("Live online · Group or
+  one-to-one · Recordings included") asserted live delivery, group/one-to-one availability and
+  recordings for PTE, none of which is owner-confirmed (see Operational facts above). Added a
+  PTE-specific override: "Online coaching · Confirm current format and support."
+- `content/coursePresentation.ts`'s PTE card copy said "Computer-based task strategy" (read like
+  the algorithm-shortcut marketing the page's own evidence-led positioning explicitly rejects) and
+  implied migration/university acceptance was general rather than confirmed per receiving
+  organisation. Rewritten to the aligned copy specified for this step.
+
+The legacy `content/courses.ts` PTE record's `tagline`/`summary`/`price` ("score high", "smart,
+template-driven strategies", unverified `10000`) remain confirmed unreachable by any search-facing
+component for `/courses/pte` — no new consumer was introduced that would expose them, and the
+existing non-authoritative comments on that record were left in place (Steps 1, 2 and 6 already
+established and documented this).
 
 ## Global FAQ audit (PTE Step 1)
 

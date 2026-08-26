@@ -94,6 +94,16 @@ type PteIntegratedExample = {
 };
 
 export const ptePage = {
+  // PTE Step 10: backs both the visible breadcrumb (components/pte/PTEBreadcrumb.tsx) and the
+  // matching BreadcrumbList JSON-LD built in app/courses/pte/page.tsx, so the visible path and
+  // the structured data can never drift apart -- one source, two renderings. The current page has
+  // no `href` since it must not link to itself.
+  breadcrumb: [
+    { label: "Home", href: "/" },
+    { label: "Courses", href: "/courses" },
+    { label: "PTE Academic Preparation" },
+  ],
+
   hero: {
     eyebrow: "Online PTE Academic preparation",
     heading: "Prepare for the PTE Academic score your next step requires.",

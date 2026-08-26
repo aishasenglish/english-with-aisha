@@ -219,6 +219,28 @@ handle; never fill these with placeholder or invented links.
   state" section. A record missing `duration` or `schedule` is silently filtered out by
   `isCompletePteIntake()` and never rendered as a "TBA" placeholder.
 
+## PTE technical SEO, metadata and internal linking (PTE Step 10)
+
+- **Metadata**: `/courses/pte` now declares its own absolute title, description, and Open
+  Graph/Twitter metadata (including the new `public/images/social/pte-academic-preparation.jpg`,
+  a genuine `1200×630` composed image) instead of inheriting root-layout defaults or the
+  portrait `og-image.jpg`. No score, price, recording or availability promise appears in any of
+  it.
+- **Breadcrumb**: a visible `components/pte/PTEBreadcrumb.tsx` (Home / Courses / PTE Academic
+  Preparation) and a matching `BreadcrumbList` JSON-LD were added, both generated from the same
+  `content/pte.ts` `breadcrumb` array. No `Offer`, `Review`, `FAQPage`, `QAPage` or
+  `CourseInstance` markup was added — rechecked against current official Google guidance (see
+  `docs/pte-content-sources.md`).
+- **Cross-site corrections**: `content/homeCourses.ts`'s PTE override
+  ("Online coaching · Confirm current format and support") replaces the shared default line that
+  falsely implied live delivery, group/one-to-one availability and recordings for PTE.
+  `content/coursePresentation.ts`'s PTE card copy no longer uses "task strategy" wording or
+  implies general migration/university acceptance. See `docs/pte-offer-verification.md`'s
+  "Technical SEO, metadata and internal linking" section for the full detail.
+- **Verify before relying on this publicly**: production HTTPS/canonical-host behaviour, sitemap
+  entry uniqueness and social-preview rendering on the actual deployed URL — these were checked
+  against the local dev/build output in this step, not a live production deploy.
+
 ## Flagged during IELTS Step 10, not fixed (out of this step's scope)
 
 - **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is
@@ -226,11 +248,17 @@ handle; never fill these with placeholder or invented links.
   same class of unverified universal claim IELTS Step 10 removed from the root layout's
   `description` metadata ("Classes recorded.") — and it directly contradicts
   `docs/ielts-offer-verification.md`, where live/synchronous delivery, recording availability and
-  recording access period are all still "Needs owner confirmation" specifically for IELTS. Fixing
-  it is homepage content work outside an IELTS-page-specific step's scope; flagged here so it
-  isn't lost. Confirm with Aisha whether every current programme genuinely is live and recorded
-  before either keeping this sentence or rewriting it to something that doesn't assert a delivery
-  model that hasn't been confirmed for every programme.
+  recording access period are all still "Needs owner confirmation" specifically for IELTS.
+  **Also confirmed to contradict PTE** (PTE Step 10 audit — same rows are "Needs owner
+  confirmation" in `docs/pte-offer-verification.md`), and almost certainly every other programme
+  this sentence covers, since it's one shared page-level paragraph rather than a per-programme
+  field. Fixing it is homepage content work that would need to change copy shared across every
+  programme card, outside any single programme-page step's scope; flagged here so it isn't lost.
+  Confirm with Aisha whether every current programme genuinely is live and recorded before either
+  keeping this sentence or rewriting it to something that doesn't assert a delivery model that
+  hasn't been confirmed for every programme. (The per-card `delivery` line directly below this
+  paragraph is a separate, already-corrected concern — see the PTE-specific
+  `HOME_COURSE_DELIVERY` override added in PTE Step 10.)
 
 ## Flagged during Step 12, not fixed (out of this step's scope)
 
