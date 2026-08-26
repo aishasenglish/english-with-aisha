@@ -5,7 +5,31 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 6.
+**Last reviewed:** PTE Step 7.
+
+## Availability state (PTE Step 7)
+
+`components/pte/PTEAvailability.tsx` is the single source `/courses/pte` reads intake data from —
+not the shared `<BatchTable>`, which has been removed from this page entirely.
+
+| Field | Current value |
+|---|---|
+| Availability state | No future PTE intake published — the no-intake enquiry state renders |
+| Records in `content/batches.ts` tagged `pte` | Two (`batch-001`, `batch-003`), both with July/August 2026 start dates now in the past, `status: "Closed"`, `published: false` |
+| Confirmed next PTE start date | None |
+| Confirmed future PTE schedule | None |
+| Confirmed programme duration for a future intake | None |
+| Verified seat count | None — and none will ever be publicly claimed (see Part E of the implementing prompt: never invent a seat count) |
+| Verified application/enrolment deadline | None |
+| Separately modelled PTE one-to-one availability record | None — see "Open questions" below |
+| Next review responsibility | Whoever publishes the next confirmed PTE intake, following `docs/updating-batches.md` section 9b |
+
+Until a complete record exists (`pte` in `courseSlugs`, future `startDate`, `status: "Open"` or a
+recently-verified `"Filling Fast"`, confirmed `format`, `duration`, `schedule`,
+`timezone: "Asia/Karachi"`, `published: true`, current `verifiedAt`), `PTEAvailability` renders
+only the enquiry state: eyebrow "Current availability", heading "Ask about the next suitable PTE
+start.", a six-item detail checklist, and one WhatsApp CTA ("Check PTE Availability"). No past
+date, guessed recurrence, manufactured scarcity or unconfirmed one-to-one availability is shown.
 
 ## Pricing state (PTE Step 6)
 
@@ -152,10 +176,11 @@ applies, a payment note and a policy note.
 - a fee-enquiry panel (`components/pte/PTEPricing.tsx` — PTE Step 6), correctly showing no exact
   amount anywhere since `content/ptePricing.ts`'s `ptePricing.status` is `"enquire"`, with one
   WhatsApp CTA asking Aisha to confirm the complete current fee;
-- the shared, fail-closed availability fallback (`components/BatchTable.tsx`) at
-  `id="pte-availability"`, correctly showing "ask about the next available intake" since no PTE
-  batch is published, with a PTE-specific WhatsApp fallback message requesting the exact test,
-  required score, deadline, time zone and usual availability;
+- a PTE-specific availability section (`components/pte/PTEAvailability.tsx` — PTE Step 7,
+  replacing the shared `<BatchTable>` wrapper), correctly showing the no-intake enquiry state
+  since no complete future PTE record is published, with its own WhatsApp CTA requesting the
+  exact test, required overall and skill scores, previous result, deadline, time zone and usual
+  availability, and a note that an enquiry does not reserve a place;
 - a PTE-specific final CTA (`components/pte/PTEFinalCTA.tsx`) with a single WhatsApp action.
 
 It still does not show: `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely),
@@ -207,6 +232,13 @@ programme. No further correction was needed for PTE in this step.
     be created.)
 23. What is the current fee, currency and billing basis?
 24. How long is a quoted fee valid?
+25. What is the confirmed date, schedule, time zone, format and duration of the next PTE intake,
+    if any exists? (PTE Step 7 — until answered, the page correctly shows the no-intake enquiry
+    state rather than a guessed or extrapolated date.)
+26. Is one-to-one PTE coaching currently offered? If so: how does scheduling work, does it have a
+    separate fee, is there a capacity limit, and does it use a fixed start date? (PTE Step 7 — see
+    the `PTEPrivateAvailability` type sketch in the implementing prompt; nothing is modelled or
+    implied on the public page until this is confirmed.)
 
 Until these are answered, the public page deliberately shows only the verified positioning,
 test-qualifier and coaching-process content, plus a WhatsApp path to ask Aisha directly — never an

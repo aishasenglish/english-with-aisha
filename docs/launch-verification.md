@@ -191,6 +191,20 @@ handle; never fill these with placeholder or invented links.
   from August 2025) — if it happens again, update `content/pte.ts`, that document's source table,
   and `sourceVerifiedAt` together, not separately.
 
+## High priority — before publishing a PTE availability record (PTE Step 7)
+
+- **PTE availability (`components/pte/PTEAvailability.tsx`)**: this is now the *only* source
+  `/courses/pte` reads intake dates from — the shared `<BatchTable>` has been removed from this
+  page entirely. All three PTE-tagged records in `content/batches.ts` are historical (past dates,
+  `"Closed"`, `published: false`), so the page currently and correctly shows the no-intake
+  enquiry state, not a scheduled intake. To publish a real PTE intake, the record needs `pte` in
+  `courseSlugs`, a genuine future `startDate`, confirmed `format`, `duration` and `schedule`,
+  `timezone: "Asia/Karachi"`, `status: "Open"` (or a freshly-verified `"Filling Fast"` with
+  `statusVerifiedAt`), `published: true`, and a current `verifiedAt` — see
+  `docs/updating-batches.md` section 9b and `docs/pte-offer-verification.md`'s "Availability
+  state" section. A record missing `duration` or `schedule` is silently filtered out by
+  `isCompletePteIntake()` and never rendered as a "TBA" placeholder.
+
 ## Flagged during IELTS Step 10, not fixed (out of this step's scope)
 
 - **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is

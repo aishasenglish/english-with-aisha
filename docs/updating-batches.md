@@ -131,6 +131,59 @@ applies stricter rules on top of the general ones above:
   passes, leave it in the array (unpublished, closed, for history — as the three existing
   examples already are) rather than replacing it with a new record with an invented date.
 
+## 9b. PTE-specific publication rules (Step 7)
+
+`/courses/pte` no longer uses the shared `<BatchTable>` fallback —
+`components/pte/PTEAvailability.tsx` reads `getPublishedUpcomingBatches("pte")` directly and
+applies the same stricter rules IELTS Step 7 established, on top of the general ones above:
+
+- **`duration` and `schedule` are required, not optional, for a PTE record to display.** A record
+  missing either is filtered out by `isCompletePteIntake()` and never rendered — not shown with a
+  "TBA" or "To be confirmed" placeholder. If you don't yet know the schedule, leave the record
+  unpublished (or `duration`/`schedule` empty); the page will correctly show its no-intake
+  enquiry state instead of an incomplete card.
+- **`Filling Fast` requires `statusVerifiedAt`.** Set this to today's date whenever you manually
+  confirm that remaining capacity genuinely justifies the scarcity wording — never infer it from
+  how close the start date is. If `statusVerifiedAt` is missing, `PTEAvailability` silently
+  displays the record as the neutral `Open` instead of an unverified scarcity claim. This is the
+  same field IELTS uses (see the shared comment on `statusVerifiedAt` in `content/batches.ts`) —
+  re-verify and update it periodically; there's no automatic expiry.
+- **No future date may be inferred from previous dates.** Do not add a new PTE batch by
+  extrapolating from the spacing between the closed historical records already in this file, or
+  from the existence of an old multi-course batch that happened to include the `pte` slug — every
+  `startDate` must come from a real, confirmed schedule (this restates rule 8 above).
+- **One-to-one availability is not modelled by this file.** `content/batches.ts`'s `Batch` type
+  and `PTEAvailability` only ever represent scheduled group intakes. Do not add a batch record to
+  imply one-to-one PTE coaching is available — that would need a separate, explicitly
+  owner-confirmed data source (whether it's currently offered, how scheduling works, whether it
+  has a separate fee, capacity, and whether it uses a fixed start date) that doesn't exist yet.
+  See `docs/pte-offer-verification.md`.
+- **No published intake means the enquiry state renders, and that state does not link to
+  `/batches`.** A link to another page showing the same "nothing scheduled" information would
+  send the candidate in a conversion loop. `PTEAvailability` only links to `/batches` when more
+  than 3 complete, published, non-past PTE records genuinely exist, so a visitor is never sent to
+  a page with no additional relevant PTE information.
+- **Sending an enquiry is never described as a reservation.** Both the no-intake and scheduled
+  states are careful not to imply "join the next batch," "reserve my seat," or a waitlist — none
+  of those exist as real, consent-managed systems on this site.
+- **Do not label an intake card `PTE Academic UKVI` or `PTE Core`** unless the current programme
+  support and that specific intake record explicitly cover it. `PTEAvailability` currently always
+  shows the neutral "PTE Academic Preparation" title regardless of test variant, since
+  `content/batches.ts` has no field distinguishing them.
+- **Same-day starts:** this codebase does not automatically treat a batch starting today as still
+  open. `isPubliclyVisible()` in `lib/batches.ts` only excludes a batch once its `startDate` is
+  strictly *before* today in Pakistan time, so a same-day batch would still show unless you
+  manually set `status: "Closed"` or `published: false` once same-day enrolment is no longer
+  accepted. There is no automated same-day cutoff — treat this as a manual daily check on the
+  morning of a start date, not a rule the code enforces for you.
+- **Expired records are not duplicated with a guessed follow-up date.** Once a batch's date
+  passes, leave it in the array (unpublished, closed, for history) rather than replacing it with a
+  new record with an invented date. The three existing PTE-slugged historical records
+  (`batch-001`, `batch-003`) are examples of this.
+- **If Step 6 later publishes a fee for a specific PTE intake and format, never type a duplicate
+  fee into a batch record.** Link or reference the same authoritative `content/ptePricing.ts`
+  record instead of hand-entering an amount into `content/batches.ts`.
+
 ## 10. Keep `verifiedAt` current
 
 Update `verifiedAt` to today's date whenever you check that a record's information (date, status,

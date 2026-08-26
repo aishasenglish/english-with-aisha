@@ -19,10 +19,11 @@ export type Batch = {
   /** "YYYY-MM-DD" — when this record was last checked against reality. Update it when you verify. */
   verifiedAt: string;
   /**
-   * "YYYY-MM-DD" — required alongside `status: "Filling Fast"` on any IELTS-published record (see
-   * components/ielts/IELTSAvailability.tsx). "Filling Fast" is a scarcity claim, so it must carry
-   * its own recent, manual verification date separate from `verifiedAt`'s general accuracy check —
-   * never inferred from proximity to `startDate`. If absent, IELTSAvailability displays the record
+   * "YYYY-MM-DD" — required alongside `status: "Filling Fast"` on any published record shown by a
+   * programme's specialist availability component (see components/ielts/IELTSAvailability.tsx and
+   * components/pte/PTEAvailability.tsx). "Filling Fast" is a scarcity claim, so it must carry its
+   * own recent, manual verification date separate from `verifiedAt`'s general accuracy check —
+   * never inferred from proximity to `startDate`. If absent, those components display the record
    * as the neutral "Open" instead of rendering an unverified scarcity claim.
    */
   statusVerifiedAt?: string;

@@ -68,6 +68,13 @@ type PteScoreObservation = {
   body: string;
 };
 
+/** One "bring these details" checklist item in the no-intake availability state
+ *  (components/pte/PTEAvailability.tsx). */
+type PTEAvailabilityDetail = {
+  id: string;
+  label: string;
+};
+
 /** One of the four communicative-skill curriculum cards (components/pte/PTETaskCurriculum.tsx).
  *  `integratedNote` is optional but every skill currently has one — see docs/pte-content-sources.md
  *  for the official basis of each. */
@@ -525,14 +532,41 @@ export const ptePage = {
     },
   },
 
-  // PTE Step 1: no confirmed PTE intake exists yet (content/batches.ts). The shared BatchTable's
-  // own generic fallback message doesn't request the exact test/score/deadline this programme
-  // needs, so this overrides it — see components/BatchTable.tsx's optional `fallbackMessage` prop.
+  // PTE Step 7: copy for components/pte/PTEAvailability.tsx, replacing the PTE Step 1 page-level
+  // <BatchTable> wrapper. Keep `id` stable -- other CTAs/links may target "#pte-availability".
+  // Both the no-intake enquiry state and the verified scheduled state share the section id and
+  // eyebrow; only one H2 renders per state. As of this step, content/batches.ts has no published
+  // future PTE record, so production renders the no-intake enquiry state below.
   availability: {
     id: "pte-availability",
-    heading: "Current PTE Academic availability",
-    fallbackMessage:
-      "Hi Aisha! I'd like to ask about current PTE Academic availability. My exact PTE test, required score, test or application deadline, country/time zone and usual availability are: [details].",
+    eyebrow: "Current availability",
+
+    // No-intake enquiry state (the one currently shown -- see content/batches.ts, whose three PTE
+    // records are all historical: past dates, "Closed", and unpublished).
+    enquiryHeading: "Ask about the next suitable PTE start.",
+    enquiryBody:
+      "No future PTE start date is currently confirmed on this page. Share your exact test, required overall and skill scores, deadline, time zone and usual availability so Aisha can confirm whether a suitable option is currently available.",
+    detailsHeading: "Include these details",
+    enquiryDetails: [
+      { id: "test", label: "PTE Academic or PTE Academic UKVI" },
+      { id: "scores", label: "Required overall and skill scores" },
+      { id: "starting-point", label: "Previous overall and skill scores or current starting point" },
+      { id: "deadline", label: "Test, application or registration deadline" },
+      { id: "location", label: "Country and time zone" },
+      { id: "schedule-fit", label: "Days and times that usually suit you" },
+    ] as PTEAvailabilityDetail[],
+    enquiryCtaLabel: "Check PTE Availability",
+    enquiryMessage:
+      "Hi Aisha! I would like to ask about current PTE availability. I need [PTE Academic or PTE Academic UKVI], my required overall and skill scores are [scores], my previous overall and skill scores or current starting point are [details], my test, application or registration deadline is [date], my country/time zone is [details], and the days or times that usually suit me are [details].",
+    reservationNote: "Sending an enquiry does not reserve a place, and no payment is required to ask.",
+
+    // Verified scheduled state (renders only once getPublishedUpcomingBatches("pte") returns at
+    // least one complete record -- see components/pte/PTEAvailability.tsx's isCompletePteIntake).
+    scheduledHeading: "Review the confirmed PTE intake details.",
+    scheduledBody: "Check the start date, schedule, format and time zone before asking about this intake.",
+    timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
+    intakeCtaLabel: "Ask About This PTE Intake",
+    moreAvailabilityLabel: "View all PTE availability",
   },
 
   // PTE Step 1: a single strong WhatsApp action only — the configured-form/email dual-path

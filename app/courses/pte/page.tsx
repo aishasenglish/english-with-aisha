@@ -9,9 +9,8 @@ import PTEFeedbackDemo from "@/components/pte/PTEFeedbackDemo";
 import PTEVerifiedEvidence from "@/components/pte/PTEVerifiedEvidence";
 import PTELearningFormat from "@/components/pte/PTELearningFormat";
 import PTEPricing from "@/components/pte/PTEPricing";
-import BatchTable from "@/components/BatchTable";
+import PTEAvailability from "@/components/pte/PTEAvailability";
 import PTEFinalCTA from "@/components/pte/PTEFinalCTA";
-import { ptePage } from "@/content/pte";
 import { site } from "@/content/site";
 
 // Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
@@ -54,19 +53,7 @@ export default function PTEPage() {
       <PTEVerifiedEvidence />
       <PTELearningFormat />
       <PTEPricing />
-
-      {/* PTE Step 1: no confirmed PTE intake exists yet -- the shared, fail-closed BatchTable
-          correctly shows its truthful "ask about the next available intake" state. A dedicated
-          PTEAvailability component (mirroring IELTS Step 7) is a later step. */}
-      <section id={ptePage.availability.id} className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
-            {ptePage.availability.heading}
-          </h2>
-          <BatchTable courseSlug="pte" fallbackMessage={ptePage.availability.fallbackMessage} />
-        </div>
-      </section>
-
+      <PTEAvailability />
       <PTEFinalCTA />
     </>
   );
