@@ -10,6 +10,7 @@ import IELTSVerifiedEvidence from "@/components/ielts/IELTSVerifiedEvidence";
 import IELTSLearningFormat from "@/components/ielts/IELTSLearningFormat";
 import IELTSPricing from "@/components/ielts/IELTSPricing";
 import IELTSAvailability from "@/components/ielts/IELTSAvailability";
+import IELTSFAQ from "@/components/ielts/IELTSFAQ";
 import IELTSFinalCTA from "@/components/ielts/IELTSFinalCTA";
 import { site } from "@/content/site";
 
@@ -50,11 +51,7 @@ export default function IELTSPage() {
       <IELTSLearningFormat />
       <IELTSPricing />
       <IELTSAvailability />
-
-      {/* The generic 15-question global FAQ is intentionally removed from this page (IELTS
-          Step 1) — an IELTS-specific curated FAQ is added in a later step rather than repeating
-          unrelated school/batch/programme-selection questions here. */}
-
+      <IELTSFAQ />
       <IELTSFinalCTA />
     </>
   );

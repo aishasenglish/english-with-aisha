@@ -466,6 +466,17 @@ export const ieltsPage = {
     moreAvailabilityLabel: "View all IELTS availability",
   },
 
+  // IELTS Step 8: heading copy for components/ielts/IELTSFAQ.tsx. The eight question/answer
+  // pairs themselves live in the dedicated content/ieltsFaqs.ts, independent of
+  // content/faqs.ts's generalFaqs.
+  faq: {
+    id: "ielts-faq",
+    eyebrow: "IELTS questions",
+    heading: "What to confirm before you begin.",
+    introduction:
+      "These answers cover score requirements, preparation, feedback and the current coaching offer. Ask Aisha if your deadline or requirement needs a more specific answer.",
+  },
+
   finalCta: {
     eyebrow: "Your IELTS next step",
     heading: "Share your target score and deadline.",

@@ -66,24 +66,36 @@ export const faqs: FAQ[] = [
 
   // --- Additional questions shown only on the full /faq page ---
   {
+    // Corrected (Step 8): the previous answer asserted "live on Zoom" and "every current
+    // programme includes a recording" as universal facts. Neither is owner-confirmed for every
+    // programme — the IELTS page's own verification record (docs/ielts-offer-verification.md)
+    // explicitly lists platform and recording availability as "Needs owner confirmation," which
+    // this answer directly contradicted. Rewritten to the safe fallback: confirmed per programme
+    // and current option, not asserted as a blanket claim.
     id: "live-or-recorded",
     question: "Are classes live, recorded, or both?",
     answer:
-      "Both — you attend live on Zoom, and every current programme includes a recording so you can rewatch it afterwards.",
+      "This depends on the programme and current option. The class platform, live delivery and recording availability are confirmed for your specific programme before you enrol — ask Aisha when enquiring.",
     published: true,
   },
   {
+    // Corrected (Step 8): the previous answer assumed a recording is always available. See the
+    // live-or-recorded correction above — missed-class handling depends on the confirmed policy
+    // for the specific programme, not a universal recording guarantee.
     id: "missed-class",
     question: "What if I miss a class?",
     answer:
-      "No problem — watch the recording whenever it suits you, then bring your questions to the next session.",
+      "Missed-class options — such as a recording, a catch-up session or rescheduling — depend on the policy confirmed for your specific programme and current intake. Ask Aisha about the option that applies to you.",
     published: true,
   },
   {
+    // Corrected (Step 8): "New groups open regularly" implied an unconfirmed recurring cadence.
+    // Future intake dates are only published once genuinely confirmed (see
+    // docs/updating-batches.md) — never inferred from the spacing between past batches.
     id: "new-batches",
     question: "How often do new batches start?",
     answer:
-      "New groups open regularly. Ask about the next confirmed intake, or check current availability on the batches page.",
+      "New intake dates are published only once confirmed, so how often they open can vary by programme. Ask about the next confirmed start date, or check current published availability on the batches page.",
     published: true,
   },
   {
@@ -94,23 +106,36 @@ export const faqs: FAQ[] = [
     published: true,
   },
   {
+    // Corrected (Step 8): named IELTS, PTE, TOEFL and O & A Level as all including "regular
+    // tests and full-length mock exams," which directly contradicted the IELTS page's own
+    // verification record (practice-test frequency and mock count are both "Needs owner
+    // confirmation" — see docs/ielts-offer-verification.md). Rewritten so quantity and frequency
+    // are confirmed per programme rather than asserted as an included quantity.
     id: "mock-exams",
     question: "Do you offer mock exams?",
     answer:
-      "Regular tests and full-length mock exams are included in the IELTS, PTE, TOEFL and O & A Level courses. Spoken English and Writing focus on ongoing practice, marked work and feedback instead.",
+      "Mock-test availability, format and quantity differ by programme and are confirmed for your current option before you enrol. Ask Aisha what's included for your specific programme.",
     published: true,
   },
   {
+    // Corrected (Step 8): "Most programmes include a 1-on-1 consultation" asserted an unconfirmed
+    // universal inclusion — the IELTS page's own verification record lists one-to-one
+    // availability as "Needs owner confirmation," including whether it's included or separately
+    // priced. Rewritten so it's confirmed per programme rather than assumed included.
     id: "one-to-one-help",
     question: "Do you offer one-on-one help?",
     answer:
-      "Most programmes include a 1-on-1 consultation or individual practice option, and full one-to-one coaching is available for O & A Level English. Ask about the option for your specific programme.",
+      "One-to-one availability is programme-specific and confirmed before you enrol — it may be the main format, an optional add-on, or not currently offered, depending on the programme. Ask Aisha about the option for yours.",
     published: true,
   },
   {
+    // Corrected (Step 8): "All classes run live on Zoom" asserted a universal platform that
+    // directly contradicted the IELTS page's own verification record (platform is "Needs owner
+    // confirmation," not confirmed as Zoom). Rewritten to the safe fallback: confirmed per
+    // programme and current option.
     id: "platform",
     question: "Which platform are classes on?",
-    answer: "All classes run live on Zoom.",
+    answer: "The class platform is confirmed for your specific programme and current option — ask Aisha when enquiring.",
     published: true,
   },
   {
@@ -120,6 +145,10 @@ export const faqs: FAQ[] = [
     published: true,
   },
   {
+    // Reviewed, not changed (Step 8): unlike its neighbours above, this doesn't assert an
+    // unconfirmed frequency, turnaround time or delivery method — it's consistent with the
+    // IELTS page's own feedback description (Steps 3-4) and every other programme's teaching
+    // approach, so it was left as-is.
     id: "personal-feedback",
     question: "Do I get personal feedback?",
     answer: "Yes — Aisha reviews your writing and speaking and gives specific, actionable feedback.",

@@ -1,8 +1,23 @@
-import { generalFaqs, type FAQ } from "@/content/faqs";
+import { generalFaqs } from "@/content/faqs";
+
+/**
+ * The minimal shape this component actually needs — deliberately narrower than `FAQ` so a
+ * programme-specific source with its own type (e.g. content/ieltsFaqs.ts's `IeltsFaq`, IELTS
+ * Step 8) can be passed as `items` too, without needing FAQ's `published`/`homepage` fields.
+ * `links` is optional "jump to" references appended after the answer — e.g. IELTS Step 8's
+ * current-offer answer linking to the verified Learning format / Fee / Availability sections it
+ * describes, instead of duplicating those changing details in the FAQ text itself.
+ */
+type FAQAccordionItem = {
+  id: string;
+  question: string;
+  answer: string;
+  links?: { label: string; href: string }[];
+};
 
 type Props = {
   /** Defaults to every published FAQ (the full /faq page's list) when omitted. */
-  items?: FAQ[];
+  items?: FAQAccordionItem[];
 };
 
 // Native <details>/<summary> — answers are present in the initial HTML, keyboard-operable
@@ -27,6 +42,19 @@ export default function FAQAccordion({ items = generalFaqs }: Props) {
           </summary>
           <div className="px-4 sm:px-6 pb-5">
             <p className="text-muted leading-relaxed">{faq.answer}</p>
+            {faq.links && faq.links.length > 0 && (
+              <p className="mt-3 flex flex-wrap gap-x-4 gap-y-1.5 text-sm">
+                {faq.links.map((link) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    className="text-teal hover:text-ink underline underline-offset-2 font-medium"
+                  >
+                    {link.label}
+                  </a>
+                ))}
+              </p>
+            )}
           </div>
         </details>
       ))}

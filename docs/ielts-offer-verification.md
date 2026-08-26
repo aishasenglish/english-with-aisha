@@ -5,7 +5,36 @@ Internal record of what the current IELTS offer can and cannot claim publicly on
 rendered on the public page, and nothing here should be read as legal advice or as an answer on
 Aisha's behalf.
 
-**Last reviewed:** IELTS Step 7.
+**Last reviewed:** IELTS Step 8.
+
+## FAQ (IELTS Step 8)
+
+`components/ielts/IELTSFAQ.tsx` renders exactly eight questions from the dedicated
+`content/ieltsFaqs.ts` — never `content/faqs.ts`'s `generalFaqs`. Every operational answer either
+avoids stating an unconfirmed specific (feedback, preparation time, guarantee) or points to this
+page's own verified Steps 5-7 sections instead of restating a number that can drift (the
+current-offer answer links to `#ielts-learning-format`, the pricing section and
+`#ielts-availability`).
+
+### Global FAQ audit (`content/faqs.ts`)
+
+Seven existing global entries were checked against this document for a cross-site contradiction.
+Six asserted an unconfirmed universal claim and were rewritten conservatively (kept `published:
+true`, wording corrected to "confirmed per programme/current option" rather than asserted as
+fact); one was reviewed and left unchanged.
+
+| Global FAQ id | Outcome |
+|---|---|
+| `live-or-recorded` | Rewritten — no longer asserts "live on Zoom" or "every current programme includes a recording" |
+| `missed-class` | Rewritten — no longer assumes a recording is always available |
+| `new-batches` | Rewritten — no longer implies a regular recurring cadence |
+| `mock-exams` | Rewritten — no longer names IELTS (or PTE/TOEFL/O & A Level) as including a specific mock quantity |
+| `one-to-one-help` | Rewritten — no longer asserts "most programmes include" one-to-one |
+| `platform` | Rewritten — no longer asserts "All classes run live on Zoom" |
+| `personal-feedback` | Reviewed, unchanged — doesn't assert an unconfirmed frequency, turnaround or delivery method |
+
+None of the seven ids are part of `homepageFaqs` or `courseHubFaqs`'s curated selections, so these
+corrections only affect the full `/faq` page — no other selector was at risk of breaking.
 
 ## Availability state (IELTS Step 7)
 
