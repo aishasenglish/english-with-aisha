@@ -398,6 +398,31 @@ export const ieltsPage = {
     },
   },
 
+  // IELTS Step 6: copy for components/ielts/IELTSPricing.tsx. The `enquire` branch is the only
+  // one currently used -- see content/ieltsPricing.ts's `ieltsPricing` for the gate that decides
+  // which branch actually renders. Do not add a placeholder amount to the `published` branch;
+  // it exists so a future genuinely approved record has copy ready to attach to.
+  pricing: {
+    id: "ielts-pricing",
+    enquire: {
+      eyebrow: "Fees and enrolment",
+      heading: "Review the complete fee before you decide.",
+      body: "Confirm the current IELTS fee together with the learning format, schedule, duration and included feedback or practice. No payment is required to ask.",
+      note: "You can review the confirmed details before deciding whether to enrol.",
+      ctaLabel: "Ask for the Current IELTS Fee",
+      ctaMessage:
+        "Hi Aisha! I am interested in IELTS coaching. Please share the current fee, currency, billing basis, learning format, schedule, duration, included feedback and practice, and payment terms. My test type, target score and deadline are: [details].",
+    },
+    published: {
+      eyebrow: "Current IELTS fee",
+      heading: "See the complete cost and what it covers.",
+      inclusionsHeading: "What this fee includes",
+      lastVerifiedLabel: "Last verified",
+      validUntilLabel: "Valid until",
+      ctaLabel: "Ask About Enrolling",
+    },
+  },
+
   finalCta: {
     eyebrow: "Your IELTS next step",
     heading: "Share your target score and deadline.",

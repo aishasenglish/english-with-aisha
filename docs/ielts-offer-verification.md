@@ -5,7 +5,31 @@ Internal record of what the current IELTS offer can and cannot claim publicly on
 rendered on the public page, and nothing here should be read as legal advice or as an answer on
 Aisha's behalf.
 
-**Last reviewed:** IELTS Step 5.
+**Last reviewed:** IELTS Step 6.
+
+## Pricing state (IELTS Step 6)
+
+`content/ieltsPricing.ts` is the single, gate-kept source for any IELTS fee shown on
+`/courses/ielts` — `components/ielts/IELTSPricing.tsx` reads only from it, never from
+`content/courses.ts`'s legacy `price`/former `discount` fields.
+
+| Field | Current value |
+|---|---|
+| Pricing state | `enquire` |
+| Exact approved public record | None exists |
+| Confirmation date | Not applicable — no record to confirm |
+| Billing basis | Not applicable |
+| Applicable format | Not applicable |
+| Inclusion references | Not applicable |
+| Validity / review date | `lastReviewed: "2026-08-26"` on the `enquire` record |
+| Policy status | Not applicable — no policy has been approved to publish |
+| Legacy discount claims | **Removed** — the `discount` object ("LIMITED TIME: 40% OFF" from $75/PKR 20,000 down to $45/PKR 12,000) has been deleted from `content/courses.ts`'s `ielts` entry, not merely un-rendered |
+| Next review responsibility | Whoever implements the next IELTS step, or immediately once Aisha supplies a complete approved fee — see the billing/policy question list below |
+
+Until a complete, owner-approved record exists, `IELTSPricing` renders a fee-enquiry panel (eyebrow
+"Fees and enrolment", heading "Review the complete fee before you decide.") with one WhatsApp CTA
+asking Aisha to confirm the complete current offer. No payment of any kind is requested through
+the website.
 
 ## Allowed internal states
 
@@ -101,3 +125,31 @@ published.
 
 Until these are answered, `IELTSLearningFormat` deliberately shows the checklist above instead of
 stating any of these as an inclusion.
+
+## Billing and policy questions still required (IELTS Step 6)
+
+Before `content/ieltsPricing.ts`'s `ieltsPricing` can move from `status: "enquire"` to
+`status: "published"`, every one of these needs an owner-approved answer — not one inferred from
+common industry practice:
+
+1. Is the fee per lesson, week, month, batch or complete programme?
+2. How many lessons or weeks does that basis include?
+3. Does the fee differ between group and one-to-one coaching?
+4. Which feedback and practice items are included?
+5. Are recordings included, and for how long?
+6. Are mock tests included, and how many?
+7. Is full payment required in advance?
+8. Are instalments available?
+9. Which payment methods and currencies are accepted?
+10. Who pays transfer or processing fees?
+11. What happens if Aisha cancels or reschedules a class?
+12. What happens if a learner misses a class?
+13. Is any amount refundable, and under which conditions?
+14. Can an enrolment be transferred or deferred?
+15. How long is a quoted fee valid?
+
+Plus the full field list `isValidPublishedPrice()` in `content/ieltsPricing.ts` checks before any
+of this can render: exact numeric amount, explicit currency (`PKR` or `USD`), a stated billing
+basis, a stated duration, at least one inclusion id that matches a real
+`content/ielts.ts` `delivery.supportItems` entry, an ISO `effectiveFrom` date, an ISO `verifiedAt`
+date, an unexpired ISO `validUntil` date if one applies, a payment note and a policy note.

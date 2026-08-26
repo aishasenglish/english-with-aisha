@@ -53,17 +53,15 @@ export const courses: Course[] = [
       "Personal feedback on writing & speaking",
       "1-on-1 consultation option",
     ],
+    // Not publication-authoritative for /courses/ielts (IELTS Step 6) — this figure was never
+    // verified and must never be rendered on that page. The old `discount` object that
+    // contradicted it ("LIMITED TIME: 40% OFF" from $75/PKR 20,000 down to $45/PKR 12,000, which
+    // didn't even match this base price) has been removed entirely rather than left dormant.
+    // content/ieltsPricing.ts is the only source /courses/ielts is allowed to read a fee from —
+    // see components/ielts/IELTSPricing.tsx. This field is left in place only because the
+    // shared Course type requires every record to have one and this page no longer imports
+    // <PricingCard>, which is the only component that would otherwise render it.
     price: 10000,
-    discount: {
-      badgeLabel: "LIMITED TIME: 40% OFF",
-      originalPrice: "$75",
-      discountedPrice: "$45",
-      subtitle: "Full course access for the upcoming batch",
-      secondary: {
-        originalPrice: "PKR 20,000",
-        discountedPrice: "PKR 12,000",
-      },
-    },
   },
   {
     slug: "pte",

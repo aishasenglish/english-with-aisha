@@ -8,6 +8,7 @@ import IELTSCoachingProcess from "@/components/ielts/IELTSCoachingProcess";
 import IELTSFeedbackDemo from "@/components/ielts/IELTSFeedbackDemo";
 import IELTSVerifiedEvidence from "@/components/ielts/IELTSVerifiedEvidence";
 import IELTSLearningFormat from "@/components/ielts/IELTSLearningFormat";
+import IELTSPricing from "@/components/ielts/IELTSPricing";
 import BatchTable from "@/components/BatchTable";
 import IELTSFinalCTA from "@/components/ielts/IELTSFinalCTA";
 import { site } from "@/content/site";
@@ -47,11 +48,7 @@ export default function IELTSPage() {
       <IELTSFeedbackDemo />
       <IELTSVerifiedEvidence />
       <IELTSLearningFormat />
-
-      {/* Pricing intentionally omitted (IELTS Step 1) — the previous data was internally
-          contradictory (a $75->$45 / PKR 20,000->12,000 "LIMITED TIME" discount against a base
-          price of PKR 10,000, with no verified expiry or billing basis). See
-          docs/launch-verification.md for what's needed before pricing is restored. */}
+      <IELTSPricing />
 
       <section id="ielts-availability" className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto">

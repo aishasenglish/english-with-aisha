@@ -60,18 +60,25 @@ add both routes to `app/sitemap.ts`.
 expected platform domain). Add a real profile URL per platform only once Aisha confirms the
 handle; never fill these with placeholder or invented links.
 
-## High priority — before restoring public IELTS pricing
+## High priority — before publishing an IELTS fee
 
-- **IELTS pricing (`app/courses/ielts/page.tsx`)**: `<PricingCard>` was removed from this page
-  in IELTS Step 1 because the underlying data was internally contradictory — a base
-  `price: 10000` alongside a `discount` object claiming "LIMITED TIME: 40% OFF" from $75/PKR
-  20,000 down to $45/PKR 12,000, with no verified expiry, and the discounted PKR figure didn't
-  even match the base price. Confirm the current IELTS fee, currency, billing basis, included
-  services, validity date, and whether the same price applies to local and international
-  candidates before restoring public pricing on this page. The `discount` object is still
-  present in `content/courses.ts`'s IELTS entry (only the render was removed, per the step's
-  instruction not to delete data other pages might still reference) — do not re-enable it as-is;
-  replace it with a verified, non-contradictory record first.
+- **IELTS pricing (`content/ieltsPricing.ts`)**: this is now the *only* source
+  `/courses/ielts` is allowed to read a fee from (`components/ielts/IELTSPricing.tsx`) — not
+  `content/courses.ts`'s generic `price` field, and not a `<PricingCard>` (still not imported on
+  this page). `content/courses.ts`'s IELTS `discount` object — which claimed "LIMITED TIME: 40%
+  OFF" from $75/PKR 20,000 down to $45/PKR 12,000, contradicting its own `price: 10000` and with
+  no verified expiry — has been deleted entirely (IELTS Step 6), not merely left unrendered.
+  `ieltsPricing`'s `status` is currently `"enquire"`: the page shows a fee-enquiry panel with a
+  WhatsApp CTA, and no exact amount renders anywhere. To publish a real fee, every field
+  `isValidPublishedPrice()` checks must be answered and approved by Aisha first — see
+  `docs/ielts-offer-verification.md`'s "Billing and policy questions still required" section for
+  the complete list (billing basis, duration, group-vs-one-to-one pricing, inclusions,
+  recordings, mocks, payment schedule, instalments, accepted methods/currencies, who pays
+  transfer fees, cancellation/reschedule/missed-class/refund/transfer policy, and how long a
+  quoted fee stays valid). Do not hand-edit `ieltsPricing` to `status: "published"` without every
+  field complete — an incomplete or malformed record fails the build (see the module-level check
+  in `content/ieltsPricing.ts`), and an expired `validUntil` fails safely back to the enquiry
+  panel at render time rather than showing stale pricing.
 
 ## Flagged during Step 12, not fixed (out of this step's scope)
 
