@@ -36,6 +36,21 @@ Discussion` and `Respond to a Situation` are current, live task types.
 Used by: `content/pte.ts`'s `curriculum.skills` Speaking (`taskFamilies`) and Writing
 (`taskFamilies`, partial — see source 4 below for the integrated Listening/Writing tasks).
 
+**Rechecked for PTE Step 4 (feedback demonstration), 27 August 2026:** this same page confirms
+`Respond to a Situation` requires the candidate to listen to and read a description of an
+everyday situation, then give a spoken response describing what they would say; and that its
+three published scoring traits are **Content**, **Pronunciation** and **Oral Fluency** — Content
+is described as whether the response addresses the situation effectively and communicates
+information clearly using appropriate expressions, and the page confirms Content specifically
+receives human expert review before the final score is confirmed, alongside AI scoring of all
+three traits. This is PTE Academic's own published terminology — PTE Core's distinct
+`Appropriacy` trait is not used here.
+
+Used by: `content/pte.ts`'s `feedbackDemo` (the illustrative diagnosis points address only what
+Content-type criteria can assess from a transcript — purpose, accuracy and register — and the
+`transcriptLimitation`/`audioBoundary` text explicitly excludes Pronunciation and Oral Fluency,
+since those require audio and cannot be evaluated from text).
+
 ### 3. PTE Academic Reading task format
 `https://www.pearsonpte.com/pte-academic/test-format/reading/`
 

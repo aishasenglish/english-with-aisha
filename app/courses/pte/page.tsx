@@ -5,6 +5,8 @@ import PTEFit from "@/components/pte/PTEFit";
 import PTEScoreProfile from "@/components/pte/PTEScoreProfile";
 import PTETaskCurriculum from "@/components/pte/PTETaskCurriculum";
 import PTECoachingProcess from "@/components/pte/PTECoachingProcess";
+import PTEFeedbackDemo from "@/components/pte/PTEFeedbackDemo";
+import PTEVerifiedEvidence from "@/components/pte/PTEVerifiedEvidence";
 import BatchTable from "@/components/BatchTable";
 import PTEFinalCTA from "@/components/pte/PTEFinalCTA";
 import { ptePage } from "@/content/pte";
@@ -46,6 +48,8 @@ export default function PTEPage() {
       <PTEScoreProfile />
       <PTETaskCurriculum />
       <PTECoachingProcess />
+      <PTEFeedbackDemo />
+      <PTEVerifiedEvidence />
 
       {/* PTE Step 1: no confirmed PTE intake exists yet -- the shared, fail-closed BatchTable
           correctly shows its truthful "ask about the next available intake" state. A dedicated

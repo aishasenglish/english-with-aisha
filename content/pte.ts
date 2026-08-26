@@ -31,6 +31,20 @@ type PTEFeedbackArea = {
   body: string;
 };
 
+/** One tutor-diagnosis point in the illustrative feedback demonstration
+ *  (components/pte/PTEFeedbackDemo.tsx). */
+type PTEFeedbackPoint = {
+  id: string;
+  label: string;
+  body: string;
+};
+
+/** One "what changed" point in the illustrative feedback demonstration. */
+type PTEImprovementPoint = {
+  id: string;
+  body: string;
+};
+
 /** One score-profile observation card (components/pte/PTEScoreProfile.tsx). */
 type PteScoreObservation = {
   id: string;
@@ -345,6 +359,69 @@ export const ptePage = {
       "Tutor feedback supports preparation but is not an official PTE score or a reproduction of Pearson's scoring system.",
     expectation:
       "Progress depends on the candidate's starting point, required score, preparation time and consistent application of feedback; no PTE score can be guaranteed.",
+  },
+
+  // PTE Step 4: an original, explicitly-illustrative example created for this website — never a
+  // testimonial, never attributed to a real learner, and never given a score estimate (a single
+  // transcript can't responsibly demonstrate pronunciation or oral fluency, which require audio).
+  // Task and scoring-trait terminology (Content, Pronunciation, Oral Fluency) verified against
+  // Pearson's current Respond to a Situation format -- see docs/pte-content-sources.md.
+  feedbackDemo: {
+    id: "pte-feedback-example",
+    eyebrow: "An illustrative PTE feedback example",
+    heading: "See how a vague spoken response becomes more complete and precise.",
+    introduction:
+      "Useful feedback identifies what the response missed, explains why it matters and gives the candidate a manageable next action.",
+    disclosure:
+      "This example was created for this website. It is not learner work, an official Pearson task, a complete scored response or a PTE score prediction.",
+    taskLabel: "Illustrative Respond to a Situation practice",
+    situationHeading: "Situation",
+    situation:
+      "You are attending a college course. Your lecturer has asked you to lead Friday's group discussion, but the presentation slides have not been shared. Contact the lecturer, explain why you need the slides and ask for them by Thursday evening.",
+    firstAttemptLabel: "First-attempt transcript",
+    firstAttempt: "Hello, I need the slides. Please send them tomorrow because I have the discussion. Thank you.",
+    transcriptLimitation:
+      "The transcript shows wording and task coverage only; it does not show pronunciation, pace, phrasing or hesitation.",
+    diagnosisHeading: "Tutor diagnosis",
+    feedbackPoints: [
+      {
+        id: "purpose",
+        label: "Purpose",
+        body: "The response does not explain clearly that the speaker is leading Friday's group discussion and needs time to prepare.",
+      },
+      {
+        id: "accuracy",
+        label: "Accuracy",
+        body: "“Tomorrow” replaces the specific Thursday-evening deadline with an ambiguous time reference.",
+      },
+      {
+        id: "register",
+        label: "Register",
+        body: "The request is brief, but it needs a clearer, appropriately polite approach for communication with a lecturer.",
+      },
+    ] as PTEFeedbackPoint[],
+    nextActionLabel: "Next revision priority",
+    nextAction: "State the responsibility, give the exact deadline and make one clear, appropriately polite request.",
+    revisionLabel: "Revised transcript",
+    revisedAttempt:
+      "Hello Dr Khan. I'm leading Friday's group discussion, but I haven't received the presentation slides yet. Could you please send them by Thursday evening so I have enough time to prepare? Thank you.",
+    improvementHeading: "What changed",
+    improvements: [
+      { id: "explicit-responsibility", body: "The speaker's responsibility and reason for requesting the slides are explicit." },
+      { id: "accurate-deadline", body: "The required Thursday-evening deadline is accurate." },
+      { id: "polite-register", body: "The request uses a clear and suitably polite register for the listener." },
+    ] as PTEImprovementPoint[],
+    audioBoundary:
+      "A recording would still be needed to review intelligibility, pronunciation, oral fluency, phrasing, pace and hesitation. A written transcript cannot demonstrate those spoken features.",
+  },
+
+  // PTE Step 4: heading copy for components/pte/PTEVerifiedEvidence.tsx -- only ever rendered
+  // when at least one PTE-tagged, consent-confirmed content/testimonials.ts entry exists.
+  verifiedEvidence: {
+    eyebrow: "PTE learner experiences",
+    heading: "Preparation described by learners who completed the work.",
+    contextNote:
+      "Experiences are individual. Progress depends on the candidate's starting point, required score, preparation time and consistent practice.",
   },
 
   // PTE Step 1: no confirmed PTE intake exists yet (content/batches.ts). The shared BatchTable's
