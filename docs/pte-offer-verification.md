@@ -5,7 +5,7 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 8.
+**Last reviewed:** PTE Step 9.
 
 ## Availability state (PTE Step 7)
 
@@ -185,13 +185,30 @@ applies, a payment note and a policy note.
   Step 8), addressing exact-test choice, required score, information to share, tutor feedback vs.
   official scoring, preparation time, guarantees/shortcuts, the current offer (linking to the
   verified learning-format, pricing and availability sections) and international candidates;
-- a PTE-specific final CTA (`components/pte/PTEFinalCTA.tsx`) with a single WhatsApp action.
+- a PTE-specific final CTA (`components/pte/PTEFinalCTA.tsx` — PTE Step 9) with WhatsApp as the
+  primary action and, chosen server-side via `formsAreConfigured()`, either a locked PTE detailed
+  form (`/free-diagnostic-test?programme=pte&source=pte-page`) or a `mailto:aishasenglish@gmail.com`
+  link as the secondary action.
 
 It still does not show: `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely),
 `<LearningFormats>` (never rendered on this page), or the generic 17-item `<FAQAccordion />` with
 its default `generalFaqs` (removed entirely — the page now uses `<FAQAccordion items={pteFaqs} />`
 via `PTEFAQ` instead). None of these render "coming soon" or an empty heading in their place —
 they are simply absent until their own verified replacement step.
+
+## Final CTA and enquiry handoff (PTE Step 9)
+
+`components/pte/PTEFinalCTA.tsx` replaces the Step 1 single-WhatsApp-only section. Canonical field
+list and message text live in `content/pteEnquiry.ts` (`pteEnquiryFields`, `pteFinalEnquiry`,
+`pteFormVariant`) rather than being duplicated inline. The secondary action is chosen on the
+server via `formsAreConfigured()`: `/free-diagnostic-test?programme=pte&source=pte-page` (which
+preselects and locks "PTE Academic Preparation" in `components/DiagnosticForm.tsx`) when a real
+Formspree endpoint is configured, otherwise a `mailto:aishasenglish@gmail.com` link built by
+`lib/contact.ts`'s `emailLink()`. `lib/enquiryQuery.ts`'s allowlist was extended with the
+`"pte-page"` source and `"pte"` programme/variant values — an unrecognised or missing value still
+falls back to the general form. No PTE `data-analytics-*` attributes were added (PTE conversion
+measurement remains deferred to a later step); the existing IELTS `assessment_form_*` analytics
+events remain scoped to `variant === "ielts"` only.
 
 ## Global FAQ audit (PTE Step 1)
 

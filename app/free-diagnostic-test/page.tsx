@@ -2,7 +2,18 @@ import type { Metadata } from "next";
 import DiagnosticForm from "@/components/DiagnosticForm";
 import { leadCapture } from "@/content/leadCapture";
 import { ieltsFormVariant } from "@/content/ieltsEnquiry";
+import { pteFormVariant } from "@/content/pteEnquiry";
 import { resolveProgrammeQuery, resolveEnquirySource } from "@/lib/enquiryQuery";
+import type { EnquiryVariant } from "@/lib/enquiryQuery";
+
+/** Page heading/subtitle per form variant — extend here (never with a new inline ternary) when a
+ *  new programme variant is added. See components/DiagnosticForm.tsx's VARIANT_CONFIG for the
+ *  same pattern applied to the form fields themselves. */
+const PAGE_CONTENT: Record<EnquiryVariant, { heading: string; subtitle: string }> = {
+  general: { heading: leadCapture.requestPage.heading, subtitle: leadCapture.requestPage.subtitle },
+  ielts: { heading: ieltsFormVariant.pageHeading, subtitle: ieltsFormVariant.pageSubtitle },
+  pte: { heading: pteFormVariant.pageHeading, subtitle: pteFormVariant.pageSubtitle },
+};
 
 export const metadata: Metadata = {
   title: leadCapture.requestPage.metaTitle,
@@ -30,10 +41,7 @@ export default async function FreeDiagnosticPage({ searchParams }: Props) {
   const params = await searchParams;
   const { initialProgramme, variant } = resolveProgrammeQuery(params.programme);
   const source = resolveEnquirySource(params.source);
-  const isIelts = variant === "ielts";
-
-  const heading = isIelts ? ieltsFormVariant.pageHeading : leadCapture.requestPage.heading;
-  const subtitle = isIelts ? ieltsFormVariant.pageSubtitle : leadCapture.requestPage.subtitle;
+  const { heading, subtitle } = PAGE_CONTENT[variant];
 
   return (
     <>

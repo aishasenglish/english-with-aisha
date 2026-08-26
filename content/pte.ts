@@ -580,14 +580,21 @@ export const ptePage = {
       "These answers cover test choice, score requirements, preparation, feedback and the current coaching offer. Ask Aisha if your deadline or requirement needs a more specific answer.",
   },
 
-  // PTE Step 1: a single strong WhatsApp action only — the configured-form/email dual-path
-  // DiagnosticForm.tsx supports for IELTS (Step 9) needs its own dedicated PTE enquiry-handoff
-  // step (its own field labels, success copy and submission subject), not a Step-1 addition.
+  // PTE Step 9: the final CTA and enquiry handoff -- replaces the Step 1 single-WhatsApp-only
+  // section now that DiagnosticForm.tsx (Step 9) supports a dedicated PTE variant. Canonical field
+  // list and message text live in content/pteEnquiry.ts; this object holds only this section's own
+  // eyebrow/heading/body/labels. See components/pte/PTEFinalCTA.tsx.
   finalCta: {
     id: "pte-enquiry",
     eyebrow: "Your PTE next step",
-    heading: "Share your exact PTE requirement and deadline.",
-    body: "Include the test name, required score, previous result or current level, test or application deadline, country or time zone and usual availability.",
-    primaryLabel: "Discuss PTE Academic Coaching on WhatsApp",
+    heading: "Share your exact PTE test, score requirement and deadline.",
+    body: "Send the details below so Aisha can understand your starting point and confirm whether the current coaching format, schedule and preparation approach may suit your requirement.",
+    detailsHeading: "Include these details",
+    primaryLabel: "Discuss PTE Coaching on WhatsApp",
+    formCtaLabel: "Send a Detailed Enquiry",
+    emailCtaLabel: "Email Aisha",
+    emailAccessibleLabel: "Email Aisha about PTE coaching",
+    responseExpectation:
+      "Aisha will use your details to respond about programme fit and the current offer. No payment is required to ask, and you can review the confirmed details before deciding.",
   },
 } as const;

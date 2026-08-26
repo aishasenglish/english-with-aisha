@@ -112,6 +112,20 @@ Formspree payload now also includes a non-sensitive `source` label and, only whe
 supplied one, `_replyto: form.email` — no code change is needed to activate any of this once a
 real endpoint is set.
 
+### PTE enquiry handoff (PTE Step 9)
+
+`components/pte/PTEFinalCTA.tsx` follows the identical pattern: `formsAreConfigured()` on the
+server picks either `/free-diagnostic-test?programme=pte&source=pte-page` (preselects and locks
+`components/DiagnosticForm.tsx` to "PTE Academic Preparation" and swaps its field guidance to PTE
+wording) or a `mailto:` link to `aishasenglish@gmail.com` when unconfigured — no code change
+needed to activate either once a real endpoint is set. `components/DiagnosticForm.tsx` now reads
+all three variants' (general/ielts/pte) labels, placeholders and fallback/success/error WhatsApp
+messages from one typed `VARIANT_CONFIG` map rather than a growing set of `isIelts` ternaries — the
+general and IELTS variants' exact prior behaviour was preserved when this was introduced. PTE form
+interactions deliberately do not emit any analytics event — the existing `assessment_form_*`
+events remain scoped to `variant === "ielts"` only; PTE conversion measurement is deferred to its
+own later step.
+
 ## Contact details — verify before relying on them publicly
 
 - **Email**: `content/site.ts`'s `email` field is set to `aishasenglish@gmail.com`, per Aisha's
