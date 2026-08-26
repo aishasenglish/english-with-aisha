@@ -7,13 +7,10 @@ import IELTSSkillsCurriculum from "@/components/ielts/IELTSSkillsCurriculum";
 import IELTSCoachingProcess from "@/components/ielts/IELTSCoachingProcess";
 import IELTSFeedbackDemo from "@/components/ielts/IELTSFeedbackDemo";
 import IELTSVerifiedEvidence from "@/components/ielts/IELTSVerifiedEvidence";
-import IncludedList from "@/components/IncludedList";
+import IELTSLearningFormat from "@/components/ielts/IELTSLearningFormat";
 import BatchTable from "@/components/BatchTable";
 import IELTSFinalCTA from "@/components/ielts/IELTSFinalCTA";
-import { courses } from "@/content/courses";
 import { site } from "@/content/site";
-
-const course = courses.find((c) => c.slug === "ielts")!;
 
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses/ielts`;
@@ -49,10 +46,7 @@ export default function IELTSPage() {
       <IELTSCoachingProcess />
       <IELTSFeedbackDemo />
       <IELTSVerifiedEvidence />
-
-      {/* Inclusions are temporarily retained from the generic course template — replaced once a
-          later IELTS step verifies exactly what's included against Aisha's current offering. */}
-      <IncludedList course={course} />
+      <IELTSLearningFormat />
 
       {/* Pricing intentionally omitted (IELTS Step 1) — the previous data was internally
           contradictory (a $75->$45 / PKR 20,000->12,000 "LIMITED TIME" discount against a base

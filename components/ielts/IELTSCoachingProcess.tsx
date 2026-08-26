@@ -8,9 +8,8 @@ export default function IELTSCoachingProcess() {
   const { process } = ieltsPage;
 
   return (
-    // border-b: the shared IncludedList section immediately after this one is also white — this
-    // seam (matching the established Footer/CTASection pattern elsewhere) keeps a visible
-    // boundary between them without needing a third surface tone the palette doesn't have.
+    // border-b: a plain divider before the ivory IELTSFeedbackDemo section that follows,
+    // matching the established Footer/CTASection seam pattern used elsewhere on this page.
     <section
       id={process.id}
       className="py-14 sm:py-16 px-4 bg-white border-b border-line"

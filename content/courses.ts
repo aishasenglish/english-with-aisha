@@ -41,6 +41,11 @@ export const courses: Course[] = [
       "Understanding the band descriptors",
       "Time management under pressure",
     ],
+    // Not publication-authoritative for /courses/ielts (IELTS Step 5) — every claim here is
+    // still "Needs owner confirmation" per docs/ielts-offer-verification.md. The IELTS page no
+    // longer renders this field (see components/ielts/IELTSLearningFormat.tsx for its verified
+    // replacement); it's left in place only because the shared Course type and other pages'
+    // <IncludedList> still depend on every course record having an `includes` array.
     includes: [
       "Live Zoom classes (recorded)",
       "Weekly practice tests",

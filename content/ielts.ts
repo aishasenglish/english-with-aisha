@@ -48,6 +48,22 @@ type IeltsFeedbackPoint = {
   body: string;
 };
 
+/** One stable, already-approved (Steps 2-4) learning-experience item — never an unverified
+ *  frequency or quantity claim (components/ielts/IELTSLearningFormat.tsx). */
+type IeltsLearningSupport = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+/** One operational detail a candidate should confirm before paying. This is a question to ask,
+ *  never an inclusion — see docs/ielts-offer-verification.md for why each one is still unconfirmed
+ *  (components/ielts/IELTSLearningFormat.tsx). */
+type IeltsEnrolmentDetail = {
+  id: string;
+  label: string;
+};
+
 export const ieltsPage = {
   hero: {
     eyebrow: "Live online IELTS preparation",
@@ -324,6 +340,62 @@ export const ieltsPage = {
     heading: "Preparation described by learners who did the work.",
     contextNote:
       "Experiences are individual. Progress depends on the learner's starting point, preparation time, attendance and consistent practice.",
+  },
+
+  // IELTS Step 5: replaces the removed generic IncludedList render on this page. Describes only
+  // the stable teaching method already approved in Steps 2-4, plus a checklist of operational
+  // questions a candidate should confirm before paying -- never presents an unconfirmed detail
+  // (format, platform, group size, recordings, feedback frequency, mock count, fee) as an
+  // inclusion. See docs/ielts-offer-verification.md for the confirmation status behind every
+  // claim here, and content/courses.ts's ielts entry for why its `includes` field is no longer
+  // this page's source.
+  delivery: {
+    id: "ielts-learning-format",
+    eyebrow: "Programme delivery",
+    heading: "Know how the support works before you enrol.",
+    body: "IELTS coaching is delivered online. The exact format, schedule and included practice should be confirmed for the currently available option before payment.",
+    supportHeading: "The learning experience",
+    supportItems: [
+      {
+        id: "explanation",
+        // "Teacher-led online" rather than "Live online" -- synchronous delivery is not yet
+        // confirmed as standard to every current IELTS option (see docs/ielts-offer-verification.md).
+        title: "Teacher-led online explanation",
+        body: "Learn the task demand and the decision behind it through teacher-led online instruction, with opportunities to ask questions and clarify misunderstandings.",
+      },
+      {
+        id: "practice",
+        title: "Focused IELTS practice",
+        body: "Apply each lesson through relevant Listening, Reading, Writing or Speaking work before moving to broader timed practice.",
+      },
+      {
+        id: "writing-speaking-review",
+        title: "Writing and Speaking review",
+        body: "Use specific feedback to understand the most important limitation in a response and what to change in the next attempt.",
+      },
+      {
+        id: "listening-reading-analysis",
+        title: "Listening and Reading error analysis",
+        body: "Review why an answer was missed so future practice targets vocabulary, evidence, attention, answer handling or time-management problems.",
+      },
+    ] as IeltsLearningSupport[],
+    confirmHeading: "Confirm these details for the current option",
+    confirmBody: "Ask Aisha to confirm the complete offer that applies to your intake or private-coaching arrangement.",
+    detailsToConfirm: [
+      { id: "format", label: "Group or one-to-one availability" },
+      { id: "platform-schedule", label: "Class platform, days, time and time zone" },
+      { id: "duration", label: "Lesson and programme duration" },
+      { id: "group-size", label: "Current group-size limit, if applicable" },
+      { id: "recordings", label: "Recording availability and access period" },
+      { id: "feedback-frequency", label: "Writing and Speaking feedback frequency" },
+      { id: "practice-mocks", label: "Practice-test and full-mock inclusions" },
+      { id: "fee-policy", label: "Current fee, payment basis and relevant policy" },
+    ] as IeltsEnrolmentDetail[],
+    cta: {
+      label: "Ask About the Current IELTS Format",
+      message:
+        "Hi Aisha! I am interested in IELTS coaching. Please confirm the current group or one-to-one options, schedule and time zone, duration, recordings, feedback and mock-test inclusions, and fee. My test type, required score and deadline are: [details].",
+    },
   },
 
   finalCta: {
