@@ -81,7 +81,7 @@ export default function IELTSFinalCTA() {
           )}
         </div>
 
-        <p className="text-ink-faint text-xs max-w-md mx-auto leading-relaxed">{finalCta.responseExpectation}</p>
+        <p className="text-ink-soft text-sm max-w-md mx-auto leading-relaxed">{finalCta.responseExpectation}</p>
       </div>
     </section>
   );

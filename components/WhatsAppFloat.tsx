@@ -1,6 +1,16 @@
+"use client";
+
+import { usePathname } from "next/navigation";
 import { whatsappLink } from "@/lib/whatsapp";
 
 export default function WhatsAppFloat() {
+  const pathname = usePathname();
+
+  // IELTS already provides contextual WhatsApp actions in the hero, pricing/availability
+  // state and final enquiry section. Suppressing the generic float avoids duplicate actions
+  // and prevents it from covering content or keyboard focus on smaller screens.
+  if (pathname === "/courses/ielts") return null;
+
   return (
     <a
       href={whatsappLink()}

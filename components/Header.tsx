@@ -140,14 +140,13 @@ export default function Header() {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-3 md:gap-4 lg:gap-6 h-16 xl:h-20">
-            <Link href="/" className="flex flex-row items-center gap-3.5 shrink-0">
+            <Link href="/" className="flex min-h-11 flex-row items-center gap-3.5 shrink-0">
               <Image
                 src="/images/logo-mark.png"
                 alt=""
-                width={580}
-                height={400}
+                width={58}
+                height={40}
                 className="h-[26px] sm:h-[28px] w-auto"
-                priority
               />
               <span className="flex flex-col justify-center leading-tight">
                 <span className="font-sans font-bold text-sm text-charcoal tracking-wider whitespace-nowrap">

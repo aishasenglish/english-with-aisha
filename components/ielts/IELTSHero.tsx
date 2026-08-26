@@ -37,7 +37,7 @@ export default function IELTSHero() {
           </Link>
         </div>
 
-        <p className="text-ink-faint text-xs max-w-md mx-auto leading-relaxed">{hero.reassurance}</p>
+        <p className="text-ink-soft text-sm max-w-md mx-auto leading-relaxed">{hero.reassurance}</p>
       </div>
     </section>
   );
