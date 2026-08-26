@@ -34,6 +34,20 @@ add both routes to `app/sitemap.ts`.
   whatever a visitor submits through the contact or recommendation-request form. No endpoint is
   currently configured (see `.env.example`), so no data is actually being sent anywhere yet.
 
+### IELTS enquiry handoff (IELTS Step 9)
+
+`components/ielts/IELTSFinalCTA.tsx` picks its secondary action from `formsAreConfigured()` on
+the server: while the Formspree endpoint above is unconfigured, it shows a `mailto:` link to
+`aishasenglish@gmail.com` (built by `lib/contact.ts`'s `emailLink()`) instead of the detailed
+form. Once a real endpoint is configured, that secondary action automatically switches to
+`/free-diagnostic-test?programme=ielts&source=ielts-page`, which preselects and locks
+`components/DiagnosticForm.tsx` to "IELTS Preparation" and swaps its field guidance to IELTS
+wording — see `lib/enquiryQuery.ts` for the fixed allowlist that resolves the `programme`/`source`
+query values (an unrecognised value always falls back to the original generic form). The
+Formspree payload now also includes a non-sensitive `source` label and, only when the visitor
+supplied one, `_replyto: form.email` — no code change is needed to activate any of this once a
+real endpoint is set.
+
 ## Contact details — verify before relying on them publicly
 
 - **Email**: `content/site.ts`'s `email` field is set to `aishasenglish@gmail.com`, per Aisha's

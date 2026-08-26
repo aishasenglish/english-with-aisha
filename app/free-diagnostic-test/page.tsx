@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import DiagnosticForm from "@/components/DiagnosticForm";
 import { leadCapture } from "@/content/leadCapture";
+import { ieltsFormVariant } from "@/content/ieltsEnquiry";
+import { resolveProgrammeQuery, resolveEnquirySource } from "@/lib/enquiryQuery";
 
 export const metadata: Metadata = {
   title: leadCapture.requestPage.metaTitle,
@@ -15,15 +17,30 @@ function CheckIcon() {
   );
 }
 
-export default function FreeDiagnosticPage() {
+type Props = {
+  searchParams: Promise<{ programme?: string | string[]; source?: string | string[] }>;
+};
+
+// Reading searchParams opts this page into dynamic rendering — necessary here since the
+// programme/source query values decide which variant of the shared DiagnosticForm renders
+// (IELTS Step 9). Both are resolved through lib/enquiryQuery.ts's fixed allowlist rather than
+// trusted directly: an unrecognised or missing value always falls back to the original generic
+// "pick a programme" behaviour, never a raw query string passed into form values or markup.
+export default async function FreeDiagnosticPage({ searchParams }: Props) {
+  const params = await searchParams;
+  const { initialProgramme, variant } = resolveProgrammeQuery(params.programme);
+  const source = resolveEnquirySource(params.source);
+  const isIelts = variant === "ielts";
+
+  const heading = isIelts ? ieltsFormVariant.pageHeading : leadCapture.requestPage.heading;
+  const subtitle = isIelts ? ieltsFormVariant.pageSubtitle : leadCapture.requestPage.subtitle;
+
   return (
     <>
       <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">
-            {leadCapture.requestPage.heading}
-          </h1>
-          <p className="text-ink-soft text-lg">{leadCapture.requestPage.subtitle}</p>
+          <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">{heading}</h1>
+          <p className="text-ink-soft text-lg">{subtitle}</p>
         </div>
       </section>
 
@@ -42,7 +59,7 @@ export default function FreeDiagnosticPage() {
           </div>
 
           <div className="bg-white rounded-md p-6 sm:p-8 border border-stone">
-            <DiagnosticForm />
+            <DiagnosticForm initialProgramme={initialProgramme} source={source} variant={variant} />
           </div>
         </div>
       </section>

@@ -477,13 +477,22 @@ export const ieltsPage = {
       "These answers cover score requirements, preparation, feedback and the current coaching offer. Ask Aisha if your deadline or requirement needs a more specific answer.",
   },
 
+  // IELTS Step 9: replaces the earlier availability-linking secondary action (availability
+  // immediately precedes the FAQ and this section, so linking back to it again would be a
+  // conversion loop). The five requested facts render from the shared content/ieltsEnquiry.ts
+  // list rather than being retyped here; the WhatsApp/email message text lives there too.
   finalCta: {
+    id: "ielts-enquiry",
     eyebrow: "Your IELTS next step",
-    heading: "Share your target score and deadline.",
-    body: "Include the test type, required overall and component scores, previous result or current level, and the time available for preparation.",
-    primaryLabel: "Ask About IELTS Coaching",
-    secondaryLabel: "View Current IELTS Availability",
-    secondaryHref: "#ielts-availability",
+    heading: "Share your score requirement and deadline.",
+    body: "Send the details below so Aisha can understand your starting point and confirm whether the current coaching format, schedule and preparation approach suit your requirement.",
+    detailsHeading: "Include these details",
+    primaryLabel: "Discuss IELTS Coaching on WhatsApp",
+    formCtaLabel: "Send a Detailed Enquiry",
+    emailCtaLabel: "Email Aisha",
+    emailAccessibleLabel: "Email Aisha about IELTS coaching",
+    responseExpectation:
+      "Aisha will use your details to respond about programme fit and the current offer. No payment is required to ask, and you can review the confirmed details before deciding.",
   },
 } as const;
 

@@ -5,6 +5,8 @@ import { courses } from "@/content/courses";
 import { whatsappLink } from "@/lib/whatsapp";
 import { formsAreConfigured, getFormEndpoint } from "@/lib/forms";
 import { leadCapture } from "@/content/leadCapture";
+import { ieltsFinalEnquiry, ieltsFormVariant } from "@/content/ieltsEnquiry";
+import type { EnquirySource, EnquiryVariant } from "@/lib/enquiryQuery";
 
 type FormData = {
   name: string;
@@ -19,12 +21,11 @@ type FormData = {
   _gotcha: string;
 };
 
-const initialData: FormData = {
+const baseInitialData: Omit<FormData, "programme"> = {
   name: "",
   enquiringFor: "",
   whatsapp: "",
   email: "",
-  programme: "",
   situation: "",
   goalTimeline: "",
   location: "",
@@ -36,11 +37,25 @@ const inputClasses =
 const labelClasses = "block text-sm font-medium text-charcoal mb-1.5";
 const statusTextClasses = "text-ink-faint font-normal text-xs";
 
-export default function DiagnosticForm() {
-  const [form, setForm] = useState<FormData>(initialData);
+type Props = {
+  /** Preselects (and, for the "ielts" variant, locks) the programme field — an allowlisted
+   *  public programme name resolved server-side by lib/enquiryQuery.ts, never a raw query
+   *  string. Omit for the generic "pick a programme" behaviour. */
+  initialProgramme?: string;
+  /** Non-sensitive label included in the Formspree payload so a submission's origin is known
+   *  without needing to log request headers or referrers. */
+  source?: EnquirySource;
+  /** "ielts" locks the programme field and swaps field guidance/success copy to IELTS-specific
+   *  wording (IELTS Step 9). Defaults to the original generic behaviour. */
+  variant?: EnquiryVariant;
+};
+
+export default function DiagnosticForm({ initialProgramme, source = "general", variant = "general" }: Props) {
+  const [form, setForm] = useState<FormData>({ ...baseInitialData, programme: initialProgramme ?? "" });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const submittingRef = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
+  const isIelts = variant === "ielts";
 
   useEffect(() => {
     if (status === "error") {
@@ -71,7 +86,14 @@ export default function DiagnosticForm() {
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({ ...form, _subject: "Free Course Recommendation Request" }),
+        body: JSON.stringify({
+          ...form,
+          _subject: isIelts ? ieltsFormVariant.submissionSubject : "Free Course Recommendation Request",
+          source,
+          // Only sent when the visitor actually provided one — an empty _replyto would leave
+          // Formspree with nothing usable to reply to.
+          ...(form.email ? { _replyto: form.email } : {}),
+        }),
       });
       setStatus(res.ok ? "success" : "error");
     } catch {
@@ -82,13 +104,14 @@ export default function DiagnosticForm() {
   }
 
   if (!formsAreConfigured()) {
-    const fallback = leadCapture.recommendationFallback;
+    const fallback = isIelts ? ieltsFormVariant.unconfiguredFallback : leadCapture.recommendationFallback;
+    const fallbackMessage = isIelts ? ieltsFinalEnquiry.whatsappMessage : leadCapture.recommendationFallback.whatsappMessage;
     return (
       <div className="text-center">
         <h3 className="font-serif text-2xl font-medium text-ink mb-2">{fallback.heading}</h3>
         <p className="text-muted mb-6">{fallback.body}</p>
         <a
-          href={whatsappLink(fallback.whatsappMessage)}
+          href={whatsappLink(fallbackMessage)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex min-h-12 items-center justify-center gap-2 bg-coral hover:bg-amber-dark text-white font-medium rounded-sm px-6 py-3.5 text-base transition-colors"
@@ -100,6 +123,8 @@ export default function DiagnosticForm() {
   }
 
   if (status === "success") {
+    const success = isIelts ? ieltsFormVariant.success : leadCapture.success;
+    const continueMessage = isIelts ? ieltsFinalEnquiry.whatsappMessage : leadCapture.success.whatsappMessage;
     return (
       <div role="status" aria-live="polite" className="bg-green-50 border border-green-200 rounded-md p-8 text-center">
         <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
@@ -107,10 +132,10 @@ export default function DiagnosticForm() {
             <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
           </svg>
         </div>
-        <h3 className="font-serif text-2xl font-medium text-ink mb-2">{leadCapture.success.heading}</h3>
-        <p className="text-muted mb-6">{leadCapture.success.body}</p>
+        <h3 className="font-serif text-2xl font-medium text-ink mb-2">{success.heading}</h3>
+        <p className="text-muted mb-6">{success.body}</p>
         <a
-          href={whatsappLink(leadCapture.success.whatsappMessage)}
+          href={whatsappLink(continueMessage)}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex min-h-12 items-center justify-center gap-2 border-2 border-ink text-ink hover:bg-ink hover:text-white font-medium rounded-sm px-6 py-3 text-sm transition-colors"
@@ -199,29 +224,40 @@ export default function DiagnosticForm() {
           <label htmlFor="diag-programme" className={labelClasses}>
             Programme or goal <span className={statusTextClasses}>(required)</span>
           </label>
-          <select
-            id="diag-programme"
-            required
-            value={form.programme}
-            onChange={(e) => update("programme", e.target.value)}
-            className={inputClasses}
-          >
-            <option value="">Select a programme</option>
-            {courses.map((c) => (
-              <option key={c.slug} value={c.name}>
-                {c.name}
-              </option>
-            ))}
-            {leadCapture.programmeOtherOptions.map((option) => (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            ))}
-          </select>
+          {isIelts ? (
+            // Locked, not just preselected — the candidate arrived here specifically to discuss
+            // IELTS and shouldn't be asked to choose a programme again. Still a real form control
+            // (disabled <select>, not just styled text) so its state stays visibly consistent
+            // with every other field, and form.programme is already set from initialProgramme.
+            <select id="diag-programme" disabled value={form.programme} className={`${inputClasses} disabled:opacity-100 disabled:bg-ivory`}>
+              <option value={form.programme}>{form.programme}</option>
+            </select>
+          ) : (
+            <select
+              id="diag-programme"
+              required
+              value={form.programme}
+              onChange={(e) => update("programme", e.target.value)}
+              className={inputClasses}
+            >
+              <option value="">Select a programme</option>
+              {courses.map((c) => (
+                <option key={c.slug} value={c.name}>
+                  {c.name}
+                </option>
+              ))}
+              {leadCapture.programmeOtherOptions.map((option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              ))}
+            </select>
+          )}
         </div>
         <div>
           <label htmlFor="diag-location" className={labelClasses}>
-            Country or time zone <span className={statusTextClasses}>(optional)</span>
+            {isIelts ? ieltsFormVariant.locationLabel : "Country or time zone"}{" "}
+            <span className={statusTextClasses}>(optional)</span>
           </label>
           <input
             id="diag-location"
@@ -230,14 +266,15 @@ export default function DiagnosticForm() {
             value={form.location}
             onChange={(e) => update("location", e.target.value)}
             className={inputClasses}
-            placeholder="e.g. Lahore, Pakistan (PKT)"
+            placeholder={isIelts ? ieltsFormVariant.locationPlaceholder : "e.g. Lahore, Pakistan (PKT)"}
           />
         </div>
       </div>
 
       <div>
         <label htmlFor="diag-situation" className={labelClasses}>
-          Current situation <span className={statusTextClasses}>(required)</span>
+          {isIelts ? ieltsFormVariant.situationLabel : "Current situation"}{" "}
+          <span className={statusTextClasses}>(required)</span>
         </label>
         <textarea
           id="diag-situation"
@@ -246,13 +283,18 @@ export default function DiagnosticForm() {
           value={form.situation}
           onChange={(e) => update("situation", e.target.value)}
           className={`${inputClasses} resize-y`}
-          placeholder="School level, board, syllabus or exam session; current IELTS/PTE/TOEFL score if known; or a speaking, writing or workplace challenge."
+          placeholder={
+            isIelts
+              ? ieltsFormVariant.situationPlaceholder
+              : "School level, board, syllabus or exam session; current IELTS/PTE/TOEFL score if known; or a speaking, writing or workplace challenge."
+          }
         />
       </div>
 
       <div>
         <label htmlFor="diag-goal" className={labelClasses}>
-          Goal and preferred timeline <span className={statusTextClasses}>(required)</span>
+          {isIelts ? ieltsFormVariant.goalLabel : "Goal and preferred timeline"}{" "}
+          <span className={statusTextClasses}>(required)</span>
         </label>
         <input
           id="diag-goal"
@@ -261,7 +303,7 @@ export default function DiagnosticForm() {
           value={form.goalTimeline}
           onChange={(e) => update("goalTimeline", e.target.value)}
           className={inputClasses}
-          placeholder="e.g. Band 7 for a visa application by December"
+          placeholder={isIelts ? ieltsFormVariant.goalPlaceholder : "e.g. Band 7 for a visa application by December"}
         />
       </div>
 
@@ -294,14 +336,14 @@ export default function DiagnosticForm() {
         disabled={status === "loading"}
         className="w-full min-h-12 py-3.5 bg-coral hover:bg-amber-dark disabled:opacity-60 text-white font-medium rounded-sm text-base transition-colors"
       >
-        {status === "loading" ? "Sending request…" : "Request My Recommendation"}
+        {status === "loading" ? "Sending…" : isIelts ? "Send My IELTS Enquiry" : "Request My Recommendation"}
       </button>
 
       {status === "error" && (
         <p className="text-center text-sm text-ink-soft">
           Or{" "}
           <a
-            href={whatsappLink(leadCapture.recommendationFallback.whatsappMessage)}
+            href={whatsappLink(isIelts ? ieltsFinalEnquiry.whatsappMessage : leadCapture.recommendationFallback.whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
             className="font-medium text-teal hover:text-ink underline underline-offset-2"
