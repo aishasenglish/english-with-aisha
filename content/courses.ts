@@ -36,8 +36,8 @@ export const courses: Course[] = [
     modules: [
       "Listening strategies",
       "Reading speed & accuracy",
-      "Writing Task 1 & 2 (Cambridge-Aligned Frameworks)",
-      "Speaking Fluency (Official IDP-Trained Strategies)",
+      "Writing task structure, development and response quality",
+      "Speaking practice with feedback on fluency, clarity and response development",
       "Understanding the band descriptors",
       "Time management under pressure",
     ],

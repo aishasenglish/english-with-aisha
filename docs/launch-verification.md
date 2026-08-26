@@ -60,16 +60,30 @@ add both routes to `app/sitemap.ts`.
 expected platform domain). Add a real profile URL per platform only once Aisha confirms the
 handle; never fill these with placeholder or invented links.
 
+## High priority — before restoring public IELTS pricing
+
+- **IELTS pricing (`app/courses/ielts/page.tsx`)**: `<PricingCard>` was removed from this page
+  in IELTS Step 1 because the underlying data was internally contradictory — a base
+  `price: 10000` alongside a `discount` object claiming "LIMITED TIME: 40% OFF" from $75/PKR
+  20,000 down to $45/PKR 12,000, with no verified expiry, and the discounted PKR figure didn't
+  even match the base price. Confirm the current IELTS fee, currency, billing basis, included
+  services, validity date, and whether the same price applies to local and international
+  candidates before restoring public pricing on this page. The `discount` object is still
+  present in `content/courses.ts`'s IELTS entry (only the render was removed, per the step's
+  instruction not to delete data other pages might still reference) — do not re-enable it as-is;
+  replace it with a verified, non-contradictory record first.
+
 ## Flagged during Step 12, not fixed (out of this step's scope)
 
 - **`components/PricingCard.tsx`** labels every course's price "One-time fee" (shown on the
-  IELTS, PTE, TOEFL, Writing and Spoken English pricing cards). `content/faqs.ts` was corrected
-  in Step 12 to stop asserting a single universal billing model in the FAQ, but this same claim
-  is still live in a more prominent place — directly next to the price on five course pages.
-  `content/courses.ts`'s `Course` type has no field recording billing model per programme, so
-  this can't be verified from the codebase alone. Confirm with Aisha whether every course is
-  genuinely billed as a one-time fee before leaving this label as-is, or change it to something
-  that doesn't assert a billing model that hasn't been confirmed.
+  PTE, TOEFL, Writing and Spoken English pricing cards — IELTS's card is currently hidden, see
+  above). `content/faqs.ts` was corrected in Step 12 to stop asserting a single universal billing
+  model in the FAQ, but this same claim is still live in a more prominent place — directly next
+  to the price on four remaining course pages. `content/courses.ts`'s `Course` type has no field
+  recording billing model per programme, so this can't be verified from the codebase alone.
+  Confirm with Aisha whether every course is genuinely billed as a one-time fee before leaving
+  this label as-is, or change it to something that doesn't assert a billing model that hasn't
+  been confirmed.
 
 ## Lower priority — noted, not blocking
 
