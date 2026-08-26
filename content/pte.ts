@@ -14,6 +14,23 @@ type PteFitItem = {
   body: string;
 };
 
+/** One stage in the four-stage coaching cycle (components/pte/PTECoachingProcess.tsx). */
+type PTEProcessStep = {
+  id: string;
+  number: string;
+  title: string;
+  body: string;
+  result: string;
+};
+
+/** One of the three feedback-by-response-type blocks (constructed / selected-entered /
+ *  integrated). */
+type PTEFeedbackArea = {
+  id: string;
+  title: string;
+  body: string;
+};
+
 /** One score-profile observation card (components/pte/PTEScoreProfile.tsx). */
 type PteScoreObservation = {
   id: string;
@@ -262,6 +279,72 @@ export const ptePage = {
     // Pearson's official current-format pages. See docs/pte-content-sources.md for the full
     // per-claim URL mapping and the recheck-after-format-update requirement.
     sourceVerifiedAt: "2026-08-27",
+  },
+
+  // PTE Step 3: the coaching-process section -- shows how a confirmed score requirement (Step 2)
+  // becomes task-focused teaching, appropriate computer-based practice and response-specific
+  // review. Never claims a guaranteed score, a reproduction of Pearson's scoring engine, or an
+  // unconfirmed inclusion (quantity, platform, turnaround) -- see docs/pte-offer-verification.md.
+  process: {
+    id: "pte-coaching-process",
+    eyebrow: "How the coaching works",
+    heading: "Turn each practice attempt into a clearer next action.",
+    introduction:
+      "PTE practice is most useful when you can identify what affected the response and what to change next. Coaching connects task understanding, English-language development, computer-based practice and focused review.",
+    steps: [
+      {
+        id: "requirement",
+        number: "01",
+        title: "Define the requirement and starting point",
+        body: "Begin with the exact PTE test, required overall and skill scores, previous score report or current performance, and the available preparation time. This keeps the first priority connected to the candidate's real requirement.",
+        result: "Result: a defined score profile and first preparation priority.",
+      },
+      {
+        id: "method",
+        number: "02",
+        title: "Learn what the task requires",
+        body: "Focus on the language skill, response process and published task conditions that matter: selecting relevant content, organising an answer, speaking clearly, managing attention or completing the response within the required form and time.",
+        result: "Result: a method the candidate understands instead of a script to memorise.",
+      },
+      {
+        id: "practice",
+        number: "03",
+        title: "Practise in the right response mode",
+        body: "Apply the method through a focused spoken, typed or selected-answer task, then introduce realistic timing and computer-based conditions when appropriate. Practice should reveal whether the skill remains usable under test pressure.",
+        result: "Result: a response or decision pattern that can be reviewed.",
+      },
+      {
+        id: "apply-feedback",
+        number: "04",
+        title: "Apply feedback to the next attempt",
+        body: "Review what worked, identify the error or limitation with the greatest effect, and carry one or two priorities into a new response. The next attempt shows whether the change is becoming more accurate, clear and repeatable.",
+        result: "Result: a specific next action rather than a vague instruction to practise more.",
+      },
+    ] as PTEProcessStep[],
+    feedbackHeading: "Feedback follows the response—not a generic template.",
+    feedbackIntroduction:
+      "The useful feedback depends on whether the task requires a spoken or written response, an objectively correct answer, or more than one communicative skill.",
+    feedbackAreas: [
+      {
+        id: "constructed",
+        title: "For constructed responses",
+        body: "Feedback can identify whether the response addresses the task, follows the required form, communicates ideas clearly and uses language effectively. For relevant speaking tasks, it may also address intelligibility, pronunciation and oral fluency; for relevant writing tasks, it may address organisation, grammar, vocabulary and spelling.",
+      },
+      {
+        id: "selected-entered",
+        title: "For selected or entered answers",
+        body: "Review should go beyond the answer key. Candidates examine whether an error came from vocabulary, missing evidence, misunderstanding the prompt, losing the thread of an audio passage, spelling, answer transfer, attention or time management.",
+      },
+      {
+        id: "integrated",
+        title: "For integrated tasks",
+        body: "When a task draws on more than one communicative skill, review both sides of the response: how accurately the candidate understood the source and how effectively that information was spoken, written or entered.",
+      },
+    ] as PTEFeedbackArea[],
+    scoringNote:
+      "Tutor feedback supports preparation but is not an official PTE score or a reproduction of Pearson's scoring system.",
+    expectation:
+      "Progress depends on the candidate's starting point, required score, preparation time and consistent application of feedback; no PTE score can be guaranteed.",
   },
 
   // PTE Step 1: no confirmed PTE intake exists yet (content/batches.ts). The shared BatchTable's
