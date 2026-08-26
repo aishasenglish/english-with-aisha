@@ -95,7 +95,7 @@ export default function Hero() {
               aria-hidden="true"
             />
             <Image
-              src="/images/aisha-cutout-placeholder.png"
+              src="/images/aishaa.png"
               alt="Aisha, online English teacher and English Literature lecturer"
               width={896}
               height={1195}
