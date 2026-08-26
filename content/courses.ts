@@ -88,11 +88,12 @@ export const courses: Course[] = [
       "Those who want a faster, computer-based alternative to IELTS",
       "Professionals seeking a quicker pathway to results",
     ],
-    // Corrected labels only (PTE Step 1) — a dedicated PTE curriculum component with real task
-    // detail from official Pearson sources is a later step. These five strings are still rendered
-    // temporarily by the generic components/CourseModules.tsx (see app/courses/pte/page.tsx) —
-    // corrected here so that render no longer implies AI-scoring insider knowledge or promotes
-    // templates/memorised responses as a strategy.
+    // Not publication-authoritative for /courses/pte (PTE Step 2) — the corrected labels below
+    // were a temporary Step 1 measure while components/CourseModules.tsx rendered them; that
+    // render has been removed entirely now that components/pte/PTETaskCurriculum.tsx provides
+    // the real, officially-verified four-skill curriculum (see content/pte.ts's `curriculum` and
+    // docs/pte-content-sources.md). Left in place, still corrected (not reverted to the old
+    // AI-scoring/templates wording), only because the shared Course type requires this field.
     modules: [
       "Understanding the published PTE Academic scoring information",
       "Response planning for Speaking and Writing tasks",

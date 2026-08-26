@@ -2,14 +2,12 @@ import type { Metadata } from "next";
 import PTEHero from "@/components/pte/PTEHero";
 import PTEAuthorityStrip from "@/components/pte/PTEAuthorityStrip";
 import PTEFit from "@/components/pte/PTEFit";
-import CourseModules from "@/components/CourseModules";
+import PTEScoreProfile from "@/components/pte/PTEScoreProfile";
+import PTETaskCurriculum from "@/components/pte/PTETaskCurriculum";
 import BatchTable from "@/components/BatchTable";
 import PTEFinalCTA from "@/components/pte/PTEFinalCTA";
-import { courses } from "@/content/courses";
 import { ptePage } from "@/content/pte";
 import { site } from "@/content/site";
-
-const course = courses.find((c) => c.slug === "pte")!;
 
 // Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
 // daily so a page built once doesn't keep showing an intake after its date has passed.
@@ -44,11 +42,8 @@ export default function PTEPage() {
       <PTEHero />
       <PTEAuthorityStrip />
       <PTEFit />
-
-      {/* Corrected labels only (PTE Step 1) -- see content/courses.ts's pte.modules comment. A
-          dedicated PTE curriculum component with real task detail from official Pearson sources
-          replaces this in a later step. */}
-      <CourseModules course={course} />
+      <PTEScoreProfile />
+      <PTETaskCurriculum />
 
       {/* PTE Step 1: no confirmed PTE intake exists yet -- the shared, fail-closed BatchTable
           correctly shows its truthful "ask about the next available intake" state. A dedicated

@@ -14,6 +14,31 @@ type PteFitItem = {
   body: string;
 };
 
+/** One score-profile observation card (components/pte/PTEScoreProfile.tsx). */
+type PteScoreObservation = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+/** One of the four communicative-skill curriculum cards (components/pte/PTETaskCurriculum.tsx).
+ *  `integratedNote` is optional but every skill currently has one — see docs/pte-content-sources.md
+ *  for the official basis of each. */
+type PteSkillArea = {
+  id: "speaking" | "writing" | "reading" | "listening";
+  title: string;
+  introduction: string;
+  focusItems: readonly string[];
+  taskFamilies: readonly string[];
+  integratedNote?: string;
+};
+
+/** One officially-verified integrated-skills example shown under the four skill cards. */
+type PteIntegratedExample = {
+  id: string;
+  body: string;
+};
+
 export const ptePage = {
   hero: {
     eyebrow: "Online PTE Academic preparation",
@@ -64,6 +89,179 @@ export const ptePage = {
       label: "Compare IELTS, PTE and TOEFL preparation",
       href: "/courses#language-tests",
     },
+  },
+
+  // PTE Step 2: score-requirement guidance -- see docs/pte-content-sources.md for the official
+  // Pearson basis (score scale, overall + four communicative-skill scores). Deliberately does not
+  // claim the overall score "is not a simple arithmetic average" of the four skill scores -- the
+  // official score-guide pages checked for this step did not confirm that specific claim, so it's
+  // omitted rather than asserted from memory.
+  scoreProfile: {
+    id: "pte-score-profile",
+    eyebrow: "Your score requirement",
+    heading: "An overall target may still include minimum scores in each skill.",
+    body: "PTE Academic reports an overall score and scores for Listening, Reading, Speaking and Writing. Preparation should begin with the exact combination required by the organisation receiving your result.",
+    detailsHeading: "Bring these details",
+    requiredDetails: [
+      "Exact test: PTE Academic or PTE Academic UKVI",
+      "Required overall score",
+      "Any minimum Listening, Reading, Speaking or Writing scores",
+      "Previous score report or current starting point",
+      "Test, application or registration deadline",
+      "Country or time zone and usual availability",
+    ],
+    observations: [
+      {
+        id: "different-priorities",
+        title: "The same overall target can hide different priorities",
+        body: "One candidate may need stronger speaking and listening performance, while another needs writing or reading improvement. The previous skill scores help identify the first priority.",
+      },
+      {
+        id: "integrated-tasks",
+        title: "Integrated tasks connect more than one skill",
+        body: "Some tasks use one skill to produce another—for example, listening before speaking or writing. Preparation should account for those connections instead of treating every skill in isolation.",
+      },
+      {
+        id: "receiving-organisation",
+        title: "The receiving organisation sets the requirement",
+        body: "Use the current score requirement supplied by the university, visa route, employer or professional body. Generic “good PTE score” tables are not a substitute for that requirement.",
+      },
+    ] as PteScoreObservation[],
+    contextualLink: {
+      label: "Share Your PTE Score Requirement with Aisha",
+      message:
+        "Hi Aisha! I am preparing for [PTE Academic or PTE Academic UKVI]. My required overall score is [score], my minimum skill requirements are [details or none specified], my previous overall and skill scores or current starting point are [details], and my deadline is [date]. Which preparation priorities should I begin with?",
+    },
+  },
+
+  // PTE Step 2: current four-skill/task curriculum, verified against official Pearson pages on
+  // 27 August 2026 -- see docs/pte-content-sources.md for the full URL/claim mapping. Includes
+  // the newer Summarize Group Discussion and Respond to a Situation speaking tasks (added to the
+  // enhanced PTE Academic format from August 2025). No task-weight percentages, score-conversion
+  // table or exact timing/count claims are published here.
+  curriculum: {
+    id: "pte-task-curriculum",
+    eyebrow: "Four-skill preparation",
+    heading: "Prepare the language skills and current task demands together.",
+    body: "PTE Academic combines computer-based task familiarity with speaking, writing, reading and listening performance. The emphasis should change according to the candidate's score profile rather than treating every task as equally weak.",
+    skills: [
+      {
+        id: "speaking",
+        title: "Speaking",
+        introduction:
+          "Develop clear, relevant spoken responses while managing preparation time, microphone timing and the one-attempt test environment.",
+        focusItems: [
+          "Intelligible pronunciation rather than accent imitation",
+          "Natural oral fluency, phrasing and pace",
+          "Accurate listening and short-term recall where the prompt is heard",
+          "Selecting and organising relevant content",
+          "Concise answers where the task requires them",
+          "Paraphrasing and connected speech for extended responses",
+          "Starting and finishing within the recording window",
+        ],
+        taskFamilies: [
+          "Read Aloud",
+          "Repeat Sentence",
+          "Describe Image",
+          "Retell Lecture",
+          "Answer Short Question",
+          "Summarize Group Discussion",
+          "Respond to a Situation",
+        ],
+        integratedNote:
+          "Read Aloud connects reading input with spoken delivery, and several other speaking tasks depend on listening to a prompt first.",
+      },
+      {
+        id: "writing",
+        title: "Writing",
+        introduction:
+          "Build concise, relevant and well-organised written responses under the current task instructions and time limits.",
+        focusItems: [
+          "Identifying the main point and essential supporting information",
+          "Response development and coherence",
+          "Sentence control and grammar",
+          "Appropriate vocabulary and consistent spelling",
+          "Task-specific form and word-limit control",
+          "Planning, drafting and checking within the available time",
+          "Using original language rather than memorised paragraphs",
+        ],
+        taskFamilies: [
+          "Summarize Written Text",
+          "Write Essay",
+          "Summarize Spoken Text (integrated Listening/Writing)",
+          "Write from Dictation (integrated Listening/Writing)",
+        ],
+        integratedNote:
+          "Summarize Spoken Text and Write from Dictation are assessed through Writing but depend on accurate listening first.",
+      },
+      {
+        id: "reading",
+        title: "Reading",
+        introduction:
+          "Strengthen comprehension, vocabulary-in-context and text organisation while learning how current reading tasks award and deduct credit.",
+        focusItems: [
+          "Main idea, detail, purpose and inference",
+          "Vocabulary, collocation and grammar in context",
+          "Paragraph cohesion and logical order",
+          "Efficient reading under time pressure",
+          "Careful selection where incorrect choices can lose credit",
+          "Integrated reading-and-writing demands",
+        ],
+        taskFamilies: [
+          "Fill in the Blanks (Dropdown)",
+          "Multiple Choice, Multiple Answers",
+          "Reorder Paragraph",
+          "Fill in the Blanks (Drag and Drop)",
+          "Multiple Choice, Single Answer",
+        ],
+        integratedNote:
+          "Multiple Choice, Multiple Answers can lose points for incorrect selections, so careful, evidence-based choices matter more than quick guessing.",
+      },
+      {
+        id: "listening",
+        title: "Listening",
+        introduction:
+          "Practise understanding recordings played once, taking useful notes and transferring what you hear into accurate spoken, written or selected responses.",
+        focusItems: [
+          "Main ideas, detail, purpose, attitude and inference",
+          "Selective note-taking",
+          "Following academic discussions and lectures",
+          "Spelling and accurate transcription",
+          "Distinguishing meaning from repeated keywords",
+          "Predicting from context",
+          "Managing single-play audio and on-screen response time",
+        ],
+        taskFamilies: [
+          "Summarize Spoken Text",
+          "Multiple Choice, Multiple Answers",
+          "Fill in the Blanks (Type In)",
+          "Highlight Correct Summary",
+          "Multiple Choice, Single Answer",
+          "Select Missing Word",
+          "Highlight Incorrect Words",
+          "Write from Dictation",
+        ],
+        integratedNote:
+          "Listening also underpins several speaking tasks, such as Retell Lecture and Answer Short Question, and the extended discussion-based speaking tasks.",
+      },
+    ] as PteSkillArea[],
+    integratedHeading: "One task can draw on more than one skill.",
+    integratedBody:
+      "PTE Academic includes integrated tasks—for example, listening before speaking or writing, and reading before speaking or writing. A weak result may therefore reflect both understanding the input and producing the response.",
+    integratedExamples: [
+      { id: "read-aloud", body: "Read Aloud connects reading input with spoken delivery." },
+      { id: "summarize-spoken-text", body: "Summarize Spoken Text connects listening comprehension with written response." },
+      { id: "write-from-dictation", body: "Write from Dictation connects listening accuracy, memory and written form." },
+    ] as PteIntegratedExample[],
+    integrityHeading: "Prepare for the published task criteria—not an algorithm shortcut.",
+    integrityBody:
+      "The programme uses current public Pearson task information to practise relevant content, language control, timing and computer-test routines. It does not claim access to Pearson's proprietary scoring system or promise that memorised responses will produce a particular score.",
+    integritySecondSentence:
+      "Pearson currently describes automated scoring and human expert review for some response aspects, so preparation should remain relevant, original and aligned with the published task requirements.",
+    // "YYYY-MM-DD" -- when the task list and scoring facts above were last checked against
+    // Pearson's official current-format pages. See docs/pte-content-sources.md for the full
+    // per-claim URL mapping and the recheck-after-format-update requirement.
+    sourceVerifiedAt: "2026-08-27",
   },
 
   // PTE Step 1: no confirmed PTE intake exists yet (content/batches.ts). The shared BatchTable's

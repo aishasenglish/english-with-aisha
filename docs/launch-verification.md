@@ -175,6 +175,16 @@ handle; never fill these with placeholder or invented links.
   learning-format step and pricing step (mirroring IELTS Steps 5 and 6) should build their own
   dedicated, gate-kept sources rather than restoring these shared components on this page.
 
+## High priority — before the next PTE format update (PTE Step 2)
+
+- **Recheck the PTE Academic task list and public scoring facts against Pearson's current format
+  and score guide before launch and after any announced test update.** `content/pte.ts`'s
+  `curriculum` and `scoreProfile` objects were built from the official Pearson pages listed in
+  `docs/pte-content-sources.md`, checked 27 August 2026. Pearson has changed the PTE Academic
+  format before (the `Summarize Group Discussion` / `Respond to a Situation` tasks were added
+  from August 2025) — if it happens again, update `content/pte.ts`, that document's source table,
+  and `sourceVerifiedAt` together, not separately.
+
 ## Flagged during IELTS Step 10, not fixed (out of this step's scope)
 
 - **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is
