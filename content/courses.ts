@@ -112,11 +112,12 @@ export const courses: Course[] = [
       "Personal feedback on writing & speaking",
       "1-on-1 consultation option",
     ],
-    // Not publication-authoritative for /courses/pte (PTE Step 1) — this figure was never
-    // verified and must never be rendered on that page. The <PricingCard> render was removed
-    // from that page entirely; left in place only because the shared Course type requires every
-    // record to have a price and this page no longer imports the only component that would
-    // otherwise render it.
+    // Not publication-authoritative for /courses/pte (PTE Step 6) — this figure was never
+    // verified and must never be rendered on that page. content/ptePricing.ts is the only source
+    // /courses/pte is allowed to read a fee from (components/pte/PTEPricing.tsx). The
+    // <PricingCard> render was removed from that page entirely; left in place only because the
+    // shared Course type requires every record to have a price and this page no longer imports
+    // the only component that would otherwise render it.
     price: 10000,
   },
   {

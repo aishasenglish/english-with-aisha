@@ -158,22 +158,28 @@ handle; never fill these with placeholder or invented links.
   in `content/ieltsPricing.ts`), and an expired `validUntil` fails safely back to the enquiry
   panel at render time rather than showing stale pricing.
 
-## High priority — before publishing a PTE fee or inclusions (PTE Step 1)
+## High priority — before publishing a PTE fee (PTE Steps 1, 5 and 6)
 
-- **PTE pricing and inclusions**: `<PricingCard course={course} />` and
-  `<IncludedList course={course} />` have been removed entirely from `/courses/pte` — neither the
-  unverified `PKR 10,000` "one-time fee" nor the five generic inclusion claims (live Zoom classes,
-  weekly practice tests, full-length mocks, personal feedback, 1-on-1 consultation) render
-  anywhere on that page any more. `content/courses.ts`'s `pte` entry keeps its legacy `price` and
-  `includes` fields only because the shared `Course` type requires them and other course pages'
-  own `<PricingCard>`/`<IncludedList>` still depend on every record having them — both are now
-  commented there as not publication-authoritative for `/courses/pte`. See
-  `docs/pte-offer-verification.md` for the complete list of unresolved pricing and operational
-  facts (billing basis, group-vs-one-to-one fee, duration, inclusions, payment methods, refund/
-  cancellation policy, quotation validity, and whether PTE Academic UKVI or PTE Core need separate
-  handling) that must be answered before any of this can be republished. A future PTE
-  learning-format step and pricing step (mirroring IELTS Steps 5 and 6) should build their own
-  dedicated, gate-kept sources rather than restoring these shared components on this page.
+- **PTE inclusions**: `<IncludedList course={course} />` and the shared `<LearningFormats />` have
+  been removed entirely from `/courses/pte` (PTE Steps 1 and 5) — the five generic inclusion
+  claims (live Zoom classes, weekly practice tests, full-length mocks, personal feedback, 1-on-1
+  consultation) and `LearningFormats`' own group/one-to-one/Zoom/recordings assertions do not
+  render anywhere on that page. `components/pte/PTELearningFormat.tsx` shows only the stable,
+  already-approved teaching method plus a neutral checklist of operational details to confirm.
+- **PTE pricing (`content/ptePricing.ts`)**: this is now the *only* source `/courses/pte` is
+  allowed to read a fee from (`components/pte/PTEPricing.tsx`) — not `content/courses.ts`'s
+  generic `price` field, and not a `<PricingCard>` (still not imported on this page).
+  `ptePricing`'s `status` is currently `"enquire"`: the page shows a fee-enquiry panel with a
+  WhatsApp CTA, and no exact amount renders anywhere (PTE Step 6). To publish a real fee, every
+  field `isValidPublishedPTEPrice()` checks must be answered and approved by Aisha first — see
+  `docs/pte-offer-verification.md`'s "Billing and policy questions still required" section for
+  the complete list (exact test/format, billing basis, duration, group-vs-one-to-one pricing,
+  inclusions, recordings, mocks, practice-platform access, payment schedule, instalments,
+  accepted methods/currencies, who pays transfer fees, cancellation/reschedule/missed-session/
+  refund/transfer policy, and how long a quoted fee stays valid). Do not hand-edit `ptePricing` to
+  `status: "published"` without every field complete — an incomplete or malformed record fails
+  the build (see the module-level check in `content/ptePricing.ts`), and an expired `validUntil`
+  fails safely back to the enquiry panel at render time rather than showing stale pricing.
 
 ## High priority — before the next PTE format update (PTE Step 2)
 

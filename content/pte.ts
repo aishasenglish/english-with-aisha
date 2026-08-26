@@ -500,6 +500,31 @@ export const ptePage = {
     },
   },
 
+  // PTE Step 6: copy for components/pte/PTEPricing.tsx. The `enquire` branch is the only one
+  // currently used -- see content/ptePricing.ts's `ptePricing` for the gate that decides which
+  // branch actually renders. Do not add a placeholder amount to the `published` branch; it exists
+  // so a future genuinely approved record has copy ready to attach to.
+  pricing: {
+    id: "pte-pricing",
+    enquire: {
+      eyebrow: "Fees and enrolment",
+      heading: "Review the complete PTE fee before you decide.",
+      body: "Confirm the current fee together with the exact PTE option, learning format, schedule, duration and included feedback, practice or platform access. No payment is required to ask.",
+      note: "You can review the confirmed details before deciding whether to enrol.",
+      ctaLabel: "Ask for the Current PTE Fee",
+      ctaMessage:
+        "Hi Aisha! I am interested in PTE coaching. Please share the current fee, currency, billing basis, exact PTE option, learning format, schedule, duration, included feedback, practice and mock-test support, any platform access, and payment or cancellation terms. My exact test, required overall and skill scores, previous result and deadline are: [details].",
+    },
+    published: {
+      eyebrow: "Current PTE fee",
+      heading: "See the complete cost and what it covers.",
+      inclusionsHeading: "What this fee includes",
+      lastVerifiedLabel: "Last verified",
+      validUntilLabel: "Valid until",
+      ctaLabel: "Ask About Enrolling",
+    },
+  },
+
   // PTE Step 1: no confirmed PTE intake exists yet (content/batches.ts). The shared BatchTable's
   // own generic fallback message doesn't request the exact test/score/deadline this programme
   // needs, so this overrides it — see components/BatchTable.tsx's optional `fallbackMessage` prop.

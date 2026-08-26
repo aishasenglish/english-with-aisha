@@ -5,7 +5,31 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 5.
+**Last reviewed:** PTE Step 6.
+
+## Pricing state (PTE Step 6)
+
+`content/ptePricing.ts` is the single, gate-kept source for any PTE fee shown on `/courses/pte` —
+`components/pte/PTEPricing.tsx` reads only from it, never from `content/courses.ts`'s legacy
+`price` field.
+
+| Field | Current value |
+|---|---|
+| Pricing state | `enquire` |
+| Exact approved public record | None exists |
+| Confirmation date | Not applicable — no record to confirm |
+| Billing basis | Not applicable |
+| Applicable test/format | Not applicable |
+| Inclusion references | Not applicable |
+| Validity / review date | `lastReviewed: "2026-08-27"` on the `enquire` record |
+| Policy status | Not applicable — no policy has been approved to publish |
+| Legacy pricing figure | **Removed from public authority** — `content/courses.ts`'s `pte.price` (`10000`, never verified for currency, billing basis, test/format, duration or inclusions) cannot render on `/courses/pte`; that page no longer imports `<PricingCard>`, the only component that would read it |
+| Next review responsibility | Whoever implements the next PTE step, or immediately once Aisha supplies a complete approved fee — see the billing/policy question list below |
+
+Until a complete, owner-approved record exists, `PTEPricing` renders a fee-enquiry panel (eyebrow
+"Fees and enrolment", heading "Review the complete PTE fee before you decide.") with one WhatsApp
+CTA asking Aisha to confirm the complete current offer. No payment of any kind is requested
+through the website.
 
 ## Allowed internal states
 
@@ -68,7 +92,45 @@ on Aisha's behalf.
 | Quotation validity date | Needs owner confirmation | — |
 | Owner verification date | Not applicable | No record has been verified yet. |
 
-## What the public page currently says instead (as of PTE Step 5)
+## Billing and policy questions still required (PTE Step 6)
+
+Before `content/ptePricing.ts`'s `ptePricing` can move from `status: "enquire"` to
+`status: "published"`, every one of these needs an owner-approved answer — not one inferred from
+industry practice or legacy code:
+
+1. What is the exact amount and currency?
+2. Is the fee per lesson, week, month, intake/batch or complete programme?
+3. Which exact PTE test option does it cover?
+4. Does the fee differ for PTE Academic and PTE Academic UKVI support?
+5. Does it differ between group and one-to-one coaching?
+6. How many lessons, weeks or months does the billing basis cover?
+7. What is the lesson duration and programme duration?
+8. Which Speaking and Writing feedback services are included?
+9. Are Reading and Listening error reviews included?
+10. Are recordings included, and for how long?
+11. Are timed practice tasks or full mock tests included, and how many?
+12. Does a mock include an estimated score, and which system provides it?
+13. Is access to a practice or scoring platform included, and for how long?
+14. Are official Pearson-licensed or teacher-created materials included?
+15. Is full payment required before the programme begins?
+16. Are instalments available?
+17. Which payment methods and currencies are accepted?
+18. Who pays transfer or processing fees?
+19. What happens when Aisha cancels or reschedules a session?
+20. What happens when a learner misses or reschedules a session?
+21. Is any amount refundable, and under which conditions?
+22. Can enrolment be transferred, paused or deferred?
+23. How long is a quoted fee valid?
+24. When should the public price be reviewed again?
+
+Plus the full field list `isValidPublishedPTEPrice()` in `content/ptePricing.ts` checks before any
+of this can render: stable id, exact test label, format label, exact numeric amount, explicit
+currency (`PKR` or `USD`), a stated billing basis, a stated duration, at least one inclusion id
+that matches a real `content/pte.ts` `delivery.supportItems` entry, an ISO `effectiveFrom` date
+not after `validUntil`, an ISO `verifiedAt` date, an unexpired ISO `validUntil` date if one
+applies, a payment note and a policy note.
+
+## What the public page currently says instead (as of PTE Step 6)
 
 `/courses/pte` shows only:
 
@@ -87,6 +149,9 @@ on Aisha's behalf.
 - a learning-format section separating the stable, already-approved teaching method from the
   operational details a candidate must confirm before paying
   (`components/pte/PTELearningFormat.tsx` — PTE Step 5), with one contextual WhatsApp CTA;
+- a fee-enquiry panel (`components/pte/PTEPricing.tsx` — PTE Step 6), correctly showing no exact
+  amount anywhere since `content/ptePricing.ts`'s `ptePricing.status` is `"enquire"`, with one
+  WhatsApp CTA asking Aisha to confirm the complete current fee;
 - the shared, fail-closed availability fallback (`components/BatchTable.tsx`) at
   `id="pte-availability"`, correctly showing "ask about the next available intake" since no PTE
   batch is published, with a PTE-specific WhatsApp fallback message requesting the exact test,
