@@ -40,6 +40,14 @@ type IeltsFeedbackArea = {
   body: string;
 };
 
+/** One tutor-diagnosis point in the illustrative feedback demonstration
+ *  (components/ielts/IELTSFeedbackDemo.tsx). */
+type IeltsFeedbackPoint = {
+  id: string;
+  label: string;
+  body: string;
+};
+
 export const ieltsPage = {
   hero: {
     eyebrow: "Live online IELTS preparation",
@@ -262,6 +270,60 @@ export const ieltsPage = {
     ] as IeltsFeedbackArea[],
     expectation:
       "Progress depends on your starting point, target, preparation time and consistent use of feedback; no band score can be guaranteed.",
+  },
+
+  // An original, explicitly-illustrative example created for this website — never a testimonial,
+  // never attributed to a real learner, and never given a band estimate (a single sentence can't
+  // responsibly demonstrate an official Writing band). See IELTS Step 4 for the full rationale.
+  feedbackDemo: {
+    id: "ielts-feedback-example",
+    eyebrow: "An illustrative feedback example",
+    heading: "See how one vague sentence becomes a clearer argument.",
+    introduction:
+      "Useful feedback identifies the problem, explains its effect and gives the learner a manageable next action.",
+    disclosure:
+      "This short example was created for this website. It is not student work, a complete IELTS response, an official IELTS task or a band-score prediction.",
+    contextLabel: "Illustrative Task 2 opening sentence",
+    firstAttemptLabel: "First attempt",
+    firstAttempt: "Nowadays cars are a big problem and governments should do something about it.",
+    diagnosisHeading: "Tutor diagnosis",
+    feedbackPoints: [
+      {
+        id: "position",
+        label: "Position",
+        body: "“Do something” does not show what response the writer supports.",
+      },
+      {
+        id: "precision",
+        label: "Precision",
+        body: "“A big problem” does not identify the specific effects of private-car use.",
+      },
+      {
+        id: "development",
+        label: "Development",
+        body: "The relationship between the problem and the proposed action is not yet clear.",
+      },
+    ] as IeltsFeedbackPoint[],
+    nextActionLabel: "Next revision priority",
+    nextAction: "Name the specific urban problems and state the action the argument will support.",
+    revisionLabel: "Revised attempt",
+    revisedAttempt:
+      "Heavy reliance on private cars increases urban congestion and air pollution; governments should therefore improve public transport and reduce unnecessary car journeys.",
+    improvementHeading: "What changed",
+    improvements: [
+      "The problem is specific: congestion and air pollution.",
+      "The proposed response is explicit: improve public transport and reduce unnecessary journeys.",
+      "The cause, effect and position now form one connected argument.",
+    ],
+  },
+
+  // Heading copy for components/ielts/IELTSVerifiedEvidence.tsx — only ever rendered when at
+  // least one IELTS-tagged, consent-confirmed content/testimonials.ts entry exists.
+  verifiedEvidence: {
+    eyebrow: "IELTS learner experiences",
+    heading: "Preparation described by learners who did the work.",
+    contextNote:
+      "Experiences are individual. Progress depends on the learner's starting point, preparation time, attendance and consistent practice.",
   },
 
   finalCta: {

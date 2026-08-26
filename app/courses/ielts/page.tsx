@@ -5,6 +5,8 @@ import IELTSFit from "@/components/ielts/IELTSFit";
 import IELTSScoreProfile from "@/components/ielts/IELTSScoreProfile";
 import IELTSSkillsCurriculum from "@/components/ielts/IELTSSkillsCurriculum";
 import IELTSCoachingProcess from "@/components/ielts/IELTSCoachingProcess";
+import IELTSFeedbackDemo from "@/components/ielts/IELTSFeedbackDemo";
+import IELTSVerifiedEvidence from "@/components/ielts/IELTSVerifiedEvidence";
 import IncludedList from "@/components/IncludedList";
 import BatchTable from "@/components/BatchTable";
 import IELTSFinalCTA from "@/components/ielts/IELTSFinalCTA";
@@ -45,6 +47,8 @@ export default function IELTSPage() {
       <IELTSScoreProfile />
       <IELTSSkillsCurriculum />
       <IELTSCoachingProcess />
+      <IELTSFeedbackDemo />
+      <IELTSVerifiedEvidence />
 
       {/* Inclusions are temporarily retained from the generic course template — replaced once a
           later IELTS step verifies exactly what's included against Aisha's current offering. */}
