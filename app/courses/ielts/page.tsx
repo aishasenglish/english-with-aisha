@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import IELTSHero from "@/components/ielts/IELTSHero";
 import IELTSAuthorityStrip from "@/components/ielts/IELTSAuthorityStrip";
 import IELTSFit from "@/components/ielts/IELTSFit";
-import CourseModules from "@/components/CourseModules";
+import IELTSScoreProfile from "@/components/ielts/IELTSScoreProfile";
+import IELTSSkillsCurriculum from "@/components/ielts/IELTSSkillsCurriculum";
 import IncludedList from "@/components/IncludedList";
 import BatchTable from "@/components/BatchTable";
 import IELTSFinalCTA from "@/components/ielts/IELTSFinalCTA";
@@ -40,12 +41,11 @@ export default function IELTSPage() {
       <IELTSHero />
       <IELTSAuthorityStrip />
       <IELTSFit />
+      <IELTSScoreProfile />
+      <IELTSSkillsCurriculum />
 
-      {/* Curriculum and inclusions are temporarily retained from the generic course template —
-          the two most misleading labels are corrected (see content/courses.ts); the full
-          four-skill curriculum section replaces this after official-source verification in a
-          later IELTS step. */}
-      <CourseModules course={course} />
+      {/* Inclusions are temporarily retained from the generic course template — replaced once a
+          later IELTS step verifies exactly what's included against Aisha's current offering. */}
       <IncludedList course={course} />
 
       {/* Pricing intentionally omitted (IELTS Step 1) — the previous data was internally
