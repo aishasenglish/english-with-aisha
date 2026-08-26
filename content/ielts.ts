@@ -24,6 +24,22 @@ type IeltsSkill = {
   weightingNote?: string;
 };
 
+/** One stage in the four-stage coaching cycle (components/ielts/IELTSCoachingProcess.tsx). */
+type IeltsProcessStep = {
+  id: string;
+  number: string;
+  title: string;
+  body: string;
+  result: string;
+};
+
+/** One of the two skill-group feedback blocks (productive vs. receptive skills). */
+type IeltsFeedbackArea = {
+  id: string;
+  title: string;
+  body: string;
+};
+
 export const ieltsPage = {
   hero: {
     eyebrow: "Live online IELTS preparation",
@@ -191,6 +207,61 @@ export const ieltsPage = {
           "Speaking feedback is organised around fluency and coherence, lexical resource, grammatical range and accuracy, and pronunciation.",
       },
     ] as IeltsSkill[],
+  },
+
+  process: {
+    id: "ielts-coaching-process",
+    eyebrow: "How the coaching works",
+    heading: "Turn practice into a clear next improvement.",
+    introduction:
+      "Practice is most useful when you know what went wrong, why it affected the response and what to change next. Coaching follows a focused cycle rather than repeating complete tests without analysis.",
+    steps: [
+      {
+        id: "requirement",
+        number: "01",
+        title: "Establish the requirement and starting point",
+        body: "Begin with the test type, required overall and component scores, previous results or current performance, and the available preparation time. This keeps the plan connected to the candidate's actual requirement.",
+        result: "Result: a defined score profile and first priority.",
+      },
+      {
+        id: "method",
+        number: "02",
+        title: "Learn the decision behind the task",
+        body: "A lesson focuses on a specific demand: how to interpret a question, select information, organise a response, manage attention or use time more deliberately. The method is explained before the candidate is asked to repeat it independently.",
+        result: "Result: a method the candidate can explain and apply.",
+      },
+      {
+        id: "practice",
+        number: "03",
+        title: "Practise with a clear purpose",
+        body: "Apply the lesson through a focused task, then introduce realistic timing when the skill is ready. Practice should reveal whether the method holds under test conditions—not simply add another completed paper.",
+        result: "Result: observable performance to review.",
+      },
+      {
+        id: "apply-feedback",
+        number: "04",
+        title: "Use feedback in the next attempt",
+        body: "Review what is working, identify the error or weakness with the greatest impact, and apply one or two priorities to the next response. The next attempt shows whether the change is becoming repeatable.",
+        result: "Result: a specific next action rather than a vague instruction to practise more.",
+      },
+    ] as IeltsProcessStep[],
+    feedbackHeading: "Feedback changes by skill.",
+    feedbackIntroduction:
+      "Writing and Speaking need qualitative feedback on the response. Listening and Reading need careful review of the decisions and error patterns behind incorrect answers.",
+    feedbackAreas: [
+      {
+        id: "productive",
+        title: "For productive skills",
+        body: "Writing and Speaking feedback should identify strengths, the most important limitations and a manageable next priority. It can be connected to the relevant assessment criteria without presenting a tutor's judgement as an official IELTS result.",
+      },
+      {
+        id: "receptive",
+        title: "For receptive skills",
+        body: "Listening and Reading review should go beyond the answer key. Candidates examine whether an error came from vocabulary, misunderstanding the question, missing evidence, losing attention, transferring an answer incorrectly or using time poorly.",
+      },
+    ] as IeltsFeedbackArea[],
+    expectation:
+      "Progress depends on your starting point, target, preparation time and consistent use of feedback; no band score can be guaranteed.",
   },
 
   finalCta: {
