@@ -25,6 +25,14 @@ export const courses: Course[] = [
   {
     slug: "ielts",
     name: "IELTS Preparation",
+    // Not publication-authoritative for /courses/ielts (IELTS Step 10) — this "Band 7 and
+    // beyond" / "Band 7+" language was never owner-confirmed and must never appear in
+    // search-facing metadata, structured data or internal-link anchor text. Confirmed unreachable
+    // by that route: IELTS has its own dedicated components/ielts/IELTSHero.tsx (reading from
+    // content/ielts.ts's `hero`), unlike components/CourseHero.tsx (used only by the PTE, TOEFL,
+    // Spoken English and Writing pages), which is the only component that renders `tagline`.
+    // Homepage and Courses-hub cards read content/coursePresentation.ts's already-clean IELTS
+    // copy instead of this field. Left in place only because the shared Course type requires it.
     tagline: "IELTS Preparation — target Band 7 and beyond.",
     summary:
       "Target Band 7+ for study, work, or migration abroad. Academic and General Training both covered.",

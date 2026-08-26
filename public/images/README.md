@@ -7,7 +7,8 @@ Drop your photos into this folder. The website references these filenames:
 | `aisha-hero.jpg` | Home page hero | 800×1067px (portrait, 3:4) |
 | `aisha-cutout-placeholder.png` | Home page hero (right-column cutout portrait) | Transparent-background PNG, portrait, ~1000px tall |
 | `aisha-about.jpg` | About page | 800×1000px (portrait, 4:5) |
-| `og-image.jpg` | Open Graph / social previews | 1200×630px (landscape) |
+| `og-image.jpg` | Default Open Graph / Twitter image (root layout, inherited by pages without their own) | Currently 960×1280px (portrait) — declared as such in `app/layout.tsx`; a genuinely landscape 1200×630px replacement would let more pages use the `summary_large_image` Twitter card type |
+| `social/ielts-preparation.jpg` | `/courses/ielts` Open Graph / Twitter image | 1200×630px (landscape) — composed from `og-image.jpg` padded onto an ivory background, not cropped or stretched; see `docs/ielts-content-sources.md` for why |
 
 ## Testimonial Photos
 

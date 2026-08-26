@@ -7,6 +7,10 @@ export type FAQ = {
   published: boolean;
   /** Marks the six items shown in the homepage's closing FAQ (components/HomeFAQ.tsx). */
   homepage?: boolean;
+  /** Optional "jump to" links appended after the answer — see components/FAQAccordion.tsx's
+   *  FAQAccordionItem shape (added for content/ieltsFaqs.ts in IELTS Step 8, reused here in
+   *  IELTS Step 10 so this test-comparison answer can link to each named programme page). */
+  links?: { label: string; href: string }[];
 };
 
 // Single canonical FAQ source. The homepage FAQ and the full /faq page are both filtered
@@ -164,11 +168,19 @@ export const faqs: FAQ[] = [
     published: true,
   },
   {
+    // IELTS Step 10: added `links` so this test-comparison answer — a natural, relevant place
+    // for it per that step's internal-link audit — sends a reader to each named programme page
+    // rather than only naming the tests in prose.
     id: "choosing-language-test",
     question: "How should I choose between IELTS, PTE and TOEFL?",
     answer:
       "First confirm which tests and scores the university, employer, visa route or professional body currently accepts. If more than one is accepted, share those confirmed requirements, your current level or previous score and your deadline when asking Aisha for guidance.",
     published: true,
+    links: [
+      { label: "IELTS Preparation", href: "/courses/ielts" },
+      { label: "PTE Academic", href: "/courses/pte" },
+      { label: "TOEFL iBT", href: "/courses/toefl" },
+    ],
   },
 ];
 

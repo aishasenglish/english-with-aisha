@@ -94,6 +94,19 @@ handle; never fill these with placeholder or invented links.
   in `content/ieltsPricing.ts`), and an expired `validUntil` fails safely back to the enquiry
   panel at render time rather than showing stale pricing.
 
+## Flagged during IELTS Step 10, not fixed (out of this step's scope)
+
+- **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is
+  taught live online and includes recordings, guided practice and personal feedback." This is the
+  same class of unverified universal claim IELTS Step 10 removed from the root layout's
+  `description` metadata ("Classes recorded.") — and it directly contradicts
+  `docs/ielts-offer-verification.md`, where live/synchronous delivery, recording availability and
+  recording access period are all still "Needs owner confirmation" specifically for IELTS. Fixing
+  it is homepage content work outside an IELTS-page-specific step's scope; flagged here so it
+  isn't lost. Confirm with Aisha whether every current programme genuinely is live and recorded
+  before either keeping this sentence or rewriting it to something that doesn't assert a delivery
+  model that hasn't been confirmed for every programme.
+
 ## Flagged during Step 12, not fixed (out of this step's scope)
 
 - **`components/PricingCard.tsx`** labels every course's price "One-time fee" (shown on the

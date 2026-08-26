@@ -73,6 +73,28 @@ alone.
 
 Used by: `content/ielts.ts`'s Speaking `assessmentNote`.
 
+## Social image (IELTS Step 10)
+
+`/courses/ielts`'s Open Graph/Twitter image is `public/images/social/ielts-preparation.jpg` — a
+genuine `1200×630` file (declared dimensions match the actual pixels). It was composed from the
+site's existing approved portrait (`public/images/og-image.jpg`, itself `960×1280`, portrait
+orientation) by resizing it to fill the canvas height and centring it on a plain `#F7FAFB`
+(ivory/`--color-surface-tint`) background — padding, not cropping or stretching. No AI generation,
+retouching or identity change was applied; the photo itself is unmodified other than a resize. No
+IELTS logo, band badge or test-provider branding was added.
+
+This was necessary because the source portrait's aspect ratio (`0.75`, tall) cannot honestly fill
+a `1200×630` (`1.9:1`, wide) frame without either cropping off Aisha's face/body or stretching the
+image — both of which the implementation prompt explicitly disallows. Padding on a brand-neutral
+background was the only option left that keeps the photo genuine and undistorted while still
+declaring truthful dimensions.
+
+The root layout's own default `og-image.jpg` reference was also corrected in this step — it
+previously declared `1200×630` for a file that is actually `960×1280`; it now declares the true
+dimensions, and the root `twitter.card` was changed from `summary_large_image` to `summary`
+(better suited to a portrait image than a large landscape card). Only `/courses/ielts` uses the
+newly composed wide asset and `summary_large_image`.
+
 ## Maintenance warning
 
 If official IELTS information changes, update the canonical IELTS content and every visible or
