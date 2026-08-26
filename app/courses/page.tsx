@@ -3,13 +3,57 @@ import Link from "next/link";
 import ServiceCard from "@/components/ServiceCard";
 import CourseChoiceGuide from "@/components/CourseChoiceGuide";
 import CorporateEnquiryPanel from "@/components/CorporateEnquiryPanel";
+import CoursesFAQ from "@/components/CoursesFAQ";
 import CTASection from "@/components/CTASection";
 import { courseCategories, coursesForCategory, type CourseCategoryId } from "@/content/courseCategories";
+import { courses } from "@/content/courses";
+import { site } from "@/content/site";
+
+const base = `https://${site.domain}`;
+const pageUrl = `${base}/courses`;
+const pageTitle = "Online English Courses and Tutoring";
+const pageDescription =
+  "Compare live online English support for O Level, IGCSE and A Level students, IELTS, PTE and TOEFL candidates, and learners improving speaking, writing or workplace communication.";
 
 export const metadata: Metadata = {
-  title: "Online English Courses and Tutoring",
-  description:
-    "Compare live online English support for school exams, IELTS, PTE, TOEFL, speaking, writing and workplace communication.",
+  title: pageTitle,
+  description: pageDescription,
+  alternates: { canonical: "/courses" },
+  openGraph: {
+    type: "website",
+    title: `${pageTitle} | ${site.brandName}`,
+    description: pageDescription,
+    url: pageUrl,
+    images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: site.brandName }],
+  },
+};
+
+// Visible hub order, flattened from the canonical category configuration rather than a second
+// manually-maintained list — School English, then Language Tests, then Communication Skills,
+// matching content/courseCategories.ts exactly.
+const collectionPageJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": `${pageUrl}#webpage`,
+  url: pageUrl,
+  name: pageTitle,
+  description: pageDescription,
+  mainEntity: {
+    "@type": "ItemList",
+    itemListOrder: "https://schema.org/ItemListOrderAscending",
+    numberOfItems: courseCategories.flatMap((c) => c.courseSlugs).length,
+    itemListElement: courseCategories
+      .flatMap((c) => c.courseSlugs)
+      .map((slug, i) => {
+        const course = courses.find((c) => c.slug === slug)!;
+        return {
+          "@type": "ListItem",
+          position: i + 1,
+          name: course.name,
+          url: `${base}/courses/${course.slug}`,
+        };
+      }),
+  },
 };
 
 type GoalChoice = {
@@ -67,6 +111,11 @@ const CTA_WHATSAPP_MESSAGE =
 export default function CoursesPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
+      />
+
       {/* Hero */}
       <section className="bg-white text-ink pt-28 pb-14 lg:pt-36 lg:pb-16 px-4 border-b border-line">
         <div className="max-w-3xl mx-auto text-center">
@@ -145,19 +194,7 @@ export default function CoursesPage() {
       <CourseChoiceGuide />
       <CorporateEnquiryPanel />
 
-      {/* What varies by programme */}
-      <section className="py-12 sm:py-14 px-4 bg-white border-y border-line">
-        <div className="max-w-2xl mx-auto text-center">
-          <h2 className="font-serif text-xl sm:text-2xl font-medium text-ink mb-3">
-            Details are confirmed for the programme you choose.
-          </h2>
-          <p className="text-ink-soft leading-relaxed">
-            Class format, schedule, fees, practice requirements and available support can differ
-            by programme and intake. Review the relevant course page or ask Aisha for the current
-            details before enrolling.
-          </p>
-        </div>
-      </section>
+      <CoursesFAQ />
 
       {/* One closing recommendation CTA */}
       <CTASection

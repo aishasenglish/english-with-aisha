@@ -27,23 +27,23 @@ export const faqs: FAQ[] = [
     id: "choosing-programme",
     question: "How do I know which programme is right?",
     answer:
-      "Share the learner's goal, current situation and preferred timeline. Aisha can then recommend the most relevant programme, learning format or next assessment step.",
+      "Start with the learner's exact requirement: school examination, named language test, speaking goal or writing goal. If you are still unsure, share the current situation and preferred timeline so Aisha can recommend the most relevant next step.",
     published: true,
     homepage: true,
   },
   {
     id: "international-students",
-    question: "Can students join from outside Pakistan?",
+    question: "Can learners join from outside Pakistan?",
     answer:
-      "Yes, teaching is online. Current schedules are shown or confirmed in Pakistan Standard Time, so international students should include their country or time zone when enquiring.",
+      "Yes, teaching is online. Current schedules are shown or confirmed in Pakistan Standard Time, so international learners should include their country or time zone when enquiring.",
     published: true,
     homepage: true,
   },
   {
     id: "fees-and-schedules",
-    question: "How are fees and schedules confirmed?",
+    question: "How are course fees confirmed?",
     answer:
-      "Fees and schedules can differ by programme, format and intake. Aisha will share the current details before you decide whether to enrol.",
+      "Fees can differ by programme, learning format and intake. Aisha will share the current fee and payment details before you decide whether to enrol.",
     published: true,
     homepage: true,
   },
@@ -125,6 +125,22 @@ export const faqs: FAQ[] = [
     answer: "Yes — Aisha reviews your writing and speaking and gives specific, actionable feedback.",
     published: true,
   },
+
+  // --- Added for the Courses hub (Step 4); also useful on the full /faq page ---
+  {
+    id: "programme-format-schedule",
+    question: "Do all programmes have the same class format and schedule?",
+    answer:
+      "No. Format, schedule, practice requirements and available support can differ by programme and intake. Review the relevant programme page and confirm the current details before enrolling.",
+    published: true,
+  },
+  {
+    id: "choosing-language-test",
+    question: "How should I choose between IELTS, PTE and TOEFL?",
+    answer:
+      "First confirm which tests and scores the university, employer, visa route or professional body currently accepts. If more than one is accepted, share those confirmed requirements, your current level or previous score and your deadline when asking Aisha for guidance.",
+    published: true,
+  },
 ];
 
 /** Every FAQ eligible to render anywhere on the public site. */
@@ -135,3 +151,34 @@ export const generalFaqs: FAQ[] = publishedFaqs;
 
 /** The homepage's six-question closing FAQ (components/HomeFAQ.tsx), in source order. */
 export const homepageFaqs: FAQ[] = publishedFaqs.filter((faq) => faq.homepage);
+
+/**
+ * Selects published FAQs by stable ID, preserving the requested order — for a page that needs
+ * a specific curated subset (e.g. the Courses hub) rather than "every published item" or "every
+ * item flagged for one particular page". Deliberately throws (not a silent `.filter()`) if an ID
+ * is missing or refers to an unpublished entry, so a typo'd or removed ID fails at build time —
+ * the earliest point a developer would see it — rather than quietly rendering a shorter list.
+ */
+export function selectPublishedFaqs(ids: readonly string[]): FAQ[] {
+  return ids.map((id) => {
+    const faq = faqs.find((f) => f.id === id);
+    if (!faq) {
+      throw new Error(`content/faqs.ts: selectPublishedFaqs — no FAQ entry with id "${id}".`);
+    }
+    if (!faq.published) {
+      throw new Error(`content/faqs.ts: selectPublishedFaqs — FAQ "${id}" is not published.`);
+    }
+    return faq;
+  });
+}
+
+const COURSE_HUB_FAQ_IDS = [
+  "choosing-programme",
+  "programme-format-schedule",
+  "international-students",
+  "fees-and-schedules",
+  "choosing-language-test",
+] as const;
+
+/** The Courses hub's five-question closing FAQ (components/CoursesFAQ.tsx), in curated order. */
+export const courseHubFaqs: FAQ[] = selectPublishedFaqs(COURSE_HUB_FAQ_IDS);
