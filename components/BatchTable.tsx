@@ -27,9 +27,16 @@ type Props = {
   limit?: number;
   /** Hide the "View All Availability Details" link — used on /batches itself. */
   hideViewAllLink?: boolean;
+  /**
+   * Overrides the generic cross-programme WhatsApp message shown in the no-intake fallback state
+   * — use this when a specific programme page needs its own details requested (e.g. PTE Step 1
+   * asking for the exact test, required score, deadline, time zone and usual availability rather
+   * than the generic "programme, timezone and preferred days" prompt). Omit to keep the default.
+   */
+  fallbackMessage?: string;
 };
 
-export default function BatchTable({ courseSlug, limit, hideViewAllLink }: Props) {
+export default function BatchTable({ courseSlug, limit, hideViewAllLink, fallbackMessage }: Props) {
   const allUpcoming = getPublishedUpcomingBatches(courseSlug);
   const upcomingBatches = limit ? allUpcoming.slice(0, limit) : allUpcoming;
 
@@ -45,7 +52,7 @@ export default function BatchTable({ courseSlug, limit, hideViewAllLink }: Props
         </p>
         <div className="flex flex-col sm:flex-row sm:justify-center gap-3">
           <a
-            href={whatsappLink(FALLBACK_WHATSAPP_MESSAGE)}
+            href={whatsappLink(fallbackMessage ?? FALLBACK_WHATSAPP_MESSAGE)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-medium px-5 py-3 transition-colors"

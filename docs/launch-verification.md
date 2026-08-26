@@ -158,6 +158,23 @@ handle; never fill these with placeholder or invented links.
   in `content/ieltsPricing.ts`), and an expired `validUntil` fails safely back to the enquiry
   panel at render time rather than showing stale pricing.
 
+## High priority — before publishing a PTE fee or inclusions (PTE Step 1)
+
+- **PTE pricing and inclusions**: `<PricingCard course={course} />` and
+  `<IncludedList course={course} />` have been removed entirely from `/courses/pte` — neither the
+  unverified `PKR 10,000` "one-time fee" nor the five generic inclusion claims (live Zoom classes,
+  weekly practice tests, full-length mocks, personal feedback, 1-on-1 consultation) render
+  anywhere on that page any more. `content/courses.ts`'s `pte` entry keeps its legacy `price` and
+  `includes` fields only because the shared `Course` type requires them and other course pages'
+  own `<PricingCard>`/`<IncludedList>` still depend on every record having them — both are now
+  commented there as not publication-authoritative for `/courses/pte`. See
+  `docs/pte-offer-verification.md` for the complete list of unresolved pricing and operational
+  facts (billing basis, group-vs-one-to-one fee, duration, inclusions, payment methods, refund/
+  cancellation policy, quotation validity, and whether PTE Academic UKVI or PTE Core need separate
+  handling) that must be answered before any of this can be republished. A future PTE
+  learning-format step and pricing step (mirroring IELTS Steps 5 and 6) should build their own
+  dedicated, gate-kept sources rather than restoring these shared components on this page.
+
 ## Flagged during IELTS Step 10, not fixed (out of this step's scope)
 
 - **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is

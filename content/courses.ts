@@ -74,6 +74,12 @@ export const courses: Course[] = [
   {
     slug: "pte",
     name: "PTE Academic",
+    // Not publication-authoritative for /courses/pte (PTE Step 1) — this "score high" tagline
+    // and summary are confirmed unreachable by that route: PTE has its own dedicated
+    // components/pte/PTEHero.tsx (reading from content/pte.ts's `hero`), unlike
+    // components/CourseHero.tsx (used only by the TOEFL, Spoken English and Writing pages),
+    // which is the only component that renders `tagline`/`whoFor`. Left in place only because
+    // the shared Course type requires every record to have these fields.
     tagline: "PTE Academic — score high with smart strategies.",
     summary:
       "Score high with smart, template-driven strategies for the computer-based PTE Academic exam.",
@@ -82,13 +88,22 @@ export const courses: Course[] = [
       "Those who want a faster, computer-based alternative to IELTS",
       "Professionals seeking a quicker pathway to results",
     ],
+    // Corrected labels only (PTE Step 1) — a dedicated PTE curriculum component with real task
+    // detail from official Pearson sources is a later step. These five strings are still rendered
+    // temporarily by the generic components/CourseModules.tsx (see app/courses/pte/page.tsx) —
+    // corrected here so that render no longer implies AI-scoring insider knowledge or promotes
+    // templates/memorised responses as a strategy.
     modules: [
-      "How PTE's AI scoring really works",
-      "Templates for Speaking & Writing tasks",
-      "All question types across Speaking, Writing, Reading, Listening",
-      "Pronunciation & fluency for the mic",
-      "Pacing and exam-day strategy",
+      "Understanding the published PTE Academic scoring information",
+      "Response planning for Speaking and Writing tasks",
+      "Familiarity with the current PTE Academic task types",
+      "Speaking clarity, pronunciation and oral fluency",
+      "Timing, pacing and computer-test routines",
     ],
+    // Not publication-authoritative for /courses/pte (PTE Step 1) — every claim here is
+    // "Needs owner confirmation" per docs/pte-offer-verification.md. The IncludedList render was
+    // removed from that page entirely; left in place only because the shared Course type and
+    // other pages' <IncludedList> still depend on every course record having an `includes` array.
     includes: [
       "Live Zoom classes (recorded)",
       "Weekly practice tests",
@@ -96,6 +111,11 @@ export const courses: Course[] = [
       "Personal feedback on writing & speaking",
       "1-on-1 consultation option",
     ],
+    // Not publication-authoritative for /courses/pte (PTE Step 1) — this figure was never
+    // verified and must never be rendered on that page. The <PricingCard> render was removed
+    // from that page entirely; left in place only because the shared Course type requires every
+    // record to have a price and this page no longer imports the only component that would
+    // otherwise render it.
     price: 10000,
   },
   {
