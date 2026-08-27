@@ -573,6 +573,17 @@ export const toeflPage = {
     moreAvailabilityLabel: "View all TOEFL availability",
   },
 
+  // TOEFL Step 8: heading copy for components/toefl/TOEFLFAQ.tsx. The eight question/answer
+  // pairs themselves live in the dedicated content/toeflFaqs.ts, independent of
+  // content/faqs.ts's generalFaqs.
+  faq: {
+    id: "toefl-faq",
+    eyebrow: "TOEFL questions",
+    heading: "What to confirm before you begin.",
+    introduction:
+      "These answers cover test choice, score requirements, preparation, feedback and the current coaching offer. Ask Aisha if your institution's requirement or deadline needs a more specific answer.",
+  },
+
   // TOEFL Step 1: a single strong WhatsApp action only — the configured-form/email dual-path
   // DiagnosticForm.tsx supports for IELTS and PTE needs its own dedicated TOEFL enquiry-handoff
   // step (its own field labels, success copy and submission subject, plus a safe fixed

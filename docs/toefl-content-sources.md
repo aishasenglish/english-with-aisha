@@ -6,7 +6,7 @@ score-requirement and four-skill curriculum sections (`content/toefl.ts`,
 maintenance record, not something imported into the website — do not paste full official task
 instructions, sample prompts or examiner comments here or into the site itself.
 
-**Last checked:** 27 August 2026 (Steps 1, 2, 3 and 4).
+**Last checked:** 27 August 2026 (Steps 1, 2, 3, 4 and 8).
 
 **Warning:** do not use old cached TOEFL blogs, third-party "prediction file" sites, pre-2026
 coaching material or TOEFL Essentials/TOEFL ITP resources as a source for TOEFL iBT content. ETS's
@@ -274,6 +274,45 @@ changed" points are entirely original text written for this website. None of it 
 imitates or reproduces an official ETS question, model answer, scoring rubric or score-report
 layout. No official scoring inference is made anywhere in the demonstration — the scoring boundary
 statement explicitly disclaims that the comparison represents official TOEFL scoring.
+
+## TOEFL Step 8: FAQ sourcing
+
+`content/toeflFaqs.ts` (rendered by `components/toefl/TOEFLFAQ.tsx`) reuses facts already
+established by sources 8, 9 and 11 above — no new claim was introduced, but all three were
+re-fetched live for this step to confirm they still hold on the implementation date:
+
+- **Source 8 re-fetched** (`.../ibt/scores/understand-scores.html`) — reconfirmed verbatim: "There
+  are no passing or failing scores set by the TOEFL Program or ETS. Each institution sets its own
+  score requirements"; "As of January 21, 2026, TOEFL iBT score reports feature a new 1 – 6 scale,
+  in half point increments"; "For a two-year transition period after January 2026, you will also
+  receive a comparable overall score on the 0 – 120 scale, representing the midpoint of the
+  corresponding total range." Directly supports `toeflFaqs`'s `required-score` answer.
+- **`.../ibt/about.html` re-fetched** — reconfirmed "It's the only test that measures all four
+  academic English skills — reading, listening, speaking and writing," supporting the general
+  TOEFL iBT framing in `exact-test`. This page does not itself distinguish TOEFL Essentials/ITP —
+  that distinction still relies on source 11, not this page.
+- **Source 11 relied upon, not re-fetched this step** (`.../essentials/content.html`) — already
+  confirms TOEFL Essentials is a materially shorter, structurally different test, supporting
+  `toeflFaqs`'s `exact-test` answer's "TOEFL Essentials and TOEFL ITP are different assessments."
+  No TOEFL ITP-specific official page has been fetched in any TOEFL step; the ITP claim rests on
+  its well-established identity as a separate, institution-administered assessment distinct from
+  TOEFL iBT, consistent with ETS's product naming — recheck directly against an official ETS ITP
+  page before making any more specific ITP claim than "different assessment."
+- No new fact about feedback, guarantees, preparation time or the current offer required an
+  external source — those four answers (`feedback-vs-official-scoring`, `preparation-time`,
+  `guarantees-and-shortcuts`, `current-offer`) restate business-boundary language already
+  established in TOEFL Steps 3–4 and 5–7 (never an official ETS claim), and the `current-offer`
+  answer links to the Step 5–7 anchors (`#toefl-learning-format`, `#toefl-pricing`,
+  `#toefl-availability`) rather than duplicating any changing fee, date or schedule value.
+- No official task question, score table, rubric or test-interface content was reproduced in any
+  FAQ answer.
+
+Google Search Central's structured-data guidance
+(`search-gallery`/`faqpage`/`sd-policies`) was reviewed for this step's Part E decision: no
+`FAQPage` or `QAPage` JSON-LD was added to `/courses/toefl` — a general tutoring/portfolio page is
+not established as eligible for the restricted FAQ rich-result use case, and the visible answers
+plus internal links already provide the page's SEO and user value. Recheck this guidance again
+before ever adding FAQ structured data to this route.
 
 ## Conflicts between sources
 

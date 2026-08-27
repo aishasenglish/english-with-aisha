@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 7.
+**Last reviewed:** TOEFL Step 8.
 
 ## Allowed internal states
 
@@ -156,7 +156,7 @@ imported on that route) and remains removed from public authority.
   (`content/batches.ts` + `TOEFLAvailability.tsx`, Step 7) remain two independent, separately
   gate-kept states — a future published price does not imply a published intake, and vice versa.
 
-## What the public page currently says instead (as of TOEFL Step 7)
+## What the public page currently says instead (as of TOEFL Step 8)
 
 `/courses/toefl` shows only:
 
@@ -213,6 +213,14 @@ imported on that route) and remains removed from public authority.
   time, format, duration, text status, last-verified date, one intake-specific CTA) only once
   `isCompleteToeflIntake()` and every other Part D gate — including separate owner confirmation of
   current-format coverage — is satisfied;
+- a specialist eight-question FAQ (`components/toefl/TOEFLFAQ.tsx` — TOEFL Step 8, id
+  `toefl-faq`, reading from the dedicated `content/toeflFaqs.ts` rather than
+  `content/faqs.ts`'s `generalFaqs`), covering exact test choice, institution-set score
+  requirements, information to share, the tutor-feedback/official-scoring boundary, preparation
+  time, guarantees/shortcuts, the current offer (linking to `#toefl-learning-format`,
+  `#toefl-pricing` and `#toefl-availability` rather than duplicating any fee, date or schedule
+  value), and international enquiries — reusing the shared native `<details>/<summary>`
+  `FAQAccordion` with no new dependency, client state or `FAQPage`/`QAPage` structured data;
 - a TOEFL-specific final CTA (`components/toefl/TOEFLFinalCTA.tsx`) with a single WhatsApp action,
   reusing the hero's exact message.
 
@@ -223,10 +231,11 @@ for the current TOEFL offer), `<PricingCard>` (removed entirely — never import
 `/courses/toefl`, so `content/courses.ts`'s legacy `price: 10000` cannot render there), the shared
 `<BatchTable>` page-level wrapper (replaced entirely by `TOEFLAvailability.tsx`, though
 `<BatchTable>` itself remains in use by the homepage, `/batches` and other programme routes), or the
-generic 17-item `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an
-empty heading in their place — they are simply absent until their own verified replacement step. A
-specialist FAQ and the enquiry-handoff form variant remain deliberately deferred to their own later
-TOEFL steps, mirroring the IELTS and PTE sequence.
+generic 17-item `<FAQAccordion />` default `items` (the component itself is reused with
+TOEFL-specific `items`, never `generalFaqs`, on this route). None of these render "coming soon" or
+an empty heading in their place — they are simply absent until their own verified replacement step.
+The enquiry-handoff form variant remains deliberately deferred to its own later TOEFL step,
+mirroring the IELTS and PTE sequence.
 
 ## Global FAQ audit (TOEFL Step 1)
 
@@ -237,6 +246,33 @@ removed their unconfirmed universal claims in favour of "confirmed per programme
 wording — this already protects TOEFL too, since those answers no longer assert anything specific
 to any one programme. `choosing-language-test` already links to `/courses/toefl` alongside IELTS
 and PTE (added in IELTS Step 10). No further correction was needed for TOEFL in this step.
+
+## Global FAQ audit (TOEFL Step 8)
+
+Re-audited every global entry this step's implementing prompt named, cross-checking each against
+this document's TOEFL-specific states:
+
+| ID | Risk checked | Finding |
+|---|---|---|
+| `programmes-taught` | Asserting live delivery, or omitting TOEFL from the taught-programme list | Says "IELTS and related tests" — no live claim, and vague enough not to exclude TOEFL. Safe as-is. |
+| `international-students` | Implying live/synchronous delivery for every international learner | "Yes, teaching is online... schedules are shown or confirmed in Pakistan Standard Time" — matches TOEFL's own `international-candidates` FAQ answer exactly in spirit. Safe as-is. |
+| `fees-and-schedules` | Asserting an unverified reason fees vary | Already states only that Aisha confirms the complete fee before enrolment — no invented reason. Safe as-is. |
+| `live-or-recorded` | Universal live/recording claim | Already "confirmed per programme and current option." Safe as-is. |
+| `missed-class` | Assuming a recording is always available | Already "depend on the policy confirmed for your specific programme." Safe as-is. |
+| `new-batches` | Implying a recurring/regular TOEFL intake cadence | Already "published only once confirmed... can vary by programme." Safe as-is. |
+| `fees-payment` | Same fee-variation risk as `fees-and-schedules` | Already confirms per-programme before enrolment, no invented reason. Safe as-is. |
+| `mock-exams` | Promising a universal mock quantity/format | Already "differ by programme... confirmed for your current option." Safe as-is. |
+| `one-to-one-help` | Implying one-to-one TOEFL availability | Already "programme-specific and confirmed before you enrol." Safe as-is. |
+| `platform` | Naming Zoom (or any platform) universally | Already "confirmed for your specific programme and current option." Safe as-is. |
+| `personal-feedback` | Promising a universal feedback method/quantity/turnaround | Already "confirmed for your specific programme and current option." Safe as-is. |
+| `choosing-language-test` | Recommending one test over another, or omitting TOEFL | Already sends candidates back to the receiving organisation's accepted tests/scores; already links to `/courses/toefl` alongside IELTS and PTE. Safe as-is. |
+
+**Result: no global FAQ entry required correction or `published: false` for TOEFL.** Every entry
+this prompt flagged for risk had already been made programme-neutral by the IELTS Step 8 and PTE
+Step 8 corrections recorded above (TOEFL Step 1's audit) — none was rewritten specifically for
+IELTS or PTE in a way that has since drifted unsafe for TOEFL. No pre-21-January-2026 integrated/
+independent task wording and no universal TOEFL passing-score claim exists anywhere in
+`content/faqs.ts`.
 
 ## Open questions for Aisha
 

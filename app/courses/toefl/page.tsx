@@ -10,6 +10,7 @@ import TOEFLVerifiedEvidence from "@/components/toefl/TOEFLVerifiedEvidence";
 import TOEFLLearningFormat from "@/components/toefl/TOEFLLearningFormat";
 import TOEFLPricing from "@/components/toefl/TOEFLPricing";
 import TOEFLAvailability from "@/components/toefl/TOEFLAvailability";
+import TOEFLFAQ from "@/components/toefl/TOEFLFAQ";
 import TOEFLFinalCTA from "@/components/toefl/TOEFLFinalCTA";
 
 // Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
@@ -41,8 +42,7 @@ export default function TOEFLPage() {
       <TOEFLLearningFormat />
       <TOEFLPricing />
       <TOEFLAvailability />
-
-      {/* TOEFL-specific FAQ handled later */}
+      <TOEFLFAQ />
       <TOEFLFinalCTA />
     </>
   );

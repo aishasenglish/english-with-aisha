@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–7)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–8)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -466,8 +466,24 @@ handle; never fill these with placeholder or invented links.
   `content/batches.ts` before commit, confirmed via `grep` for "QA FIXTURE" and `git diff`. The
   shared `<BatchTable>` itself is untouched and remains in use by the homepage, `/batches`, IELTS
   and PTE.
-- **TOEFL FAQ**: the generic 17-item `<FAQAccordion />` has been removed entirely from
-  `/courses/toefl`. No dedicated TOEFL FAQ exists yet (a later TOEFL step).
+- **TOEFL specialist FAQ and objection handling (TOEFL Step 8)**: the generic 17-item
+  `<FAQAccordion />` remains removed entirely from `/courses/toefl`. `components/toefl/TOEFLFAQ.tsx`
+  (id `toefl-faq`) now renders the shared `FAQAccordion` component with a dedicated
+  `content/toeflFaqs.ts` `items` prop — exactly eight questions covering exact test choice
+  (TOEFL iBT vs. TOEFL Essentials/ITP, test-centre vs. Home Edition), institution-set score
+  requirements (no universal passing score, current 1–6/transitional 0–120 scale), information to
+  share, the tutor-feedback/official-scoring boundary, preparation time (no fixed promise),
+  guarantees/shortcuts (a direct "No."), the current offer (linking to `#toefl-learning-format`,
+  `#toefl-pricing` and `#toefl-availability` rather than duplicating any fee, date or schedule
+  figure), and international enquiries. Test-choice and scoring facts were re-fetched live against
+  ETS's current pages for this step (`docs/toefl-content-sources.md`'s "TOEFL Step 8: FAQ
+  sourcing"), reconfirming no drift since Steps 2–4. A full audit of every global FAQ entry this
+  step's prompt named (`docs/toefl-offer-verification.md`'s "Global FAQ audit (TOEFL Step 8)")
+  found none required correction — all had already been made programme-neutral by the IELTS/PTE
+  Step 8 work. No `FAQPage`/`QAPage` structured data was added (current Google guidance does not
+  establish a general tutoring portfolio as eligible for the FAQ rich-result use case). No new
+  dependency or client state was added — the existing native `<details>/<summary>` `FAQAccordion`
+  is reused as-is.
 - **Cross-site corrections**: `content/homeCourses.ts`'s TOEFL override
   ("Online coaching · Confirm current format and support") replaces the shared default line that
   falsely implied live delivery, group/one-to-one availability and recordings for TOEFL.
