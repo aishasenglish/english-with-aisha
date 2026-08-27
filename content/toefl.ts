@@ -91,6 +91,16 @@ type ToeflAvailabilityDetail = {
 };
 
 export const toeflPage = {
+  // TOEFL Step 10: backs both the visible breadcrumb (components/toefl/TOEFLBreadcrumb.tsx) and
+  // the matching BreadcrumbList JSON-LD built in app/courses/toefl/page.tsx, so the visible path
+  // and the structured data can never drift apart -- one source, two renderings. The current page
+  // has no `href` since it must not link to itself.
+  breadcrumb: [
+    { label: "Home", href: "/" },
+    { label: "Courses", href: "/courses" },
+    { label: "TOEFL iBT Preparation" },
+  ],
+
   // "YYYY-MM-DD" -- when the format/scoring facts below were last checked against ETS's official
   // current-format pages. See docs/toefl-content-sources.md for the full per-claim URL mapping and
   // the recheck-after-format-update requirement.

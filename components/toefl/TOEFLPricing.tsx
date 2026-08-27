@@ -58,7 +58,12 @@ export default function TOEFLPricing() {
     currency: record.currency,
     maximumFractionDigits: 0,
   }).format(record.amount);
-  const enrolMessage = `Hi Aisha! I'd like to enrol in TOEFL iBT coaching (${record.testDateContext}, ${record.formatLabel}, ${formattedAmount} ${record.billingBasis}). Please confirm the next available start date and payment details.`;
+  // TOEFL Step 10: enquiry-first wording -- displaying a validated price still doesn't create a
+  // booking or enrolment transaction, so this message (currently unreachable while
+  // content/toeflPricing.ts's status stays "enquire") asks Aisha to confirm availability rather
+  // than opening with "I'd like to enrol", matching the non-transactional tone established by
+  // content/toeflEnquiry.ts's toeflFinalEnquiry message.
+  const enquiryMessage = `Hi Aisha! I am interested in TOEFL iBT coaching (${record.testDateContext}, ${record.formatLabel}, ${formattedAmount} ${record.billingBasis}). Please confirm whether this option is currently available and the next steps.`;
 
   return (
     <section
@@ -118,7 +123,7 @@ export default function TOEFLPricing() {
           </p>
 
           <a
-            href={whatsappLink(enrolMessage)}
+            href={whatsappLink(enquiryMessage)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"

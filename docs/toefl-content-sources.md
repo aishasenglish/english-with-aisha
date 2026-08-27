@@ -6,7 +6,7 @@ score-requirement and four-skill curriculum sections (`content/toefl.ts`,
 maintenance record, not something imported into the website — do not paste full official task
 instructions, sample prompts or examiner comments here or into the site itself.
 
-**Last checked:** 27 August 2026 (Steps 1, 2, 3, 4 and 8).
+**Last checked:** 27 August 2026 (Steps 1, 2, 3, 4, 8 and 10).
 
 **Warning:** do not use old cached TOEFL blogs, third-party "prediction file" sites, pre-2026
 coaching material or TOEFL Essentials/TOEFL ITP resources as a source for TOEFL iBT content. ETS's
@@ -313,6 +313,81 @@ Google Search Central's structured-data guidance
 not established as eligible for the restricted FAQ rich-result use case, and the visible answers
 plus internal links already provide the page's SEO and user value. Recheck this guidance again
 before ever adding FAQ structured data to this route.
+
+## Social image and technical SEO (TOEFL Step 10)
+
+`/courses/toefl`'s Open Graph/Twitter image is `public/images/social/toefl-ibt-preparation.jpg`
+— a genuine `1200×630` file (declared dimensions match the actual pixels, confirmed via `sharp`
+metadata inspection). It was composed from the same site-approved portrait already used for
+IELTS/PTE (`public/images/og-image.jpg`, itself `960×1280`, portrait orientation) by resizing it
+to fill the canvas height (`473×630`) and centring it on a plain `#F7FAFB` (ivory/
+`--color-surface-tint`) background — padding, not cropping or stretching, following the exact
+IELTS/PTE Step 10 approach. No AI generation, retouching or identity change was applied; the
+photo itself is unmodified other than a resize. No ETS/TOEFL logo, score badge, university crest
+or visa graphic was added. File size is 56 KB (reasonable; no visible degradation at the composed
+resolution).
+
+This was necessary because the source portrait's aspect ratio (`0.75`, tall) cannot honestly fill
+a `1200×630` (`1.9:1`, wide) frame without either cropping off Aisha's face/body or stretching the
+image — both of which the implementation prompt explicitly disallows. Padding on a brand-neutral
+background was the only option left that keeps the photo genuine and undistorted while still
+declaring truthful dimensions.
+
+### Google Search Central guidance rechecked (27 August 2026)
+
+Confirmed via direct review of the current pages before implementing (same guidance already
+reviewed for TOEFL Step 8's structured-data decision, re-confirmed here):
+
+- `search-gallery` / `faqpage`: the supported rich-result gallery does not list a general
+  `FAQPage` rich result for a tutoring portfolio. No `FAQPage`, `QAPage`, `Offer`,
+  `AggregateRating`, `Review` or `CourseInstance` markup was added to `/courses/toefl` as a
+  result — only `BreadcrumbList`, per `breadcrumb` structured-data guidance.
+- `breadcrumb`: the visible `Home / Courses / TOEFL iBT Preparation` breadcrumb and its matching
+  `BreadcrumbList` JSON-LD are built from the exact same `content/toefl.ts` `breadcrumb` array
+  (`components/toefl/TOEFLBreadcrumb.tsx` and `app/courses/toefl/page.tsx`), so the visible path
+  and structured data can never disagree. Absolute URLs are built from `site.domain`.
+- `course`: current course-list structured-data guidance applies to a list context with multiple
+  courses; a single TOEFL detail page is not a course-list implementation, so none was added here
+  (any future Courses-hub list-markup project is separately scoped, outside this step).
+- `title-link` / `snippet`: the absolute title
+  (`Online TOEFL iBT Preparation | Aisha's English`) and description were written to identify the
+  page topic, reflect visible four-skill content, and provide a natural next step without a
+  score, price, recording or availability promise — see `app/courses/toefl/page.tsx`'s
+  `metadata` export.
+- `google-images`: the social image's alt text (`Portrait of Aisha, the teacher behind Aisha's
+  English`) is factual and derived from canonical `site.founder`/`site.brandName` fields, not
+  keyword-stuffed.
+
+### Cross-site corrections made for this step
+
+- `app/page.tsx`'s homepage metadata `description` said "Personalised live online teaching" while
+  naming TOEFL alongside IELTS/PTE — removed "live" (synchronous delivery is not owner-confirmed
+  for TOEFL; see `docs/toefl-offer-verification.md`), matching the same correction pattern PTE
+  Step 8 applied to `content/faqs.ts`'s shared entries.
+- `app/courses/page.tsx`'s Courses-hub metadata `description` said "Compare live online English
+  support" across every named programme including TOEFL — same correction, "live" removed.
+- `components/toefl/TOEFLPricing.tsx`'s dormant (currently unreachable, `status: "enquire"`)
+  published-price branch built a WhatsApp message beginning "I'd like to enrol in TOEFL iBT
+  coaching..." — rewritten to an enquiry-first "I am interested in TOEFL iBT coaching... Please
+  confirm whether this option is currently available and the next steps." Displaying a validated
+  price still doesn't create a booking or enrolment transaction. No pricing state or amount was
+  changed.
+- `content/homeCourses.ts`'s TOEFL override ("Online coaching · Confirm current format and
+  support") and `content/coursePresentation.ts`'s TOEFL card copy (short description, "best for",
+  focus, CTA label) were re-audited against this step's recommended wording and found already
+  equally accurate — left unchanged per the "do not rewrite only for variation" rule.
+- `content/courses.ts`'s legacy TOEFL record (`tagline`, `modules`, `includes`, `price: 10000`)
+  was re-confirmed unreachable by any search-facing surface: `components/CourseHero.tsx` (the only
+  consumer of `tagline`/`whoFor`) is not used by `/courses/toefl`; the sitemap builds routes from
+  `courses[].slug` only, never `tagline` or `price`; no JSON-LD on the page reads from
+  `content/courses.ts`. Comments on those fields were already comprehensive from earlier steps —
+  no further correction needed.
+- `docs/launch-verification.md`'s pre-existing "Flagged during IELTS Step 10, not fixed" note on
+  `components/CourseExplorer.tsx`'s "Every programme is taught live online and includes
+  recordings..." sentence was updated to confirm TOEFL is the third programme this shared
+  paragraph contradicts (live/synchronous delivery and recordings are both "Needs owner
+  confirmation" for TOEFL) — the sentence itself remains unfixed, as correcting shared homepage
+  copy is outside any single programme-page step's scope.
 
 ## Conflicts between sources
 

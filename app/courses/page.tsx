@@ -12,8 +12,12 @@ import { site } from "@/content/site";
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses`;
 const pageTitle = "Online English Courses and Tutoring";
+// TOEFL Step 10: "Compare live online English support" asserted a universal "live" claim that
+// contradicts TOEFL's verified offer (only online delivery is confirmed -- see
+// docs/toefl-offer-verification.md). Removed "live" rather than leaving an unconfirmed universal
+// claim this cross-programme description can't back up for every named programme.
 const pageDescription =
-  "Compare live online English support for O Level, IGCSE and A Level students, IELTS, PTE and TOEFL candidates, and learners improving speaking, writing or workplace communication.";
+  "Compare online English support for O Level, IGCSE and A Level students, IELTS, PTE and TOEFL candidates, and learners improving speaking, writing or workplace communication.";
 
 export const metadata: Metadata = {
   title: pageTitle,

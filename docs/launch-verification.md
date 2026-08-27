@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–9)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–10)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -510,6 +510,33 @@ handle; never fill these with placeholder or invented links.
   script-like input, an extremely long string) — none rendered a raw value or selected the TOEFL
   variant incorrectly. IELTS and PTE variants, the general form and `ContactForm` were
   regression-tested and remain unchanged.
+- **TOEFL technical SEO, metadata and internal linking (TOEFL Step 10)**: `/courses/toefl` now
+  declares an explicit absolute title (`Online TOEFL iBT Preparation | Aisha's English`,
+  bypassing the root `%s | Aisha's English` template), a truthful description ("Online TOEFL iBT
+  preparation centred on Reading, Listening, Writing and Speaking and your institution's confirmed
+  score requirement. Ask about current availability."), a self-referencing canonical, and complete
+  TOEFL-specific Open Graph/Twitter metadata pointing to a genuine `1200×630`
+  `public/images/social/toefl-ibt-preparation.jpg` (composed the same way as the IELTS/PTE social
+  assets — see `docs/toefl-content-sources.md`). A visible `Home / Courses / TOEFL iBT
+  Preparation` breadcrumb (`components/toefl/TOEFLBreadcrumb.tsx`, id-free typed source in
+  `content/toefl.ts`) and matching `BreadcrumbList` JSON-LD (built from the identical array, one
+  script rendered once) were added — the only new structured-data type; no `Offer`,
+  `AggregateRating`, `Review`, `FAQPage`, `QAPage` or `CourseInstance` markup was added. Corrected
+  two cross-site metadata contradictions: `app/page.tsx`'s homepage description and
+  `app/courses/page.tsx`'s Courses-hub description both said "live online" while naming TOEFL
+  (and every other programme) — "live" removed from both, since synchronous delivery is not
+  owner-confirmed for TOEFL. `components/toefl/TOEFLPricing.tsx`'s dormant (currently unreachable)
+  published-price WhatsApp message opened with "I'd like to enrol" — rewritten to an
+  enquiry-first message; no pricing state or amount changed. `content/homeCourses.ts`'s TOEFL
+  override and `content/coursePresentation.ts`'s TOEFL card copy were re-audited against this
+  step's recommended wording and found already equally accurate — left unchanged. Confirmed the
+  legacy `content/courses.ts` TOEFL record (`tagline`, `modules`, `includes`, `price: 10000`)
+  remains unreachable by any search-facing surface (sitemap, JSON-LD, or `CourseHero.tsx`, which
+  `/courses/toefl` never imports). Verified `/sitemap.xml` lists `https://aishasenglish.com/courses/toefl`
+  exactly once with no fabricated `lastModified` and no separate entry for the
+  `?programme=toefl&source=toefl-page` query variant; `/robots.txt` blocks nothing. Deliberately
+  added **no** TOEFL analytics tracker (no `ProgrammePageViewTracker`) — that remains Step 12's
+  scope, mirroring PTE.
 - **Cross-site corrections**: `content/homeCourses.ts`'s TOEFL override
   ("Online coaching · Confirm current format and support") replaces the shared default line that
   falsely implied live delivery, group/one-to-one availability and recordings for TOEFL.
@@ -528,10 +555,13 @@ handle; never fill these with placeholder or invented links.
   `docs/ielts-offer-verification.md`, where live/synchronous delivery, recording availability and
   recording access period are all still "Needs owner confirmation" specifically for IELTS.
   **Also confirmed to contradict PTE** (PTE Step 10 audit — same rows are "Needs owner
-  confirmation" in `docs/pte-offer-verification.md`), and almost certainly every other programme
-  this sentence covers, since it's one shared page-level paragraph rather than a per-programme
-  field. Fixing it is homepage content work that would need to change copy shared across every
-  programme card, outside any single programme-page step's scope; flagged here so it isn't lost.
+  confirmation" in `docs/pte-offer-verification.md`) **and TOEFL** (TOEFL Step 10 audit — live/
+  synchronous delivery, recordings and recording access period are all still "Needs owner
+  confirmation" in `docs/toefl-offer-verification.md` too), and almost certainly every other
+  programme this sentence covers, since it's one shared page-level paragraph rather than a
+  per-programme field. Fixing it is homepage content work that would need to change copy shared
+  across every programme card, outside any single programme-page step's scope; flagged here so it
+  isn't lost.
   Confirm with Aisha whether every current programme genuinely is live and recorded before either
   keeping this sentence or rewriting it to something that doesn't assert a delivery model that
   hasn't been confirmed for every programme. (The per-card `delivery` line directly below this

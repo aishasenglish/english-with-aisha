@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 9.
+**Last reviewed:** TOEFL Step 10.
 
 ## Allowed internal states
 
@@ -156,10 +156,20 @@ imported on that route) and remains removed from public authority.
   (`content/batches.ts` + `TOEFLAvailability.tsx`, Step 7) remain two independent, separately
   gate-kept states — a future published price does not imply a published intake, and vice versa.
 
-## What the public page currently says instead (as of TOEFL Step 8)
+## What the public page currently says instead (as of TOEFL Step 10)
 
 `/courses/toefl` shows only:
 
+- a visible `Home / Courses / TOEFL iBT Preparation` breadcrumb
+  (`components/toefl/TOEFLBreadcrumb.tsx` — TOEFL Step 10) above the hero, with a matching
+  `BreadcrumbList` JSON-LD block built from the same `content/toefl.ts` `breadcrumb` array so the
+  visible path and structured data can never disagree — the only structured-data type added; no
+  `Offer`, `AggregateRating`, `Review`, `FAQPage`, `QAPage` or `CourseInstance` markup exists on
+  this page. The page also carries an explicit absolute title
+  (`Online TOEFL iBT Preparation | Aisha's English`), a truthful description, a self-referencing
+  canonical, and complete TOEFL-specific Open Graph/Twitter metadata with a genuine `1200×630`
+  social image (`public/images/social/toefl-ibt-preparation.jpg`, composed from the same approved
+  portrait used for IELTS/PTE — see `docs/toefl-content-sources.md`);
 - a TOEFL-iBT-specific hero, authority strip and exact-requirement qualifier
   (`components/toefl/TOEFLHero.tsx`, `TOEFLAuthorityStrip.tsx`, `TOEFLFit.tsx`), positioning the
   page around the candidate's own confirmed institution, test date and score requirement rather
