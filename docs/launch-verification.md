@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–10)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–11)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -545,6 +545,36 @@ handle; never fill these with placeholder or invented links.
 - See `docs/toefl-offer-verification.md` for the complete list of unresolved TOEFL offer facts
   (format-currency, operational, pricing) and `docs/toefl-content-sources.md` for the official ETS
   sourcing behind every current-format/scoring claim on the page.
+
+## TOEFL mobile performance and accessibility hardening (TOEFL Step 11)
+
+- **`/courses/toefl` added to the shared route-chrome list**: `lib/routeChrome.ts`'s
+  `PROGRAMME_DETAIL_ROUTES_WITH_OWN_CHROME` now reads
+  `["/courses/ielts", "/courses/pte", "/courses/toefl"]`. `components/WhatsAppFloat.tsx` and
+  `components/UtilityBar.tsx` needed no code change — both already read this list generically
+  (from PTE Step 11) — so the generic floating WhatsApp button is now suppressed and the
+  phone-width utility bar is now hidden on `/courses/toefl` exactly as they already were on
+  `/courses/ielts` and `/courses/pte`.
+- **Two sitewide "live" claims corrected**: `components/Header.tsx`'s global brand subtitle
+  ("LIVE ONLINE ENGLISH COACHING" → "ONLINE ENGLISH COACHING") and
+  `components/Footer.tsx`'s brand-summary sentence ("Live online English tutoring..." → "Online
+  English tutoring...") — both render on every route, including `/courses/toefl`, and both
+  asserted a universal synchronous-delivery claim that contradicts TOEFL's (and IELTS'/PTE's) own
+  verified state. Regression-tested across the homepage, Courses hub and every programme route.
+- **Combined-fixture conditional-branch test** (a long published TOEFL price, two scheduled TOEFL
+  intakes including a verified "Filling Fast" status, and one consent-confirmed TOEFL testimonial
+  — fully reverted via `git checkout`, confirmed via `git status` and a fixture-marker `grep`):
+  all three branches rendered correctly together with zero axe-core violations and no overflow at
+  any of the 17 required widths.
+- **No new client component, dependency or analytics** was added; the TOEFL `DiagnosticForm`
+  variant's mobile ergonomics (≥16px input text, disabled/preselected programme field, honeypot
+  correctly hidden, failed-submission value preservation and `role="alert"` focus) were verified
+  against a temporary Formspree fixture, fully removed afterward.
+- See `docs/toefl-offer-verification.md`'s "Mobile performance and accessibility hardening
+  (TOEFL Step 11)" section for the complete finding list, including two test-methodology
+  artifacts investigated and confirmed non-issues (a non-representative `font-size: 200%`
+  technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
+  way a real click or fresh load does).
 
 ## Flagged during IELTS Step 10, not fixed (out of this step's scope)
 

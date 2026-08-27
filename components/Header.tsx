@@ -153,7 +153,12 @@ export default function Header() {
                   AISHA&apos;S ENGLISH
                 </span>
                 <span className="text-[9px] font-medium text-muted tracking-widest whitespace-nowrap">
-                  LIVE ONLINE ENGLISH COACHING
+                  {/* TOEFL Step 11: "LIVE" asserted a universal synchronous-delivery claim this
+                      site-wide brand subtitle can't back up for every programme (see
+                      docs/toefl-offer-verification.md, docs/pte-offer-verification.md and
+                      docs/ielts-offer-verification.md, where live/synchronous delivery is
+                      "Needs owner confirmation"). Removed rather than left unconfirmed. */}
+                  ONLINE ENGLISH COACHING
                 </span>
               </span>
             </Link>

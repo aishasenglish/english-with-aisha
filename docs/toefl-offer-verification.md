@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 10.
+**Last reviewed:** TOEFL Step 11.
 
 ## Allowed internal states
 
@@ -290,6 +290,76 @@ Step 8 corrections recorded above (TOEFL Step 1's audit) — none was rewritten 
 IELTS or PTE in a way that has since drifted unsafe for TOEFL. No pre-21-January-2026 integrated/
 independent task wording and no universal TOEFL passing-score claim exists anywhere in
 `content/faqs.ts`.
+
+## Mobile performance and accessibility hardening (TOEFL Step 11)
+
+This step audited the complete rendered `/courses/toefl` route (not isolated components) for
+mobile, tablet, performance and accessibility defects after Steps 1–10. Findings:
+
+- **Shared chrome extended, not duplicated**: `/courses/toefl` was added to the existing
+  `lib/routeChrome.ts` `PROGRAMME_DETAIL_ROUTES_WITH_OWN_CHROME` list (already covering
+  `/courses/ielts` and `/courses/pte` from IELTS/PTE Step 11). `components/WhatsAppFloat.tsx` now
+  suppresses the generic floating WhatsApp button on `/courses/toefl` — the page already has
+  contextual WhatsApp actions throughout (hero, fit, score profile, learning format, pricing,
+  availability, FAQ current-offer answer, final CTA). `components/UtilityBar.tsx` now hides the
+  phone-width utility bar on the same route, giving the TOEFL H1 and primary action more
+  first-screen space. Neither shared component needed its own code change — both already read the
+  centralised list generically.
+- **Two sitewide "live" claims corrected**, both rendered on every route including
+  `/courses/toefl`: the global header brand subtitle (`components/Header.tsx`) said "LIVE ONLINE
+  ENGLISH COACHING" and the footer's brand summary (`components/Footer.tsx`) said "Live online
+  English tutoring..." — both asserted a universal synchronous-delivery claim that contradicts
+  this page's own verified state (live/synchronous delivery remains "Needs owner confirmation").
+  "Live"/"LIVE" removed from both; regression-tested across every route.
+- **Everything else audited and found already compliant** — every TOEFL component's `text-xs`
+  usage was individually reviewed and found identical to the already-hardened PTE/IELTS
+  equivalents (decorative eyebrows, short category labels like "Focus areas", compact task-family
+  chips, the non-critical "Last verified"/"Valid until" labels); every decision-critical note
+  already reviewed in Steps 2–9 (score/scoring-boundary statements, transcript/audio limitation,
+  feedback-demo disclosure, pricing/payment/policy notes, reservation note, evidence context note,
+  confirm-checklist items) was already `text-sm` or larger. `components/DiagnosticForm.tsx`'s
+  shared required/optional indicator and privacy note (bumped to `text-sm` in PTE Step 11) already
+  apply to the `toefl` variant with no further change needed, since the component is shared.
+- **No real horizontal overflow found** at any of the 17 required phone/tablet/desktop widths,
+  landscape, 320px reflow with page-level overflow-clipping temporarily disabled, or the correctly
+  zoom-equivalent CSS-pixel widths for 200%/400% zoom (640px/320px) — confirmed via
+  `scrollWidth`/`clientWidth` comparison. One test-methodology artifact was investigated and
+  confirmed non-issue: naively forcing `html { font-size: 200% }` at a 320px viewport (a technique
+  that does not correspond to any real browser zoom behaviour) produced apparent overflow that
+  disappeared entirely once tested at the actually-equivalent 640px width (200% of a 1280px
+  desktop) and the genuine 320px reflow width (400% equivalent) — both passed with zero overflow.
+- **Anchors, focus and reduced motion verified, not duplicated**: every Step 2–9 fragment target
+  (`#toefl-fit` through `#toefl-enquiry`) clears the sticky header at both desktop and mobile
+  widths via a real anchor-link click and a fresh direct URL load (the two ways a candidate
+  actually navigates); `prefers-reduced-motion: reduce` already correctly disables smooth
+  scrolling and shortens the FAQ disclosure-icon transition to effectively immediate (no
+  TOEFL-specific duplication was added). One test-methodology artifact was investigated and
+  confirmed non-issue: calling `page.goto()` twice against the same route with only the hash
+  changed can bypass the browser's native fragment-scroll in a way a real click or fresh page load
+  does not — both real-world interaction patterns were separately confirmed correct.
+- **All real rendering branches tested together** with a temporary combined fixture (a long
+  published TOEFL price with detailed format/schedule/payment/policy text, two scheduled TOEFL
+  intakes including a verified "Filling Fast" status and long duration/schedule text, and one
+  consent-confirmed TOEFL testimonial with a long quote) — confirmed correct rendering, no
+  overflow at any of 17 widths, zero axe-core violations, and no duplicate headings, then fully
+  reverted via `git checkout` (confirmed clean via `git status` and a fixture-marker `grep`).
+- **Server rendering and JS payload confirmed minimal**: no new client component was added; the
+  page's only interactive client boundaries remain the shared header/mobile menu, the
+  route-chrome-aware `UtilityBar`/`WhatsAppFloat`, and the TOEFL `DiagnosticForm` variant — all
+  pre-existing. No new dependency was added.
+- **TOEFL enquiry form hardening** (temporary Formspree fixture, confirmed removed via `ls`
+  afterward): mobile input/textarea text confirmed ≥16px (avoids iOS auto-zoom); programme field
+  confirmed disabled and preselected as "TOEFL iBT Preparation" and remains visually readable
+  (not near-invisible); correct `inputMode`/`type` on phone and email fields; honeypot confirmed
+  `tabindex="-1"` inside an `aria-hidden` wrapper; a failed submission preserved every entered
+  value and moved focus to a `role="alert"` error message offering the canonical TOEFL WhatsApp
+  fallback. Two test-script artifacts were investigated and confirmed non-issues: a
+  `text-transform: uppercase` eyebrow breaking a case-sensitive text assertion (an established
+  recurring pattern in this project), and Next.js's own always-present hidden route-announcer
+  element also carrying `role="alert"` alongside the genuine, single visible form error.
+
+No page reordering, new dependency, analytics addition, or weakening of any price/availability/
+evidence verification gate was made in this step.
 
 ## Open questions for Aisha
 

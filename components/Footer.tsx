@@ -65,8 +65,13 @@ export default function Footer() {
           {/* Brand summary */}
           <div className="md:col-span-2 lg:col-span-1">
             <p className="font-serif text-xl font-medium text-ink mb-2">{site.brandName}</p>
+            {/* TOEFL Step 11: "Live" asserted a universal synchronous-delivery claim this
+                sitewide footer sentence (rendered on every route, including /courses/toefl)
+                can't back up for every programme -- see docs/toefl-offer-verification.md and
+                the sibling IELTS/PTE offer-verification records, where live/synchronous
+                delivery is "Needs owner confirmation". Removed rather than left unconfirmed. */}
             <p className="text-sm mb-2 max-w-xs leading-relaxed">
-              Live online English tutoring for school examinations, international language
+              Online English tutoring for school examinations, international language
               tests, speaking and writing.
             </p>
             <p className="text-sm mb-6 max-w-xs leading-relaxed">
