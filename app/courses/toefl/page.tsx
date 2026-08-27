@@ -1,52 +1,53 @@
 import type { Metadata } from "next";
-import CourseHero from "@/components/CourseHero";
-import CourseModules from "@/components/CourseModules";
-import IncludedList from "@/components/IncludedList";
-import PricingCard from "@/components/PricingCard";
+import TOEFLHero from "@/components/toefl/TOEFLHero";
+import TOEFLAuthorityStrip from "@/components/toefl/TOEFLAuthorityStrip";
+import TOEFLFit from "@/components/toefl/TOEFLFit";
+import TOEFLCurriculumPreview from "@/components/toefl/TOEFLCurriculumPreview";
 import BatchTable from "@/components/BatchTable";
-import FAQAccordion from "@/components/FAQAccordion";
-import CTASection from "@/components/CTASection";
-import { courses } from "@/content/courses";
-
-const course = courses.find((c) => c.slug === "toefl")!;
+import TOEFLFinalCTA from "@/components/toefl/TOEFLFinalCTA";
+import { toeflPage } from "@/content/toefl";
 
 // Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
 // daily so a page built once doesn't keep showing an intake after its date has passed.
 export const revalidate = 3600;
 
+// TOEFL Step 1: replaces the outcome-led generic metadata ("get ready for universities
+// worldwide", live Zoom/mock/fee claims). Description deliberately omits any recording, price,
+// delivery-format or admissions claim -- none of that is verified yet (see
+// docs/toefl-offer-verification.md).
 export const metadata: Metadata = {
-  title: "TOEFL iBT Course",
+  title: "Online TOEFL iBT Preparation",
   description:
-    "Get ready for TOEFL iBT and university admissions worldwide. Live Zoom classes, mock exams, and personal feedback from Aisha.",
+    "Online TOEFL iBT preparation focused on the current four-skill test, updated task demands and the candidate's confirmed overall and section-score requirements.",
+  alternates: { canonical: "/courses/toefl" },
 };
 
 export default function TOEFLPage() {
   return (
     <>
-      <CourseHero course={course} />
-      <CourseModules course={course} />
-      <IncludedList course={course} />
-      <PricingCard course={course} />
+      <TOEFLHero />
+      <TOEFLAuthorityStrip />
+      <TOEFLFit />
+      <TOEFLCurriculumPreview />
 
-      <section className="py-16 px-4 bg-white">
+      {/* TOEFL Step 1: no confirmed TOEFL intake exists yet -- the shared, fail-closed
+          BatchTable correctly shows its truthful "ask about the next available intake" state.
+          A dedicated TOEFLAvailability component (mirroring IELTS/PTE Step 7) is a later step. */}
+      <section id={toeflPage.availability.id} className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
-            Upcoming TOEFL batches
+            {toeflPage.availability.sectionHeading}
           </h2>
-          <BatchTable courseSlug="toefl" />
+          <BatchTable
+            courseSlug="toefl"
+            fallbackMessage={toeflPage.availability.fallbackMessage}
+            emptyStateHeading={toeflPage.availability.enquiryHeading}
+            emptyStateBody={toeflPage.availability.enquiryBody}
+          />
         </div>
       </section>
 
-      <section className="py-16 px-4 bg-ivory">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
-            Common questions
-          </h2>
-          <FAQAccordion />
-        </div>
-      </section>
-
-      <CTASection />
+      <TOEFLFinalCTA />
     </>
   );
 }

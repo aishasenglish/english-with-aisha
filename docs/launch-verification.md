@@ -352,6 +352,41 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Step 1)
+
+- **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
+  `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLCurriculumPreview,
+  TOEFLFinalCTA}.tsx` reading from `content/toefl.ts`, replacing the generic
+  `CourseHero`/`CourseModules` render and its pre-2026 curriculum labels ("Integrated and
+  independent Writing tasks", "Speaking responses that score") and broad
+  "universities worldwide" positioning. The current-format preview and score-scale note are
+  sourced from official ETS pages — see `docs/toefl-content-sources.md`.
+- **TOEFL inclusions**: `<IncludedList course={course} />` has been removed entirely from
+  `/courses/toefl` — the five generic inclusion claims (live Zoom classes, weekly practice tests,
+  full-length mocks, personal feedback, 1-on-1 consultation) do not render anywhere on that page.
+  No replacement learning-format section exists yet (a later TOEFL step).
+- **TOEFL pricing**: `<PricingCard course={course} />` has been removed entirely from
+  `/courses/toefl` — no amount, `One-time fee`, `PKR 10,000`, discount or enrolment action renders
+  anywhere on that page. No gate-kept `content/toeflPricing.ts` exists yet (a later TOEFL step,
+  mirroring `content/ieltsPricing.ts`/`content/ptePricing.ts`) — until then, the page requests the
+  current fee only through a plain WhatsApp enquiry, never displaying an amount.
+- **TOEFL availability**: the page-level `<BatchTable>` wrapper now uses `id="toefl-availability"`
+  with a truthful "Current TOEFL availability" section heading and TOEFL-specific empty-state
+  heading/body/WhatsApp message (`components/BatchTable.tsx` was extended with optional
+  `emptyStateHeading`/`emptyStateBody` props, backward-compatible with every other caller). All
+  TOEFL-tagged records in `content/batches.ts` remain historical (past dates, `"Closed"`,
+  `published: false`), so the page currently and correctly shows the no-intake enquiry state.
+- **TOEFL FAQ**: the generic 17-item `<FAQAccordion />` has been removed entirely from
+  `/courses/toefl`. No dedicated TOEFL FAQ exists yet (a later TOEFL step).
+- **Cross-site corrections**: `content/homeCourses.ts`'s TOEFL override
+  ("Online coaching · Confirm current format and support") replaces the shared default line that
+  falsely implied live delivery, group/one-to-one availability and recordings for TOEFL.
+  `content/coursePresentation.ts`'s TOEFL card copy no longer says "integrated-task practice"
+  (a pre-2026 structural description) and no longer implies general worldwide acceptance.
+- See `docs/toefl-offer-verification.md` for the complete list of unresolved TOEFL offer facts
+  (format-currency, operational, pricing) and `docs/toefl-content-sources.md` for the official ETS
+  sourcing behind every current-format/scoring claim on the page.
+
 ## Flagged during IELTS Step 10, not fixed (out of this step's scope)
 
 - **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is

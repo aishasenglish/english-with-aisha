@@ -57,12 +57,15 @@ export const coursePresentations: CoursePresentation[] = [
     ctaLabel: "View PTE Programme",
   },
   {
+    // TOEFL Step 1: aligned with the rebuilt /courses/toefl content -- the previous copy
+    // ("integrated-task practice") described the pre-21-January-2026 TOEFL structure and no
+    // longer matches the current test.
     slug: "toefl",
     typeLabel: "English test preparation",
     shortDescription:
-      "Prepare for academic reading, listening, speaking and writing tasks with structured TOEFL iBT practice.",
-    bestFor: "Applicants and professionals with a confirmed TOEFL iBT requirement",
-    focus: "Academic skills and integrated-task practice",
+      "Prepare for the current TOEFL iBT through Reading, Listening, Writing and Speaking development aligned with your confirmed requirement.",
+    bestFor: "Applicants whose institution or programme has confirmed TOEFL iBT and supplied the required score.",
+    focus: "Current four-skill TOEFL iBT preparation",
     ctaLabel: "View TOEFL Programme",
   },
   {

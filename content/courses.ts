@@ -123,6 +123,12 @@ export const courses: Course[] = [
   {
     slug: "toefl",
     name: "TOEFL iBT",
+    // Not publication-authoritative for /courses/toefl (TOEFL Step 1) — "universities worldwide"
+    // is an overly broad acceptance claim, never owner-confirmed. TOEFL has its own dedicated
+    // components/toefl/TOEFLHero.tsx (reading from content/toefl.ts's `hero`), unlike
+    // components/CourseHero.tsx (used only by Spoken English and Writing), which is the only
+    // component that renders `tagline`/`whoFor`. Left in place only because the shared Course
+    // type requires every record to have these fields.
     tagline: "TOEFL iBT — get ready for universities worldwide.",
     summary:
       "Comprehensive TOEFL iBT prep for students applying to universities that require the test.",
@@ -131,6 +137,13 @@ export const courses: Course[] = [
       "Those whose universities require TOEFL iBT specifically",
       "Anyone preparing for graduate or undergraduate admissions",
     ],
+    // Not publication-authoritative for /courses/toefl (TOEFL Step 1) — this pre-2026 structure
+    // ("Integrated and independent Writing tasks", "Speaking responses that score") does not
+    // describe the TOEFL iBT test introduced 21 January 2026. The CourseModules render was
+    // removed from that page entirely; see components/toefl/TOEFLCurriculumPreview.tsx and
+    // content/toefl.ts's `curriculumPreview` for the corrected, officially-sourced temporary
+    // preview (docs/toefl-content-sources.md has the full ETS source mapping). Left in place,
+    // uncorrected, only because the shared Course type requires this field.
     modules: [
       "Reading & Listening for academic content",
       "Integrated and independent Writing tasks",
@@ -138,6 +151,10 @@ export const courses: Course[] = [
       "Note-taking systems",
       "Academic vocabulary",
     ],
+    // Not publication-authoritative for /courses/toefl (TOEFL Step 1) — every claim here is
+    // "Needs owner confirmation" per docs/toefl-offer-verification.md. The IncludedList render
+    // was removed from that page entirely; left in place only because the shared Course type and
+    // other pages' <IncludedList> still depend on every course record having an `includes` array.
     includes: [
       "Live Zoom classes (recorded)",
       "Weekly practice tests",
@@ -145,6 +162,11 @@ export const courses: Course[] = [
       "Personal feedback on writing & speaking",
       "1-on-1 consultation option",
     ],
+    // Not publication-authoritative for /courses/toefl (TOEFL Step 1) — this figure was never
+    // verified and must never be rendered on that page. The <PricingCard> render was removed
+    // from that page entirely; left in place only because the shared Course type requires every
+    // record to have a price and this page no longer imports the only component that would
+    // otherwise render it.
     price: 10000,
   },
   {

@@ -31,6 +31,10 @@ export const HOME_COURSE_DELIVERY: Partial<Record<CourseSlug, string>> = {
   // availability" rows, all "Needs owner confirmation"). Overridden with wording consistent with
   // the verified Step 5 learning-format section instead of asserting an unconfirmed format.
   pte: "Online coaching · Confirm current format and support",
+  // TOEFL Step 1: same reasoning as PTE above -- no TOEFL-specific record verifies live delivery,
+  // group/one-to-one availability or recordings (see docs/toefl-offer-verification.md, where
+  // every one of those rows is "Needs owner confirmation").
+  toefl: "Online coaching · Confirm current format and support",
 };
 
 // The homepage's compact corporate-training panel reuses the same shared, deliberately-hedged

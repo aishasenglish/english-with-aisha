@@ -34,9 +34,24 @@ type Props = {
    * than the generic "programme, timezone and preferred days" prompt). Omit to keep the default.
    */
   fallbackMessage?: string;
+  /**
+   * Overrides the generic no-intake fallback heading/body — use this when a specific programme
+   * page needs its own truthful current-state wording (e.g. TOEFL Step 1's "Ask about the next
+   * suitable TOEFL start." rather than the generic "Ask about the next available intake"). Omit
+   * either to keep the corresponding default.
+   */
+  emptyStateHeading?: string;
+  emptyStateBody?: string;
 };
 
-export default function BatchTable({ courseSlug, limit, hideViewAllLink, fallbackMessage }: Props) {
+export default function BatchTable({
+  courseSlug,
+  limit,
+  hideViewAllLink,
+  fallbackMessage,
+  emptyStateHeading,
+  emptyStateBody,
+}: Props) {
   const allUpcoming = getPublishedUpcomingBatches(courseSlug);
   const upcomingBatches = limit ? allUpcoming.slice(0, limit) : allUpcoming;
 
@@ -44,11 +59,11 @@ export default function BatchTable({ courseSlug, limit, hideViewAllLink, fallbac
     return (
       <div className="bg-white border border-stone rounded-md p-6 sm:p-8 text-center">
         <h3 className="font-serif text-xl font-medium text-ink mb-2">
-          Ask about the next available intake
+          {emptyStateHeading ?? "Ask about the next available intake"}
         </h3>
         <p className="text-muted text-sm sm:text-base mb-6 max-w-md mx-auto">
-          Schedules differ by programme, format and learner location. Tell Aisha which programme
-          you need and the days or times that usually suit you.
+          {emptyStateBody ??
+            "Schedules differ by programme, format and learner location. Tell Aisha which programme you need and the days or times that usually suit you."}
         </p>
         <div className="flex flex-col sm:flex-row sm:justify-center gap-3">
           <a
