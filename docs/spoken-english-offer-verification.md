@@ -5,12 +5,10 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 3 (28 August 2026). Step 3 added the teaching, practice and
-feedback process section. It exposed no genuinely new offer question beyond those already open from
-Steps 1–2 (see "Open questions for Aisha" below) — every operational detail the process touches
-(feedback mode/frequency/turnaround, role-play frequency, number of attempts, homework, platform,
-recordings, duration/frequency) was already an open question, so the table itself is unchanged; see
-"Teaching approach versus operational inclusions" below for the new split Step 3 requires.
+**Last reviewed:** Spoken English Step 4 (28 August 2026). Step 4 added an illustrative feedback
+demonstration and a conditional verified-evidence component. It exposed no genuinely new
+operational offer question — see "Illustrative demonstration versus learner evidence" below for
+what Step 4 confirms and does not confirm.
 
 ## Allowed internal states
 
@@ -93,7 +91,81 @@ any of them):
 The implementation of the Step 3 process section is not itself evidence that any of the above is a
 genuine current inclusion — it describes a teaching method, not a package.
 
-## What the public page currently says instead (as of Spoken English Step 3)
+## Illustrative demonstration versus learner evidence (Step 4)
+
+Step 4 added a text-based feedback demonstration (`components/spoken-english/
+SpokenEnglishFeedbackDemo.tsx`) and a conditional verified-evidence component
+(`components/spoken-english/SpokenEnglishVerifiedEvidence.tsx`). This document records the boundary
+between the two, per the implementing prompt's requirements.
+
+### The demonstration is illustrative, not learner evidence
+
+- The scenario, first attempt, diagnosis, revision and follow-up in `content/spokenEnglish.ts`'s
+  `feedbackDemo` object are **entirely original website copy**, written for this step — not a real
+  learner's response, not a transcript of an actual lesson, and not something Aisha is confirmed to
+  have said to any specific learner. The section's own on-page disclosure states this directly:
+  "This website-created example is for illustration only. It is not learner work, a testimonial, a
+  formal assessment, a CEFR result or evidence of a guaranteed outcome."
+- It demonstrates only the quality of the instructional thinking (recognising what already works,
+  diagnosing a specific gap, proposing one manageable revision, testing it against a changed
+  follow-up). It does **not** demonstrate, and must never be read as demonstrating: that pronunciation,
+  intelligibility, stress, rhythm, intonation, pacing or actual spoken delivery were assessed (a
+  written transcript cannot show any of that — the section's transcript-only boundary makes this
+  explicit); that a real learner achieved this outcome; or that any interview, job, promotion or
+  presentation outcome followed.
+- No CEFR level, score, percentage or rating is attached to any part of the demonstration.
+
+### Learner evidence status: none available
+
+- `content/testimonials.ts` remains an empty array. No genuine, consent-confirmed Spoken English
+  testimonial, interview result, presentation outcome, before/after audio, employer statement or
+  learner case study exists in the repository.
+- `SpokenEnglishVerifiedEvidence.tsx` filters `publishedTestimonials` to
+  `courseSlug === "spoken-english"` and returns `null` (no heading, no section, no placeholder)
+  while that filtered set is empty — which it currently is.
+- Until a genuine record exists, no Spoken English evidence section renders on the public page, and
+  the illustrative demonstration must never be repurposed, rebranded or extended to imply that it
+  is such a record.
+
+### Audio collection/publication remains unresolved
+
+No audio, video, recorder, upload control or AI pronunciation/speech analysis was added in Step 4,
+and none may be added until a separate, fully-documented decision covers: ownership of each
+recording; explicit consent to public web publication (distinct from consent to be quoted);
+consent to editing/transcription; approved public identity; whether employer/client voices or
+confidential information appear; a permanent removal/redaction method; a withdrawal/removal
+process; storage and retention; an accessibility transcript/captions; whether two recordings are
+genuinely comparable; and that no manipulated audio could create a misleading result. See
+`docs/testimonial-content-intake.md`'s "Spoken English-specific intake fields (Step 4)" section for
+the full intake template this would require.
+
+### Feedback mode/frequency remains unresolved
+
+Step 3's "Operational inclusions still unresolved" list (feedback mode, frequency, turnaround,
+etc.) is unchanged by Step 4. The illustrative demonstration shows what a feedback *cycle* can look
+like in principle; it does not confirm how often, in what format, or within what turnaround real
+feedback is actually given in the current offer.
+
+### Evidence eligibility rules
+
+A Spoken English testimonial may render on the public page only when all of the following pass:
+
+1. The exact quotation was supplied or explicitly approved by the person.
+2. `consentConfirmed` is `true`.
+3. `courseSlug` is exactly `"spoken-english"`.
+4. `displayName` matches the approved public format.
+5. `context` is accurate and non-sensitive.
+6. The quotation is not generated, rewritten or embellished.
+7. Any outcome statement is supported and appropriately qualified.
+8. Employer/client names are removed unless separately approved.
+9. The quote does not make an unsupported clinical or guaranteed claim.
+10. Publication does not expose private contact or account data.
+
+Rewriting a person's quote to improve its grammar is not permitted without their explicit approval
+of the final public wording — request permission for an edited version, or use a clearly approved
+excerpt instead.
+
+## What the public page currently says instead (as of Spoken English Step 4)
 
 `/courses/spoken-english` shows only:
 
@@ -129,6 +201,15 @@ genuine current inclusion — it describes a teaching method, not a package.
   (message/response, language choices, delivery/intelligibility, interaction/repair) — see
   "Teaching approach versus operational inclusions" above for what this section can and cannot be
   read as confirming;
+- an illustrative feedback demonstration (`components/spoken-english/SpokenEnglishFeedbackDemo.tsx`,
+  id `spoken-english-feedback-example`) — one original, website-created workplace-communication
+  scenario moving from a first attempt through what already works, a focused diagnosis, one
+  revision priority, a clearer revised response and a changed follow-up, with a prominent
+  disclosure before the scenario and transcript-only/outcome boundaries after it — see
+  "Illustrative demonstration versus learner evidence" above for the full boundary;
+- a conditional verified-evidence component (`components/spoken-english/
+  SpokenEnglishVerifiedEvidence.tsx`) that currently renders nothing (no heading, no section)
+  because no consent-confirmed Spoken English testimonial exists in `content/testimonials.ts` yet;
 - the fail-closed, enquiry-only availability state (`components/spoken-english/
   SpokenEnglishAvailability.tsx`, id `spoken-english-availability`), correctly showing "ask about
   the current Spoken English option" since no Spoken English batch is published, with a

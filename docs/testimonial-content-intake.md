@@ -29,6 +29,51 @@ recorded as "yes" and personal identifiers have been removed from any evidence.
 
 _Copy the block above for each new testimonial._
 
+## Spoken English-specific intake fields (Step 4)
+
+`/courses/spoken-english`'s conditional evidence component
+(`components/spoken-english/SpokenEnglishVerifiedEvidence.tsx`) renders a Spoken English
+testimonial only when it passes every check in
+`docs/spoken-english-offer-verification.md`'s "Evidence eligibility rules". Collect these
+additional fields for any Spoken English record before it is considered for
+`content/testimonials.ts` (in addition to the general fields above):
+
+- Exact programme/service the person actually used (e.g. "Spoken English coaching" specifically,
+  not a related programme):
+- Learner audience: student / professional / other approved category:
+- Real communication context (e.g. "workplace meetings", "job interviews", "study
+  participation") — accurate and non-sensitive, with any employer/institution name removed unless
+  separately approved:
+- Exact original quotation, word for word:
+- Approved excerpt, if different from the exact quotation (only usable with explicit approval of
+  the final public wording — never a silent grammar cleanup):
+- Approved public display name:
+- Approved context line for public display:
+- Consent-confirmation date and where the private consent record is kept (e.g. "WhatsApp message,
+  kept by Aisha outside this repository" — never paste the consent evidence itself into this file
+  or into `content/testimonials.ts`):
+- May an employer/client/institution name appear: yes / no:
+- Does the quote make an interview, job, promotion or presentation-outcome claim: yes / no — if
+  yes, what specific evidence supports it:
+- Evidence supporting any other specific outcome named in the quote:
+- Does audio or image evidence exist: yes / no:
+- If audio/image exists: who owns it, and has the person given explicit consent to public web
+  publication (separate from consent to be quoted)?
+- Accessibility transcript/caption status for any audio/image (required before any audio/image can
+  be published — see the implementing prompt's "Audio and media safeguards"):
+- Expiry/review date, if the context could become stale (e.g. a role, employer or study stage that
+  may change):
+- Withdrawal/removal process: how the person can ask for the entry to be removed, and who is
+  responsible for actioning that request.
+
+Do not add learner audio, an audio recorder/player, or AI-generated pronunciation analysis to the
+public site under any circumstances arising from this intake — Spoken English audio evidence
+remains categorically out of scope until a separate, fully-documented decision is made (see the
+"Audio and media safeguards" section of the Spoken English Step 4 implementing prompt for the full
+list of unresolved prerequisites: ownership, consent to publish, consent to edit/transcribe,
+approved identity, employer/confidential-voice screening, redaction method, withdrawal process,
+storage/retention, and accessibility transcript/captions).
+
 ## Privacy reminders
 
 - Remove student numbers, candidate numbers, email addresses, phone numbers and school

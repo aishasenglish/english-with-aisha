@@ -26,9 +26,18 @@
  * role-play frequency, homework and platform all remain unresolved -- see
  * docs/spoken-english-offer-verification.md).
  *
- * Later Spoken English steps add more sections (feedback demonstration, evidence, learning format,
- * pricing, dedicated availability, FAQ) once their content is verified against an owner
- * confirmation -- do not pre-fill those with placeholder content.
+ * Step 4 adds `feedbackDemo`: one original, website-created illustrative scenario (a workplace
+ * status update, first attempt -> diagnosis -> revision -> changed follow-up) proving only the
+ * quality of the instructional thinking -- never presented as learner work, a testimonial, a
+ * formal assessment, a CEFR result or evidence of a spoken/audio outcome. The companion
+ * components/spoken-english/SpokenEnglishVerifiedEvidence.tsx renders genuine, consent-confirmed
+ * Spoken English testimonials from content/testimonials.ts and returns null (no heading, no
+ * section) while none exist -- see docs/spoken-english-offer-verification.md's evidence-status
+ * section and docs/testimonial-content-intake.md for the intake process.
+ *
+ * Later Spoken English steps add more sections (learning format, pricing, dedicated availability,
+ * FAQ) once their content is verified against an owner confirmation -- do not pre-fill those with
+ * placeholder content.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -105,6 +114,20 @@ export type SpokenEnglishFeedbackFocus = {
   reviewQuestions: readonly string[];
   nextAction: string;
   boundary?: string;
+};
+
+/** One line of the "what already works" / diagnosis lists in the illustrative feedback
+ *  demonstration (components/spoken-english/SpokenEnglishFeedbackDemo.tsx). */
+export type SpokenEnglishFeedbackPoint = {
+  id: string;
+  label: string;
+  body: string;
+};
+
+/** One line of the "what changed" list in the same demonstration. */
+export type SpokenEnglishImprovementPoint = {
+  id: string;
+  body: string;
 };
 
 export const spokenEnglishPage = {
@@ -585,6 +608,89 @@ export const spokenEnglishPage = {
       "Focused feedback should make the next attempt more manageable. It can recognise what is already working, identify the highest-impact issue and give the learner a specific change to test.",
     expectation:
       "Coaching can provide structured practice and specific next priorities. Progress also depends on the learner's starting point, relevant practice, available time and continued application; no communication outcome can be guaranteed.",
+  },
+
+  // Step 4: one original, website-created illustrative example proving only the quality of the
+  // instructional thinking -- not learner work, a testimonial, a formal assessment, a CEFR result
+  // or evidence that any response was ever spoken aloud. Every sentence in `situation`,
+  // `firstAttempt`, `revisedAttempt`, `followUpQuestion` and `followUpResponse` is original website
+  // copy (see docs/spoken-english-content-sources.md's "Step 4 -- illustrative example provenance"
+  // note). The two boundary strings (`transcriptBoundary`, `outcomeBoundary`) are rendered in
+  // normal readable text, never a tooltip/footnote/text-xs treatment.
+  feedbackDemo: {
+    id: "spoken-english-feedback-example",
+    eyebrow: "An illustrative feedback example",
+    heading: "See how focused feedback can strengthen a spoken response.",
+    introduction:
+      "Useful feedback identifies what already communicates successfully, what most limits the listener and which specific change the learner can apply to another attempt.",
+    disclosure:
+      "This website-created example is for illustration only. It is not learner work, a testimonial, a formal assessment, a CEFR result or evidence of a guaranteed outcome.",
+    contextLabel: "Illustrative workplace communication practice",
+    situation:
+      "In a team meeting, explain why a report is not yet complete, state what you have already done and propose a realistic next action.",
+    firstAttemptLabel: "First illustrative attempt",
+    firstAttempt:
+      "The report not complete because some data missing. I already ask but no answer. Maybe we can submit tomorrow.",
+    whatWorksHeading: "What already works",
+    whatWorks: [
+      {
+        id: "purpose",
+        label: "Purpose",
+        body: "The response identifies the report and explains that missing data is causing the delay.",
+      },
+      {
+        id: "action",
+        label: "Action",
+        body: "The speaker indicates that they have already contacted someone and suggests a possible next date.",
+      },
+    ] as SpokenEnglishFeedbackPoint[],
+    diagnosisHeading: "Focused tutor diagnosis",
+    feedbackPoints: [
+      {
+        id: "message-responsibility",
+        label: "Message and responsibility",
+        body: "The listener needs a clearer status: which information is missing, who has been contacted and what can be completed while waiting.",
+      },
+      {
+        id: "sentence-control",
+        label: "Sentence control",
+        body: "The meaning is understandable, but the response needs complete verb forms such as “is not complete” and “I have already asked” so the timing and current status are clear.",
+      },
+      {
+        id: "specific-next-action",
+        label: "Specific next action",
+        body: "“Maybe we can submit tomorrow” is uncertain. State what makes tomorrow possible and what alternative action will happen if the data does not arrive.",
+      },
+      {
+        id: "delivery-question",
+        label: "Delivery question",
+        body: "The transcript shows wording only. An actual spoken attempt would be needed to review intelligibility, stress, phrasing, pace, pausing and listener effort.",
+      },
+    ] as SpokenEnglishFeedbackPoint[],
+    nextPriorityLabel: "Next revision priority",
+    nextPriority:
+      "State the current status, explain the missing information, give one condition for the proposed date and name the fallback action.",
+    revisedAttemptLabel: "Clearer revised response",
+    revisedAttempt:
+      "The report is not complete because two data points are still missing. I have already asked the relevant team for them. If they arrive today, I can submit the final report tomorrow; if not, I will send the completed sections and confirm the revised deadline.",
+    followUpHeading: "Now change the interaction",
+    followUpQuestion: "What can you complete today?",
+    followUpResponse:
+      "I can complete the analysis and send the draft today. I will add the final figures as soon as the missing data arrives.",
+    followUpPurposeNote:
+      "The changed question tests whether the learner can keep the main message while adapting the response instead of repeating one fixed script.",
+    improvementHeading: "What changed",
+    improvements: [
+      { id: "status-cause", body: "The status and cause are more specific." },
+      { id: "verb-forms", body: "The verb forms make the timeline clearer." },
+      { id: "proposed-date-condition", body: "The proposed date has a stated condition." },
+      { id: "fallback-action", body: "The speaker offers a useful fallback action." },
+      { id: "relevant-followup", body: "The follow-up response remains relevant without copying the first answer." },
+    ] as SpokenEnglishImprovementPoint[],
+    transcriptBoundary:
+      "A written transcript cannot show how the response sounded. Pronunciation, intelligibility, stress, rhythm, intonation, pace, pausing, listening and turn-taking require an actual spoken interaction. No audio has been assessed in this example.",
+    outcomeBoundary:
+      "The revision demonstrates one feedback process. It does not prove a learner result, formal level increase, interview outcome or guaranteed progress.",
   },
 
   // Step 1: no confirmed Spoken English intake exists yet (content/batches.ts). Fails closed --

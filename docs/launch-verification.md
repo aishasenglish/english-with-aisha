@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–3)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–4)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -758,6 +758,29 @@ handle; never fill these with placeholder or invented links.
   speaking-profile and final CTAs are sufficient) and no CEFR terminology (the three CEFR source
   URLs this step was asked to recheck all still returned HTTP 403 Forbidden — see
   `docs/spoken-english-content-sources.md`'s "CEFR source access re-check" section).
+- **Illustrative feedback demonstration and conditional evidence (Step 4)**:
+  `SpokenEnglishFeedbackDemo.tsx` (id `spoken-english-feedback-example`), inserted immediately
+  after the coaching process, shows one original, website-created workplace-communication scenario
+  (explaining a delayed report in a team meeting) moving from a first illustrative attempt through
+  "what already works", a four-point diagnosis, one revision priority, a clearer revised response,
+  and a changed follow-up question and answer — with a prominent disclosure before the scenario
+  ("This website-created example is for illustration only. It is not learner work, a testimonial,
+  a formal assessment, a CEFR result or evidence of a guaranteed outcome.") and two boundaries after
+  it: a transcript-only limitation (a written transcript cannot show pronunciation, intelligibility,
+  stress, rhythm, intonation, pace, pausing, listening or turn-taking; no audio was assessed) and an
+  outcome boundary (the revision demonstrates one feedback process; it does not prove a learner
+  result, formal level increase, interview outcome or guaranteed progress). First and revised
+  attempts are distinguished by label and border treatment only, never red/green styling. No CTA,
+  audio recorder, upload control or AI analysis was added.
+  `SpokenEnglishVerifiedEvidence.tsx` (id `spoken-english-verified-evidence`), immediately after the
+  demonstration, would render genuine consent-confirmed Spoken English testimonials
+  (`courseSlug === "spoken-english"` from `publishedTestimonials`) but currently returns `null` —
+  no heading, no section, no placeholder — because `content/testimonials.ts` remains empty. See
+  `docs/spoken-english-offer-verification.md`'s "Illustrative demonstration versus learner
+  evidence" section for the complete boundary, and `docs/testimonial-content-intake.md`'s "Spoken
+  English-specific intake fields" for what a future genuine record would need before publication
+  (including that audio/video evidence remains categorically unresolved pending a separate,
+  fully-documented consent/redaction/withdrawal decision).
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions

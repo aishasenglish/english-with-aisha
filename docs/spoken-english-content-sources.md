@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 3).
+**Last checked:** 28 August 2026 (Step 4).
 
 ## Canonical owner facts used
 
@@ -167,6 +167,29 @@ phonological control without naming CEFR or any framework — the pre-existing d
 terminology needed no change. The five-stage process is described only as an internal instructional
 model; nowhere does the page call it an official CEFR method, claim CEFR alignment or certification,
 copy a descriptor table, or promise progression between CEFR levels.
+
+### Step 4 — illustrative example provenance
+
+`content/spokenEnglish.ts`'s `feedbackDemo` object (the workplace-communication scenario, first
+attempt, "what already works" points, diagnosis, revision priority, revised response, follow-up
+question/response and "what changed" list) is **entirely original website copy**, written for this
+step by the implementer against the implementing prompt's own specified wording — not sourced from,
+adapted from, or copied out of any external task bank, test-preparation material, published
+teaching example, or real lesson transcript. No external task prompt was used.
+
+- **Transcript-only limitation.** The demonstration's `transcriptBoundary` field states plainly that
+  a written transcript cannot show pronunciation, intelligibility, stress, rhythm, intonation, pace,
+  pausing, listening or turn-taking, and that no audio was assessed in the example. This is a
+  factual statement about the medium (text cannot carry audio information), not a claim requiring an
+  external citation.
+- **CEFR/intelligibility reference used for the boundary.** The demonstration's diagnosis includes
+  one "Delivery question" point noting that "an actual spoken attempt would be needed to review
+  intelligibility, stress, phrasing, pace, pausing and listener effort" — this restates, in plain
+  language, the same intelligibility-over-accent-elimination position already established in Step 1
+  and Step 2 (see "Content boundary decisions" above); it does not cite or rely on any external CEFR
+  source, and none was consulted for this specific wording.
+- **Review date.** 28 August 2026 (Step 4). Recheck this section if the illustrative scenario's
+  wording is ever revised, or if it is ever considered for reuse elsewhere on the site.
 
 ## Positioning versus formal assessment claims
 
