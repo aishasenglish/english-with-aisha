@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import SpokenEnglishHero from "@/components/spoken-english/SpokenEnglishHero";
 import SpokenEnglishAuthorityStrip from "@/components/spoken-english/SpokenEnglishAuthorityStrip";
 import SpokenEnglishFit from "@/components/spoken-english/SpokenEnglishFit";
-import SpokenEnglishPrioritiesPreview from "@/components/spoken-english/SpokenEnglishPrioritiesPreview";
+import SpokenEnglishSpeakingProfile from "@/components/spoken-english/SpokenEnglishSpeakingProfile";
+import SpokenEnglishCurriculum from "@/components/spoken-english/SpokenEnglishCurriculum";
+import SpokenEnglishContextApplication from "@/components/spoken-english/SpokenEnglishContextApplication";
 import SpokenEnglishAvailability from "@/components/spoken-english/SpokenEnglishAvailability";
 import SpokenEnglishFinalCTA from "@/components/spoken-english/SpokenEnglishFinalCTA";
 
@@ -27,7 +29,9 @@ export default function SpokenEnglishPage() {
       <SpokenEnglishHero />
       <SpokenEnglishAuthorityStrip />
       <SpokenEnglishFit />
-      <SpokenEnglishPrioritiesPreview />
+      <SpokenEnglishSpeakingProfile />
+      <SpokenEnglishCurriculum />
+      <SpokenEnglishContextApplication />
       <SpokenEnglishAvailability />
       <SpokenEnglishFinalCTA />
     </>

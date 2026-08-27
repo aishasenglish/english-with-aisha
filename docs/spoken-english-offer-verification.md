@@ -5,7 +5,10 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 1.
+**Last reviewed:** Spoken English Step 2 (28 August 2026). Step 2 added the speaking-profile and
+communication-curriculum sections; it exposed no genuinely new offer question beyond those already
+open from Step 1 (see "Open questions for Aisha" below) — it is positioning/curriculum content, not
+a new operational claim, so the table itself is unchanged except for the "as of" section below.
 
 ## Allowed internal states
 
@@ -41,7 +44,7 @@ other professional advice, or as an answer on Aisha's behalf.
 | Response time | Needs owner confirmation | No documented standard exists anywhere on the site. | None. Do not promise a reply-time window. | Confirm whether Aisha wants to commit to a stated response time. | 2026-08-27 |
 | Testimonial consent and direct Spoken English relevance | Needs owner confirmation | `content/testimonials.ts` currently has no entries. | None. No testimonial, quote or outcome claim may appear until a real, consent-confirmed, Spoken-English-tagged record exists. | Supply a genuine testimonial with recorded consent and a `courseSlug: "spoken-english"` tag before any evidence section is built. | 2026-08-27 |
 
-## What the public page currently says instead (as of Spoken English Step 1)
+## What the public page currently says instead (as of Spoken English Step 2)
 
 `/courses/spoken-english` shows only:
 
@@ -50,27 +53,44 @@ other professional advice, or as an answer on Aisha's behalf.
   `SpokenEnglishFit.tsx`), positioning the page around the candidate's own real speaking
   situations (work, interviews/presentations, study, everyday communication) rather than a
   promise to "speak without hesitation";
-- a temporary communication-priorities preview (`components/spoken-english/
-  SpokenEnglishPrioritiesPreview.tsx`, id `spoken-english-priorities`) explicitly framed as
-  "examples to discuss, not a promise that every current option includes the same syllabus" —
-  Step 2 will replace this with the final learner-profile and communication curriculum;
+- a speaking-profile section (`components/spoken-english/SpokenEnglishSpeakingProfile.tsx`, id
+  `spoken-english-speaking-profile`) that replaces Step 1's temporary priorities preview: six
+  discussion prompts (situation, listener, communication task, current difficulty, current
+  experience, timeline/time-zone/availability), six descriptively-worded profile areas Aisha may
+  use to identify initial priorities, and an explicit boundary note that this is a coaching needs
+  profile, not a certified CEFR placement, clinical speech assessment, or guarantee of progress —
+  answering, informally, part of open question 12 below (the starting point is discussed, not
+  formally tested), though whether Aisha's actual current practice matches this description still
+  needs her confirmation;
+- a communication-curriculum section (`components/spoken-english/SpokenEnglishCurriculum.tsx`, id
+  `spoken-english-communication-curriculum`) describing six areas of focus (pronunciation and
+  intelligibility, response building, spoken grammar, functional vocabulary, listening and
+  interaction, fluency/pacing/repair) with focus areas, practice examples, and boundary notes where
+  a claim could otherwise be overstated — framed throughout as areas of emphasis, not a fixed
+  syllabus every current option is confirmed to deliver;
+- a context-application section (`components/spoken-english/SpokenEnglishContextApplication.tsx`,
+  id `spoken-english-context-application`) mapping that same curriculum emphasis onto five real
+  situations (work and meetings, interviews, presentations, study, everyday) without implying a
+  separate mini-course, price or guarantee per situation;
 - the fail-closed, enquiry-only availability state (`components/spoken-english/
   SpokenEnglishAvailability.tsx`, id `spoken-english-availability`), correctly showing "ask about
   the current Spoken English option" since no Spoken English batch is published, with a
   Spoken-English-specific WhatsApp fallback message requesting the candidate's main speaking goal,
   current experience, country/time zone and usual availability;
-- a Spoken-English-specific final CTA (`components/spoken-english/SpokenEnglishFinalCTA.tsx`)
-  reusing the hero's exact WhatsApp message, plus a plain `mailto:` fallback to the canonical
-  `aishasenglish@gmail.com` (no dedicated form variant yet — that is a later step).
+- a Spoken-English-specific final CTA (`components/spoken-english/SpokenEnglishFinalCTA.tsx`) with
+  its own full structured WhatsApp message (no longer reusing the hero's message, which Step 2
+  shortened to a brief goal-and-difficulty invitation), plus a plain `mailto:` fallback to the
+  canonical `aishasenglish@gmail.com` (no dedicated form variant yet — that is a later step).
 
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
-components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely), or the
-generic complete `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an
-empty heading in their place — they are simply absent until their own verified replacement step.
-Detailed learner-profile/curriculum, coaching process, feedback demonstration, evidence, learning
-format, pricing, a dedicated availability component, a specialist FAQ and the enquiry-handoff form
-variant all remain deliberately deferred to their own later Spoken English steps, mirroring the
-IELTS, PTE and TOEFL sequence.
+components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely), the
+generic complete `<FAQAccordion />` (removed entirely), or Step 1's temporary
+`SpokenEnglishPrioritiesPreview` (deleted in Step 2, superseded by the speaking-profile and
+curriculum sections above). None of these render "coming soon" or an empty heading in their place —
+they are simply absent until their own verified replacement step. Coaching process, feedback
+demonstration, evidence, learning format, pricing, a dedicated availability component upgrade, a
+specialist FAQ and the enquiry-handoff form variant all remain deliberately deferred to their own
+later Spoken English steps, mirroring the IELTS, PTE and TOEFL sequence.
 
 ## Open questions for Aisha
 
@@ -100,6 +120,6 @@ IELTS, PTE and TOEFL sequence.
     published on this page?
 
 Until these are answered, the public page deliberately shows only the verified positioning,
-fit guidance, a temporary priorities preview, the fail-closed availability state and a WhatsApp/
-email path to ask Aisha directly — never an invented format, level, duration, fee, feedback
-promise or intake.
+fit guidance, the speaking-profile and communication-curriculum content, the fail-closed
+availability state and a WhatsApp/email path to ask Aisha directly — never an invented format,
+level, duration, fee, feedback promise or intake.

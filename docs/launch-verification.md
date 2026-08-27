@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Step 1)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–2)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -686,24 +686,44 @@ handle; never fill these with placeholder or invented links.
   section (mirrors `TOEFLAuthorityStrip.tsx`'s reasoning) — it is not general Spoken English
   accreditation. "Corporate Trainer" was also omitted pending an owner decision on its exact
   current public use for this page.
-- **Temporary priorities preview**: `TOEFLTaskCurriculum`-equivalent for this programme is
-  `SpokenEnglishPrioritiesPreview.tsx` (id `spoken-english-priorities`) — six areas (pronunciation
-  and intelligibility, building spoken responses, grammar and sentence control in speech,
-  functional vocabulary, listening/turn-taking/clarification, fluency/pacing/preparation),
-  explicitly framed as "examples to discuss, not a promise that every current option includes the
-  same syllabus." No CEFR level, automated level test, accent playback or before/after audio
-  claim exists anywhere on the page. A full learner-profile and communication curriculum
-  (mirroring TOEFL Step 2) is a later step.
+- **Speaking profile and communication curriculum (Step 2)**: Step 1's temporary
+  `SpokenEnglishPrioritiesPreview.tsx` was deleted and replaced by two dedicated sections read from
+  `content/spokenEnglish.ts`: `SpokenEnglishSpeakingProfile.tsx` (id
+  `spoken-english-speaking-profile`) — six discussion prompts (situation, listener, communication
+  task, current difficulty, current experience, timeline/time-zone/availability), six
+  descriptively-worded profile areas (never a score or severity label), and an explicit boundary
+  note that this is a coaching needs profile, not a certified CEFR placement, clinical speech
+  assessment or guarantee of progress — and `SpokenEnglishCurriculum.tsx` (id
+  `spoken-english-communication-curriculum`) — six areas (pronunciation and intelligibility,
+  response building, spoken grammar, functional vocabulary, listening and interaction, fluency/
+  pacing/repair), each with focus areas, practice examples and a boundary note wherever a claim
+  could otherwise be overstated (e.g. "not removal of the learner's identity or imitation of a
+  native accent"; "Error-free performance is not promised"; "Fluency does not mean speaking
+  nonstop..."). A third new section, `SpokenEnglishContextApplication.tsx` (id
+  `spoken-english-context-application`), maps that curriculum emphasis onto five real situations
+  (work and meetings, interviews, presentations, study, everyday) without implying a separate
+  mini-course, price or guarantee per situation. All five official Council of Europe CEFR source
+  URLs the implementing prompt named returned HTTP 403 Forbidden when checked this step — no CEFR
+  term, level label or descriptor citation was published anywhere as a result (see
+  `docs/spoken-english-content-sources.md`'s "CEFR source access attempt" section). No automated
+  level test, accent playback, or before/after audio claim exists anywhere on the page.
 - **Fail-closed availability**: `SpokenEnglishAvailability.tsx` (id `spoken-english-availability`)
   renders only the enquiry-only state — it does not query `content/batches.ts` at all in this
   step (all current Spoken-English-tagged batch records are historical, closed and unpublished, so
   this is also the truthful current state). No historical date, inferred cadence, or group/private
   availability claim appears. A dedicated verified-intake component (mirroring IELTS/PTE/TOEFL
   Step 7) is a later step.
-- **Final CTA**: `SpokenEnglishFinalCTA.tsx` reuses the hero's exact WhatsApp message plus a plain
-  `mailto:` fallback (no dedicated form variant yet — deliberately deferred to a later step,
-  mirroring IELTS/PTE/TOEFL Step 9, since the existing generic detailed-enquiry form would ask the
-  visitor to pick a programme again and lose the Spoken English context).
+- **Final CTA and WhatsApp message hierarchy (Step 2)**: `SpokenEnglishFinalCTA.tsx` now uses its
+  own dedicated `finalCta.message` (a full structured enquiry ending with an explicit request to
+  confirm format, schedule and fee) rather than reusing the hero's message — Step 2 shortened the
+  hero's WhatsApp message to a brief goal-and-difficulty invitation and retargeted the hero's
+  secondary CTA to link to the new speaking-profile section ("Build Your Speaking Profile" →
+  `#spoken-english-speaking-profile`), which has its own third, full structured message
+  (`speakingProfile.cta.message`). The three messages are deliberately different lengths for
+  different points in a visitor's decision, not copies of one another. The final CTA's plain
+  `mailto:` fallback is unchanged (no dedicated form variant yet — deliberately deferred to a later
+  step, mirroring IELTS/PTE/TOEFL Step 9, since the existing generic detailed-enquiry form would ask
+  the visitor to pick a programme again and lose the Spoken English context).
 - **Shared-copy corrections**: `content/homeCourses.ts` gained a Spoken English
   `HOME_COURSE_DELIVERY` override ("Online coaching · Confirm current format and support"),
   replacing the shared default line that falsely implied live delivery, group/one-to-one

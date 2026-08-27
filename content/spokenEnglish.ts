@@ -1,9 +1,9 @@
 /**
- * Spoken English-page-specific copy (Spoken English Step 1). Canonical programme identity --
- * slug, public name, route -- stays in content/courses.ts; this file only holds the
- * sales/positioning copy that doesn't belong on the generic Course object. Aisha's qualification
- * and professional role are NOT duplicated here -- components read those directly from
- * content/site.ts.
+ * Spoken English-page-specific copy (Spoken English Step 1, extended in Step 2). Canonical
+ * programme identity -- slug, public name, route -- stays in content/courses.ts; this file only
+ * holds the sales/positioning copy that doesn't belong on the generic Course object. Aisha's
+ * qualification and professional role are NOT duplicated here -- components read those directly
+ * from content/site.ts.
  *
  * The legacy content/courses.ts spoken-english record (`speak without hesitation`, `Thinking in
  * English`, `live Zoom classes (recorded)`, `PKR 10,000`, etc.) is not publication-authoritative
@@ -11,20 +11,20 @@
  * of unverified operational facts and docs/spoken-english-content-sources.md for the boundary
  * decisions behind this file's wording.
  *
- * Later Spoken English steps add more sections (full communication-needs curriculum, coaching
- * process, feedback demonstration, evidence, learning format, pricing, dedicated availability,
- * FAQ) once their content is verified against an owner confirmation -- do not pre-fill those with
- * placeholder content.
+ * Step 2 replaces the Step 1 temporary priorities preview with a needs-led speaking profile and a
+ * six-area communication curriculum. No CEFR level, descriptor or terminology appears anywhere in
+ * this file -- the five official Council of Europe CEFR source pages named in the implementing
+ * prompt all returned HTTP 403 Forbidden when checked for this step (see
+ * docs/spoken-english-content-sources.md's "CEFR source access" note), so nothing requiring a
+ * specific CEFR citation is published; every curriculum concept below is expressed in plain
+ * English instead, consistent with the prompt's own "if no CEFR level or descriptor is necessary
+ * in visible copy, keep it out" instruction.
+ *
+ * Later Spoken English steps add more sections (full teaching/practice/feedback process, feedback
+ * demonstration, evidence, learning format, pricing, dedicated availability, FAQ) once their
+ * content is verified against an owner confirmation -- do not pre-fill those with placeholder
+ * content.
  */
-
-/** One temporary preview priority area (components/spoken-english/SpokenEnglishPrioritiesPreview.tsx).
- *  Step 2 will expand this into the final learner-profile and communication curriculum -- these
- *  are examples to discuss, not a promise that every current option covers the same syllabus. */
-export type SpokenEnglishPriority = {
-  id: string;
-  title: string;
-  description: string;
-};
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
 export type SpokenEnglishFitItem = {
@@ -41,6 +41,46 @@ export type SpokenEnglishAlternativeRoute = {
   link?: { label: string; href: string };
 };
 
+/** One of the six starting-profile questions (components/spoken-english/
+ *  SpokenEnglishSpeakingProfile.tsx) -- helps a learner describe the communication task rather
+ *  than reach for a single vague "fluency" request or a self-awarded level label. */
+export type SpeakingProfilePrompt = {
+  id: string;
+  label: string;
+  guidance: string;
+};
+
+/** One possible starting-priority area the profile discussion may surface. `observation` is a
+ *  one-line, descriptive elaboration -- never a score, percentage or coloured severity label. */
+export type SpeakingProfileArea = {
+  id: string;
+  title: string;
+  observation: string;
+};
+
+/** One of the six communication-curriculum areas (components/spoken-english/
+ *  SpokenEnglishCurriculum.tsx). `boundary` is present wherever a claim is easy to misuse
+ *  (accent-shaming, a universal template, an exhaustive grammar list, promised vocabulary volume,
+ *  monologue-only speaking, or hesitation-free fluency). */
+export type SpokenEnglishCurriculumArea = {
+  id: string;
+  title: string;
+  purpose: string;
+  focusAreas: readonly string[];
+  practiceExamples: readonly string[];
+  boundary?: string;
+};
+
+/** One real-situation mapping in the compact context-application section
+ *  (components/spoken-english/SpokenEnglishContextApplication.tsx) -- shows that curriculum
+ *  emphasis changes by context without creating a separate mini-course, price or guarantee for
+ *  each one. */
+export type SpeakingContextApplication = {
+  id: string;
+  context: string;
+  examples: readonly string[];
+};
+
 export const spokenEnglishPage = {
   hero: {
     eyebrow: "Online Spoken English Coaching",
@@ -49,12 +89,19 @@ export const spokenEnglishPage = {
     body: "Focus on the pronunciation, response-building, vocabulary and interaction skills you need for work, interviews, presentations, study or everyday communication.",
     primaryCta: {
       label: "Discuss Your Speaking Goal",
+      // Step 2, Part L: shortened to a brief invitation (goal + current difficulty) now that the
+      // dedicated speaking-profile section below carries the full structured message, and the
+      // final CTA carries its own complete programme-enquiry message -- see `speakingProfile.cta`
+      // and `finalCta.message`.
       message:
-        "Hi Aisha! I am interested in Spoken English coaching. I need English for [work/interviews/presentations/study/everyday communication]. The situations I find difficult are [details], my current experience is [details], my important timeline is [if any], and my country/time zone and usual availability are [details]. Please let me know what current coaching option may fit and confirm the format, schedule and fee.",
+        "Hi Aisha! I am interested in Spoken English coaching. My main speaking goal is [details], and what currently becomes difficult is [details]. Could you tell me more about the current coaching option?",
     },
+    // Step 2, Part K: retargeted from the removed temporary priorities preview to the new
+    // speaking-profile section -- the most useful next destination for a visitor who wants to
+    // understand the programme further before enquiring.
     secondaryCta: {
-      label: "See Possible Speaking Priorities",
-      href: "#spoken-english-priorities",
+      label: "Build Your Speaking Profile",
+      href: "#spoken-english-speaking-profile",
     },
     reassurance:
       "No promise of instant fluency or a native accent. Progress depends on the learner's starting point, practice and available time.",
@@ -122,46 +169,289 @@ export const spokenEnglishPage = {
     ] as SpokenEnglishAlternativeRoute[],
   },
 
-  // Step 1: a deliberately temporary preview -- Step 2 will replace this with the final
-  // learner-profile and communication curriculum. Framed throughout as possible priorities to
-  // discuss, never as confirmed modules or an inclusion list.
-  prioritiesPreview: {
-    id: "spoken-english-priorities",
-    eyebrow: "Possible priorities",
-    heading: "Possible priorities for your speaking goal.",
-    body: "The right priorities depend on the situations you face and what currently makes them difficult. These are examples to discuss, not a promise that every current option includes the same syllabus.",
-    priorities: [
+  // Step 2: replaces the Step 1 temporary priorities preview. Helps a learner describe a real
+  // communication task rather than a vague "fluency" request, and explicitly rules out a formal
+  // CEFR placement, clinical assessment or guaranteed-progress claim. See
+  // docs/spoken-english-content-sources.md for the boundary decisions behind every sentence here.
+  speakingProfile: {
+    id: "spoken-english-speaking-profile",
+    eyebrow: "Your starting profile",
+    heading: "Describe the communication task—not only the level.",
+    introduction:
+      "A useful starting profile connects the situation, listener and purpose with what currently becomes difficult. It does not reduce every speaking need to one label.",
+    promptsHeading: "What a useful profile includes",
+    prompts: [
+      {
+        id: "situation",
+        label: "Situation",
+        guidance: "Where does the learner need English: meeting, interview, presentation, class, service interaction or everyday conversation?",
+      },
+      {
+        id: "listener",
+        label: "Listener",
+        guidance: "Who needs to understand or respond: colleague, interviewer, client, teacher, classmate or another everyday conversation partner?",
+      },
+      {
+        id: "communication-task",
+        label: "Communication task",
+        guidance: "What must the learner do: explain, answer, ask, clarify, present, discuss, negotiate a simple need or maintain a conversation?",
+      },
+      {
+        id: "current-difficulty",
+        label: "Current difficulty",
+        guidance: "What happens now: difficulty finding words, building a response, following questions, pronouncing key words, organising ideas or responding spontaneously?",
+      },
+      {
+        id: "current-experience",
+        label: "Current experience",
+        guidance: "What kinds of English interaction can the learner already manage? Use a description rather than a self-awarded CEFR label.",
+      },
+      {
+        id: "timeline-context",
+        label: "Timeline and practical context",
+        guidance: "Is there an interview, presentation, study start, work change or other relevant date? Include country/time zone and usual availability.",
+      },
+    ] as SpeakingProfilePrompt[],
+    profileAreasHeading: "Aisha may use this discussion to identify initial priorities across:",
+    profileAreas: [
       {
         id: "pronunciation-intelligibility",
         title: "Pronunciation and intelligibility",
-        description: "Making speech easier for the intended listener to understand.",
+        observation: "Whether pronunciation currently affects how easily the listener follows you.",
       },
       {
-        id: "building-responses",
-        title: "Building spoken responses",
-        description: "Forming complete, relevant responses instead of relying on memorised lines.",
+        id: "response-organisation",
+        title: "Response organisation and relevance",
+        observation: "Whether responses stay organised and relevant under real conditions.",
       },
       {
-        id: "grammar-in-speech",
+        id: "spoken-grammar",
+        title: "Spoken grammar and sentence control",
+        observation: "Whether grammar holds up reliably once you're speaking, not just writing.",
+      },
+      {
+        id: "functional-vocabulary",
+        title: "Functional vocabulary and appropriacy",
+        observation: "Whether the right words are available when you need them.",
+      },
+      {
+        id: "listening-interaction",
+        title: "Listening and interaction",
+        observation: "Whether you can follow, respond to and repair a real exchange.",
+      },
+      {
+        id: "fluency-pacing",
+        title: "Fluency, pacing and repair",
+        observation: "Whether pacing, pausing and recovery support or interrupt communication.",
+      },
+    ] as SpeakingProfileArea[],
+    boundaryNote:
+      "This is a coaching needs profile, not a certified CEFR placement, clinical speech assessment or guarantee of progress.",
+    cta: {
+      label: "Share Your Speaking Profile",
+      message:
+        "Hi Aisha! I am interested in Spoken English coaching. I need to speak English in [situation] with [listener/audience]. I need to [communication task]. What currently becomes difficult is [details]. I can currently manage [details], my important timeline is [if any], and my country/time zone and usual availability are [details]. Please let me know which starting priorities may be relevant and confirm the current format, schedule and fee.",
+    },
+  },
+
+  // Step 2: a learner-readable communication curriculum -- six areas that work together, each
+  // framed as possible coaching emphasis (not a fixed, identical syllabus for every learner) and
+  // each carrying a boundary statement wherever the area is easy to overstate or misuse.
+  curriculum: {
+    id: "spoken-english-communication-curriculum",
+    eyebrow: "Communication curriculum",
+    heading: "Develop the skills behind clearer spoken communication.",
+    introduction:
+      "The areas below work together. The emphasis should depend on the learner's real speaking situations and starting profile, not a one-size-fits-all promise.",
+    areas: [
+      {
+        id: "pronunciation-intelligibility",
+        title: "Pronunciation and intelligibility",
+        purpose: "Make important words, phrases and ideas easier for the intended listener to follow.",
+        focusAreas: [
+          "Relevant individual sounds where they affect understanding",
+          "Word stress",
+          "Sentence stress and emphasis",
+          "Rhythm, phrasing and chunking",
+          "Intonation used to support meaning",
+          "Recognising when repetition or clarification is needed",
+        ],
+        practiceExamples: [
+          "Introducing yourself and key names/terms clearly",
+          "Explaining one work or study idea in short meaningful chunks",
+          "Repeating or rephrasing a misunderstood point",
+        ],
+        boundary:
+          "The aim is intelligible, effective communication—not removal of the learner's identity or imitation of a native accent.",
+      },
+      {
+        id: "response-building",
+        title: "Building relevant spoken responses",
+        purpose: "Move from fragments or memorised lines to responses that address the listener's question or purpose.",
+        focusAreas: [
+          "Answering the actual question",
+          "Giving a clear main point",
+          "Adding relevant detail, reason or example",
+          "Sequencing information",
+          "Opening and closing an explanation",
+          "Summarising or redirecting when needed",
+        ],
+        practiceExamples: [
+          "A concise interview response",
+          "A short meeting update",
+          "Explaining a process or opinion",
+          "Responding to a follow-up question",
+        ],
+      },
+      {
+        id: "spoken-grammar",
         title: "Grammar and sentence control in speech",
-        description: "Applying useful grammar while communicating, without treating error-free speech as the only goal.",
+        purpose: "Build manageable spoken sentences that communicate time, relationships and meaning accurately enough for the situation.",
+        focusAreas: [
+          "Constructing complete but realistic spoken sentences",
+          "Using time reference clearly",
+          "Forming questions and follow-up questions",
+          "Linking ideas",
+          "Using modal language for requests, possibility and politeness",
+          "Noticing and repairing errors that change meaning",
+        ],
+        practiceExamples: [
+          "Describing past experience",
+          "Explaining a current responsibility",
+          "Making a request",
+          "Comparing options",
+          "Clarifying a future plan",
+        ],
+        boundary:
+          "Effective speech can include natural pauses and self-correction. Error-free performance is not promised.",
       },
       {
         id: "functional-vocabulary",
         title: "Functional vocabulary and word choice",
-        description: "Selecting language appropriate to the situation rather than memorising disconnected word lists.",
+        purpose: "Build language the learner can retrieve and use appropriately in relevant situations.",
+        focusAreas: [
+          "High-use words and phrases for the learner's contexts",
+          "Collocations and useful chunks",
+          "Paraphrasing when the exact word is unavailable",
+          "Formality and politeness",
+          "Avoiding vague or overgeneral words where precision matters",
+          "Checking meaning rather than memorising unsupported synonyms",
+        ],
+        practiceExamples: [
+          "Describing responsibilities",
+          "Giving an opinion and reason",
+          "Asking for clarification",
+          "Disagreeing appropriately",
+          "Explaining a practical problem",
+        ],
       },
       {
-        id: "listening-turn-taking",
-        title: "Listening, turn-taking and clarification",
-        description: "Following the other speaker, responding, checking meaning and keeping interaction moving.",
+        id: "listening-interaction",
+        title: "Listening, responding and interaction",
+        purpose: "Follow the other speaker, respond to what was actually said and keep communication moving.",
+        focusAreas: [
+          "Identifying the main point and important detail",
+          "Recognising questions and response expectations",
+          "Turn-taking",
+          "Follow-up questions",
+          "Checking and confirming meaning",
+          "Asking for repetition or rephrasing",
+          "Repairing a misunderstanding",
+        ],
+        practiceExamples: [
+          "Responding to a colleague's question",
+          "Handling an interview follow-up",
+          "Contributing to a class or meeting discussion",
+          "Confirming details in an everyday interaction",
+        ],
+        boundary:
+          "Spoken communication is interactive. The curriculum should not treat speaking as isolated monologues only.",
       },
       {
-        id: "fluency-pacing",
-        title: "Fluency, pacing and preparation",
-        description: "Managing pauses, organising ideas and rehearsing relevant situations.",
+        id: "fluency-pacing-repair",
+        title: "Fluency, pacing and communication repair",
+        purpose: "Organise speech into manageable stretches, use pauses purposefully and recover when communication breaks down.",
+        focusAreas: [
+          "Planning a short response",
+          "Grouping speech into meaningful chunks",
+          "Reducing avoidable filler dependence without banning natural discourse markers",
+          "Balancing speed with clarity",
+          "Rephrasing when a word is unavailable",
+          "Self-correcting without abandoning the response",
+          "Moving from rehearsed practice toward flexible use",
+        ],
+        practiceExamples: [
+          "A timed but realistic explanation",
+          "An unplanned follow-up response",
+          "Restating an idea more simply",
+          "Recovering after misunderstanding a question",
+        ],
+        boundary: "Fluency does not mean speaking nonstop, never pausing or speaking as fast as possible.",
       },
-    ] as SpokenEnglishPriority[],
+    ] as SpokenEnglishCurriculumArea[],
+  },
+
+  // Step 2, Part J: a compact mapping showing that curriculum emphasis changes by context --
+  // included because it adds a genuine curriculum-to-situation link the Step 1 fit section
+  // doesn't provide (fit describes situations; this maps each situation back to the specific
+  // curriculum emphasis relevant to it). No separate mini-course, price or guarantee per context.
+  contextApplication: {
+    id: "spoken-english-context-application",
+    eyebrow: "Applying the curriculum",
+    heading: "Apply the same skills to the situations you face.",
+    introduction: "The same curriculum areas apply differently depending on where you need to speak.",
+    contexts: [
+      {
+        id: "work-meetings",
+        context: "Work and meetings",
+        examples: [
+          "Clear updates and explanations",
+          "Polite questions and clarification",
+          "Responding to follow-up questions",
+          "Appropriate professional language",
+        ],
+      },
+      {
+        id: "interviews",
+        context: "Interviews",
+        examples: [
+          "Relevant responses",
+          "Explaining experience with examples",
+          "Handling clarification and follow-up",
+          "Intelligibility under time pressure",
+        ],
+      },
+      {
+        id: "presentations",
+        context: "Presentations",
+        examples: [
+          "Organising and signposting ideas",
+          "Emphasis, phrasing and pacing",
+          "Explaining visuals or key points",
+          "Handling audience questions",
+        ],
+      },
+      {
+        id: "study",
+        context: "Study",
+        examples: [
+          "Asking and answering questions",
+          "Participating in discussion",
+          "Explaining an idea",
+          "Responding to another viewpoint",
+        ],
+      },
+      {
+        id: "everyday",
+        context: "Everyday communication",
+        examples: [
+          "Starting and maintaining interaction",
+          "Practical requests",
+          "Checking information",
+          "Repairing misunderstanding",
+        ],
+      },
+    ] as SpeakingContextApplication[],
   },
 
   // Step 1: no confirmed Spoken English intake exists yet (content/batches.ts). Fails closed --
@@ -180,6 +470,9 @@ export const spokenEnglishPage = {
 
   // Step 1: a single strong WhatsApp action plus a plain email fallback -- a dedicated Spoken
   // English form variant (mirroring IELTS/PTE/TOEFL Step 9) is a later step, not a Step 1 addition.
+  // Step 2, Part L: now carries its own complete programme-enquiry message (previously reused the
+  // hero's message, which Step 2 shortened) -- the same eight-field information model as the
+  // speaking-profile CTA, ending with an explicit request to confirm format, schedule and fee.
   finalCta: {
     id: "spoken-english-enquiry",
     eyebrow: "Your next step",
@@ -196,6 +489,8 @@ export const spokenEnglishPage = {
       { id: "format-preference", label: "Preferred group or one-to-one format, to confirm" },
     ],
     primaryLabel: "Discuss Spoken English Coaching",
+    message:
+      "Hi Aisha! I would like to arrange Spoken English coaching. I need to speak English in [situation] with [listener/audience] to [communication task]. What currently becomes difficult is [details], and I can currently manage [details]. My important timeline is [if any], and my country/time zone and usual availability are [details]. Please confirm whether a current coaching option may suit this requirement, and share the format, schedule and fee.",
     emailCtaLabel: "Email Aisha",
     emailAccessibleLabel: "Email Aisha about Spoken English coaching",
     emailSubject: "Spoken English coaching enquiry",

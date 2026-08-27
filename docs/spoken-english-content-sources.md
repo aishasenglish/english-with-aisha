@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 27 August 2026 (Step 1).
+**Last checked:** 28 August 2026 (Step 2).
 
 ## Canonical owner facts used
 
@@ -68,6 +68,47 @@ external citation:
   visitor whose real requirement is an IELTS/PTE/TOEFL score, or formal writing, to the relevant
   dedicated programme page — this page is never presented as IELTS/TOEFL/PTE speaking preparation.
 
+### Step 2 additions (speaking profile and communication curriculum)
+
+- **Spoken interaction and spoken production are treated as inseparable, without naming that
+  distinction.** `curriculum`'s `listening-interaction` area and its boundary ("Spoken communication
+  is interactive. The curriculum should not treat speaking as isolated monologues only.") express
+  the idea behind that standard linguistic distinction without citing a framework, since the CEFR
+  source that would normally be cited for it was unreachable this step (see "CEFR source access
+  attempt" above).
+- **Pronunciation is intelligibility, explicitly not identity or imitation.** The curriculum's
+  `pronunciation-intelligibility` area's boundary states plainly that the goal is "clearer speech,
+  not removal of the learner's identity or imitation of a native accent" — extending Step 1's
+  intelligibility-not-accent-elimination decision into the curriculum detail itself.
+- **Fluency is defined against a specific misconception, not just positively.** `curriculum`'s
+  `fluency-pacing-repair` area states "Fluency does not mean speaking nonstop, never pausing or
+  speaking as fast as possible" before describing what it does mean (chunking, purposeful pausing,
+  repair) — a deliberately corrective framing, not merely an omission of the wrong claim.
+- **Grammar accuracy is bounded against a perfection expectation.** The `spoken-grammar` area's
+  boundary ("Effective speech can include natural pauses and self-correction. Error-free performance
+  is not promised.") exists so the focus-area list (time reference, question formation, modals,
+  error-repair) cannot be read as a promise of grammatically flawless speech.
+- **The speaking profile is a discussion aid, not an instrument.** `speakingProfile.profileAreas`
+  uses one-line descriptive `observation` text for each area (never a score, percentage, or coloured
+  severity label), and `speakingProfile.boundaryNote` states outright that it is "a coaching needs
+  profile, not a certified CEFR placement, clinical speech assessment or guarantee of progress" —
+  applying Step 1's "no diagnosis of clinical concerns" decision to this step's new profile content.
+- **The six profile prompts request only what coaching needs, nothing sensitive.** No prompt asks
+  for an audio/video sample, an employer's confidential information, immigration status, a medical
+  or clinical detail, or an identity document — the prompts stay limited to situation, listener,
+  communication task, current difficulty, current experience (described, not self-rated against a
+  level), and timeline/time-zone/availability.
+- **Context application maps curriculum emphasis, not separate offers.** `contextApplication`'s five
+  situational mappings (work and meetings, interviews, presentations, study, everyday) describe
+  which curriculum focus matters more in each situation — they do not imply a separate mini-course,
+  a per-situation price, or a per-situation guarantee, none of which exists.
+- **Three-tier WhatsApp message hierarchy, each scoped to what it collects.** The hero's message
+  (short: goal + current difficulty) invites a first reply; `speakingProfile.cta.message` (full:
+  eight fields matching the six prompts) is used once a visitor is ready to describe their situation
+  in detail; `finalCta.message` (also full, ending with an explicit request to confirm format,
+  schedule and fee) is used at the point of enquiry. The three are deliberately different lengths
+  for different points in the visitor's decision, not copies of one another.
+
 ## External language-framework sources
 
 None used. No CEFR (Common European Framework of Reference for Languages) terminology, level
@@ -78,12 +119,42 @@ terminology is introduced in a later step, this document must be updated with th
 Europe source consulted, the date checked, and the documented method behind any level claim before
 publication.
 
+### CEFR source access attempt (Step 2, 28 August 2026)
+
+Step 2's implementing prompt asked for CEFR terminology to be used only if it could be verified
+against a current official Council of Europe source, and named five specific URLs to check. All
+five were fetched live this step and every one returned **HTTP 403 Forbidden**:
+
+- `https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-companion-volume-and-its-language-versions`
+- `https://www.coe.int/en/web/common-european-framework-reference-languages/purposes`
+- `https://www.coe.int/en/web/common-european-framework-reference-languages/uses-and-objectives`
+- `https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-in-the-classroom`
+- `https://rm.coe.int/cefr-companion-volume-with-new-descriptors-2020/16809ea0d4`
+
+The `coe.int`/`rm.coe.int` domain appears to be blocking this fetch tool entirely, not just these
+five pages. Consistent with this project's established precedent for an unreadable official source
+(TOEFL Step 2's ETS PDF), the responsible response is omission rather than publishing from training
+data: **no CEFR term, level label (A1–C2), descriptor paraphrase, or "contextual adaptation"
+citation was published anywhere in Step 2's visible copy.** Where the implementing prompt's content
+would ordinarily reference a CEFR concept (e.g. distinguishing spoken interaction from spoken
+production, or noting that real-world curricula must adapt CEFR-style descriptors to context), the
+underlying *idea* is expressed in plain, framework-neutral language instead — e.g. `curriculum`'s
+`listening-interaction` area frames listening and responding as inseparable from speaking without
+naming any framework, and every area's "focus areas" describe observable skills rather than graded
+descriptors.
+
+Whoever attempts a later Spoken English step should re-fetch the five URLs above before assuming
+the domain is still blocked — if any becomes reachable, the CEFR-avoidance decision in this section
+should be revisited rather than carried forward by default.
+
 ## Positioning versus formal assessment claims
 
-Every "possible priority" area in `content/spokenEnglish.ts`'s `prioritiesPreview` and every "fit"
-pathway is explicitly framed as **positioning** — a description of the kind of communication goal
-the programme addresses — not a **formal assessment claim**. None of the following is stated or
-implied anywhere on the page:
+Every profile area in `content/spokenEnglish.ts`'s `speakingProfile`, every curriculum area in
+`curriculum`, and every "fit" pathway is explicitly framed as **positioning** — a description of the
+kind of communication goal the programme addresses — not a **formal assessment claim**. (Step 1's
+temporary `prioritiesPreview` object, referenced here previously, was replaced in Step 2 by the
+fuller `speakingProfile` and `curriculum` objects described above.) None of the following is stated
+or implied anywhere on the page:
 
 - a specific proficiency level (beginner/intermediate/advanced or CEFR);
 - an automated or human level test;

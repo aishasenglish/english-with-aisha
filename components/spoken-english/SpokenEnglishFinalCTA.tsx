@@ -3,14 +3,15 @@ import { emailLink } from "@/lib/contact";
 import { site } from "@/content/site";
 import { spokenEnglishPage } from "@/content/spokenEnglish";
 
-// Server component. Reuses the hero's exact WhatsApp message (this step's own guidance: "Use the
-// same canonical contextual WhatsApp message as the hero") rather than a second near-duplicate
-// template. The secondary action is a plain mailto: link, not the generic detailed-enquiry form --
-// that form would ask the visitor to pick a programme again, losing the Spoken English context
-// they've already established by reaching this page. A dedicated Spoken English form variant
-// (mirroring IELTS/PTE/TOEFL Step 9) is a later step, not a Step 1 addition.
+// Server component. Carries its own complete programme-enquiry WhatsApp message (Step 2, Part L --
+// the hero's message was shortened once the dedicated speaking-profile section took over the full
+// structured message; this final CTA needed its own complete equivalent rather than reusing the
+// now-shorter hero message). The secondary action is a plain mailto: link, not the generic
+// detailed-enquiry form -- that form would ask the visitor to pick a programme again, losing the
+// Spoken English context they've already established by reaching this page. A dedicated Spoken
+// English form variant (mirroring IELTS/PTE/TOEFL Step 9) is a later step.
 export default function SpokenEnglishFinalCTA() {
-  const { finalCta, hero } = spokenEnglishPage;
+  const { finalCta } = spokenEnglishPage;
 
   return (
     <section
@@ -44,7 +45,7 @@ export default function SpokenEnglishFinalCTA() {
 
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center mb-6">
           <a
-            href={whatsappLink(hero.primaryCta.message)}
+            href={whatsappLink(finalCta.message)}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
