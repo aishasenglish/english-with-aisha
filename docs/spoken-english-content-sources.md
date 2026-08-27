@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 7).
+**Last checked:** 28 August 2026 (Step 8).
 
 ## Canonical owner facts used
 
@@ -240,6 +240,19 @@ in a scheduled card comes directly from whatever batch record passes that guard.
 
 **Review date.** 28 August 2026 (Step 7). Recheck this section only if the enquiry-state copy is
 reworded, or the completeness guard's required fields change.
+
+### Step 8 — specialist FAQ source basis
+
+`content/spokenEnglishFaqs.ts`'s eight questions introduce no new source. Every answer is taken
+verbatim from the implementing prompt's own specified wording, and every claim inside each answer
+restates a position already established and sourced in an earlier step: pronunciation/
+intelligibility (Step 1/2/3), the non-certified speaking-profile boundary (Step 2), the coaching
+process description (Step 3), and the no-guaranteed-timeline boundary (Step 3). Changing
+operational facts (format, fee, availability) are linked to their Step 5-7 sections rather than
+answered as new copy, so this file carries no independent factual claim needing its own source.
+
+**Review date.** 28 August 2026 (Step 8). Recheck this section only if a question's wording changes
+or a new claim is added that doesn't already trace to an earlier step's sourced position.
 
 ## Positioning versus formal assessment claims
 

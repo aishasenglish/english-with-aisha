@@ -5,11 +5,11 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 7 (28 August 2026). Step 7 upgraded the temporary
-enquiry-only availability block into a dedicated, date-aware, fail-closed availability section
-(`components/spoken-english/SpokenEnglishAvailability.tsx`). It resolved no availability field —
-the public state remains the detailed enquiry state — and exposed no genuinely new operational
-offer question. See "Availability verification (Step 7)" below for the complete record.
+**Last reviewed:** Spoken English Step 8 (28 August 2026). Step 8 added the dedicated eight-question
+specialist FAQ (`content/spokenEnglishFaqs.ts` + `components/spoken-english/SpokenEnglishFAQ.tsx`).
+It resolved no operational field — every changing fact is linked to its Step 5-7 section instead of
+being answered directly — and exposed no genuinely new operational offer question. See "Specialist
+FAQ (Step 8)" below for the complete record.
 
 ## Allowed internal states
 
@@ -165,6 +165,79 @@ A Spoken English testimonial may render on the public page only when all of the 
 Rewriting a person's quote to improve its grammar is not permitted without their explicit approval
 of the final public wording — request permission for an edited version, or use a clearly approved
 excerpt instead.
+
+## Specialist FAQ (Step 8)
+
+`content/spokenEnglishFaqs.ts` holds exactly eight Spoken-English-specific questions, independent
+of `content/faqs.ts`'s `generalFaqs`, rendered by `components/spoken-english/SpokenEnglishFAQ.tsx`
+via the shared `FAQAccordion`.
+
+- **Step 8 implementation date:** 2026-08-28.
+- **The eight specialist questions added:** `learner-suitability`, `communication-goals`,
+  `starting-point-discussion`, `pronunciation-and-accent`, `practice-and-feedback`,
+  `progress-timeline`, `current-offer`, `international-learners` (see
+  `content/spokenEnglishFaqs.ts` for the full text of each).
+- **Answers based on verified facts:** `pronunciation-and-accent` restates the intelligibility-not-
+  accent-elimination position established in Step 1/2/3; `international-learners` restates the one
+  owner-confirmed fact (online delivery) from Step 5's `delivery.confirmedOnline`.
+- **Answers that deliberately route unverified details to confirmation rather than answering
+  directly:** `learner-suitability` (no level/age accepted as universal); `communication-goals` (no
+  guaranteed outcome or separate specialist course implied); `starting-point-discussion` (no formal
+  assessment confirmed as included); `practice-and-feedback` (practice method, feedback format/
+  frequency/turnaround, homework, audio requirements and between-session support all still `Needs
+  owner confirmation`); `progress-timeline` (no universal timeline — this document has no evidence
+  that would ever support one); `current-offer` (links to Learning format/Pricing/Availability
+  rather than repeating any amount, date or schedule, all of which remain `Needs owner
+  confirmation` or fail-closed); `international-learners` (schedule/timing suitability still
+  depends on unconfirmed delivery details).
+- **Pronunciation/intelligibility and non-clinical boundary:** `pronunciation-and-accent` states
+  directly that no native-accent or accent-removal outcome is promised, frames pronunciation work
+  around intelligibility, and states explicitly "this is language coaching, not speech-language
+  therapy or a clinical service" — consistent with every earlier step's qualification boundary (see
+  `docs/spoken-english-content-sources.md`'s "Content boundary decisions").
+- **Speaking-profile/non-certified-assessment boundary:** `starting-point-discussion` states
+  directly that "a formal placement test or certified CEFR assessment is not currently confirmed as
+  an included service," matching `speakingProfile.boundaryNote` (Step 2) exactly in substance. No
+  CEFR level appears anywhere in the FAQ.
+- **No-guaranteed-timeline boundary:** `progress-timeline` states there is "no responsible universal
+  improvement timeline" and lists the real variables progress depends on, without naming a duration,
+  session count, or percentage — consistent with `process.expectation` (Step 3).
+- **Stable anchors used for changing offer details:** `#spoken-english-speaking-profile` (Step 2),
+  `#spoken-english-coaching-process` (Step 3), `#spoken-english-learning-format` (Step 5),
+  `#spoken-english-pricing` (Step 6), `#spoken-english-availability` (Step 7) — every anchor was
+  confirmed to exist exactly once in the rendered page via a live Playwright check before this
+  step's commit. No fee, date or schedule is duplicated as FAQ text; each changing fact links to its
+  authoritative section instead.
+- **Shared FAQ contradictions corrected:** none needed. All thirteen `content/faqs.ts` IDs named in
+  the implementing prompt (`programmes-taught`, `international-students`, `fees-and-schedules`,
+  `grade-guarantee`, `enquiry-details`, `live-or-recorded`, `missed-class`, `new-batches`,
+  `fees-payment`, `one-to-one-help`, `platform`, `personal-feedback`, `programme-format-schedule`)
+  were re-read against this document and found already programme-neutral — each already routes the
+  visitor to "confirm for your specific programme" rather than asserting a universal claim, per the
+  correction already made during earlier IELTS/PTE/TOEFL Step 8 work (see
+  `content/toeflFaqs.ts`'s equivalent comment for the same conclusion). No edit to
+  `content/faqs.ts` was made this step. `components/FAQAccordion.tsx` already provides visible
+  `:focus-visible` styling (global `app/globals.css` rule) and already respects
+  `prefers-reduced-motion` (the same global rule collapses all `transition-duration`), so no change
+  to the shared component was needed either — confirmed by inspection, not assumed.
+
+### QA performed
+
+- Live Playwright script against the production build: 46 checks covering exactly 8 items with
+  unique stable ids, all 8 questions verbatim and in order, answers present in the raw
+  (pre-hydration) server HTML, every content boundary (no CEFR level, no accent-removal promise, no
+  outcome guarantee, no fixed timeline, no invented live/group/one-to-one inclusion, no duplicated
+  legacy amount or date, no vague promotional filler), every internal anchor resolving to an
+  existing element exactly once, absence of a duplicate "Still have questions?" panel, absence of
+  `FAQPage` JSON-LD, keyboard operability (Enter on a focused `<summary>` opens the item), no
+  horizontal overflow at 11 viewports (320-1440px) including with the longest answer open at 390px,
+  and full regression of Step 1-7 sections plus canonical facts — 46/46 passed.
+- axe-core (wcag2a/wcag2aa/wcag22aa): 0 violations.
+- No-JS check: heading and all 8 questions/answers render before hydration.
+- Regression spot-check: `/`, `/faq`, `/courses`, `/courses/ielts`, `/courses/pte`,
+  `/courses/toefl`, `/courses/english-writing`, `/how-it-works`, `/about`, `/contact`,
+  `/success-stories`, `/batches` all return 200; the homepage and `/faq` page confirmed still
+  rendering the shared `generalFaqs` entries correctly, unaffected by this change.
 
 ## Availability verification (Step 7)
 
@@ -345,7 +418,7 @@ benefit.
   `content/spokenEnglish.ts` above the `delivery` object for the exact condition to re-check before
   adding them.
 
-## What the public page currently says instead (as of Spoken English Step 7)
+## What the public page currently says instead (as of Spoken English Step 8)
 
 `/courses/spoken-english` shows only:
 
@@ -409,6 +482,11 @@ benefit.
   automatically once one genuinely exists, and disappears automatically once it is past, closed or
   unpublished; see "Availability verification (Step 7)" above for the complete completeness-guard
   and fixture-test record;
+- a dedicated eight-question specialist FAQ (`components/spoken-english/SpokenEnglishFAQ.tsx`, id
+  `spoken-english-faq`) answering the highest-value objections (suitability, communication goals,
+  starting-point discussion, pronunciation/accent, practice/feedback, progress timeline, current
+  offer, international enquiries) without inventing any operational detail — see "Specialist FAQ
+  (Step 8)" above for the complete record;
 - a Spoken-English-specific final CTA (`components/spoken-english/SpokenEnglishFinalCTA.tsx`) with
   its own full structured WhatsApp message (no longer reusing the hero's message, which Step 2
   shortened to a brief goal-and-difficulty invitation), plus a plain `mailto:` fallback to the

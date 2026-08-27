@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–7)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–8)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -833,6 +833,21 @@ handle; never fill these with placeholder or invented links.
   `docs/spoken-english-offer-verification.md`'s "Availability verification (Step 7)" section for
   the complete record and fixture tests, and `docs/updating-batches.md`'s new "9d. Spoken
   English-specific publication rules" for how to publish a real record.
+- **Specialist FAQ and objection handling (Step 8)**: `content/spokenEnglishFaqs.ts` +
+  `components/spoken-english/SpokenEnglishFAQ.tsx` (id `spoken-english-faq`) add exactly eight
+  Spoken-English-specific questions via the shared `FAQAccordion`, independent of
+  `content/faqs.ts`'s `generalFaqs`, placed after availability and before the final CTA. No level/
+  age is promised universally; the speaking profile is explicitly not called a formal placement
+  test or certified CEFR assessment; pronunciation is framed around intelligibility with an
+  explicit "not speech-language therapy or a clinical service" statement; no fixed improvement
+  timeline or outcome guarantee appears; the current-offer answer links to the verified Learning
+  format/Pricing/Availability sections (`#spoken-english-learning-format`,
+  `#spoken-english-pricing`, `#spoken-english-availability`) rather than duplicating any amount,
+  date or schedule. All thirteen `content/faqs.ts` IDs the implementing prompt named were
+  re-audited and found already programme-neutral from earlier IELTS/PTE/TOEFL Step 8 work — no
+  shared FAQ edit was needed. No `FAQPage` JSON-LD was added. See
+  `docs/spoken-english-offer-verification.md`'s "Specialist FAQ (Step 8)" section for the complete
+  record.
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions

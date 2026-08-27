@@ -11,6 +11,7 @@ import SpokenEnglishVerifiedEvidence from "@/components/spoken-english/SpokenEng
 import SpokenEnglishLearningFormat from "@/components/spoken-english/SpokenEnglishLearningFormat";
 import SpokenEnglishPricing from "@/components/spoken-english/SpokenEnglishPricing";
 import SpokenEnglishAvailability from "@/components/spoken-english/SpokenEnglishAvailability";
+import SpokenEnglishFAQ from "@/components/spoken-english/SpokenEnglishFAQ";
 import SpokenEnglishFinalCTA from "@/components/spoken-english/SpokenEnglishFinalCTA";
 
 // Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
@@ -43,6 +44,7 @@ export default function SpokenEnglishPage() {
       <SpokenEnglishLearningFormat />
       <SpokenEnglishPricing />
       <SpokenEnglishAvailability />
+      <SpokenEnglishFAQ />
       <SpokenEnglishFinalCTA />
     </>
   );

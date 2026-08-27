@@ -58,9 +58,12 @@
  * and pricing remain separate business states -- a future intake never verifies a fee, and a
  * verified fee never verifies availability.
  *
- * Later Spoken English steps add more sections (FAQ, final enquiry-handoff form) once their
- * content is verified against an owner confirmation -- do not pre-fill those with placeholder
- * content.
+ * Step 8 adds `faq`: heading copy for components/spoken-english/SpokenEnglishFAQ.tsx, which
+ * renders the dedicated content/spokenEnglishFaqs.ts source (eight specialist questions,
+ * independent of content/faqs.ts's generalFaqs).
+ *
+ * Later Spoken English steps add more sections (final enquiry-handoff form) once their content is
+ * verified against an owner confirmation -- do not pre-fill those with placeholder content.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -902,6 +905,17 @@ export const spokenEnglishPage = {
     timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
     intakeCtaLabel: "Ask About This Spoken English Option",
     moreAvailabilityLabel: "View all Spoken English availability",
+  },
+
+  // Step 8: heading copy for components/spoken-english/SpokenEnglishFAQ.tsx. The eight
+  // question/answer pairs themselves live in the dedicated content/spokenEnglishFaqs.ts,
+  // independent of content/faqs.ts's generalFaqs.
+  faq: {
+    id: "spoken-english-faq",
+    eyebrow: "Spoken English questions",
+    heading: "What to confirm before you begin.",
+    introduction:
+      "These answers cover suitability, communication goals, pronunciation, progress and the current coaching offer. Ask Aisha if your situation needs a more specific answer.",
   },
 
   // Step 1: a single strong WhatsApp action plus a plain email fallback -- a dedicated Spoken
