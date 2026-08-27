@@ -16,10 +16,10 @@ import { pteEnquiryFields, pteFinalEnquiry } from "@/content/pteEnquiry";
 // never client-side — so there's no flash of the wrong action and no client bundle needed for
 // this decision. Availability is deliberately not linked again: it immediately precedes the FAQ
 // and this section, so a second link back to it would be a conversion loop backwards through
-// content the candidate has already read. No data-analytics-* attributes here -- PTE conversion
-// measurement is deliberately deferred to its own later step (Part I of the implementing prompt);
-// the existing analytics event contract and sanitizer are IELTS-specific and must not be extended
-// here just to mirror IELTSFinalCTA's attributes.
+// content the candidate has already read. PTE Step 12 added the same controlled
+// data-analytics-* attributes IELTSFinalCTA.tsx already carries -- the shared event contract in
+// lib/analytics/events.ts now supports "pte" as a first-class programme, so these are read and
+// validated by the same delegated listener rather than needing PTE-specific wiring.
 export default function PTEFinalCTA() {
   const { finalCta } = ptePage;
   const formConfigured = formsAreConfigured();
@@ -61,6 +61,9 @@ export default function PTEFinalCTA() {
             href={whatsappLink(pteFinalEnquiry.whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="final_enquiry"
+            data-analytics-intent="discuss_goal"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
           >
             {finalCta.primaryLabel}
@@ -69,6 +72,10 @@ export default function PTEFinalCTA() {
           {formConfigured ? (
             <Link
               href="/free-diagnostic-test?programme=pte&source=pte-page"
+              data-analytics-event="assessment_cta_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="request_assessment"
+              data-analytics-source="pte-page"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.formCtaLabel}
@@ -77,6 +84,9 @@ export default function PTEFinalCTA() {
             <a
               href={emailLink(pteFinalEnquiry.emailSubject, pteFinalEnquiry.emailBody, site.email)}
               aria-label={finalCta.emailAccessibleLabel}
+              data-analytics-event="email_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="send_email"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.emailCtaLabel}

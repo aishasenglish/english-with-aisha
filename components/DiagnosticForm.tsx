@@ -9,7 +9,20 @@ import { ieltsFinalEnquiry, ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFinalEnquiry, pteFormVariant } from "@/content/pteEnquiry";
 import type { EnquirySource, EnquiryVariant } from "@/lib/enquiryQuery";
 import { track } from "@/lib/analytics/track";
-import type { AnalyticsErrorType, AnalyticsSource } from "@/lib/analytics/events";
+import type { AnalyticsErrorType, AnalyticsProgramme, AnalyticsSource } from "@/lib/analytics/events";
+
+/** Which analytics programme (if any) each form variant reports as, and which resolved `source`
+ *  value is expected to accompany it — PTE Step 12 generalises the previous IELTS-only analytics
+ *  branch. "general" has no entry: the generic form deliberately stays outside programme-specific
+ *  conversion tracking (see docs/analytics-event-map.md). */
+const ANALYTICS_PROGRAMME_BY_VARIANT: Partial<Record<EnquiryVariant, AnalyticsProgramme>> = {
+  ielts: "ielts",
+  pte: "pte",
+};
+const ANALYTICS_SOURCE_BY_VARIANT: Partial<Record<EnquiryVariant, AnalyticsSource>> = {
+  ielts: "ielts-page",
+  pte: "pte-page",
+};
 
 /**
  * PTE Step 9: a small typed configuration map replaces the growing `isIelts ? X : Y` ternary
@@ -145,17 +158,23 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
   const submittingRef = useRef(false);
   const errorRef = useRef<HTMLDivElement>(null);
   const config = VARIANT_CONFIG[variant];
-  // Analytics stay scoped to "ielts" specifically (never "pte") -- AnalyticsProgramme only has
-  // one allowed value, and PTE Step 9 deliberately doesn't add PTE analytics (that's Step 12).
-  const isIelts = variant === "ielts";
+  // PTE Step 12: generalised from an IELTS-only "isIelts" boolean to a small lookup so both
+  // programmes (and only those two -- never "general") report analytics. `analyticsProgramme` is
+  // `undefined` for the generic form, which deliberately stays outside programme-specific
+  // conversion tracking.
+  const analyticsProgramme = ANALYTICS_PROGRAMME_BY_VARIANT[variant];
   // IELTS Step 12: fires assessment_form_start at most once per mount, on the first meaningful
   // edit -- never on load, on the preselected/locked programme field's initial render, or on
-  // every keystroke thereafter. Analytics events only ever fire for the "ielts" variant, since
-  // AnalyticsProgramme only has one allowed value.
+  // every keystroke thereafter. Analytics events only ever fire for the "ielts" and "pte"
+  // variants (PTE Step 12), never the generic form.
   const formStartTrackedRef = useRef(false);
-  // Only "ielts-page" or "general" reach analytics -- the broader EnquirySource values
-  // ("homepage", "courses-hub") collapse to "general" for this narrower, allowlisted field.
-  const analyticsSource: AnalyticsSource = source === "ielts-page" ? "ielts-page" : "general";
+  // Only the variant's own expected source value (or "general") ever reaches analytics -- the
+  // broader EnquirySource values ("homepage", "courses-hub") collapse to "general" for this
+  // narrower, allowlisted field, exactly as the original IELTS-only logic did.
+  const analyticsSource: AnalyticsSource = (() => {
+    const expected = ANALYTICS_SOURCE_BY_VARIANT[variant];
+    return expected && source === expected ? expected : "general";
+  })();
 
   useEffect(() => {
     if (status === "error") {
@@ -164,10 +183,10 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
   }, [status]);
 
   function update(field: keyof FormData, value: string) {
-    if (isIelts && !formStartTrackedRef.current) {
+    if (analyticsProgramme && !formStartTrackedRef.current) {
       formStartTrackedRef.current = true;
       track("assessment_form_start", {
-        programme: "ielts",
+        programme: analyticsProgramme,
         page_path: "/free-diagnostic-test",
         source: analyticsSource,
       });
@@ -176,9 +195,9 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
   }
 
   function trackFormError(errorType: AnalyticsErrorType) {
-    if (!isIelts) return;
+    if (!analyticsProgramme) return;
     track("assessment_form_error", {
-      programme: "ielts",
+      programme: analyticsProgramme,
       page_path: "/free-diagnostic-test",
       source: analyticsSource,
       error_type: errorType,
@@ -216,9 +235,9 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
       });
       if (res.ok) {
         setStatus("success");
-        if (isIelts) {
+        if (analyticsProgramme) {
           track("assessment_form_submit", {
-            programme: "ielts",
+            programme: analyticsProgramme,
             page_path: "/free-diagnostic-test",
             source: analyticsSource,
           });

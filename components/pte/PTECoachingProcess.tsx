@@ -55,7 +55,12 @@ export default function PTECoachingProcess() {
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 mb-8">
           {process.feedbackAreas.map((area) => (
             <article key={area.id} className="bg-ivory border border-stone rounded-md p-5 sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-wide text-teal mb-2">{area.title}</p>
+              {/* text-amber-dark, not text-teal -- PTE Step 12's axe-core pass measured text-teal
+                  on bg-ivory at 4.42:1, just short of the 4.5:1 WCAG AA minimum for this 12px
+                  text. text-amber-dark (#1F616E) measures 6.69:1 on this background. The
+                  identical pattern also exists in components/ielts/IELTSCoachingProcess.tsx --
+                  flagged, not fixed here, in docs/launch-verification.md. */}
+              <p className="text-xs font-semibold uppercase tracking-wide text-amber-dark mb-2">{area.title}</p>
               <p className="text-sm text-ink-soft leading-relaxed">{area.body}</p>
             </article>
           ))}

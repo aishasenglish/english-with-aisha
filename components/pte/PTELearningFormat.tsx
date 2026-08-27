@@ -66,6 +66,9 @@ export default function PTELearningFormat() {
               href={whatsappLink(delivery.cta.message)}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics-event="whatsapp_click"
+              data-analytics-section="learning_format"
+              data-analytics-intent="ask_format"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {delivery.cta.label}

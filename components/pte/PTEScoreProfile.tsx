@@ -49,6 +49,9 @@ export default function PTEScoreProfile() {
           href={whatsappLink(scoreProfile.contextualLink.message)}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="whatsapp_click"
+          data-analytics-section="score_profile"
+          data-analytics-intent="share_score_profile"
           className="inline-flex min-h-11 items-center text-sm font-medium text-teal hover:text-ink underline underline-offset-2"
         >
           {scoreProfile.contextualLink.label}

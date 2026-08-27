@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import IELTSPageViewTracker from "@/components/analytics/IELTSPageViewTracker";
+import ProgrammePageViewTracker from "@/components/analytics/ProgrammePageViewTracker";
 import IELTSBreadcrumb from "@/components/ielts/IELTSBreadcrumb";
 import IELTSHero from "@/components/ielts/IELTSHero";
 import IELTSAuthorityStrip from "@/components/ielts/IELTSAuthorityStrip";
@@ -86,9 +86,10 @@ export default function IELTSPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* IELTS Step 12: the only Client Component leaf this page adds -- fires programme_view
-          once per navigation to this route. Every other section below stays server-rendered. */}
-      <IELTSPageViewTracker />
+      {/* IELTS Step 12 (generalised to a shared component in PTE Step 12): the only Client
+          Component leaf this page adds -- fires programme_view once per navigation to this
+          route. Every other section below stays server-rendered. */}
+      <ProgrammePageViewTracker programme="ielts" pagePath="/courses/ielts" />
       <IELTSBreadcrumb />
       <IELTSHero />
       <IELTSAuthorityStrip />

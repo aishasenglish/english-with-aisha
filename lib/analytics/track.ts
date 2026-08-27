@@ -6,6 +6,9 @@ import {
   type AnalyticsPagePath,
   type AnalyticsPayload,
 } from "./events";
+import { programmeForPagePath, resolvePagePath } from "./pagePaths";
+
+export { resolvePagePath };
 
 /**
  * Shared dispatch, called only after a payload has already been validated by
@@ -51,8 +54,11 @@ export function track(name: AnalyticsEventName, payload: AnalyticsPayload): void
 /**
  * The one entry point for values that are NOT compile-time-checked because they originate as
  * untrusted strings read from a `data-analytics-*` DOM attribute — see
- * components/analytics/AnalyticsListener.tsx, the only caller. Every value is validated against
- * the same allowlists `track()` uses before anything is dispatched.
+ * components/analytics/AnalyticsListener.tsx, the only caller. `programme` is derived from the
+ * current pathname (see `programmeForPagePath()` in lib/analytics/pagePaths.ts), never read from
+ * a dataset attribute (PTE Step 12, Part C: "Do not trust data-* attributes simply because the
+ * server rendered them") — every other value is validated against the same allowlists `track()`
+ * uses before anything is dispatched.
  */
 export function trackFromUntrustedAttributes(
   eventNameCandidate: unknown,
@@ -60,22 +66,13 @@ export function trackFromUntrustedAttributes(
   pagePath: AnalyticsPagePath
 ): void {
   if (!isAnalyticsEventName(eventNameCandidate)) return;
+  const programme = programmeForPagePath(pagePath);
+  if (!programme) return;
   const safePayload = sanitizeAnalyticsPayload({
-    programme: "ielts",
+    programme,
     page_path: pagePath,
     ...attributeCandidate,
   });
   if (!safePayload) return;
   dispatch(eventNameCandidate, safePayload);
-}
-
-/**
- * Resolves the current pathname to one of the two allowlisted analytics page paths — never
- * `window.location.href`, `document.URL`, or anything carrying a query string. Returns
- * `undefined` for any other route, so an unrecognised path is dropped rather than forwarded.
- */
-export function resolvePagePath(pathname: string): AnalyticsPagePath | undefined {
-  if (pathname === "/courses/ielts") return "/courses/ielts";
-  if (pathname === "/free-diagnostic-test") return "/free-diagnostic-test";
-  return undefined;
 }

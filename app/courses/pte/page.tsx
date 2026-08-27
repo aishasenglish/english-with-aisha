@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ProgrammePageViewTracker from "@/components/analytics/ProgrammePageViewTracker";
 import PTEBreadcrumb from "@/components/pte/PTEBreadcrumb";
 import PTEHero from "@/components/pte/PTEHero";
 import PTEAuthorityStrip from "@/components/pte/PTEAuthorityStrip";
@@ -86,6 +87,10 @@ export default function PTEPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {/* PTE Step 12: the only Client Component leaf this page adds -- fires programme_view once
+          per navigation to this route, through the same shared tracker IELTS uses. Every other
+          section below stays server-rendered. */}
+      <ProgrammePageViewTracker programme="pte" pagePath="/courses/pte" />
       <PTEBreadcrumb />
       <PTEHero />
       <PTEAuthorityStrip />

@@ -44,9 +44,13 @@ export default function PTETaskCurriculum() {
               </ul>
 
               <p className="text-xs font-semibold uppercase tracking-wide text-ink-faint mb-2">Current task families</p>
+              {/* text-amber-dark, not text-teal -- PTE Step 12's axe-core pass measured text-teal
+                  on bg-amber-tint at 4.03:1, short of the 4.5:1 WCAG AA minimum for this 12px
+                  text. text-amber-dark (the same #1F616E token used elsewhere as the brand's
+                  darker accent) measures 6.11:1 on this background. */}
               <ul className="flex flex-wrap gap-1.5 mb-4">
                 {skill.taskFamilies.map((task) => (
-                  <li key={task} className="text-xs text-teal bg-amber-tint rounded-sm px-2 py-1 leading-snug">
+                  <li key={task} className="text-xs text-amber-dark bg-amber-tint rounded-sm px-2 py-1 leading-snug">
                     {task}
                   </li>
                 ))}

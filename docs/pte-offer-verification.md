@@ -5,7 +5,8 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 11.
+**Last reviewed:** PTE Step 12. This step closes out the full 12-step PTE programme-page project,
+mirroring the completed IELTS project.
 
 ## Availability state (PTE Step 7)
 
@@ -206,9 +207,10 @@ preselects and locks "PTE Academic Preparation" in `components/DiagnosticForm.ts
 Formspree endpoint is configured, otherwise a `mailto:aishasenglish@gmail.com` link built by
 `lib/contact.ts`'s `emailLink()`. `lib/enquiryQuery.ts`'s allowlist was extended with the
 `"pte-page"` source and `"pte"` programme/variant values — an unrecognised or missing value still
-falls back to the general form. No PTE `data-analytics-*` attributes were added (PTE conversion
-measurement remains deferred to a later step); the existing IELTS `assessment_form_*` analytics
-events remain scoped to `variant === "ielts"` only.
+falls back to the general form. **Update (PTE Step 12):** `data-analytics-*` attributes and
+`assessment_form_*` events were added for PTE, matching IELTS exactly — see the "Conversion
+measurement and launch readiness" section below and `docs/analytics-event-map.md`. All of it
+remains fully inert pending owner/legal approval.
 
 ## Technical SEO, metadata and internal linking (PTE Step 10)
 
@@ -284,6 +286,58 @@ mobile, tablet, performance and accessibility defects after Steps 1-10. Findings
 
 No page reordering, new dependency, analytics addition, or weakening of any price/availability/
 evidence verification gate was made in this step.
+
+## Conversion measurement and launch readiness (PTE Step 12)
+
+Extended the existing IELTS-only analytics foundation (`lib/analytics/`) to support PTE as a
+second, equally-inert programme, and completed a full launch-readiness pass over the PTE journey.
+No third-party tracker was activated; `analyticsIsApproved()` remains hard-coded `false`.
+
+- **Shared contract, not a second stack**: `AnalyticsProgramme` extended to `"ielts" | "pte"`,
+  `AnalyticsPagePath` extended with `/courses/pte`, `AnalyticsSource` extended with `"pte-page"`.
+  No new event names — `programme: "pte"` on the same seven existing events provides the reporting
+  dimension. See `docs/analytics-event-map.md` for the combined, per-programme instrumentation
+  tables.
+- **New cross-programme consistency rule**: `sanitizeAnalyticsPayload()` now rejects the whole
+  payload (not just drops one field) for an impossible combination — `programme: "pte"` with
+  `page_path: "/courses/ielts"`, or a known source value assigned to the wrong programme (e.g.
+  `pte` + `ielts-page`). `components/analytics/AnalyticsListener.tsx` also no longer trusts a
+  `data-*` attribute for `programme` at all — it now derives `programme` from the current,
+  un-spoofable pathname via `lib/analytics/pagePaths.ts`'s `programmeForPagePath()`.
+  `resolvePagePath()` was split out of `lib/analytics/track.ts` into that same new
+  `lib/analytics/pagePaths.ts` file specifically so `scripts/analytics-selftest.mts` could test it
+  directly (track.ts's own runtime imports can't be resolved when the file is executed directly
+  by Node — pagePaths.ts is self-contained, matching events.ts/config.ts's existing pattern).
+- **PTE CTAs instrumented**: hero, score-profile, learning-format, pricing (both branches),
+  availability (both branches), and all three final-CTA actions on `/courses/pte` now carry the
+  same controlled `data-analytics-*` attributes IELTS's equivalents already had — same event
+  names, sections and intents, `programme` dimension the only difference.
+- **PTE form lifecycle instrumented**: `components/DiagnosticForm.tsx`'s `isIelts`-only analytics
+  gating was replaced with a small `ANALYTICS_PROGRAMME_BY_VARIANT`/`ANALYTICS_SOURCE_BY_VARIANT`
+  lookup so `assessment_form_start`/`_error`/`_submit` now also fire correctly for the PTE variant
+  (`programme: "pte"`, `source: "pte-page"`) — the general variant still emits nothing, and IELTS's
+  exact prior behaviour is unchanged.
+- **Page view**: the IELTS-only `IELTSPageViewTracker.tsx` was replaced with a shared, typed
+  `components/analytics/ProgrammePageViewTracker.tsx` accepting `programme`/`pagePath` props —
+  both `app/courses/ielts/page.tsx` and `app/courses/pte/page.tsx` mount their own instance. No
+  visible rendering changed.
+- **Self-test expanded** from 12 to 23 checks (all originals still passing unchanged): new
+  cross-programme rejection cases, a wider sensitive-key injection list (added `phone`, `score`,
+  `target_score`, `deadline`, `country`, `query`, `form_data`), a PTE-shaped injection test, a "PTE
+  support doesn't activate a provider" check, and four new `resolvePagePath()` tests.
+- **Two genuine, pre-existing WCAG AA colour-contrast failures found and fixed** via an
+  `axe-core` pass (unrelated to analytics; see `docs/launch-verification.md`'s "Colour-contrast
+  fixes" section for the measured ratios and the identical, flagged-not-fixed IELTS occurrence).
+- **Zero-network/storage confirmed** on a local production build: no request to any known
+  analytics/advertising/replay host, no third-party request of any kind, no cookie or storage
+  identifier created on the site's own origin, across `/courses/pte`, the PTE detailed-enquiry
+  route, `/courses/ielts`, the homepage and the Courses hub.
+
+Owner/legal gates for third-party tracking (provider choice, purpose, consent approach, approved
+privacy/terms pages, retention, account ownership, whether advertising/remarketing/session
+recording are enabled, real measurement ID, tested consent behaviour) remain entirely unresolved —
+see `docs/launch-verification.md`'s "Analytics activation checklist" for the full list. This step
+did not and could not resolve any of them from code alone.
 
 ## Global FAQ audit (PTE Step 1)
 
