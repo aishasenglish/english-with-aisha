@@ -3,14 +3,18 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { site } from "@/content/site";
+import { isProgrammeDetailRouteWithOwnChrome } from "@/lib/routeChrome";
 
 export default function UtilityBar() {
   const pathname = usePathname();
-  const isIeltsProgramme = pathname === "/courses/ielts";
+  // PTE Step 11 generalises the IELTS-only phone suppression to every hardened programme detail
+  // route: at phone widths the utility bar plus sticky header otherwise consumes first-screen
+  // space the programme's own H1 and primary action need more.
+  const isHardenedProgrammeDetailRoute = isProgrammeDetailRouteWithOwnChrome(pathname);
 
   return (
     <div
-      className={`${isIeltsProgramme ? "hidden md:block " : ""}bg-sea-wash text-sea-deep text-[13px] sm:text-sm`}
+      className={`${isHardenedProgrammeDetailRoute ? "hidden md:block " : ""}bg-sea-wash text-sea-deep text-[13px] sm:text-sm`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 min-h-11 flex items-center justify-center md:justify-between gap-3">
         {/* Phones below 768px: a single centred link, nothing else. */}

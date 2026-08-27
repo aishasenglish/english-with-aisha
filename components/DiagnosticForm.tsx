@@ -120,7 +120,11 @@ const baseInitialData: Omit<FormData, "programme"> = {
 const inputClasses =
   "w-full min-h-12 px-4 py-3 rounded-md border border-stone bg-white text-charcoal focus:outline-none focus:ring-2 focus:ring-teal text-base sm:text-sm";
 const labelClasses = "block text-sm font-medium text-charcoal mb-1.5";
-const statusTextClasses = "text-ink-faint font-normal text-xs";
+// PTE Step 11: bumped from text-xs to text-sm -- required/optional status is decision-relevant
+// (a candidate needs to know before typing whether a field can be skipped) and the implementing
+// prompt names this class of label explicitly as needing at least 14px when it's difficult to
+// perceive. Applies to every variant (general/IELTS/PTE) since this is the one shared form.
+const statusTextClasses = "text-ink-faint font-normal text-sm";
 
 type Props = {
   /** Preselects (and, for the "ielts" variant, locks) the programme field — an allowlisted
@@ -447,7 +451,9 @@ export default function DiagnosticForm({ initialProgramme, source = "general", v
         </div>
       )}
 
-      <p className="text-ink-faint text-xs leading-relaxed">{leadCapture.privacyNote}</p>
+      {/* PTE Step 11: bumped from text-xs to text-sm -- privacy text is explicitly named in the
+          implementing prompt as needing at least 14px with comfortable line height. */}
+      <p className="text-ink-faint text-sm leading-relaxed">{leadCapture.privacyNote}</p>
 
       <button
         type="submit"

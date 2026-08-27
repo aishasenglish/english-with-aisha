@@ -241,6 +241,28 @@ handle; never fill these with placeholder or invented links.
   entry uniqueness and social-preview rendering on the actual deployed URL — these were checked
   against the local dev/build output in this step, not a live production deploy.
 
+## PTE mobile performance and accessibility hardening (PTE Step 11)
+
+- **Shared route chrome now driven by `lib/routeChrome.ts`**: `components/WhatsAppFloat.tsx` and
+  `components/UtilityBar.tsx` both suppress the generic floating WhatsApp button / phone-width
+  utility bar for the same named route list (`PROGRAMME_DETAIL_ROUTES_WITH_OWN_CHROME`), currently
+  `["/courses/ielts", "/courses/pte"]`. Adding a third programme route to this treatment later
+  means adding one string to that one list — not editing two separate inline conditions.
+- **`components/DiagnosticForm.tsx`'s required/optional indicator and privacy note** were bumped
+  from `text-xs` to `text-sm` — this affects the general, IELTS and PTE form variants equally
+  (there's only one shared component).
+- **Performance snapshot** (production build, `npm run build && npm run start`, Chromium via
+  Playwright, 390×844 viewport, Android Chrome UA, CPU 4x slowdown, ~1.6 Mbps/150 ms-latency
+  network, 27 August 2026): `/courses/pte` ships the identical shared framework JavaScript payload
+  as a page with no form (`/about`) — zero PTE-specific script weight — and zero third-party
+  network requests. No Lighthouse CLI was available in this environment to produce an official
+  score; lab timing (TTFB, DOMContentLoaded, paint, best-effort LCP/CLS via
+  `PerformanceObserver`) was captured instead and is not a substitute for a full Lighthouse run
+  or real-user field data — re-run an actual Lighthouse audit before relying on a specific score
+  number publicly.
+- See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
+  for the complete finding list and QA method.
+
 ## Flagged during IELTS Step 10, not fixed (out of this step's scope)
 
 - **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is

@@ -2,14 +2,16 @@
 
 import { usePathname } from "next/navigation";
 import { whatsappLink } from "@/lib/whatsapp";
+import { isProgrammeDetailRouteWithOwnChrome } from "@/lib/routeChrome";
 
 export default function WhatsAppFloat() {
   const pathname = usePathname();
 
-  // IELTS already provides contextual WhatsApp actions in the hero, pricing/availability
-  // state and final enquiry section. Suppressing the generic float avoids duplicate actions
-  // and prevents it from covering content or keyboard focus on smaller screens.
-  if (pathname === "/courses/ielts") return null;
+  // IELTS and PTE already provide contextual WhatsApp actions in the hero, pricing/availability
+  // state and final enquiry section (PTE Step 11 generalises the IELTS-only suppression here).
+  // Suppressing the generic float avoids duplicate actions and prevents it from covering content
+  // or keyboard focus on smaller screens.
+  if (isProgrammeDetailRouteWithOwnChrome(pathname)) return null;
 
   return (
     <a

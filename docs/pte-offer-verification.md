@@ -5,7 +5,7 @@ Internal record of what the current PTE Academic offer can and cannot claim publ
 on the public page, and nothing here should be read as legal advice, visa advice, or as an answer
 on Aisha's behalf.
 
-**Last reviewed:** PTE Step 10.
+**Last reviewed:** PTE Step 11.
 
 ## Availability state (PTE Step 7)
 
@@ -240,6 +240,50 @@ template-driven strategies", unverified `10000`) remain confirmed unreachable by
 component for `/courses/pte` — no new consumer was introduced that would expose them, and the
 existing non-authoritative comments on that record were left in place (Steps 1, 2 and 6 already
 established and documented this).
+
+## Mobile performance and accessibility hardening (PTE Step 11)
+
+This step audited the complete rendered `/courses/pte` route (not isolated components) for
+mobile, tablet, performance and accessibility defects after Steps 1-10. Findings:
+
+- **Shared chrome generalised, not duplicated**: `lib/routeChrome.ts` (new) centralises the
+  previously IELTS-only route check into one named `PROGRAMME_DETAIL_ROUTES_WITH_OWN_CHROME` list.
+  `components/WhatsAppFloat.tsx` now suppresses the generic floating WhatsApp button on
+  `/courses/pte` exactly as it already did on `/courses/ielts` (both routes have contextual
+  WhatsApp actions of their own). `components/UtilityBar.tsx` now hides the phone-width utility
+  bar on the same two routes, giving the PTE H1 and primary action more first-screen space.
+- **Two real small-text findings, both fixed** in the shared `components/DiagnosticForm.tsx`
+  (affects every variant — general/IELTS/PTE): the "(required)"/"(optional)" field-status
+  indicator and the privacy note were both `text-xs` (12px); the implementing prompt names both
+  as decision-relevant text needing at least 14px. Bumped both to `text-sm`.
+- **Everything else audited and found already compliant** — every PTE component's `text-xs`
+  usage was individually reviewed against the prompt's explicit exception list (decorative
+  eyebrows, short category labels like "Focus areas", compact task-family chips, the
+  non-critical "Last verified" label) and found to fall within an allowed exception; every
+  decision-critical note already reviewed in Steps 2-9 (score-guarantee, transcript/audio
+  limitation, disclosure, pricing/payment/policy notes, reservation note, evidence context note)
+  was already `text-sm` or larger.
+- **No real horizontal overflow found** at any of the 21 required phone/tablet/desktop widths,
+  landscape phone, 320px reflow or simulated 200% zoom — confirmed via
+  `scrollWidth`/`clientWidth` comparison (the codebase has no global `overflow-x: hidden` to mask
+  a defect in the first place).
+- **Server rendering and JS payload confirmed minimal**: a byte-for-byte comparison against a
+  page with no form (`/about`) showed `/courses/pte` ships the *same* shared framework JavaScript
+  and zero additional PTE-specific script — the only client component PTE depends on is the
+  existing `DiagnosticForm`. Zero third-party network requests were observed on the route.
+- **All real rendering branches tested together** with a temporary combined fixture (published
+  pricing with a long amount/inclusions/policy text, two scheduled PTE intakes including a
+  verified "Filling Fast" status, and one consent-confirmed PTE testimonial) — confirmed correct
+  rendering, no overflow, no duplicate headings and no layout defect, then fully reverted via
+  `git checkout` (confirmed clean via `git status` and a fixture-marker `grep`).
+- **Anchors, focus and reduced motion verified, not duplicated**: every Step 5-9 fragment target
+  (`#pte-fit` through `#pte-enquiry`) clears the sticky header at both desktop and mobile widths;
+  `prefers-reduced-motion: reduce` already correctly disables smooth scrolling and shortens
+  transitions site-wide (no PTE-specific duplication was added); the mobile drawer's focus trap,
+  Escape handling and focus restoration all continue to work correctly on the PTE route.
+
+No page reordering, new dependency, analytics addition, or weakening of any price/availability/
+evidence verification gate was made in this step.
 
 ## Global FAQ audit (PTE Step 1)
 
