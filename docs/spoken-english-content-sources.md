@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 2).
+**Last checked:** 28 August 2026 (Step 3).
 
 ## Canonical owner facts used
 
@@ -146,6 +146,27 @@ descriptors.
 Whoever attempts a later Spoken English step should re-fetch the five URLs above before assuming
 the domain is still blocked — if any becomes reachable, the CEFR-avoidance decision in this section
 should be revisited rather than carried forward by default.
+
+### CEFR source access re-check (Step 3, 28 August 2026)
+
+Step 3's implementing prompt permitted the Step-2 source record to use current Council of Europe
+CEFR material as a *curriculum-design reference* (not a public-facing citation) for: action-
+oriented, context-based language use; the spoken-production/spoken-interaction distinction;
+intelligibility; phonological features that support meaning; and contextual adaptation of learning
+objectives. It named three specific URLs to recheck:
+
+- `https://www.coe.int/en/web/common-european-framework-reference-languages/cefr-in-the-classroom`
+- `https://www.coe.int/en/web/common-european-framework-reference-languages/uses-and-objectives`
+- `https://rm.coe.int/cefr-companion-volume-with-new-descriptors-2020/16809ea0d4`
+
+These three are a subset of the five already recorded as HTTP 403 Forbidden above, and this step's
+own live re-fetch confirmed the domain remains blocked. Since the process content added this step
+(the five-stage coaching cycle and four-lens feedback explanation) was already written entirely in
+learner-facing plain language — using the *ideas* of spoken interaction, intelligibility and
+phonological control without naming CEFR or any framework — the pre-existing decision to omit CEFR
+terminology needed no change. The five-stage process is described only as an internal instructional
+model; nowhere does the page call it an official CEFR method, claim CEFR alignment or certification,
+copy a descriptor table, or promise progression between CEFR levels.
 
 ## Positioning versus formal assessment claims
 

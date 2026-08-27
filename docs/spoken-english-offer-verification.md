@@ -5,10 +5,12 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 2 (28 August 2026). Step 2 added the speaking-profile and
-communication-curriculum sections; it exposed no genuinely new offer question beyond those already
-open from Step 1 (see "Open questions for Aisha" below) — it is positioning/curriculum content, not
-a new operational claim, so the table itself is unchanged except for the "as of" section below.
+**Last reviewed:** Spoken English Step 3 (28 August 2026). Step 3 added the teaching, practice and
+feedback process section. It exposed no genuinely new offer question beyond those already open from
+Steps 1–2 (see "Open questions for Aisha" below) — every operational detail the process touches
+(feedback mode/frequency/turnaround, role-play frequency, number of attempts, homework, platform,
+recordings, duration/frequency) was already an open question, so the table itself is unchanged; see
+"Teaching approach versus operational inclusions" below for the new split Step 3 requires.
 
 ## Allowed internal states
 
@@ -44,7 +46,54 @@ a new operational claim, so the table itself is unchanged except for the "as of"
 | Response time | Needs owner confirmation | No documented standard exists anywhere on the site. | None. Do not promise a reply-time window. | Confirm whether Aisha wants to commit to a stated response time. | 2026-08-27 |
 | Testimonial consent and direct Spoken English relevance | Needs owner confirmation | `content/testimonials.ts` currently has no entries. | None. No testimonial, quote or outcome claim may appear until a real, consent-confirmed, Spoken-English-tagged record exists. | Supply a genuine testimonial with recorded consent and a `courseSlug: "spoken-english"` tag before any evidence section is built. | 2026-08-27 |
 
-## What the public page currently says instead (as of Spoken English Step 2)
+## Teaching approach versus operational inclusions (Step 3)
+
+Step 3 added a five-stage coaching-process section and a four-lens feedback explanation. Its
+implementing prompt requires this document to separate what the process describes from what remains
+an unverified operational claim.
+
+### Teaching approach that can be described
+
+The following is **proposed public wording describing a durable instructional approach**, not an
+owner-confirmed operational inclusion — no existing owner-approved site content specifically
+establishes that every current lesson follows this exact sequence, so none of it is marked "Owner
+confirmed" in the table above:
+
+- real-situation goal definition (define the listener, purpose and communication task);
+- useful language and structure (response shape, vocabulary, spoken grammar, pronunciation
+  priorities chosen for the task);
+- guided practice (rehearsing a first attempt with support);
+- interaction and variation (adapting to a changed question, follow-up or listener need);
+- focused next-action feedback (message, language, delivery/intelligibility, interaction/repair,
+  each pointing to one next priority rather than a general confidence message).
+
+This wording requires Aisha's review before publication is treated as final — it describes coaching
+*can* work this way, using "can", "may" and "is designed to" throughout
+(`content/spokenEnglish.ts`'s `process` object), not that every current lesson demonstrably does.
+
+### Operational inclusions still unresolved
+
+None of the following is stated as included anywhere in the Step 3 process section, and each
+remains open (most already appeared in "Open questions for Aisha" below; Step 3 did not resolve
+any of them):
+
+- a formal diagnostic or placement test;
+- a written personal learning plan;
+- role-play frequency (whether every session includes one);
+- a fixed or guaranteed number of speaking attempts;
+- feedback mode (written/audio/verbal), frequency and turnaround;
+- homework or between-class practice quantity;
+- learner audio submission or storage;
+- between-class WhatsApp correction/support;
+- group versus one-to-one delivery, and whether one-to-one review is included in a group option;
+- the delivery platform;
+- lesson recordings or access to them;
+- a fixed course duration or lesson frequency.
+
+The implementation of the Step 3 process section is not itself evidence that any of the above is a
+genuine current inclusion — it describes a teaching method, not a package.
+
+## What the public page currently says instead (as of Spoken English Step 3)
 
 `/courses/spoken-english` shows only:
 
@@ -72,6 +121,14 @@ a new operational claim, so the table itself is unchanged except for the "as of"
   id `spoken-english-context-application`) mapping that same curriculum emphasis onto five real
   situations (work and meetings, interviews, presentations, study, everyday) without implying a
   separate mini-course, price or guarantee per situation;
+- a teaching, practice and feedback process section
+  (`components/spoken-english/SpokenEnglishCoachingProcess.tsx`, id
+  `spoken-english-coaching-process`) describing a five-stage coaching cycle (define the listener,
+  purpose and task; build language and response shape; rehearse a first attempt; adapt through
+  interaction; review and apply a next priority) and a separate four-lens feedback explanation
+  (message/response, language choices, delivery/intelligibility, interaction/repair) — see
+  "Teaching approach versus operational inclusions" above for what this section can and cannot be
+  read as confirming;
 - the fail-closed, enquiry-only availability state (`components/spoken-english/
   SpokenEnglishAvailability.tsx`, id `spoken-english-availability`), correctly showing "ask about
   the current Spoken English option" since no Spoken English batch is published, with a
@@ -87,10 +144,10 @@ components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed
 generic complete `<FAQAccordion />` (removed entirely), or Step 1's temporary
 `SpokenEnglishPrioritiesPreview` (deleted in Step 2, superseded by the speaking-profile and
 curriculum sections above). None of these render "coming soon" or an empty heading in their place —
-they are simply absent until their own verified replacement step. Coaching process, feedback
-demonstration, evidence, learning format, pricing, a dedicated availability component upgrade, a
-specialist FAQ and the enquiry-handoff form variant all remain deliberately deferred to their own
-later Spoken English steps, mirroring the IELTS, PTE and TOEFL sequence.
+they are simply absent until their own verified replacement step. Feedback demonstration, evidence,
+learning format, pricing, a dedicated availability component upgrade, a specialist FAQ and the
+enquiry-handoff form variant all remain deliberately deferred to their own later Spoken English
+steps, mirroring the IELTS, PTE and TOEFL sequence.
 
 ## Open questions for Aisha
 

@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–2)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–3)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -737,6 +737,27 @@ handle; never fill these with placeholder or invented links.
   `components/CourseHero.tsx` (the only consumer of `tagline`/`whoFor`) is not used by
   `/courses/spoken-english`; comments on every field now explain their non-authoritative status,
   mirroring the TOEFL Step 1 pattern.
+- **Teaching, practice and feedback process (Step 3)**: `SpokenEnglishCoachingProcess.tsx` (id
+  `spoken-english-coaching-process`), inserted after the curriculum/context-application sections
+  and before availability, describes a five-stage coaching cycle — define the listener, purpose and
+  task; build the language and response shape; rehearse a first attempt; adapt through interaction;
+  review the attempt and apply a next priority — as a semantic `<ol>`, plus a separate four-lens
+  feedback explanation (message/response, language choices, delivery/intelligibility,
+  interaction/repair) as `<article>` elements. This is **proposed public wording describing a
+  durable instructional approach, not an owner-confirmed operational inclusion** — see
+  `docs/spoken-english-offer-verification.md`'s "Teaching approach versus operational inclusions"
+  section for the exact split. No formal diagnostic, written plan, role-play frequency, feedback
+  mode/frequency/turnaround, homework quantity, audio submission/storage, platform, recording,
+  fixed duration/frequency, or outcome/confidence guarantee is claimed anywhere in the section. The
+  delivery-intelligibility feedback lens carries its own boundary ("Accent features may remain.
+  Feedback should focus on intelligibility and meaning, not native imitation."), and the section
+  closes with one expectation statement stated once rather than repeated per card: "Coaching can
+  provide structured practice and specific next priorities. Progress also depends on the learner's
+  starting point, relevant practice, available time and continued application; no communication
+  outcome can be guaranteed." The section adds no CTA of its own (Step 3's spec: the existing
+  speaking-profile and final CTAs are sufficient) and no CEFR terminology (the three CEFR source
+  URLs this step was asked to recheck all still returned HTTP 403 Forbidden — see
+  `docs/spoken-english-content-sources.md`'s "CEFR source access re-check" section).
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions

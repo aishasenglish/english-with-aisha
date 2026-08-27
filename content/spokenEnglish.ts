@@ -20,10 +20,15 @@
  * English instead, consistent with the prompt's own "if no CEFR level or descriptor is necessary
  * in visible copy, keep it out" instruction.
  *
- * Later Spoken English steps add more sections (full teaching/practice/feedback process, feedback
- * demonstration, evidence, learning format, pricing, dedicated availability, FAQ) once their
- * content is verified against an owner confirmation -- do not pre-fill those with placeholder
- * content.
+ * Step 3 adds a five-stage teaching/practice/feedback process (`process`) describing a durable
+ * instructional approach in plain learner language -- an internal coaching model, not an official
+ * CEFR method, and not a confirmed operational inclusion (feedback mode, quantity, turnaround,
+ * role-play frequency, homework and platform all remain unresolved -- see
+ * docs/spoken-english-offer-verification.md).
+ *
+ * Later Spoken English steps add more sections (feedback demonstration, evidence, learning format,
+ * pricing, dedicated availability, FAQ) once their content is verified against an owner
+ * confirmation -- do not pre-fill those with placeholder content.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -79,6 +84,27 @@ export type SpeakingContextApplication = {
   id: string;
   context: string;
   examples: readonly string[];
+};
+
+/** One stage of the five-stage coaching cycle (components/spoken-english/
+ *  SpokenEnglishCoachingProcess.tsx). Describes a teaching action, never a guaranteed inclusion,
+ *  quantity, sequence-per-lesson or turnaround. */
+export type SpokenEnglishProcessStep = {
+  id: string;
+  number: string;
+  title: string;
+  body: string;
+  focus: string;
+};
+
+/** One of the four feedback lenses within the same component. `boundary` is present only where a
+ *  lens is easy to misread as a native-accent promise (delivery/intelligibility). */
+export type SpokenEnglishFeedbackFocus = {
+  id: string;
+  title: string;
+  reviewQuestions: readonly string[];
+  nextAction: string;
+  boundary?: string;
 };
 
 export const spokenEnglishPage = {
@@ -452,6 +478,113 @@ export const spokenEnglishPage = {
         ],
       },
     ] as SpeakingContextApplication[],
+  },
+
+  // Step 3: a five-stage coaching cycle showing how one real speaking situation becomes a
+  // focused next attempt, plus a separate four-lens feedback explanation. This is proposed public
+  // wording describing a durable instructional approach, not a confirmed operational inclusion --
+  // see docs/spoken-english-offer-verification.md's "Teaching approach that can be described" vs.
+  // "Operational inclusions still unresolved" split. No formal assessment, feedback quantity or
+  // turnaround, homework, platform, recording, role-play frequency or outcome guarantee appears
+  // anywhere below.
+  process: {
+    id: "spoken-english-coaching-process",
+    eyebrow: "How coaching works",
+    heading: "Turn one speaking situation into a focused next attempt.",
+    introduction:
+      "Effective speaking practice connects the message, language, delivery and interaction. The process begins with a real communication task and uses each attempt to identify what to practise next.",
+    steps: [
+      {
+        id: "define-situation",
+        number: "01",
+        title: "Define the listener, purpose and task.",
+        body: "Start with one real situation: who the learner needs to speak with, what they need to communicate and what a useful response must achieve.",
+        focus: "A specific communication target instead of a vague request for fluency.",
+      },
+      {
+        id: "build-language",
+        number: "02",
+        title: "Build the language and response shape.",
+        body: "Select a manageable response structure, useful vocabulary, spoken grammar and pronunciation priorities that support the listener's needs.",
+        focus: "Language chosen for the task rather than disconnected rules or memorised impressive phrases.",
+      },
+      {
+        id: "rehearse",
+        number: "03",
+        title: "Rehearse a manageable first attempt.",
+        body: "Practise the response in smaller parts where useful, then connect them into a complete spoken attempt with attention to meaning, phrasing and listener understanding.",
+        focus: "Applying the selected language in speech—not only recognising it on a page.",
+      },
+      {
+        id: "adapt",
+        number: "04",
+        title: "Respond when the conversation changes.",
+        body: "Vary the question, follow-up, listener need or available preparation so the learner practises listening, responding, clarifying and rephrasing rather than repeating one fixed script.",
+        focus: "Flexible communication and repair when the interaction does not follow the rehearsal exactly.",
+      },
+      {
+        id: "review-retry",
+        number: "05",
+        title: "Review the attempt and apply the next priority.",
+        body: "Identify what already supported communication, what most affected the attempt and which small number of changes should be applied to another response or related situation.",
+        focus: "A clearer next action rather than general advice to be more confident.",
+      },
+    ] as SpokenEnglishProcessStep[],
+    feedbackHeading: "Useful feedback answers four different questions.",
+    feedbackIntroduction:
+      "Feedback should identify what helped the listener, what interfered with the message and what the learner can try next. It should not reduce every speaking attempt to pronunciation correction.",
+    feedbackFocuses: [
+      {
+        id: "message-response",
+        title: "Did the response address the purpose?",
+        reviewQuestions: [
+          "Was the main point clear?",
+          "Was the answer relevant to the question or situation?",
+          "Was supporting detail organised and sufficient?",
+          "Did the response have an understandable beginning, development and close where needed?",
+        ],
+        nextAction: "Strengthen the main point, sequence or supporting example.",
+      },
+      {
+        id: "language-choices",
+        title: "Did the language express the intended meaning?",
+        reviewQuestions: [
+          "Did grammar make time and relationships clear?",
+          "Was vocabulary accurate and appropriate for the listener?",
+          "Could the learner paraphrase when a word was unavailable?",
+          "Did formality and politeness fit the situation?",
+        ],
+        nextAction: "Replace one vague or inaccurate pattern with a more useful alternative.",
+      },
+      {
+        id: "delivery-intelligibility",
+        title: "Could the listener follow the speech?",
+        reviewQuestions: [
+          "Were key words intelligible?",
+          "Did word/sentence stress support meaning?",
+          "Were phrasing, pausing and pace manageable?",
+          "Did intonation help signal the intended meaning?",
+        ],
+        nextAction: "Rehearse one phrase, stress pattern or pacing change that affects listener understanding.",
+        boundary: "Accent features may remain. Feedback should focus on intelligibility and meaning, not native imitation.",
+      },
+      {
+        id: "interaction-repair",
+        title: "Did the learner respond to the other speaker?",
+        reviewQuestions: [
+          "Was the question or main point understood?",
+          "Did the response connect to what was said?",
+          "Could the learner ask for clarification?",
+          "Could the learner rephrase, confirm or recover from misunderstanding?",
+          "Was turn-taking appropriate for the context?",
+        ],
+        nextAction: "Practise one clarification, follow-up or repair strategy in a changed interaction.",
+      },
+    ] as SpokenEnglishFeedbackFocus[],
+    feedbackPrinciple:
+      "Focused feedback should make the next attempt more manageable. It can recognise what is already working, identify the highest-impact issue and give the learner a specific change to test.",
+    expectation:
+      "Coaching can provide structured practice and specific next priorities. Progress also depends on the learner's starting point, relevant practice, available time and continued application; no communication outcome can be guaranteed.",
   },
 
   // Step 1: no confirmed Spoken English intake exists yet (content/batches.ts). Fails closed --

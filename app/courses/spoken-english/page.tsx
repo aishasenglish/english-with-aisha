@@ -5,6 +5,7 @@ import SpokenEnglishFit from "@/components/spoken-english/SpokenEnglishFit";
 import SpokenEnglishSpeakingProfile from "@/components/spoken-english/SpokenEnglishSpeakingProfile";
 import SpokenEnglishCurriculum from "@/components/spoken-english/SpokenEnglishCurriculum";
 import SpokenEnglishContextApplication from "@/components/spoken-english/SpokenEnglishContextApplication";
+import SpokenEnglishCoachingProcess from "@/components/spoken-english/SpokenEnglishCoachingProcess";
 import SpokenEnglishAvailability from "@/components/spoken-english/SpokenEnglishAvailability";
 import SpokenEnglishFinalCTA from "@/components/spoken-english/SpokenEnglishFinalCTA";
 
@@ -32,6 +33,7 @@ export default function SpokenEnglishPage() {
       <SpokenEnglishSpeakingProfile />
       <SpokenEnglishCurriculum />
       <SpokenEnglishContextApplication />
+      <SpokenEnglishCoachingProcess />
       <SpokenEnglishAvailability />
       <SpokenEnglishFinalCTA />
     </>
