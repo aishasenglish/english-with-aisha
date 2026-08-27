@@ -500,6 +500,31 @@ export const toeflPage = {
     },
   },
 
+  // TOEFL Step 6: copy for components/toefl/TOEFLPricing.tsx. The `enquire` branch is the only
+  // one currently used -- see content/toeflPricing.ts's `toeflPricing` for the gate that decides
+  // which branch actually renders. Do not add a placeholder amount to the `published` branch; it
+  // exists so a future genuinely approved record has copy ready to attach to.
+  pricing: {
+    id: "toefl-pricing",
+    enquire: {
+      eyebrow: "Fees and enrolment",
+      heading: "Review the complete TOEFL fee before you decide.",
+      body: "Confirm the current fee together with the TOEFL iBT format covered, learning arrangement, schedule, duration and included feedback, practice or platform access. No payment is required to ask.",
+      note: "You can review the confirmed details before deciding whether to enrol.",
+      ctaLabel: "Ask for the Current TOEFL Fee",
+      ctaMessage:
+        "Hi Aisha! I am interested in TOEFL iBT coaching. Please share the current fee, currency, billing basis, test-format coverage, learning arrangement, schedule and time zone, duration, included feedback, timed practice and mock-test support, learning materials or platform access, and payment, rescheduling or cancellation terms. My institution/programme, required overall and section scores, score scale, previous result or starting point, test/application deadline, and country/time zone are: [details].",
+    },
+    published: {
+      eyebrow: "Current TOEFL fee",
+      heading: "See the complete cost and what it covers.",
+      inclusionsHeading: "What this fee includes",
+      lastVerifiedLabel: "Last verified",
+      validUntilLabel: "Valid until",
+      ctaLabel: "Ask About Enrolling",
+    },
+  },
+
   // TOEFL Step 1: no confirmed TOEFL intake exists yet (content/batches.ts). The shared
   // BatchTable's own generic fallback message doesn't request the exact institution/score/scale
   // this programme needs, so this overrides it — see components/BatchTable.tsx's optional

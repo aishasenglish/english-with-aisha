@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–5)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–6)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -426,11 +426,23 @@ handle; never fill these with placeholder or invented links.
   Option") that does not compete with the final CTA below it. The shared `<LearningFormats />`
   (which asserts live small-group teaching, Zoom, recordings and flexible scheduling) is still not
   rendered on `/courses/toefl`.
-- **TOEFL pricing**: `<PricingCard course={course} />` has been removed entirely from
-  `/courses/toefl` — no amount, `One-time fee`, `PKR 10,000`, discount or enrolment action renders
-  anywhere on that page. No gate-kept `content/toeflPricing.ts` exists yet (a later TOEFL step,
-  mirroring `content/ieltsPricing.ts`/`content/ptePricing.ts`) — until then, the page requests the
-  current fee only through a plain WhatsApp enquiry, never displaying an amount.
+- **TOEFL pricing transparency and verification (TOEFL Step 6)**: `<PricingCard course={course} />`
+  remains removed entirely from `/courses/toefl` — no amount, `One-time fee`, `PKR 10,000`,
+  discount or enrolment action renders anywhere on that page. `content/toeflPricing.ts` (new, a
+  discriminated `status: "enquire" | "published"` union mirroring
+  `content/ieltsPricing.ts`/`content/ptePricing.ts`) is now the only publication-authoritative
+  TOEFL pricing source; `toeflPricing.status` is `"enquire"`, so `TOEFLPricing.tsx` (id
+  `toefl-pricing`) renders only the honest "Review the complete TOEFL fee before you decide."
+  fee-enquiry panel with a single WhatsApp CTA ("Ask for the Current TOEFL Fee") requesting the
+  complete current offer. `isValidPublishedTOEFLPrice()` gates the `published` branch and rejects
+  a missing field, non-finite/zero/negative amount, unsupported currency, wrong `programmeLabel`,
+  invalid or impossible date sequence, an already-expired `validUntil` (checked in Pakistan time),
+  or an inclusion id outside `content/toefl.ts`'s verified `delivery.supportItems` — verified both
+  by an assert-throws build guard and by fixture testing (25/25 validation-logic checks; a
+  temporary valid fixture rendered correctly and was fully reverted, confirmed via `grep` for "QA
+  FIXTURE" and `git status` before commit). The legacy `content/courses.ts` TOEFL `price: 10000` is
+  confirmed unreachable on this route — `PricingCard` is never imported near `/courses/toefl`, and
+  no TOEFL JSON-LD or `Offer` structured data exists anywhere on the site.
 - **TOEFL availability**: the page-level `<BatchTable>` wrapper now uses `id="toefl-availability"`
   with a truthful "Current TOEFL availability" section heading and TOEFL-specific empty-state
   heading/body/WhatsApp message (`components/BatchTable.tsx` was extended with optional

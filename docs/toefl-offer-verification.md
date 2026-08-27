@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 5.
+**Last reviewed:** TOEFL Step 6.
 
 ## Allowed internal states
 
@@ -73,23 +73,58 @@ advice or an answer on Aisha's behalf.
 
 ## Pricing facts
 
+**Current TOEFL pricing state: `enquire`.** `content/toeflPricing.ts` is the only
+publication-authoritative TOEFL pricing source — see "Pricing authority and state" below. The
+legacy `price: 10000` in `content/courses.ts` (TOEFL) is retained only for shared `Course`-type
+compatibility (no consumer on `/courses/toefl` reads it — the generic `<PricingCard>` is never
+imported on that route) and remains removed from public authority.
+
 | Item | State | Notes |
 |---|---|---|
-| Current amount | Needs owner confirmation | The legacy `PKR 10,000` in `content/courses.ts` was never verified — see that file's comment on the `price` field. |
-| Currency | Needs owner confirmation | — |
+| Current amount | Needs owner confirmation | The legacy `PKR 10,000` in `content/courses.ts` was never verified — see that file's comment on the `price` field. `content/toeflPricing.ts`'s `toeflPricing.amount` does not exist while `status: "enquire"`. |
+| Currency | Needs owner confirmation | `content/toeflPricing.ts` only accepts `"PKR"` or `"USD"` once a record is approved — no currency is inferred from the business timezone or owner location. |
 | Billing basis | Needs owner confirmation | Per lesson, week, month, batch or complete programme — not recorded. |
-| Group vs. one-to-one fee | Needs owner confirmation | — |
+| Exact TOEFL iBT / current-format context for the fee | Needs owner confirmation | Whether the priced offer covers the format applicable to tests taken on or after 21 January 2026 — overlaps with the "Coaching covers tests taken on/after 21 January 2026" row above; a published price cannot assert format coverage merely because the public page describes the current ETS format elsewhere. |
+| Group vs. one-to-one fee | Needs owner confirmation | Whether separate prices exist per confirmed learning format; `content/toeflPricing.ts` would store these as separate, clearly labelled records rather than one figure covering both. |
 | Duration covered | Needs owner confirmation | — |
-| Inclusions | Needs owner confirmation | See operational facts above. |
+| Schedule context the price applies to | Needs owner confirmation | — |
+| Inclusions | Needs owner confirmation | See operational facts above — a published price's `verifiedInclusionIds` may only reference `content/toefl.ts`'s `delivery.supportItems` (Step 5's stable teaching-method items), never Step 5's neutral `detailsToConfirm` question list. |
 | Recordings, mocks and platform access included | Needs owner confirmation | — |
 | Instalments / payment schedule | Needs owner confirmation | — |
 | Accepted payment methods | Needs owner confirmation | — |
 | International transfer/currency policy | Needs owner confirmation | — |
 | Refund, cancellation, rescheduling and transfer policy | Needs owner confirmation | — |
+| Effective date | Needs owner confirmation | — |
+| Verification date | Not applicable | No record has been verified yet — see `toeflPricing.lastReviewed` (2026-08-27), which records when the `enquire` state itself was last reviewed against reality, not a price verification date. |
 | Quotation validity date | Needs owner confirmation | — |
-| Owner verification date | Not applicable | No record has been verified yet. |
+| Next-review date | Needs owner confirmation | To be set once a first record is approved. |
+| Person responsible for future pricing review | Aisha (site owner) | Same as every other confirmation item in this document. |
 
-## What the public page currently says instead (as of TOEFL Step 5)
+## Pricing authority and state (TOEFL Step 6)
+
+- `content/toeflPricing.ts` is the single, publication-authoritative TOEFL pricing source. It is a
+  discriminated union (`status: "enquire" | "published"`) mirroring
+  `content/ieltsPricing.ts`/`content/ptePricing.ts`'s established fail-closed pattern.
+- Current `toeflPricing.status` is `"enquire"` (`lastReviewed: "2026-08-27"`) — no owner-approved
+  fee exists, so `components/toefl/TOEFLPricing.tsx` renders only the honest fee-enquiry panel.
+- `isValidPublishedTOEFLPrice()` gates the `published` branch: it rejects a missing required
+  field, a zero/negative/`NaN`/non-finite amount, an unsupported currency, an empty programme,
+  test-date, format, billing, duration or schedule label, any `programmeLabel` other than the
+  exact string `"TOEFL iBT preparation"`, an invalid ISO date, `effectiveFrom` after `validUntil`,
+  `verifiedAt` before `effectiveFrom`, an already-expired `validUntil` (checked against Pakistan
+  time via `lib/batches.ts`'s `pakistanTodayDateOnly()`), an inclusion id absent from
+  `content/toefl.ts`'s `delivery.supportItems`, or an empty payment/policy note. A module-level
+  `assertPublishedTOEFLPriceIsValid()` call also fails the dev server/build loudly and immediately
+  if the record is ever edited to `"published"` with a defect, so a content mistake is caught
+  before it ships.
+- `/courses/toefl` revalidates hourly (`export const revalidate = 3600` in
+  `app/courses/toefl/page.tsx`), which is frequent enough that an expired `validUntil` cannot
+  remain visible indefinitely once a price is eventually published.
+- No exact TOEFL fee, currency, billing basis, or exact/published record exists as of this step.
+  When Aisha supplies one, record the exact approved public wording, owner-confirmation date and a
+  privacy-safe confirmation description here before flipping `status` to `"published"`.
+
+## What the public page currently says instead (as of TOEFL Step 6)
 
 `/courses/toefl` shows only:
 
@@ -126,6 +161,13 @@ advice or an answer on Aisha's behalf.
   landmark separate from the support list, and a single contextual WhatsApp CTA
   ("Ask About the Current TOEFL Option") that requests the candidate's exact requirement alongside
   the current-offer confirmation, without competing with the final CTA below it;
+- a fail-closed fee-enquiry panel (`components/toefl/TOEFLPricing.tsx` — TOEFL Step 6, id
+  `toefl-pricing`), which is the ONLY place on the site allowed to render an exact TOEFL fee and
+  currently shows only the honest "Review the complete TOEFL fee before you decide." enquiry state
+  (no amount, currency, billing basis, "One-time fee", "per course", discount or scarcity
+  language) because `content/toeflPricing.ts`'s `toeflPricing.status` is `"enquire"`; a single
+  WhatsApp CTA ("Ask for the Current TOEFL Fee") requests the complete current offer alongside the
+  candidate's exact requirement;
 - the shared, fail-closed availability fallback (`components/BatchTable.tsx`, extended in an
   earlier step with optional `emptyStateHeading`/`emptyStateBody` props) at `id="toefl-availability"`,
   correctly showing "ask about the next suitable TOEFL start" since no TOEFL batch is published,
@@ -137,9 +179,10 @@ advice or an answer on Aisha's behalf.
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
 components above), `<IncludedList>` (removed entirely), `<LearningFormats>` (never rendered on this
 route — its live-group/one-to-one/Zoom/recordings/personal-feedback copy is not owner confirmation
-for the current TOEFL offer), `<PricingCard>` (removed entirely), or the generic 17-item
-`<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty heading in
-their place — they are simply absent until their own verified replacement step. Pricing, a
+for the current TOEFL offer), `<PricingCard>` (removed entirely — never imported on
+`/courses/toefl`, so `content/courses.ts`'s legacy `price: 10000` cannot render there), or the
+generic 17-item `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an
+empty heading in their place — they are simply absent until their own verified replacement step. A
 dedicated availability component, a specialist FAQ and the enquiry-handoff form variant all remain
 deliberately deferred to their own later TOEFL steps, mirroring the IELTS and PTE sequence.
 
@@ -184,8 +227,17 @@ and PTE (added in IELTS Step 10). No further correction was needed for TOEFL in 
 21. How long is a quoted fee valid?
 22. If any third-party practice platform is used, what estimated-score source does it provide, and
     for how long can a learner access it?
+23. Does the fee differ between confirmed learning formats (e.g. group vs. one-to-one)?
+24. Is full payment required before the programme begins, or are instalments available, and on
+    what schedule?
+25. Which payment methods and currencies are accepted, and who pays transfer or processing
+    charges?
+26. What happens when Aisha cancels or reschedules a session, versus when a learner does?
+27. Can enrolment be transferred, paused or deferred?
+28. When does an approved public price take effect (`effectiveFrom`), and when should it next be
+    reviewed?
 
 Until these are answered, the public page deliberately shows only the verified positioning,
-test-qualifier, current-format-preview, coaching-process, feedback-demonstration and
-learning-format content, plus a WhatsApp path to ask Aisha directly — never an invented format,
-platform, fee, mock count, diagnostic offer or inclusion.
+test-qualifier, current-format-preview, coaching-process, feedback-demonstration,
+learning-format and fee-enquiry content, plus a WhatsApp path to ask Aisha directly — never an
+invented format, platform, fee, mock count, diagnostic offer or inclusion.

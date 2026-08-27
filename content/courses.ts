@@ -166,7 +166,8 @@ export const courses: Course[] = [
     // verified and must never be rendered on that page. The <PricingCard> render was removed
     // from that page entirely; left in place only because the shared Course type requires every
     // record to have a price and this page no longer imports the only component that would
-    // otherwise render it.
+    // otherwise render it. content/toeflPricing.ts (TOEFL Step 6) is the only
+    // publication-authoritative TOEFL pricing source — see docs/toefl-offer-verification.md.
     price: 10000,
   },
   {
