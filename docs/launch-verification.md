@@ -352,15 +352,32 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Step 1)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–2)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
-  `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLCurriculumPreview,
-  TOEFLFinalCTA}.tsx` reading from `content/toefl.ts`, replacing the generic
+  `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
+  TOEFLTaskCurriculum,TOEFLFinalCTA}.tsx` reading from `content/toefl.ts`, replacing the generic
   `CourseHero`/`CourseModules` render and its pre-2026 curriculum labels ("Integrated and
   independent Writing tasks", "Speaking responses that score") and broad
-  "universities worldwide" positioning. The current-format preview and score-scale note are
-  sourced from official ETS pages — see `docs/toefl-content-sources.md`.
+  "universities worldwide" positioning. The current-format qualifier, score-requirement profile
+  and four-skill curriculum are all sourced from official ETS pages — see
+  `docs/toefl-content-sources.md`.
+- **TOEFL score requirement and curriculum (TOEFL Step 2)**: the Step 1 temporary
+  `TOEFLCurriculumPreview.tsx` has been removed entirely (not merely superseded).
+  `TOEFLScoreProfile.tsx` explains that ETS sets no universal passing score and that each
+  institution sets its own requirement (quoted directly from ETS's score-report FAQ);
+  `TOEFLTaskCurriculum.tsx` covers the current Reading/Listening/Writing/Speaking task families
+  with an adaptive-design note (deliberately says only "adaptive", not the unconfirmed
+  "multistage adaptive" — the 2026 technical-specification PDF that might confirm the more
+  specific term could not be read by the tooling available in this session; see
+  `docs/toefl-content-sources.md`) and a scoring-integrity note distinguishing tutor feedback from
+  an official TOEFL score.
+- **Recheck the current TOEFL iBT task families, adaptive-section wording and score-reporting
+  facts against ETS before launch and after any announced test update.** `content/toefl.ts`'s
+  `scoreProfile` and `curriculum` objects were built from the official ETS pages listed in
+  `docs/toefl-content-sources.md`, checked 27 August 2026. If ETS updates the format, task
+  families, score scale or transition timeline, update `content/toefl.ts`, that document's source
+  table, and `sourceVerifiedAt` together — not separately.
 - **TOEFL inclusions**: `<IncludedList course={course} />` has been removed entirely from
   `/courses/toefl` — the five generic inclusion claims (live Zoom classes, weekly practice tests,
   full-length mocks, personal feedback, 1-on-1 consultation) do not render anywhere on that page.

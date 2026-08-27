@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import TOEFLHero from "@/components/toefl/TOEFLHero";
 import TOEFLAuthorityStrip from "@/components/toefl/TOEFLAuthorityStrip";
 import TOEFLFit from "@/components/toefl/TOEFLFit";
-import TOEFLCurriculumPreview from "@/components/toefl/TOEFLCurriculumPreview";
+import TOEFLScoreProfile from "@/components/toefl/TOEFLScoreProfile";
+import TOEFLTaskCurriculum from "@/components/toefl/TOEFLTaskCurriculum";
 import BatchTable from "@/components/BatchTable";
 import TOEFLFinalCTA from "@/components/toefl/TOEFLFinalCTA";
 import { toeflPage } from "@/content/toefl";
@@ -28,7 +29,8 @@ export default function TOEFLPage() {
       <TOEFLHero />
       <TOEFLAuthorityStrip />
       <TOEFLFit />
-      <TOEFLCurriculumPreview />
+      <TOEFLScoreProfile />
+      <TOEFLTaskCurriculum />
 
       {/* TOEFL Step 1: no confirmed TOEFL intake exists yet -- the shared, fail-closed
           BatchTable correctly shows its truthful "ask about the next available intake" state.

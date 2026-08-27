@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 1.
+**Last reviewed:** TOEFL Step 2.
 
 ## Allowed internal states
 
@@ -75,9 +75,13 @@ advice or an answer on Aisha's behalf.
   (`components/toefl/TOEFLHero.tsx`, `TOEFLAuthorityStrip.tsx`, `TOEFLFit.tsx`), positioning the
   page around the candidate's own confirmed institution, test date and score requirement rather
   than a broad worldwide-admissions claim;
-- a temporary, officially-sourced current-format curriculum preview
-  (`components/toefl/TOEFLCurriculumPreview.tsx` — corrects the pre-2026 "Integrated and
-  independent Writing tasks" / "Speaking responses that score" labels that previously rendered);
+- an officially-verified score-requirement profile and four-skill task curriculum
+  (`components/toefl/TOEFLScoreProfile.tsx`, `TOEFLTaskCurriculum.tsx` — TOEFL Step 2; the
+  Step 1 temporary `TOEFLCurriculumPreview.tsx` has been removed entirely, not merely
+  superseded), explaining that ETS sets no universal passing score, describing current 1–6/
+  transitional 0–120 score reporting without an unofficial conversion, and covering the current
+  Reading/Listening/Writing/Speaking task families with an adaptive-design note and a scoring-
+  integrity note;
 - the shared, fail-closed availability fallback (`components/BatchTable.tsx`, extended in this
   step with optional `emptyStateHeading`/`emptyStateBody` props) at `id="toefl-availability"`,
   correctly showing "ask about the next suitable TOEFL start" since no TOEFL batch is published,

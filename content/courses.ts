@@ -140,9 +140,9 @@ export const courses: Course[] = [
     // Not publication-authoritative for /courses/toefl (TOEFL Step 1) — this pre-2026 structure
     // ("Integrated and independent Writing tasks", "Speaking responses that score") does not
     // describe the TOEFL iBT test introduced 21 January 2026. The CourseModules render was
-    // removed from that page entirely; see components/toefl/TOEFLCurriculumPreview.tsx and
-    // content/toefl.ts's `curriculumPreview` for the corrected, officially-sourced temporary
-    // preview (docs/toefl-content-sources.md has the full ETS source mapping). Left in place,
+    // removed from that page entirely; see components/toefl/TOEFLTaskCurriculum.tsx (TOEFL
+    // Step 2) and content/toefl.ts's `curriculum` for the real, officially-verified four-skill
+    // curriculum (docs/toefl-content-sources.md has the full ETS source mapping). Left in place,
     // uncorrected, only because the shared Course type requires this field.
     modules: [
       "Reading & Listening for academic content",

@@ -20,6 +20,23 @@ type ToeflFitItem = {
   body: string;
 };
 
+/** One score-profile observation card (components/toefl/TOEFLScoreProfile.tsx). */
+type ToeflScoreObservation = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+/** One of the four communicative-skill curriculum cards (components/toefl/TOEFLTaskCurriculum.tsx).
+ *  See docs/toefl-content-sources.md for the official ETS basis of each skill's task families. */
+type ToeflSkillArea = {
+  id: "reading" | "listening" | "writing" | "speaking";
+  title: string;
+  introduction: string;
+  focusItems: readonly string[];
+  taskFamilies: readonly string[];
+};
+
 export const toeflPage = {
   // "YYYY-MM-DD" -- when the format/scoring facts below were last checked against ETS's official
   // current-format pages. See docs/toefl-content-sources.md for the full per-claim URL mapping and
@@ -85,24 +102,156 @@ export const toeflPage = {
     },
   },
 
-  // TOEFL Step 1: a temporary current-format preview only -- corrects the pre-2026 module labels
-  // that previously rendered on this page. Deliberately omits exact item counts, timing, adaptive
-  // mechanics and score weights, none of which are published here without a later step's fuller
-  // sourcing. See docs/toefl-content-sources.md for the official basis of each task family named
-  // below (ETS's current TOEFL iBT content-and-structure pages, checked 27 August 2026).
-  curriculumPreview: {
-    eyebrow: "Current TOEFL iBT preparation",
-    heading: "Prepare for the current four-skill task families.",
-    body: "TOEFL iBT changed on 21 January 2026. This preview reflects the current task families rather than the older independent/integrated Writing and Speaking structure.",
-    items: [
-      "Reading across current academic and everyday text tasks",
-      "Listening across responses, conversations, announcements and academic talks",
-      "Writing through sentence building, email and academic-discussion tasks",
-      "Speaking through listen-and-repeat and interview-style tasks",
-      "Timing, attention and computer-test routines",
+  // TOEFL Step 2: score-requirement guidance -- see docs/toefl-content-sources.md for the official
+  // ETS basis (no universal passing score; institution sets the requirement; current 1-6 scale;
+  // transitional comparable overall 0-120 score during the two-year transition after January
+  // 2026). Deliberately does not imply the comparable 0-120 figure supplies converted section
+  // scores -- the official source checked for this step describes it only as an overall estimate.
+  scoreProfile: {
+    id: "toefl-score-profile",
+    eyebrow: "Your TOEFL requirement",
+    heading: "Begin with the score requirement supplied by your institution.",
+    body: "ETS does not set one passing TOEFL iBT score. Each institution or programme decides the overall and any Reading, Listening, Writing or Speaking scores it accepts.",
+    detailsHeading: "Bring these details",
+    requiredDetails: [
+      "Exact test: TOEFL iBT",
+      "Institution and programme receiving the result",
+      "Test date and application deadline",
+      "Required score scale: 1–6 or a still-published 0–120 requirement",
+      "Required overall score",
+      "Any minimum Reading, Listening, Writing or Speaking scores",
+      "Previous TOEFL score report or current starting point",
+      "Country or time zone and usual availability",
     ],
-    footnote:
-      "This preview reflects the current TOEFL iBT task families, verified against official ETS pages on 27 August 2026. A full task-by-task curriculum with complete sourcing is a later step.",
+    observations: [
+      {
+        id: "no-universal-passing-score",
+        title: "There is no single TOEFL passing score",
+        body: "ETS does not set a universal pass or fail mark. Use the current requirement published or confirmed by the institution receiving your result.",
+      },
+      {
+        id: "overall-not-whole-story",
+        title: "An overall target may not tell the whole story",
+        body: "An institution may also require minimum scores in one or more sections. A previous report can show whether Reading, Listening, Writing or Speaking should become the first preparation priority.",
+      },
+      {
+        id: "do-not-convert-yourself",
+        title: "Do not convert the requirement yourself",
+        body: "During the score transition, current official reports include the 1–6 scores and a comparable overall 0–120 figure. If an institution's guidance is unclear, confirm it directly rather than relying on an unofficial calculator.",
+      },
+    ] as ToeflScoreObservation[],
+    contextualLink: {
+      label: "Share Your TOEFL Requirement with Aisha",
+      message:
+        "Hi Aisha! I am preparing for TOEFL iBT. My institution/programme is [name], its required overall and section scores are [details] on the [1–6 or 0–120] scale, my test/application deadline is [date], and my previous TOEFL result or current starting point is [details]. Which preparation priorities should I begin with?",
+    },
+  },
+
+  // TOEFL Step 2: current four-skill/task curriculum, verified against official ETS pages on
+  // 27 August 2026 -- see docs/toefl-content-sources.md for the full URL/claim mapping. Reflects
+  // the task families introduced for tests taken on or after 21 January 2026, replacing the old
+  // independent/integrated Writing and Speaking structure entirely. No task-weight percentages,
+  // exact item counts, section timing or adaptive-routing mechanics are published here.
+  curriculum: {
+    id: "toefl-task-curriculum",
+    eyebrow: "Current four-skill preparation",
+    heading: "Prepare for the task demands introduced in January 2026.",
+    body: "The current TOEFL iBT measures Reading, Listening, Writing and Speaking through updated task families. Preparation should connect task familiarity with the underlying English skills identified in the candidate's score requirement and starting point.",
+    skills: [
+      {
+        id: "reading",
+        title: "Reading",
+        introduction:
+          "Develop vocabulary-in-context and comprehension across concise everyday and academic texts while working accurately in an adaptive section.",
+        focusItems: [
+          "Understanding meaning from context",
+          "Vocabulary and word-form knowledge",
+          "Main ideas and important details",
+          "Implied meaning and purpose",
+          "Reading notices, messages and informational text",
+          "Reading focused academic passages",
+          "Maintaining accuracy and pace across changing text demands",
+        ],
+        taskFamilies: ["Complete the Words", "Read in Daily Life", "Read an Academic Passage"],
+      },
+      {
+        id: "listening",
+        title: "Listening",
+        introduction:
+          "Build accurate understanding of short exchanges, conversations, announcements and academic talks while recognising purpose, detail and implied meaning.",
+        focusItems: [
+          "Understanding an appropriate response to a spoken prompt",
+          "Identifying main ideas and important details",
+          "Recognising speaker purpose, attitude and implied meaning",
+          "Following campus conversations and announcements",
+          "Following academic talks",
+          "Selective note-taking where useful",
+          "Sustaining attention through an adaptive section",
+          "Distinguishing genuine meaning from repeated keywords",
+        ],
+        taskFamilies: [
+          "Listen and Choose a Response",
+          "Listen to a Conversation",
+          "Listen to an Announcement",
+          "Listen to an Academic Talk",
+        ],
+      },
+      {
+        id: "writing",
+        title: "Writing",
+        introduction:
+          "Develop accurate sentence construction and purposeful written responses for current academic and campus communication tasks.",
+        focusItems: [
+          "Word order and grammatical sentence construction",
+          "Sentence boundaries and control",
+          "Writing for a clear purpose and reader",
+          "Appropriate email register and organisation",
+          "Selecting relevant information",
+          "Developing a concise position in an academic discussion",
+          "Coherence, grammar and vocabulary",
+          "Planning and checking within the available time",
+          "Original, prompt-specific responses",
+        ],
+        taskFamilies: ["Build a Sentence", "Write an Email", "Write for an Academic Discussion"],
+      },
+      {
+        id: "speaking",
+        title: "Speaking",
+        introduction:
+          "Develop clear spoken repetition and relevant spontaneous responses for the current speaking tasks.",
+        focusItems: [
+          "Accurate listening and short-term retention",
+          "Intelligible pronunciation rather than accent imitation",
+          "Clear phrasing, pace and oral fluency",
+          "Repeating meaningfully without adding or omitting content",
+          "Understanding interview questions",
+          "Producing relevant, developed answers",
+          "Organising a response quickly",
+          "Maintaining clarity under recording conditions",
+        ],
+        taskFamilies: ["Listen and Repeat", "Take an Interview"],
+      },
+    ] as ToeflSkillArea[],
+    // Part H: "multistage" is deliberately not asserted -- ETS's current task-format pages
+    // confirm only that "the test adapts" (timing and items may vary), not the specific
+    // "multistage" mechanism, and the 2026 technical specification PDF could not be reliably
+    // read for this step (see docs/toefl-content-sources.md's "facts deliberately omitted"
+    // section). The optional "Writing and Speaking follow linear task sequences" sentence is
+    // omitted for the same reason -- Part H makes it conditional on official-source support.
+    adaptiveNote: {
+      heading: "Adaptive sections still require broad, consistent skill.",
+      body: "Reading and Listening use an adaptive design, so the exact experience can vary. Preparation should build accuracy, comprehension, attention and time management across the published task families rather than trying to predict or manipulate the route.",
+    },
+    integrityNote: {
+      heading: "Prepare from published task guidance—not a scoring shortcut.",
+      body: "The programme uses current public ETS task and score information to develop relevant language, task response and computer-test routines. It does not claim access to ETS's proprietary scoring system or guarantee that a particular response will receive a particular score.",
+      feedbackNote:
+        "Tutor feedback supports preparation; it is not an official TOEFL score, score report or admission decision.",
+    },
+    // "YYYY-MM-DD" -- when the task list and scoring facts above were last checked against
+    // ETS's official current-format pages. See docs/toefl-content-sources.md for the full
+    // per-claim URL mapping and the recheck-after-format-update requirement.
+    sourceVerifiedAt: "2026-08-27",
   },
 
   // TOEFL Step 1: no confirmed TOEFL intake exists yet (content/batches.ts). The shared
