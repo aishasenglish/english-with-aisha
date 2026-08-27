@@ -6,7 +6,7 @@ score-requirement and four-skill curriculum sections (`content/toefl.ts`,
 maintenance record, not something imported into the website — do not paste full official task
 instructions, sample prompts or examiner comments here or into the site itself.
 
-**Last checked:** 27 August 2026 (Steps 1 and 2).
+**Last checked:** 27 August 2026 (Steps 1, 2 and 3).
 
 **Warning:** do not use old cached TOEFL blogs, third-party "prediction file" sites, pre-2026
 coaching material or TOEFL Essentials/TOEFL ITP resources as a source for TOEFL iBT content. ETS's
@@ -224,6 +224,35 @@ environment that can actually read this document. See "Facts deliberately omitte
   describes only a comparable *overall* score; `content/toefl.ts` never states or implies that
   section-level 0–120 conversions exist.
 
+## TOEFL Step 3: feedback-category sourcing
+
+`content/toefl.ts`'s `process.feedbackAreas` (rendered by
+`components/toefl/TOEFLCoachingProcess.tsx`) describes what tutor review can look at for each
+response type. These are grounded in the same per-skill task-type pages already sourced above
+(sources 2–5), not a new fetch — Step 3 rechecked that Step 2's task names and page content still
+matched before building the feedback categories on top of them:
+
+- **Reading and Listening decisions** — "vocabulary or word form, missing evidence,
+  misunderstanding purpose or implied meaning, following a distractor, losing attention, weak note
+  selection or time management" is a candidate-readable restatement of the focus areas already
+  sourced in `curriculum.skills` (sources 2–3: meaning from context, main ideas, implied meaning,
+  purpose), not a new official claim requiring its own citation — no automated error
+  classification or adaptive-route analytics is implied.
+- **Writing responses** — distinguishes `Build a Sentence` (grammatically complete sentence
+  construction) from the two produced-response tasks (`Write an Email`'s purpose/organisation/
+  social conventions, `Write for an Academic Discussion`'s position/support), based on source 4's
+  three named task types. Deliberately uses "can" and "where relevant" throughout rather than
+  asserting one identical scoring guide applies to all three tasks, since source 4 does not
+  publish ETS's actual rubric.
+- **Speaking responses** — distinguishes `Listen and Repeat` (accurate processing/reproduction,
+  intelligibility) from `Take an Interview` (relevance, development, pace, intelligibility,
+  vocabulary and grammar), based on source 5's two named task types and its confirmation that
+  responses are recorded. No official rating-calculation reproduction is implied; the language
+  focuses on intelligibility rather than native-accent imitation, matching the same boundary
+  already established in `curriculum.skills`' Speaking focus areas.
+
+No new official ETS scoring rubric, sample response or task prompt was reproduced for this step.
+
 ## Conflicts between sources
 
 None identified between the officially-reachable pages checked for Steps 1–2. The one genuine gap
@@ -242,8 +271,9 @@ update one without the others.
 
 ## Files to review after an ETS update
 
-- `content/toefl.ts` (`scoreProfile`, `curriculum`, `fit`);
-- `components/toefl/TOEFLFit.tsx`, `TOEFLScoreProfile.tsx`, `TOEFLTaskCurriculum.tsx`;
+- `content/toefl.ts` (`scoreProfile`, `curriculum`, `fit`, `process`);
+- `components/toefl/TOEFLFit.tsx`, `TOEFLScoreProfile.tsx`, `TOEFLTaskCurriculum.tsx`,
+  `TOEFLCoachingProcess.tsx`;
 - this document's source table and "Last checked" date;
 - `docs/toefl-offer-verification.md`, if the update also changes an operational or pricing fact.
 

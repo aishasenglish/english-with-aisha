@@ -186,6 +186,21 @@ almost certainly fails the same 4.42:1 check — this was not fixed here to keep
 the PTE route; it needs the same one-line `text-teal` → `text-amber-dark` change whenever IELTS is
 next touched, or as its own small fix.
 
+### Colour-contrast fix found during the TOEFL Step 3 audit (unrelated to analytics)
+
+An `axe-core` pass against `/courses/toefl` after adding `TOEFLCoachingProcess.tsx` found the same
+family of failure again: the four stage cards' `text-sm font-medium text-teal` "Result:" line on
+`bg-ivory` measured **4.41:1**, short of 4.5:1 for 14px text. Fixed the same way — changed to
+`text-amber-dark`, measuring **6.69:1** on the same background.
+
+**Flagged, not fixed:** the identical `text-teal` "Result:" line exists in
+`components/pte/PTECoachingProcess.tsx` and `components/ielts/IELTSCoachingProcess.tsx` (both
+already flagged above for their separate feedback-area-label instance of the same underlying
+issue) — not fixed here to keep this step scoped to the TOEFL route. All three coaching-process
+components' remaining `text-teal`-on-tinted-surface instances should be swept together the next
+time any one of IELTS, PTE or TOEFL is touched, rather than fixed one occurrence at a time across
+three separate steps.
+
 ### IELTS enquiry handoff (IELTS Step 9)
 
 `components/ielts/IELTSFinalCTA.tsx` picks its secondary action from `formsAreConfigured()` on
@@ -352,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–2)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–3)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -378,6 +393,14 @@ handle; never fill these with placeholder or invented links.
   `docs/toefl-content-sources.md`, checked 27 August 2026. If ETS updates the format, task
   families, score scale or transition timeline, update `content/toefl.ts`, that document's source
   table, and `sourceVerifiedAt` together — not separately.
+- **TOEFL coaching process (TOEFL Step 3)**: `TOEFLCoachingProcess.tsx` adds a four-stage teaching
+  cycle and a feedback-by-task-type explanation (Reading/Listening decisions, Writing responses,
+  Speaking responses), none of which asserts a formal diagnostic, personalised study plan, fixed
+  practice/marking quantity, feedback turnaround, retained recordings, ETS-licensed question-bank
+  access, a proprietary platform, automatic analytics, or one-to-one-included-with-group — every
+  one of those remains "Needs owner confirmation" in `docs/toefl-offer-verification.md`. Tutor
+  feedback is explicitly distinguished from an official TOEFL score, and the standard "no TOEFL
+  score can be guaranteed" expectation statement appears once, not per stage.
 - **TOEFL inclusions**: `<IncludedList course={course} />` has been removed entirely from
   `/courses/toefl` — the five generic inclusion claims (live Zoom classes, weekly practice tests,
   full-length mocks, personal feedback, 1-on-1 consultation) do not render anywhere on that page.

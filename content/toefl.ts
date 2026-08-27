@@ -37,6 +37,22 @@ type ToeflSkillArea = {
   taskFamilies: readonly string[];
 };
 
+/** One stage in the four-stage coaching cycle (components/toefl/TOEFLCoachingProcess.tsx). */
+type TOEFLProcessStep = {
+  id: string;
+  number: string;
+  title: string;
+  body: string;
+  result: string;
+};
+
+/** One of the three feedback-by-task-type blocks (Reading/Listening, Writing, Speaking). */
+type TOEFLFeedbackArea = {
+  id: "reading-listening" | "writing" | "speaking";
+  title: string;
+  body: string;
+};
+
 export const toeflPage = {
   // "YYYY-MM-DD" -- when the format/scoring facts below were last checked against ETS's official
   // current-format pages. See docs/toefl-content-sources.md for the full per-claim URL mapping and
@@ -252,6 +268,74 @@ export const toeflPage = {
     // ETS's official current-format pages. See docs/toefl-content-sources.md for the full
     // per-claim URL mapping and the recheck-after-format-update requirement.
     sourceVerifiedAt: "2026-08-27",
+  },
+
+  // TOEFL Step 3: the coaching-process section -- shows how a confirmed score requirement
+  // (Step 2) becomes task-focused teaching, appropriate computer-based practice and
+  // response-specific review. Never claims a guaranteed score, a reproduction of ETS's scoring
+  // system, or an unconfirmed inclusion (formal diagnostic, mock quantity, feedback turnaround,
+  // platform) -- see docs/toefl-offer-verification.md and Part G of the implementing prompt for
+  // the durable-teaching-action vs. operational-inclusion distinction every sentence here follows.
+  process: {
+    id: "toefl-coaching-process",
+    eyebrow: "How the coaching works",
+    heading: "Turn each TOEFL practice attempt into a clearer next action.",
+    introduction:
+      "TOEFL practice is more useful when the candidate can identify what affected an answer or response and what to change next. Coaching connects the institutional requirement, current task understanding, English-language development, computer-based practice and focused review.",
+    steps: [
+      {
+        id: "requirement",
+        number: "01",
+        title: "Define the requirement and starting point",
+        body: "Begin with the institution and programme, exact TOEFL iBT requirement, score scale, any section minimums, test or application deadline, and a previous report or current performance where available. This keeps the first priority tied to the candidate's real next step.",
+        result: "Result: a defined score profile and first preparation priority.",
+      },
+      {
+        id: "method",
+        number: "02",
+        title: "Learn what the current task requires",
+        body: "Focus on the language skill and response process that matter for the task: understanding context or evidence, selecting an answer, building a grammatical sentence, writing for a purpose, repeating accurately or developing a relevant spoken response.",
+        result: "Result: a method the candidate understands instead of a script to memorise.",
+      },
+      {
+        id: "practice",
+        number: "03",
+        title: "Practise in the correct response mode",
+        body: "Apply the method through the response mode the task uses—selected or arranged answers, typed writing or recorded speech—then introduce realistic timing and computer-based conditions where appropriate. Practice should show whether the skill remains usable under test pressure.",
+        result: "Result: an answer or response pattern that can be reviewed.",
+      },
+      {
+        id: "apply-feedback",
+        number: "04",
+        title: "Apply feedback to the next attempt",
+        body: "Review what worked, identify the error or limitation with the greatest effect, and carry one or two priorities into another attempt. The next response shows whether the change is becoming more accurate, clear and repeatable.",
+        result: "Result: a specific next action rather than a vague instruction to practise more.",
+      },
+    ] as TOEFLProcessStep[],
+    feedbackHeading: "Feedback changes with the task—not just the section.",
+    feedbackIntroduction:
+      "Useful review depends on whether the candidate selected an answer, arranged language, produced a written response or recorded speech. The purpose is to identify the cause of the problem and the next manageable change.",
+    feedbackAreas: [
+      {
+        id: "reading-listening",
+        title: "For Reading and Listening answers",
+        body: "Review should go beyond the answer key. Candidates examine whether an error came from vocabulary or word form, missing evidence, misunderstanding purpose or implied meaning, following a distractor, losing attention, weak note selection or time management.",
+      },
+      {
+        id: "writing",
+        title: "For sentence, email and discussion writing",
+        body: "Feedback can identify whether the sentence is grammatically complete, whether an email achieves its purpose with suitable organisation and social conventions, or whether an academic-discussion response states and supports a relevant position. Language review may address clarity, cohesion, grammar, vocabulary, spelling and punctuation where relevant.",
+      },
+      {
+        id: "speaking",
+        title: "For repeated and interview responses",
+        body: "For Listen and Repeat, review can consider how accurately the candidate processed and reproduced the sentence and whether the speech remained intelligible. For Take an Interview, review can consider relevance, development, natural pace, intelligibility and appropriate vocabulary and grammar.",
+      },
+    ] as TOEFLFeedbackArea[],
+    scoringNote:
+      "Tutor feedback supports preparation; it is not an official TOEFL score, score report or admission decision.",
+    expectation:
+      "Progress depends on the candidate's starting point, confirmed requirement, preparation time and consistent application of feedback; no TOEFL score can be guaranteed.",
   },
 
   // TOEFL Step 1: no confirmed TOEFL intake exists yet (content/batches.ts). The shared

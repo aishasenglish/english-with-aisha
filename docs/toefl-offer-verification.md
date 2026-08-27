@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 2.
+**Last reviewed:** TOEFL Step 3.
 
 ## Allowed internal states
 
@@ -48,6 +48,16 @@ advice or an answer on Aisha's behalf.
 | Home Edition candidates — different guidance | Needs owner confirmation | Whether TOEFL iBT Home Edition candidates receive any preparation guidance distinct from test-centre candidates. |
 | TOEFL Essentials offered separately | Needs owner confirmation | TOEFL Essentials is a different, shorter test (see `docs/toefl-content-sources.md`) — do not create TOEFL Essentials coaching content unless Aisha confirms it as a separately offered service. |
 | TOEFL ITP offered separately | Needs owner confirmation | TOEFL ITP is a different, institution-administered test — same rule as TOEFL Essentials above. |
+| Free diagnostic or placement test | Needs owner confirmation | TOEFL Step 3. Process copy describes reviewing "a previous report or current performance where available" — deliberately not the same claim as a formal diagnostic service. |
+| Official-style predicted TOEFL score | Needs owner confirmation | TOEFL Step 3. Not published anywhere on the page; tutor feedback is explicitly distinguished from an official score. |
+| Personalised written study plan | Needs owner confirmation | TOEFL Step 3. |
+| Fixed number of practice tasks or marked responses per week | Needs owner confirmation | TOEFL Step 3. |
+| Audio recordings retained by the tutor | Needs owner confirmation | TOEFL Step 3 — "recorded speech" in the process copy describes the Speaking response mode, not a promise that recordings are stored or returned. |
+| Access to official ETS-licensed question banks | Needs owner confirmation | TOEFL Step 3 — overlaps with the existing "official vs. teacher-created practice materials" row above. |
+| Proprietary practice platform or scoring dashboard | Needs owner confirmation | TOEFL Step 3. |
+| Automatic error analytics | Needs owner confirmation | TOEFL Step 3. |
+| One-to-one review included with every group option | Needs owner confirmation | TOEFL Step 3. |
+| Support through a named app or messaging channel | Needs owner confirmation | TOEFL Step 3 — overlaps with the existing "support between sessions" row above. |
 
 ## Pricing facts
 
@@ -82,6 +92,10 @@ advice or an answer on Aisha's behalf.
   transitional 0–120 score reporting without an unofficial conversion, and covering the current
   Reading/Listening/Writing/Speaking task families with an adaptive-design note and a scoring-
   integrity note;
+- a four-stage coaching-process section and feedback-by-task-type explanation
+  (`components/toefl/TOEFLCoachingProcess.tsx` — TOEFL Step 3), describing the teaching cycle
+  without asserting any unconfirmed quantity, platform, frequency or turnaround, and without
+  claiming a guaranteed score or a reproduction of ETS's scoring system;
 - the shared, fail-closed availability fallback (`components/BatchTable.tsx`, extended in this
   step with optional `emptyStateHeading`/`emptyStateBody` props) at `id="toefl-availability"`,
   correctly showing "ask about the next suitable TOEFL start" since no TOEFL batch is published,
