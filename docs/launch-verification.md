@@ -459,7 +459,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–11)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–12)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -668,27 +668,79 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## Flagged during IELTS Step 10, not fixed (out of this step's scope)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Step 1)
 
-- **`components/CourseExplorer.tsx`** (the homepage's programme grid) states: "Every programme is
-  taught live online and includes recordings, guided practice and personal feedback." This is the
-  same class of unverified universal claim IELTS Step 10 removed from the root layout's
-  `description` metadata ("Classes recorded.") — and it directly contradicts
-  `docs/ielts-offer-verification.md`, where live/synchronous delivery, recording availability and
-  recording access period are all still "Needs owner confirmation" specifically for IELTS.
-  **Also confirmed to contradict PTE** (PTE Step 10 audit — same rows are "Needs owner
-  confirmation" in `docs/pte-offer-verification.md`) **and TOEFL** (TOEFL Step 10 audit — live/
-  synchronous delivery, recordings and recording access period are all still "Needs owner
-  confirmation" in `docs/toefl-offer-verification.md` too), and almost certainly every other
-  programme this sentence covers, since it's one shared page-level paragraph rather than a
-  per-programme field. Fixing it is homepage content work that would need to change copy shared
-  across every programme card, outside any single programme-page step's scope; flagged here so it
-  isn't lost.
-  Confirm with Aisha whether every current programme genuinely is live and recorded before either
-  keeping this sentence or rewriting it to something that doesn't assert a delivery model that
-  hasn't been confirmed for every programme. (The per-card `delivery` line directly below this
-  paragraph is a separate, already-corrected concern — see the PTE-specific
-  `HOME_COURSE_DELIVERY` override added in PTE Step 10.)
+- **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
+  `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
+  SpokenEnglishPrioritiesPreview,SpokenEnglishAvailability,SpokenEnglishFinalCTA}.tsx` reading
+  from `content/spokenEnglish.ts`, replacing the generic `CourseHero`/`CourseModules`/
+  `IncludedList`/`PricingCard`/complete `<FAQAccordion />`/`CTASection` render and its
+  outcome-promising copy ("speak without hesitation", "real speaking fluency", "freezes when
+  speaking", "Thinking in English" and "Confidence for interviews & presentations" as modules).
+  The page is now positioned around the candidate's own real speaking situations (work,
+  interviews/presentations, study, everyday communication) with an explicit no-instant-fluency/
+  no-native-accent boundary in the hero reassurance copy.
+- **Authority strip**: uses only `site.qualification` (`MPhil in English Literature`) and
+  `site.professionalRole` (`College Lecturer`), read directly rather than duplicated. The
+  IELTS-specific "IDP-Certified IELTS Trainer" credential is deliberately not shown near this
+  section (mirrors `TOEFLAuthorityStrip.tsx`'s reasoning) — it is not general Spoken English
+  accreditation. "Corporate Trainer" was also omitted pending an owner decision on its exact
+  current public use for this page.
+- **Temporary priorities preview**: `TOEFLTaskCurriculum`-equivalent for this programme is
+  `SpokenEnglishPrioritiesPreview.tsx` (id `spoken-english-priorities`) — six areas (pronunciation
+  and intelligibility, building spoken responses, grammar and sentence control in speech,
+  functional vocabulary, listening/turn-taking/clarification, fluency/pacing/preparation),
+  explicitly framed as "examples to discuss, not a promise that every current option includes the
+  same syllabus." No CEFR level, automated level test, accent playback or before/after audio
+  claim exists anywhere on the page. A full learner-profile and communication curriculum
+  (mirroring TOEFL Step 2) is a later step.
+- **Fail-closed availability**: `SpokenEnglishAvailability.tsx` (id `spoken-english-availability`)
+  renders only the enquiry-only state — it does not query `content/batches.ts` at all in this
+  step (all current Spoken-English-tagged batch records are historical, closed and unpublished, so
+  this is also the truthful current state). No historical date, inferred cadence, or group/private
+  availability claim appears. A dedicated verified-intake component (mirroring IELTS/PTE/TOEFL
+  Step 7) is a later step.
+- **Final CTA**: `SpokenEnglishFinalCTA.tsx` reuses the hero's exact WhatsApp message plus a plain
+  `mailto:` fallback (no dedicated form variant yet — deliberately deferred to a later step,
+  mirroring IELTS/PTE/TOEFL Step 9, since the existing generic detailed-enquiry form would ask the
+  visitor to pick a programme again and lose the Spoken English context).
+- **Shared-copy corrections**: `content/homeCourses.ts` gained a Spoken English
+  `HOME_COURSE_DELIVERY` override ("Online coaching · Confirm current format and support"),
+  replacing the shared default line that falsely implied live delivery, group/one-to-one
+  availability and recordings. `content/coursePresentation.ts`'s Spoken English card copy no
+  longer states "personal feedback" as an inclusion (previously "Guided speaking practice with
+  personal feedback") and no longer implies every learner needs the same situations. See
+  "Resolved: the CourseExplorer universal claim" above for the shared `CourseExplorer.tsx`
+  sentence this step also corrected.
+- **Legacy course record**: `content/courses.ts`'s spoken-english record (`tagline`, `whoFor`,
+  `modules`, `includes`, `price: 10000`) is confirmed unreachable by the dedicated route —
+  `components/CourseHero.tsx` (the only consumer of `tagline`/`whoFor`) is not used by
+  `/courses/spoken-english`; comments on every field now explain their non-authoritative status,
+  mirroring the TOEFL Step 1 pattern.
+- See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
+  English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
+  consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions
+  behind every claim on the page.
+
+## Resolved: the CourseExplorer universal claim flagged since IELTS Step 10 (fixed in Spoken English Step 1)
+
+`components/CourseExplorer.tsx` (the homepage's programme grid) previously stated: "Every
+programme is taught live online and includes recordings, guided practice and personal feedback."
+This was flagged as out-of-scope during IELTS Step 10, PTE Step 10 and TOEFL Step 10 (each audit
+confirmed it directly contradicted that programme's own offer-verification record, where live/
+synchronous delivery, recording availability and recording access period were all still "Needs
+owner confirmation") because fixing shared homepage copy was outside any single programme-page
+step's scope.
+
+Spoken English Step 1's implementing prompt explicitly authorised and directed this fix — unlike
+the earlier steps, it named `components/CourseExplorer.tsx` directly and supplied exact
+replacement wording. The sentence now reads: "Review each programme for its current focus, then
+confirm the available format, schedule, support and fee before enrolling." This remains true and
+useful for every programme card regardless of what any individual programme's format is later
+confirmed to be. Regression-tested against every homepage programme card (see "Spoken English
+positioning and page architecture" below). The per-card `delivery` line directly below this
+paragraph remains a separate, already-corrected concern — see the PTE/TOEFL/Spoken-English-
+specific `HOME_COURSE_DELIVERY` overrides.
 
 ## Flagged during Step 12, not fixed (out of this step's scope)
 

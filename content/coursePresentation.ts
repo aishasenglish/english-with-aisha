@@ -69,15 +69,20 @@ export const coursePresentations: CoursePresentation[] = [
     ctaLabel: "View TOEFL Programme",
   },
   {
+    // Spoken English Step 1: "Guided speaking practice with personal feedback" stated personal
+    // feedback as an included inclusion, and "Interviews, work, presentations and everyday
+    // communication" implied every learner needs the same thing rather than a specific real-world
+    // situation. Aligned with the rebuilt /courses/spoken-english content -- see
+    // docs/spoken-english-offer-verification.md.
     slug: "spoken-english",
     typeLabel: "Fluency and communication",
     shortDescription:
-      "Develop clearer pronunciation, more confident responses and stronger communication in real situations.",
-    bestFor: "Interviews, work, presentations and everyday communication",
-    focus: "Guided speaking practice with personal feedback",
+      "Develop clearer spoken English for work, interviews, presentations, study and everyday interactions.",
+    bestFor: "Learners with specific real-world speaking situations",
+    focus: "Pronunciation, response-building and interaction priorities",
     ctaLabel: "View Spoken English Programme",
     whatsappMessage:
-      "Hi Aisha! I'm interested in Spoken English & Fluency coaching. My main speaking goal is:",
+      "Hi Aisha! I am interested in Spoken English coaching. The situations where I need to speak more clearly are:",
   },
   {
     slug: "english-writing",

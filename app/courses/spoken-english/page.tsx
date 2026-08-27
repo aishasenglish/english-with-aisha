@@ -1,52 +1,35 @@
 import type { Metadata } from "next";
-import CourseHero from "@/components/CourseHero";
-import CourseModules from "@/components/CourseModules";
-import IncludedList from "@/components/IncludedList";
-import PricingCard from "@/components/PricingCard";
-import BatchTable from "@/components/BatchTable";
-import FAQAccordion from "@/components/FAQAccordion";
-import CTASection from "@/components/CTASection";
-import { courses } from "@/content/courses";
-
-const course = courses.find((c) => c.slug === "spoken-english")!;
+import SpokenEnglishHero from "@/components/spoken-english/SpokenEnglishHero";
+import SpokenEnglishAuthorityStrip from "@/components/spoken-english/SpokenEnglishAuthorityStrip";
+import SpokenEnglishFit from "@/components/spoken-english/SpokenEnglishFit";
+import SpokenEnglishPrioritiesPreview from "@/components/spoken-english/SpokenEnglishPrioritiesPreview";
+import SpokenEnglishAvailability from "@/components/spoken-english/SpokenEnglishAvailability";
+import SpokenEnglishFinalCTA from "@/components/spoken-english/SpokenEnglishFinalCTA";
 
 // Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
-// daily so a page built once doesn't keep showing an intake after its date has passed.
+// daily so a page built once doesn't keep showing stale content if that ever changes.
 export const revalidate = 3600;
 
+// Spoken English Step 1: replaces the outcome-led generic metadata ("speak without hesitation",
+// broad fluency/confidence claims, "expert coaching" asserted without a verified basis).
+// Description deliberately omits any format, recording, price or delivery claim -- none of that
+// is verified yet (see docs/spoken-english-offer-verification.md).
 export const metadata: Metadata = {
-  title: "Spoken English & Fluency Course",
+  title: "Online Spoken English Coaching",
   description:
-    "Speak English without hesitation. Build fluency and confidence for interviews, work, and daily life with expert coaching from Aisha.",
+    "Online spoken English coaching focused on clearer pronunciation, stronger responses and practical communication for work, interviews, presentations, study and everyday situations.",
+  alternates: { canonical: "/courses/spoken-english" },
 };
 
 export default function SpokenEnglishPage() {
   return (
     <>
-      <CourseHero course={course} />
-      <CourseModules course={course} />
-      <IncludedList course={course} />
-      <PricingCard course={course} />
-
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
-            Upcoming Spoken English batches
-          </h2>
-          <BatchTable courseSlug="spoken-english" />
-        </div>
-      </section>
-
-      <section className="py-16 px-4 bg-ivory">
-        <div className="max-w-2xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
-            Common questions
-          </h2>
-          <FAQAccordion />
-        </div>
-      </section>
-
-      <CTASection />
+      <SpokenEnglishHero />
+      <SpokenEnglishAuthorityStrip />
+      <SpokenEnglishFit />
+      <SpokenEnglishPrioritiesPreview />
+      <SpokenEnglishAvailability />
+      <SpokenEnglishFinalCTA />
     </>
   );
 }

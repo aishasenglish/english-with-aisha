@@ -234,14 +234,31 @@ export const courses: Course[] = [
   {
     slug: "spoken-english",
     name: "Spoken English & Fluency",
+    // Not publication-authoritative for /courses/spoken-english (Spoken English Step 1) --
+    // "speak without hesitation" presents hesitation-removal as a promised outcome, and "real
+    // speaking fluency" is undefined. Spoken English has its own dedicated
+    // components/spoken-english/SpokenEnglishHero.tsx (reading from content/spokenEnglish.ts's
+    // `hero`), unlike components/CourseHero.tsx (used only by English Writing and O/A Level),
+    // which is the only component that renders `tagline`/`whoFor`. Left in place only because the
+    // shared Course type requires every record to have these fields.
     tagline: "Spoken English & Fluency — speak without hesitation.",
     summary:
       "Build real speaking fluency for interviews, work, study, or daily confidence.",
+    // "freezes when speaking" is ableist/shaming framing; "confidence" is presented as something
+    // the course delivers rather than a possible result of supported practice. See
+    // docs/spoken-english-offer-verification.md.
     whoFor: [
       "Anyone who understands English but freezes when speaking",
       "Professionals preparing for interviews or presentations",
       "Students who need confidence in academic settings",
     ],
+    // Not publication-authoritative for /courses/spoken-english (Spoken English Step 1) --
+    // "Thinking in English" is not a definable or teachable module, "Confidence" is not a
+    // curriculum domain, and "reducing hesitation" is undefined/unmeasured. The CourseModules
+    // render was removed from that page entirely; see
+    // components/spoken-english/SpokenEnglishPrioritiesPreview.tsx for the current temporary
+    // preview (a full communication-needs curriculum is a later step). Left in place, uncorrected,
+    // only because the shared Course type requires this field.
     modules: [
       "Pronunciation & clarity",
       "Building fluency and reducing hesitation",
@@ -249,12 +266,22 @@ export const courses: Course[] = [
       "Thinking in English",
       "Confidence for interviews & presentations",
     ],
+    // Not publication-authoritative for /courses/spoken-english (Spoken English Step 1) -- every
+    // claim here is "Needs owner confirmation" per docs/spoken-english-offer-verification.md. The
+    // IncludedList render was removed from that page entirely; left in place only because the
+    // shared Course type and other pages' <IncludedList> still depend on every course record
+    // having an `includes` array.
     includes: [
       "Live Zoom classes (recorded)",
       "Regular speaking practice sessions",
       "Personal feedback",
       "Individual practice session option",
     ],
+    // Not publication-authoritative for /courses/spoken-english (Spoken English Step 1) -- this
+    // figure was never verified and must never be rendered on that page. The <PricingCard> render
+    // was removed from that page entirely; left in place only because the shared Course type
+    // requires every record to have a price and this page no longer imports the only component
+    // that would otherwise render it.
     price: 10000,
   },
 ];

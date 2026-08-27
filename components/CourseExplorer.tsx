@@ -37,9 +37,8 @@ export default function CourseExplorer() {
               Choose the programme that fits your goal.
             </h2>
             <p className="text-ink-soft text-base sm:text-lg leading-relaxed">
-              Every programme is taught live online and includes recordings, guided practice and
-              personal feedback. Select a programme to see the complete syllabus and ask about the
-              available schedule.
+              Review each programme for its current focus, then confirm the available format,
+              schedule, support and fee before enrolling.
             </p>
           </div>
           <Link
