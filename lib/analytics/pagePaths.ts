@@ -14,12 +14,13 @@ import type { AnalyticsPagePath, AnalyticsProgramme } from "./events";
 /** Which programme owns each programme-specific detail page — used by
  *  `trackFromUntrustedAttributes()` in lib/analytics/track.ts to derive `programme` from the
  *  trustworthy current pathname rather than from a spoofable `data-analytics-*` attribute.
- *  `/free-diagnostic-test` is deliberately absent — it's shared by both programmes, and no
+ *  `/free-diagnostic-test` is deliberately absent — it's shared by all three programmes, and no
  *  component currently renders `data-analytics-*` elements there (DiagnosticForm.tsx calls the
  *  typed `track()` directly for its own lifecycle events instead). */
 const PAGE_PATH_PROGRAMME: Partial<Record<AnalyticsPagePath, AnalyticsProgramme>> = {
   "/courses/ielts": "ielts",
   "/courses/pte": "pte",
+  "/courses/toefl": "toefl",
 };
 
 export function programmeForPagePath(pagePath: AnalyticsPagePath): AnalyticsProgramme | undefined {
@@ -34,6 +35,7 @@ export function programmeForPagePath(pagePath: AnalyticsPagePath): AnalyticsProg
 export function resolvePagePath(pathname: string): AnalyticsPagePath | undefined {
   if (pathname === "/courses/ielts") return "/courses/ielts";
   if (pathname === "/courses/pte") return "/courses/pte";
+  if (pathname === "/courses/toefl") return "/courses/toefl";
   if (pathname === "/free-diagnostic-test") return "/free-diagnostic-test";
   return undefined;
 }

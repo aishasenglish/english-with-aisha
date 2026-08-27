@@ -34,16 +34,17 @@ add both routes to `app/sitemap.ts`.
   whatever a visitor submits through the contact or recommendation-request form. No endpoint is
   currently configured (see `.env.example`), so no data is actually being sent anywhere yet.
 
-### Analytics activation checklist (IELTS Step 12; extended to PTE in PTE Step 12)
+### Analytics activation checklist (IELTS Step 12; extended to PTE in PTE Step 12 and to TOEFL in TOEFL Step 12)
 
-`lib/analytics/` implements a strict, typed event contract shared by the IELTS and PTE enquiry
-journeys (see `docs/analytics-event-map.md` for the full funnel and per-action instrumentation
-tables for both programmes) — `components/analytics/AnalyticsListener.tsx` (one delegated click
-listener, mounted once in `app/layout.tsx`), `components/analytics/ProgrammePageViewTracker.tsx`
-(fires `programme_view` once per navigation to `/courses/ielts` or `/courses/pte` — one small
-typed component mounted with a different `programme`/`pagePath` prop pair on each page, replacing
-the earlier IELTS-only `IELTSPageViewTracker.tsx`), and `components/DiagnosticForm.tsx`'s IELTS-
-and PTE-variant form-lifecycle events. **All of it is currently inert, for both programmes.**
+`lib/analytics/` implements a strict, typed event contract shared by the IELTS, PTE and TOEFL
+enquiry journeys (see `docs/analytics-event-map.md` for the full funnel and per-action
+instrumentation tables for all three programmes) — `components/analytics/AnalyticsListener.tsx`
+(one delegated click listener, mounted once in `app/layout.tsx`),
+`components/analytics/ProgrammePageViewTracker.tsx` (fires `programme_view` once per navigation to
+`/courses/ielts`, `/courses/pte` or `/courses/toefl` — one small typed component mounted with a
+different `programme`/`pagePath` prop pair on each page, replacing the earlier IELTS-only
+`IELTSPageViewTracker.tsx`), and `components/DiagnosticForm.tsx`'s IELTS-, PTE- and TOEFL-variant
+form-lifecycle events. **All of it is currently inert, for all three programmes.**
 `lib/analytics/config.ts`'s `analyticsIsApproved()` is hard-coded `false`, so
 `lib/analytics/track.ts`'s `track()` never dispatches anything beyond an opt-in local
 `console.debug` (itself off by default, and never active in a production build regardless of the
@@ -167,6 +168,84 @@ behaves as documented (fires only the approved events, no more).
   fixes" below — and reported **zero violations on both pages** after the fix, with all `wcag2a`/
   `wcag2aa`/`wcag22aa`-tagged rules passing.
 
+**TOEFL evidence (TOEFL Step 12):**
+
+- `npm run test:analytics` — 27/27 checks passed (up from 23, all originals still passing
+  unchanged): every real event name still accepted; a minimal valid TOEFL payload accepted; all
+  three programmes accepted on `/free-diagnostic-test` with their own matching `source`; an
+  unrecognised programme (now `"toeic"`, since `"toefl"` is a real programme as of this step)
+  rejected; a programme paired with a *different* programme's own detail page rejected outright
+  for every one of the six possible cross-programme pairs
+  (`pte`+`/courses/ielts`, `ielts`+`/courses/pte`, `toefl`+`/courses/ielts`,
+  `toefl`+`/courses/pte`, `ielts`+`/courses/toefl`, `pte`+`/courses/toefl`); a *known* source value
+  belonging to a different programme rejected outright even though the string itself is real, for
+  every one of ten combinations across `/courses/*` and `/free-diagnostic-test`; valid
+  section/intent/source/error_type combinations kept for TOEFL; a TOEFL-specific sensitive-key
+  injection attempt (now including `institution`, `programme_name`, `overall_score`,
+  `section_score`, `score_scale`, `previous_result`, `test_date`, `timezone` alongside the
+  original set) fully stripped; GA measurement-ID shape validation unchanged; `analyticsIsActive()`
+  confirmed to stay `false` even with a valid-shaped measurement ID *and* a fully valid TOEFL
+  payload present together; and `resolvePagePath("/courses/toefl")` now correctly resolves to
+  `/courses/toefl` (the unresolved-route example was moved to `/courses/o-a-level-english` since
+  `/courses/toefl` is now a real resolved path).
+- A live Playwright pass against a local production build (`npm run build && npm run start`) with
+  no `.env.local` present confirmed zero requests to any known analytics/advertising/replay host
+  (156 total requests observed while browsing `/courses/toefl`,
+  `/free-diagnostic-test?programme=toefl&source=toefl-page`, `/courses/ielts`, `/courses/pte`, the
+  homepage and the Courses hub — including scrolling the full TOEFL page, opening a TOEFL FAQ item,
+  and clicking every non-destructive TOEFL WhatsApp CTA); zero cookies or `localStorage`/
+  `sessionStorage` keys created on the site's own origin (the only cookies observed were
+  `wa_ul`/`wa_lang_pref` on `whatsapp.com`/`api.whatsapp.com` — WhatsApp's own external site, set
+  only because the test actually let a real `wa.me` popup load; not something this site sets or
+  controls); no `<script src>` referencing a known tracker domain anywhere in the rendered HTML;
+  zero dev-debug console output (the opt-in flag was unset).
+- With a temporary, non-committed `.env.local` setting only `NEXT_PUBLIC_ANALYTICS_DEBUG=1`
+  (deleted before this step's commit, confirmed via `ls`), run against the dev server (the debug
+  log only fires outside production): exactly one `programme_view` logged on TOEFL page load with
+  `programme: toefl, page_path: /courses/toefl`; exactly one `whatsapp_click` (with the correct
+  `section`/`intent`) for each of the hero, score-profile, learning-format, pricing, availability
+  and final-enquiry CTAs; exactly one `email_click` for the final CTA's unconfigured fallback; zero
+  events from expanding a TOEFL FAQ item, following the hero's same-page anchor to `#toefl-fit`, or
+  clicking the fit section's official ETS source link or internal `/courses#language-tests`
+  comparison link; the IELTS and PTE page views continued to fire correctly and distinctly
+  (`programme: ielts` / `programme: pte`, never `toefl`) with no regression; and navigating
+  TOEFL → IELTS → back to TOEFL produced exactly one further `programme_view` for the return visit
+  (no dedup failure, no double-fire) — confirming `ProgrammePageViewTracker`'s `pathname`-keyed
+  `useEffect` behaves correctly for the newly-added instance too.
+- Form lifecycle (same temporary `.env.local`, plus a temporary valid-format
+  `NEXT_PUBLIC_FORMSPREE_ENDPOINT`, both confirmed removed afterward): clicking the TOEFL final
+  CTA's configured-form link fired exactly one `assessment_cta_click` with `source: toefl-page`
+  before navigating; the first meaningful edit on the resulting TOEFL-locked form fired exactly one
+  `assessment_form_start` with `programme: toefl, source: toefl-page`; further edits (including
+  filling in a name, institution text and WhatsApp number) did not re-fire it; a submission to the
+  fake endpoint fired exactly one `assessment_form_error` with a safe categorical `error_type`
+  (`provider`) and confirmed no entered field value (the test's own "QA Analytics Candidate" name
+  or "ABC University" text) anywhere in the log; no `assessment_form_submit` fired for the failed
+  attempt; a second submission to a mocked 200-response endpoint then fired exactly one
+  `assessment_form_submit` with `programme: toefl, source: toefl-page` (a genuine, non-production
+  double confirming the `res.ok === true` gating, since no live Formspree account exists in this
+  environment — the code path itself is identical in shape to the already-proven IELTS/PTE path);
+  and the same edit performed on the **general** (non-programme) form variant produced zero
+  analytics events, confirming the generic form still stays outside programme-specific conversion
+  tracking.
+- Fixture-branch regression (temporary edits to `content/toeflPricing.ts` — a complete, valid
+  `published` record — and `content/batches.ts` — one complete scheduled TOEFL intake — both
+  reverted via `git checkout` and confirmed via a fixture-marker `grep` afterward): the published-
+  pricing branch's WhatsApp CTA and the scheduled-intake branch's per-card WhatsApp CTA both fired
+  their documented `whatsapp_click` events correctly (exactly the allowlisted
+  `programme`/`page_path`/`section`/`intent` fields, nothing more), with no amount, currency,
+  billing/policy text, start date, schedule, format or duration leaked into the logged payload.
+- Instrumentation coverage (production build): exactly 7 `data-analytics-*`-carrying elements
+  render in the current (unconfigured Formspree, enquire pricing, no-intake availability) default
+  state — hero, score-profile, learning-format, pricing, availability, final-WhatsApp and
+  final-email — each with both `section` and `intent` present and no nested duplicate-firing
+  elements (a nested element would risk a double-fire from both the child's own handler and the
+  parent's delegated listener); zero console or hydration errors on page load.
+- An `axe-core` automated accessibility pass against `/courses/toefl` in this final state reported
+  **zero violations**, with all `wcag2a`/`wcag2aa`/`wcag22aa`-tagged rules passing — confirming
+  Step 11's hardening work and this step's instrumentation additions together introduced no new
+  accessibility regression.
+
 ### Colour-contrast fixes found during the PTE Step 12 audit (unrelated to analytics)
 
 An `axe-core` pass required by this step's own "measure WCAG AA contrast" mandate surfaced two
@@ -229,6 +308,19 @@ general and IELTS variants' exact prior behaviour was preserved when this was in
 `docs/analytics-event-map.md`'s per-programme instrumentation tables and this document's
 "Analytics activation checklist" above for the (still fully inert) PTE instrumentation. The
 general variant still emits nothing.
+
+### TOEFL enquiry handoff (TOEFL Step 9)
+
+`components/toefl/TOEFLFinalCTA.tsx` follows the identical pattern: `formsAreConfigured()` on the
+server picks either `/free-diagnostic-test?programme=toefl&source=toefl-page` (preselects and
+locks `components/DiagnosticForm.tsx` to "TOEFL iBT Preparation" and swaps its field guidance to
+TOEFL wording) or a `mailto:` link to `aishasenglish@gmail.com` when unconfigured — no code change
+needed to activate either once a real endpoint is set. `components/DiagnosticForm.tsx`'s typed
+`VARIANT_CONFIG` map (general/ielts/pte/toefl) already covers the TOEFL variant without
+reintroducing ternary sprawl. **Update (TOEFL Step 12):** `assessment_form_*` events now also fire
+for the TOEFL variant — see `docs/analytics-event-map.md`'s per-programme instrumentation tables
+and this document's "Analytics activation checklist" above for the (still fully inert) TOEFL
+instrumentation. The general variant still emits nothing.
 
 ## Contact details — verify before relying on them publicly
 

@@ -16,9 +16,11 @@ import { toeflEnquiryFields, toeflFinalEnquiry } from "@/content/toeflEnquiry";
 // never client-side — so there's no flash of the wrong action and no client bundle needed for
 // this decision. Availability is deliberately not linked again: it immediately precedes the FAQ
 // and this section, so a second link back to it would be a conversion loop backwards through
-// content the candidate has already read. No data-analytics-* attributes yet -- TOEFL conversion
-// measurement is a later step (mirroring PTE Step 12); adding an unsupported value now would only
-// be discarded by the shared analytics allowlist.
+// content the candidate has already read. TOEFL Step 12 added the same controlled
+// data-analytics-* attributes IELTSFinalCTA.tsx/PTEFinalCTA.tsx already carry -- the shared event
+// contract in lib/analytics/events.ts now supports "toefl" as a first-class programme, so these
+// are read and validated by the same delegated listener rather than needing TOEFL-specific
+// wiring.
 export default function TOEFLFinalCTA() {
   const { finalCta } = toeflPage;
   const formConfigured = formsAreConfigured();
@@ -60,6 +62,9 @@ export default function TOEFLFinalCTA() {
             href={whatsappLink(toeflFinalEnquiry.whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="final_enquiry"
+            data-analytics-intent="discuss_goal"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
           >
             {finalCta.primaryLabel}
@@ -68,6 +73,10 @@ export default function TOEFLFinalCTA() {
           {formConfigured ? (
             <Link
               href="/free-diagnostic-test?programme=toefl&source=toefl-page"
+              data-analytics-event="assessment_cta_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="request_assessment"
+              data-analytics-source="toefl-page"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.formCtaLabel}
@@ -76,6 +85,9 @@ export default function TOEFLFinalCTA() {
             <a
               href={emailLink(toeflFinalEnquiry.emailSubject, toeflFinalEnquiry.emailBody, site.email)}
               aria-label={finalCta.emailAccessibleLabel}
+              data-analytics-event="email_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="send_email"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.emailCtaLabel}

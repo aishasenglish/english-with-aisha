@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import ProgrammePageViewTracker from "@/components/analytics/ProgrammePageViewTracker";
 import TOEFLBreadcrumb from "@/components/toefl/TOEFLBreadcrumb";
 import TOEFLHero from "@/components/toefl/TOEFLHero";
 import TOEFLAuthorityStrip from "@/components/toefl/TOEFLAuthorityStrip";
@@ -86,8 +87,10 @@ export default function TOEFLPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      {/* TOEFL Step 10: no analytics tracker added here -- TOEFL conversion measurement is a
-          later step (mirroring PTE Step 12's ProgrammePageViewTracker). */}
+      {/* TOEFL Step 12: the only Client Component leaf this page adds -- fires programme_view
+          once per navigation to this route, through the same shared tracker IELTS/PTE use. Every
+          other section below stays server-rendered. */}
+      <ProgrammePageViewTracker programme="toefl" pagePath="/courses/toefl" />
       <TOEFLBreadcrumb />
       <TOEFLHero />
       <TOEFLAuthorityStrip />

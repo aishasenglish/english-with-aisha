@@ -75,6 +75,9 @@ export default function TOEFLAvailability() {
             href={whatsappLink(availability.enquiryMessage)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="availability"
+            data-analytics-intent="ask_availability"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral mb-4"
           >
             {availability.enquiryCtaLabel}
@@ -148,6 +151,9 @@ export default function TOEFLAvailability() {
                   href={whatsappLink(intakeEnquiryMessage(formattedDate, batch.schedule))}
                   target="_blank"
                   rel="noopener noreferrer"
+                  data-analytics-event="whatsapp_click"
+                  data-analytics-section="availability"
+                  data-analytics-intent="ask_intake"
                   aria-label={`${availability.intakeCtaLabel} — starting ${formattedDate}`}
                   className="flex min-h-12 w-full items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-4 py-3 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
                 >

@@ -1,7 +1,7 @@
 /**
- * Deterministic validation script for the shared IELTS/PTE analytics event contract (IELTS
- * Step 12, extended to PTE in PTE Step 12). Not part of the client bundle and not imported by any
- * app code — run manually with:
+ * Deterministic validation script for the shared IELTS/PTE/TOEFL analytics event contract (IELTS
+ * Step 12, extended to PTE in PTE Step 12 and to TOEFL in TOEFL Step 12). Not part of the client
+ * bundle and not imported by any app code — run manually with:
  *
  *   node scripts/analytics-selftest.mts
  *
@@ -86,7 +86,12 @@ check("accepts a minimal valid PTE payload (PTE Step 12)", () => {
   assert.deepEqual(result, { programme: "pte", page_path: "/courses/pte" });
 });
 
-check("accepts /free-diagnostic-test for either programme with its own matching source", () => {
+check("accepts a minimal valid TOEFL payload (TOEFL Step 12)", () => {
+  const result = sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/courses/toefl" });
+  assert.deepEqual(result, { programme: "toefl", page_path: "/courses/toefl" });
+});
+
+check("accepts /free-diagnostic-test for any of the three programmes with its own matching source", () => {
   const ielts = sanitizeAnalyticsPayload({
     programme: "ielts",
     page_path: "/free-diagnostic-test",
@@ -100,10 +105,17 @@ check("accepts /free-diagnostic-test for either programme with its own matching 
     source: "pte-page",
   });
   assert.deepEqual(pte, { programme: "pte", page_path: "/free-diagnostic-test", source: "pte-page" });
+
+  const toefl = sanitizeAnalyticsPayload({
+    programme: "toefl",
+    page_path: "/free-diagnostic-test",
+    source: "toefl-page",
+  });
+  assert.deepEqual(toefl, { programme: "toefl", page_path: "/free-diagnostic-test", source: "toefl-page" });
 });
 
 check("rejects an unrecognised programme", () => {
-  assert.equal(sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/courses/ielts" }), null);
+  assert.equal(sanitizeAnalyticsPayload({ programme: "toeic", page_path: "/courses/ielts" }), null);
   assert.equal(sanitizeAnalyticsPayload({ programme: undefined, page_path: "/courses/ielts" }), null);
 });
 
@@ -119,12 +131,16 @@ check("rejects an unrecognised page_path (never a raw pathname or URL)", () => {
   );
 });
 
-check("rejects a programme paired with the OTHER programme's own detail page (PTE Step 12)", () => {
+check("rejects a programme paired with a DIFFERENT programme's own detail page (PTE Step 12; extended to TOEFL in TOEFL Step 12)", () => {
   assert.equal(sanitizeAnalyticsPayload({ programme: "pte", page_path: "/courses/ielts" }), null);
   assert.equal(sanitizeAnalyticsPayload({ programme: "ielts", page_path: "/courses/pte" }), null);
+  assert.equal(sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/courses/ielts" }), null);
+  assert.equal(sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/courses/pte" }), null);
+  assert.equal(sanitizeAnalyticsPayload({ programme: "ielts", page_path: "/courses/toefl" }), null);
+  assert.equal(sanitizeAnalyticsPayload({ programme: "pte", page_path: "/courses/toefl" }), null);
 });
 
-check("rejects a source belonging to the OTHER programme, even though the string is a real allowlisted value (PTE Step 12)", () => {
+check("rejects a source belonging to a DIFFERENT programme, even though the string is a real allowlisted value (PTE Step 12; extended to TOEFL in TOEFL Step 12)", () => {
   assert.equal(
     sanitizeAnalyticsPayload({ programme: "pte", page_path: "/courses/pte", source: "ielts-page" }),
     null
@@ -139,6 +155,30 @@ check("rejects a source belonging to the OTHER programme, even though the string
   );
   assert.equal(
     sanitizeAnalyticsPayload({ programme: "ielts", page_path: "/free-diagnostic-test", source: "pte-page" }),
+    null
+  );
+  assert.equal(
+    sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/courses/toefl", source: "ielts-page" }),
+    null
+  );
+  assert.equal(
+    sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/courses/toefl", source: "pte-page" }),
+    null
+  );
+  assert.equal(
+    sanitizeAnalyticsPayload({ programme: "ielts", page_path: "/free-diagnostic-test", source: "toefl-page" }),
+    null
+  );
+  assert.equal(
+    sanitizeAnalyticsPayload({ programme: "pte", page_path: "/free-diagnostic-test", source: "toefl-page" }),
+    null
+  );
+  assert.equal(
+    sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/free-diagnostic-test", source: "ielts-page" }),
+    null
+  );
+  assert.equal(
+    sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/free-diagnostic-test", source: "pte-page" }),
     null
   );
 });
@@ -178,6 +218,25 @@ check("keeps valid section/intent/source/error_type values for PTE (PTE Step 12)
     intent: "ask_intake",
     source: "general",
     error_type: "network",
+  });
+});
+
+check("keeps valid section/intent/source/error_type values for TOEFL (TOEFL Step 12)", () => {
+  const result = sanitizeAnalyticsPayload({
+    programme: "toefl",
+    page_path: "/free-diagnostic-test",
+    section: "diagnostic_form",
+    intent: "request_assessment",
+    source: "toefl-page",
+    error_type: "configuration",
+  });
+  assert.deepEqual(result, {
+    programme: "toefl",
+    page_path: "/free-diagnostic-test",
+    section: "diagnostic_form",
+    intent: "request_assessment",
+    source: "toefl-page",
+    error_type: "configuration",
   });
 });
 
@@ -240,6 +299,36 @@ check("never forwards the same sensitive keys on a valid PTE payload either (PTE
   assert.deepEqual(Object.keys(result ?? {}).sort(), ["page_path", "programme", "source"]);
 });
 
+check("never forwards sensitive keys on a valid TOEFL payload either (TOEFL Step 12)", () => {
+  const suspiciousToeflInput: Record<string, unknown> = {
+    programme: "toefl",
+    page_path: "/free-diagnostic-test",
+    source: "toefl-page",
+    name: "TOEFL Candidate",
+    email: "candidate@example.com",
+    phone: "+92 300 2222222",
+    whatsapp: "+92 300 2222222",
+    institution: "ABC University",
+    programme_name: "Master's in Engineering",
+    score: "Overall 4.5",
+    overall_score: "4.5",
+    section_score: "Writing 4",
+    score_scale: "1-6",
+    target_score: "Overall 5",
+    previous_result: "Overall 4",
+    deadline: "1 December 2026",
+    test_date: "15 November 2026",
+    country: "Pakistan, PKT",
+    timezone: "Asia/Karachi",
+    href: "https://wa.me/923112233671?text=leaked",
+    query: "programme=toefl&source=toefl-page",
+    message: "My institution requires Overall 5 by 1 December 2026.",
+    form_data: { situation: "ABC University; 1-6 scale; first attempt." },
+  };
+  const result = sanitizeAnalyticsPayload(suspiciousToeflInput);
+  assert.deepEqual(Object.keys(result ?? {}).sort(), ["page_path", "programme", "source"]);
+});
+
 // --- config.ts: the fail-closed activation gate ---
 
 check("isValidGaMeasurementId accepts a plausibly real ID", () => {
@@ -284,11 +373,26 @@ check("adding PTE support does not activate a provider (PTE Step 12)", () => {
   }
 });
 
+check("adding TOEFL support does not activate a provider (TOEFL Step 12)", () => {
+  // Same guarantee as above, now for TOEFL — analyticsIsApproved() alone gates activation,
+  // regardless of programme.
+  const original = process.env.NEXT_PUBLIC_GA_ID;
+  process.env.NEXT_PUBLIC_GA_ID = "G-REALLOOKING1";
+  try {
+    const payload = sanitizeAnalyticsPayload({ programme: "toefl", page_path: "/courses/toefl" });
+    assert.notEqual(payload, null);
+    assert.equal(analyticsIsActive(), false);
+  } finally {
+    process.env.NEXT_PUBLIC_GA_ID = original;
+  }
+});
+
 // --- track.ts: resolvePagePath(), a pure helper with no DOM dependency ---
 
 check("resolvePagePath resolves each programme's own detail page", () => {
   assert.equal(resolvePagePath("/courses/ielts"), "/courses/ielts");
   assert.equal(resolvePagePath("/courses/pte"), "/courses/pte");
+  assert.equal(resolvePagePath("/courses/toefl"), "/courses/toefl");
 });
 
 check("resolvePagePath resolves the shared detailed-enquiry route", () => {
@@ -296,7 +400,7 @@ check("resolvePagePath resolves the shared detailed-enquiry route", () => {
 });
 
 check("resolvePagePath returns undefined for any other route", () => {
-  assert.equal(resolvePagePath("/courses/toefl"), undefined);
+  assert.equal(resolvePagePath("/courses/o-a-level-english"), undefined);
   assert.equal(resolvePagePath("/"), undefined);
   assert.equal(resolvePagePath("/batches"), undefined);
 });

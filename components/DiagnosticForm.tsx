@@ -14,15 +14,17 @@ import type { AnalyticsErrorType, AnalyticsProgramme, AnalyticsSource } from "@/
 
 /** Which analytics programme (if any) each form variant reports as, and which resolved `source`
  *  value is expected to accompany it — PTE Step 12 generalises the previous IELTS-only analytics
- *  branch. "general" has no entry: the generic form deliberately stays outside programme-specific
- *  conversion tracking (see docs/analytics-event-map.md). */
+ *  branch; TOEFL Step 12 extends it again. "general" has no entry: the generic form deliberately
+ *  stays outside programme-specific conversion tracking (see docs/analytics-event-map.md). */
 const ANALYTICS_PROGRAMME_BY_VARIANT: Partial<Record<EnquiryVariant, AnalyticsProgramme>> = {
   ielts: "ielts",
   pte: "pte",
+  toefl: "toefl",
 };
 const ANALYTICS_SOURCE_BY_VARIANT: Partial<Record<EnquiryVariant, AnalyticsSource>> = {
   ielts: "ielts-page",
   pte: "pte-page",
+  toefl: "toefl-page",
 };
 
 /**
@@ -105,10 +107,9 @@ const VARIANT_CONFIG: Record<EnquiryVariant, VariantConfig> = {
     successContinueMessage: pteFinalEnquiry.whatsappMessage,
     errorFallbackMessage: pteFinalEnquiry.whatsappMessage,
   },
-  // TOEFL Step 9: deliberately absent from ANALYTICS_PROGRAMME_BY_VARIANT/
-  // ANALYTICS_SOURCE_BY_VARIANT above -- TOEFL conversion measurement belongs to a later step
-  // (mirroring PTE Step 12), so no assessment_form_start/submit/error event fires for this variant
-  // yet, and no TOEFL interaction is ever mislabelled as an "ielts"/"pte"/"general" event.
+  // TOEFL Step 12: now present in ANALYTICS_PROGRAMME_BY_VARIANT/ANALYTICS_SOURCE_BY_VARIANT
+  // above -- assessment_form_start/submit/error events now fire for this variant exactly as they
+  // already do for ielts/pte, and never for the general variant.
   toefl: {
     locked: true,
     locationLabel: toeflFormVariant.locationLabel,
