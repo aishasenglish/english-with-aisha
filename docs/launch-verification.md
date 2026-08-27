@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–4)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–5)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -411,7 +411,21 @@ handle; never fill these with placeholder or invented links.
 - **TOEFL inclusions**: `<IncludedList course={course} />` has been removed entirely from
   `/courses/toefl` — the five generic inclusion claims (live Zoom classes, weekly practice tests,
   full-length mocks, personal feedback, 1-on-1 consultation) do not render anywhere on that page.
-  No replacement learning-format section exists yet (a later TOEFL step).
+- **TOEFL learning format and pre-enrolment confirmation checklist (TOEFL Step 5)**:
+  `TOEFLLearningFormat.tsx` (id `toefl-learning-format`) confirms only that TOEFL iBT coaching is
+  delivered online, summarises the already-approved Step 2–4 teaching model as four stable,
+  non-promissory support items (requirement-led instruction, current-task practice, focused
+  response review, computer-test routines — none asserting a platform, frequency or
+  live/asynchronous claim), and separately lists 15 operational details as a neutral pre-enrolment
+  checklist to confirm (format coverage, test-centre/Home Edition needs, delivery mode,
+  group/one-to-one availability, platform/schedule/time zone, lesson frequency and duration,
+  group-size limit, recordings, Speaking/Writing feedback, Reading/Listening review,
+  timed-practice/mocks, practice-platform access, official-vs-teacher-created materials,
+  between-session support, fee/policies) using a hollow-circle marker (never a checkmark) inside a
+  separate `<aside>` landmark, plus one contextual WhatsApp CTA ("Ask About the Current TOEFL
+  Option") that does not compete with the final CTA below it. The shared `<LearningFormats />`
+  (which asserts live small-group teaching, Zoom, recordings and flexible scheduling) is still not
+  rendered on `/courses/toefl`.
 - **TOEFL pricing**: `<PricingCard course={course} />` has been removed entirely from
   `/courses/toefl` — no amount, `One-time fee`, `PKR 10,000`, discount or enrolment action renders
   anywhere on that page. No gate-kept `content/toeflPricing.ts` exists yet (a later TOEFL step,

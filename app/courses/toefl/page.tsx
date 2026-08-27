@@ -7,6 +7,7 @@ import TOEFLTaskCurriculum from "@/components/toefl/TOEFLTaskCurriculum";
 import TOEFLCoachingProcess from "@/components/toefl/TOEFLCoachingProcess";
 import TOEFLFeedbackDemo from "@/components/toefl/TOEFLFeedbackDemo";
 import TOEFLVerifiedEvidence from "@/components/toefl/TOEFLVerifiedEvidence";
+import TOEFLLearningFormat from "@/components/toefl/TOEFLLearningFormat";
 import BatchTable from "@/components/BatchTable";
 import TOEFLFinalCTA from "@/components/toefl/TOEFLFinalCTA";
 import { toeflPage } from "@/content/toefl";
@@ -37,7 +38,9 @@ export default function TOEFLPage() {
       <TOEFLCoachingProcess />
       <TOEFLFeedbackDemo />
       <TOEFLVerifiedEvidence />
+      <TOEFLLearningFormat />
 
+      {/* Pricing and dedicated availability are later steps */}
       {/* TOEFL Step 1: no confirmed TOEFL intake exists yet -- the shared, fail-closed
           BatchTable correctly shows its truthful "ask about the next available intake" state.
           A dedicated TOEFLAvailability component (mirroring IELTS/PTE Step 7) is a later step. */}

@@ -67,6 +67,22 @@ type ToeflImprovementPoint = {
   body: string;
 };
 
+/** One stable learning-experience item (components/toefl/TOEFLLearningFormat.tsx) -- an
+ *  already-approved teaching-method element from Steps 2-4, never an unconfirmed operational
+ *  quantity, frequency or platform. */
+type ToeflLearningSupport = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+/** One neutral pre-enrolment question to confirm (components/toefl/TOEFLLearningFormat.tsx) --
+ *  a question to ask Aisha, never presented as an included benefit. */
+type ToeflEnrolmentDetail = {
+  id: string;
+  label: string;
+};
+
 export const toeflPage = {
   // "YYYY-MM-DD" -- when the format/scoring facts below were last checked against ETS's official
   // current-format pages. See docs/toefl-content-sources.md for the full per-claim URL mapping and
@@ -421,6 +437,67 @@ export const toeflPage = {
     heading: "Preparation described by learners who completed the work.",
     contextNote:
       "Experiences are individual. Progress depends on the candidate's starting point, confirmed requirement, preparation time and consistent application of feedback.",
+  },
+
+  // TOEFL Step 5: replaces the removed shared IncludedList/LearningFormats renders on this page.
+  // Describes only the stable teaching method already approved in Steps 2-4, plus a checklist of
+  // operational questions a candidate should confirm before paying -- never presents an
+  // unconfirmed detail (format, platform, group size, recordings, feedback frequency, mock count,
+  // official materials, fee) as an inclusion. See docs/toefl-offer-verification.md for the
+  // confirmation status behind every claim here, and content/courses.ts's toefl entry for why its
+  // `includes` field is no longer this page's source.
+  delivery: {
+    id: "toefl-learning-format",
+    eyebrow: "Programme delivery",
+    heading: "Know how the current TOEFL option works before you enrol.",
+    body: "TOEFL iBT coaching is delivered online. The exact format, schedule, feedback, practice access, current-format coverage and fee should be confirmed for the available option before payment.",
+    supportHeading: "The learning experience",
+    supportItems: [
+      {
+        id: "requirement-led-instruction",
+        title: "Requirement-led instruction",
+        body: "Connect the candidate's confirmed TOEFL iBT requirement and starting point to the language and task priorities addressed through online instruction.",
+      },
+      {
+        id: "current-task-practice",
+        title: "Current-task practice",
+        body: "Apply the lesson through selected-answer, typed or spoken practice suited to the current TOEFL iBT task family being developed.",
+      },
+      {
+        id: "focused-response-review",
+        title: "Focused response review",
+        body: "Identify what affected an answer or response and carry one manageable priority into the next attempt.",
+      },
+      {
+        id: "computer-test-routines",
+        title: "Computer-test routines",
+        body: "Develop attention, note-taking, timing and response-handling routines where they support the relevant computer-based task.",
+      },
+    ] as ToeflLearningSupport[],
+    confirmHeading: "Confirm these details for the current option",
+    confirmBody: "Ask Aisha to confirm the complete offer that applies to the current intake or coaching arrangement.",
+    detailsToConfirm: [
+      { id: "format-coverage", label: "Coverage of the TOEFL iBT format used on your planned test date" },
+      { id: "test-centre-home-edition", label: "Test-centre or Home Edition preparation needs, where relevant" },
+      { id: "delivery-mode", label: "Live, asynchronous or mixed delivery" },
+      { id: "format", label: "Group or one-to-one availability" },
+      { id: "platform-schedule", label: "Class platform, days, time and time zone" },
+      { id: "frequency-duration", label: "Lesson frequency and complete programme duration" },
+      { id: "group-size", label: "Current group-size limit, if a group option exists" },
+      { id: "recordings", label: "Recording availability and access period" },
+      { id: "speaking-writing-feedback", label: "Speaking and Writing submission, feedback frequency and turnaround" },
+      { id: "reading-listening-review", label: "Reading and Listening review approach" },
+      { id: "practice-mocks", label: "Timed-practice and full-mock inclusions" },
+      { id: "practice-platform", label: "Practice platform, estimated-score source and access period, if applicable" },
+      { id: "materials", label: "Official ETS-licensed or teacher-created materials" },
+      { id: "between-session-support", label: "Support between sessions, if any" },
+      { id: "fee-policy", label: "Current fee, billing basis and relevant policies" },
+    ] as ToeflEnrolmentDetail[],
+    cta: {
+      label: "Ask About the Current TOEFL Option",
+      message:
+        "Hi Aisha! I am interested in TOEFL iBT coaching. Please confirm whether the current option covers the format used on my planned test date, plus the delivery type, group or one-to-one availability, platform, schedule and time zone, duration, recordings, feedback, timed-practice and mock inclusions, learning materials, and current fee and policies. My institution/programme, required overall and section scores, score scale, previous result or starting point, test/application deadline, and country/time zone are: [details].",
+    },
   },
 
   // TOEFL Step 1: no confirmed TOEFL intake exists yet (content/batches.ts). The shared

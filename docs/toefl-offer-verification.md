@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 4.
+**Last reviewed:** TOEFL Step 5.
 
 ## Allowed internal states
 
@@ -26,38 +26,50 @@ advice or an answer on Aisha's behalf.
 
 | Item | State | Notes |
 |---|---|---|
-| Online delivery | **Owner confirmed** | Based on the owner-confirmed business purpose (the whole site markets online English tutoring) — consistent with the IELTS/PTE precedent. Not yet reflected in a dedicated TOEFL learning-format section (a later step). |
+| Online delivery | **Owner confirmed** | Based on the owner-confirmed business purpose (the whole site markets online English tutoring) — consistent with the IELTS/PTE precedent. Now reflected in the dedicated TOEFL learning-format section (TOEFL Step 5, `components/toefl/TOEFLLearningFormat.tsx`): "TOEFL iBT coaching is delivered online." |
+| Synchronous/live delivery | Needs owner confirmation | Not asserted as standard to every current option — Step 5 lists "Live, asynchronous or mixed delivery" as a detail to confirm rather than an inclusion. |
+| Asynchronous support | Needs owner confirmation | Same row as above — the exact delivery mode is not yet confirmed either way. |
 | Delivery platform | Needs owner confirmation | Not confirmed as Zoom or any other named platform. |
-| Live/asynchronous format | Needs owner confirmation | — |
 | Group availability | Needs owner confirmation | — |
 | One-to-one availability | Needs owner confirmation | Including whether it's included or separately priced. |
-| Group-size limit | Needs owner confirmation | — |
-| Programme duration | Needs owner confirmation | — |
+| Group-size maximum | Needs owner confirmation | Only relevant once group availability itself is confirmed. |
+| Lesson frequency and lesson duration | Needs owner confirmation | — |
+| Complete programme duration | Needs owner confirmation | — |
 | Schedule and time zone | Needs owner confirmation | Business timezone is Asia/Karachi (`content/site.ts`), but that alone doesn't confirm a class schedule. |
 | Recording availability | Needs owner confirmation | — |
-| Recording access period | Needs owner confirmation | Only relevant once recording availability itself is confirmed. |
-| Starting-point/diagnostic process | Needs owner confirmation | Whether a starting assessment exists before a study plan is set. |
-| Lesson frequency | Needs owner confirmation | — |
-| Official vs. teacher-created practice materials | Needs owner confirmation | Whether genuine ETS-licensed practice material is used, teacher-created material, or both. |
-| Timed-practice frequency | Needs owner confirmation | — |
-| Full mock availability and quantity | Needs owner confirmation | — |
-| Speaking and Writing feedback method/frequency | Needs owner confirmation | — |
+| Recording access duration | Needs owner confirmation | Only relevant once recording availability itself is confirmed. |
+| Formal starting assessment | Needs owner confirmation | Whether a starting assessment exists before a study plan is set. |
+| Requirement-led explanation | **Owner confirmed (as a teaching-method description, not an operational quantity)** | Step 5's "Requirement-led instruction" support item summarises the already-approved Step 2–4 teaching model; it asserts no platform, frequency or live/asynchronous claim. |
+| Guided current-task practice | **Owner confirmed (as a teaching-method description, not an operational quantity)** | Step 5's "Current-task practice" support item; asserts no official-material, weekly-test or mock-count claim. |
+| Computer-test routine practice | **Owner confirmed (as a teaching-method description, not an operational quantity)** | Step 5's "Computer-test routines" support item; asserts no ETS-interface, secure-content or scoring-equivalence claim. |
+| Speaking submission and feedback method | Needs owner confirmation | — |
+| Writing submission and feedback method | Needs owner confirmation | — |
+| Feedback frequency | Needs owner confirmation | — |
 | Feedback turnaround | Needs owner confirmation | — |
+| Reading and Listening review | **Owner confirmed (as a teaching-method description only)** | Step 5's "Focused response review" support item summarises the Step 3 process/Step 4 demonstration without a fixed submission allowance, review channel or turnaround; the exact review approach itself remains a Step 5 confirm-list item ("Reading and Listening review approach"). |
+| Timed-practice frequency | Needs owner confirmation | — |
+| Full-mock availability and quantity | Needs owner confirmation | — |
+| Estimated mock-score source | Needs owner confirmation | — |
+| Third-party practice-platform access and duration | Needs owner confirmation | — |
+| Official ETS-licensed materials | Needs owner confirmation | Whether genuine ETS-licensed practice material is used. |
+| Teacher-created materials | Needs owner confirmation | Whether teacher-created material is used, alongside or instead of official material. |
 | Support between sessions | Needs owner confirmation | — |
-| Rescheduling and missed-class policy | Needs owner confirmation | — |
-| Home Edition candidates — different guidance | Needs owner confirmation | Whether TOEFL iBT Home Edition candidates receive any preparation guidance distinct from test-centre candidates. |
-| TOEFL Essentials offered separately | Needs owner confirmation | TOEFL Essentials is a different, shorter test (see `docs/toefl-content-sources.md`) — do not create TOEFL Essentials coaching content unless Aisha confirms it as a separately offered service. |
-| TOEFL ITP offered separately | Needs owner confirmation | TOEFL ITP is a different, institution-administered test — same rule as TOEFL Essentials above. |
+| Current-format coaching coverage for tests taken on/after 21 January 2026 | Needs owner confirmation | Unchanged by Step 5 — the page accurately describing the public ETS format is not evidence that the actual coaching content has been rebuilt around it. See the "Format-currency facts" table above. |
+| Home Edition-specific guidance | Needs owner confirmation | Whether TOEFL iBT Home Edition candidates receive any preparation guidance distinct from test-centre candidates. Step 5 lists "Test-centre or Home Edition preparation needs" as a detail to confirm; it does not present Home Edition as a separate service or score product. |
+| Current fee, currency and billing basis | Needs owner confirmation | — |
+| Missed-class, rescheduling, cancellation and refund policies | Needs owner confirmation | — |
+| TOEFL Essentials availability as a separate service | Needs owner confirmation | TOEFL Essentials is a different, shorter test (see `docs/toefl-content-sources.md`) — do not create TOEFL Essentials coaching content unless Aisha confirms it as a separately offered service. Not mentioned anywhere on the Step 5 section. |
+| TOEFL ITP availability as a separate service | Needs owner confirmation | TOEFL ITP is a different, institution-administered test — same rule as TOEFL Essentials above. Not mentioned anywhere on the Step 5 section. |
 | Free diagnostic or placement test | Needs owner confirmation | TOEFL Step 3. Process copy describes reviewing "a previous report or current performance where available" — deliberately not the same claim as a formal diagnostic service. |
 | Official-style predicted TOEFL score | Needs owner confirmation | TOEFL Step 3. Not published anywhere on the page; tutor feedback is explicitly distinguished from an official score. |
 | Personalised written study plan | Needs owner confirmation | TOEFL Step 3. |
 | Fixed number of practice tasks or marked responses per week | Needs owner confirmation | TOEFL Step 3. |
 | Audio recordings retained by the tutor | Needs owner confirmation | TOEFL Step 3 — "recorded speech" in the process copy describes the Speaking response mode, not a promise that recordings are stored or returned. |
-| Access to official ETS-licensed question banks | Needs owner confirmation | TOEFL Step 3 — overlaps with the existing "official vs. teacher-created practice materials" row above. |
+| Access to official ETS-licensed question banks | Needs owner confirmation | TOEFL Step 3 — overlaps with the "Official ETS-licensed materials" row above. |
 | Proprietary practice platform or scoring dashboard | Needs owner confirmation | TOEFL Step 3. |
 | Automatic error analytics | Needs owner confirmation | TOEFL Step 3. |
 | One-to-one review included with every group option | Needs owner confirmation | TOEFL Step 3. |
-| Support through a named app or messaging channel | Needs owner confirmation | TOEFL Step 3 — overlaps with the existing "support between sessions" row above. |
+| Support through a named app or messaging channel | Needs owner confirmation | TOEFL Step 3 — overlaps with the "Support between sessions" row above. |
 
 ## Pricing facts
 
@@ -77,7 +89,7 @@ advice or an answer on Aisha's behalf.
 | Quotation validity date | Needs owner confirmation | — |
 | Owner verification date | Not applicable | No record has been verified yet. |
 
-## What the public page currently says instead (as of TOEFL Step 1)
+## What the public page currently says instead (as of TOEFL Step 5)
 
 `/courses/toefl` shows only:
 
@@ -100,8 +112,22 @@ advice or an answer on Aisha's behalf.
   (`components/toefl/TOEFLFeedbackDemo.tsx`, `TOEFLVerifiedEvidence.tsx` — TOEFL Step 4), the
   latter rendering nothing while `content/testimonials.ts` has no TOEFL-tagged, consent-confirmed
   entry;
-- the shared, fail-closed availability fallback (`components/BatchTable.tsx`, extended in this
-  step with optional `emptyStateHeading`/`emptyStateBody` props) at `id="toefl-availability"`,
+- an online-delivery statement, a stable-learning-experience summary and a neutral pre-enrolment
+  confirmation checklist (`components/toefl/TOEFLLearningFormat.tsx` — TOEFL Step 5, id
+  `toefl-learning-format`), confirming only that TOEFL iBT coaching is delivered online;
+  summarising "Requirement-led instruction", "Current-task practice", "Focused response review"
+  and "Computer-test routines" as the already-approved Step 2–4 teaching model with no platform,
+  frequency, live/asynchronous or quantity claim; and separately listing 15 operational details
+  (format coverage, test-centre/Home Edition needs, delivery mode, group/one-to-one availability,
+  platform/schedule/time zone, lesson frequency and duration, group-size limit, recordings,
+  Speaking/Writing feedback, Reading/Listening review, timed-practice/mocks, practice-platform
+  access, official-vs-teacher-created materials, between-session support, and fee/policies) as
+  questions to confirm — using a hollow-circle marker distinct from any checkmark, an `<aside>`
+  landmark separate from the support list, and a single contextual WhatsApp CTA
+  ("Ask About the Current TOEFL Option") that requests the candidate's exact requirement alongside
+  the current-offer confirmation, without competing with the final CTA below it;
+- the shared, fail-closed availability fallback (`components/BatchTable.tsx`, extended in an
+  earlier step with optional `emptyStateHeading`/`emptyStateBody` props) at `id="toefl-availability"`,
   correctly showing "ask about the next suitable TOEFL start" since no TOEFL batch is published,
   with a TOEFL-specific WhatsApp fallback message requesting the exact institution, score
   requirement, scale, deadline, time zone and usual availability;
@@ -109,13 +135,13 @@ advice or an answer on Aisha's behalf.
   reusing the hero's exact message.
 
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
-components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely), or the
-generic 17-item `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an
-empty heading in their place — they are simply absent until their own verified replacement step.
-Detailed score-profile/curriculum, coaching process, feedback demonstration, evidence, learning
-format, pricing, a dedicated availability component, a specialist FAQ and the enquiry-handoff form
-variant all remain deliberately deferred to their own later TOEFL steps, mirroring the IELTS and
-PTE sequence.
+components above), `<IncludedList>` (removed entirely), `<LearningFormats>` (never rendered on this
+route — its live-group/one-to-one/Zoom/recordings/personal-feedback copy is not owner confirmation
+for the current TOEFL offer), `<PricingCard>` (removed entirely), or the generic 17-item
+`<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty heading in
+their place — they are simply absent until their own verified replacement step. Pricing, a
+dedicated availability component, a specialist FAQ and the enquiry-handoff form variant all remain
+deliberately deferred to their own later TOEFL steps, mirroring the IELTS and PTE sequence.
 
 ## Global FAQ audit (TOEFL Step 1)
 
@@ -156,7 +182,10 @@ and PTE (added in IELTS Step 10). No further correction was needed for TOEFL in 
     no such content should ever be created.)
 20. What is the current fee, currency and billing basis?
 21. How long is a quoted fee valid?
+22. If any third-party practice platform is used, what estimated-score source does it provide, and
+    for how long can a learner access it?
 
 Until these are answered, the public page deliberately shows only the verified positioning,
-test-qualifier and current-format-preview content, plus a WhatsApp path to ask Aisha directly —
-never an invented format, fee, mock count, diagnostic offer or inclusion.
+test-qualifier, current-format-preview, coaching-process, feedback-demonstration and
+learning-format content, plus a WhatsApp path to ask Aisha directly — never an invented format,
+platform, fee, mock count, diagnostic offer or inclusion.
