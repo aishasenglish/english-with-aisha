@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–5)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–6)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -800,6 +800,23 @@ handle; never fill these with placeholder or invented links.
   anywhere in the section. `IncludedList`, `LearningFormats` and `PricingCard` remain absent from
   this route (unchanged since Step 1) and continue to render normally on the other routes that use
   them.
+- **Pricing transparency and verification (Step 6)**: `content/spokenEnglishPricing.ts` introduces
+  the same fail-closed, discriminated-union pricing pattern already used by IELTS/PTE/TOEFL
+  (`status: "enquire" | "published"`, a pure `isValidPublishedSpokenEnglishPrice()` validator, and
+  a module-level assert that fails the production build if a `"published"` record is ever saved
+  incomplete, malformed or expired). `spokenEnglishPricing.status` is currently `"enquire"` — no
+  amount, currency, billing basis or "one-time fee" claim renders anywhere.
+  `components/spoken-english/SpokenEnglishPricing.tsx` additionally gates on `site.showPrices`
+  (`!site.showPrices || !isValidPublishedSpokenEnglishPrice(...)` — showPrices can only *suppress*
+  an otherwise-valid record, never activate an invalid one), which the sibling IELTS/PTE/TOEFL
+  pricing components do not yet check; this was verified this step by temporarily setting a fully
+  valid local fixture and toggling `site.showPrices` to `false`, confirming the fixture correctly
+  fell back to the enquiry state with no partial data leaked. The legacy `content/courses.ts`
+  spoken-english `price: 10000` field remains unread by this route (unchanged since Step 1). No
+  Offer/price/priceCurrency structured data was added while the page stays enquiry-only. See
+  `docs/spoken-english-offer-verification.md`'s "Pricing verification (Step 6)" section for the
+  complete confirmation checklist, the fixture tests performed, and the exact condition required
+  before Aisha's first real fee can be published.
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions

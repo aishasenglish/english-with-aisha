@@ -5,13 +5,11 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 5 (28 August 2026). Step 5 added the public learning-format
-section (`components/spoken-english/SpokenEnglishLearningFormat.tsx`), which confirms only the
-single "Owner confirmed" row below (online delivery) and turns every remaining "Needs owner
-confirmation" row into a public pre-enrolment question to verify — it did not resolve any of them,
-and exposed no genuinely new operational offer question. See "Learning-format section field
-mapping" below for exactly how each table row maps to (or is deliberately excluded from) that
-public section.
+**Last reviewed:** Spoken English Step 6 (28 August 2026). Step 6 added the dedicated,
+fail-closed pricing section (`components/spoken-english/SpokenEnglishPricing.tsx` +
+`content/spokenEnglishPricing.ts`). It resolved no pricing field — the public state remains
+enquiry-only — and exposed no genuinely new operational offer question. See "Pricing verification
+(Step 6)" below for the complete record.
 
 ## Allowed internal states
 
@@ -168,6 +166,79 @@ Rewriting a person's quote to improve its grammar is not permitted without their
 of the final public wording — request permission for an edited version, or use a clearly approved
 excerpt instead.
 
+## Pricing verification (Step 6)
+
+`content/spokenEnglishPricing.ts` is the single, gate-kept source of truth for any Spoken English
+fee shown on `/courses/spoken-english`. It is a discriminated union with two states —
+`"enquire"` and `"published"` — mirroring `content/toeflPricing.ts` and `content/ptePricing.ts`
+exactly.
+
+- **Current public state:** `enquire` (the required default). `spokenEnglishPricing.status` is
+  `"enquire"` and no `"published"` record exists anywhere in the codebase.
+- **Legacy amount found and its source location:** `content/courses.ts`'s spoken-english record
+  (`price: 10000`). This field has never been read by, or supplied to, this page — the dedicated
+  route does not import `content/courses.ts`'s `price` field, `PricingCard`, or any component that
+  would consume it.
+- **Why the legacy amount is not treated as verified:** it predates this project's verification
+  process, has no recorded currency confirmation, billing basis, lesson arrangement, duration,
+  session coverage, inclusion list, payment terms, or policy — none of the fields
+  `isValidPublishedSpokenEnglishPrice()` requires. A bare number with no supporting evidence is
+  exactly the case this validator is built to reject.
+- **Required confirmation fields:** amount; currency; billing basis; option name; one-to-one/group
+  arrangement; duration; session count and/or session length; schedule scope; included practice
+  and feedback; homework; recordings; materials; between-class support; payment method and due
+  date; cancellation/refund policy; rescheduling and missed-class policy; effective date;
+  validity/expiry date; owner confirmation source and date.
+- **Confirmed fields:** none. Every field above remains `Needs owner confirmation` (see the claim
+  table above — Step 6 introduced no new confirmation).
+- **Unresolved fields:** all of the above.
+- **Last review date:** 2026-08-28.
+- **Exact condition required to activate published pricing:** Aisha supplies a complete answer for
+  every required field above; those answers are recorded in this document first (with an evidence
+  source and date); only then is `content/spokenEnglishPricing.ts`'s `spokenEnglishPricing` const
+  changed from `{ status: "enquire", lastReviewed: ... }` to a `status: "published"` record with
+  every field populated from that recorded evidence — never invented, never copied from
+  `content/courses.ts`, a UI card, `site.currency`, or old marketing copy. The record is validated
+  automatically: `isValidPublishedSpokenEnglishPrice()` gates what
+  `components/spoken-english/SpokenEnglishPricing.tsx` will render, and a second, independent
+  module-level assertion in `content/spokenEnglishPricing.ts` makes the production build itself
+  fail loudly if a `"published"` record is ever saved incomplete, malformed, or already expired —
+  so an incomplete record cannot silently ship. `site.showPrices` can additionally suppress an
+  otherwise-valid record (e.g. a temporary site-wide decision to hide all prices) but can never by
+  itself cause an invalid or incomplete record to render — confirmed this step by temporarily
+  setting a fully valid local fixture and toggling `site.showPrices` to `false`: the fixture
+  correctly fell back to the enquiry state (see "QA performed" below).
+
+### QA performed (fixtures never left in production code)
+
+All fixtures below were constructed directly in `content/spokenEnglishPricing.ts` and
+`content/site.ts` for local testing only, verified, and then fully reverted (confirmed via `grep`
+for `QA FIXTURE`/`qa-fixture` markers and `git diff`/`git status` showing no residue) before this
+step's commit:
+
+- **Zero amount** (`amount: 0`) — correctly made the production build fail with
+  `isValidPublishedSpokenEnglishPrice()`'s thrown error (covers the zero/negative/NaN/infinite
+  category — all four route through the same `Number.isFinite(amount) && amount > 0` check).
+- **Unverified inclusion id** (an id not present in `spokenEnglishPage.delivery.approachItems`) —
+  correctly made the production build fail.
+- **Expired `validUntil`** (a past date) — correctly made the production build fail.
+- **A fully complete, valid record** — correctly built and rendered every field (option, format,
+  learner scope, formatted amount and billing basis together, duration, schedule, only the two
+  referenced inclusion items, payment note, policy note, verified/valid-until dates, and a
+  CTA message referencing the option/format/amount) with 16/16 targeted Playwright assertions
+  passing and zero axe-core violations.
+- **The same fully valid record with `site.showPrices` temporarily set to `false`** — correctly
+  fell back to the enquiry state; no fixture data, amount, or partial field leaked anywhere in the
+  rendered HTML.
+- A standalone unit-test script for the validator (as the implementing prompt's Part 12 requested)
+  was not added: this repository has no test runner (`package.json` has no `test`/`typecheck`
+  script — see `CLAUDE.md`), and `content/spokenEnglishPricing.ts` depends on the `@/` path alias
+  (via `content/spokenEnglish.ts` and `lib/batches.ts`), which only Next.js's own bundler resolves
+  — the same limitation already documented in `scripts/analytics-selftest.mts` for why that script
+  avoids testing `@/`-importing modules directly. The five build-time/render-time fixture tests
+  above exercise the real, wired-up validator against the real file instead, which is the same
+  method already established for IELTS/PTE/TOEFL's identical pricing gates.
+
 ## Learning-format section field mapping (Step 5)
 
 Every field in the table above is either rendered as the one confirmed fact, folded into the
@@ -199,7 +270,7 @@ benefit.
   `content/spokenEnglish.ts` above the `delivery` object for the exact condition to re-check before
   adding them.
 
-## What the public page currently says instead (as of Spoken English Step 5)
+## What the public page currently says instead (as of Spoken English Step 6)
 
 `/courses/spoken-english` shows only:
 
@@ -251,6 +322,11 @@ benefit.
   grouped, neutral pre-enrolment question with a hollow "to confirm" marker — never a checkmark —
   plus one contextual WhatsApp action requesting the current arrangement; see "Learning-format
   section field mapping" above for the complete field-by-field mapping;
+- a dedicated, fail-closed pricing section (`components/spoken-english/SpokenEnglishPricing.tsx`,
+  id `spoken-english-pricing`) currently showing only the enquiry state — no amount, currency,
+  billing basis, or "one-time fee" claim anywhere — with one CTA ("Ask for the Current Spoken
+  English Fee") requesting the complete current fee details; see "Pricing verification (Step 6)"
+  above for the full validation record;
 - the fail-closed, enquiry-only availability state (`components/spoken-english/
   SpokenEnglishAvailability.tsx`, id `spoken-english-availability`), correctly showing "ask about
   the current Spoken English option" since no Spoken English batch is published, with a

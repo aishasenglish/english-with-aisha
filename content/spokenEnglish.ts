@@ -46,9 +46,13 @@
  * wording... requiring Aisha's review before publication is treated as final", not owner-approved.
  * Revisit this note (and add those two items) only once that document's Step 3 status changes.
  *
- * Later Spoken English steps add more sections (pricing, dedicated availability, FAQ) once their
- * content is verified against an owner confirmation -- do not pre-fill those with placeholder
- * content.
+ * Step 6 adds `pricing`: copy for the fail-closed, discriminated-union pricing pattern in
+ * content/spokenEnglishPricing.ts (mirroring content/toeflPricing.ts and content/ptePricing.ts) --
+ * the `enquire` branch is the only one currently reachable, since no owner-approved fee record
+ * exists.
+ *
+ * Later Spoken English steps add more sections (dedicated availability, FAQ) once their content is
+ * verified against an owner confirmation -- do not pre-fill those with placeholder content.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -816,6 +820,32 @@ export const spokenEnglishPage = {
       label: "Confirm the Current Spoken English Format",
       message:
         "Hi Aisha! I am interested in Spoken English coaching. Please confirm the current delivery type, platform, group or one-to-one availability, learner-level suitability, schedule and time zone, session frequency and duration, speaking-practice method, interview/presentation rehearsal availability, learner-audio requirements, feedback method and frequency, homework, recordings, materials, between-session support, missed-class/rescheduling policy, fee and billing basis. My main speaking situation is [details], my current experience is [details], my important timeline is [if any], and my country/time zone and usual availability are [details].",
+    },
+  },
+
+  // Step 6: copy for components/spoken-english/SpokenEnglishPricing.tsx. The `enquire` branch is
+  // the only one currently used -- see content/spokenEnglishPricing.ts's `spokenEnglishPricing`
+  // for the gate that decides which branch actually renders. Do not add a placeholder amount to
+  // the `published` branch; it exists so a future genuinely approved record has copy ready to
+  // attach to. Mirrors content/toefl.ts's and content/pte.ts's `pricing` objects exactly.
+  pricing: {
+    id: "spoken-english-pricing",
+    enquire: {
+      eyebrow: "Fees and enrolment",
+      heading: "Review the complete Spoken English fee before you decide.",
+      body: "Ask for the current fee together with the lesson arrangement, duration, session coverage and confirmed inclusions. You can review the complete details before deciding whether the course suits your goals.",
+      note: "No payment is needed to ask about the course.",
+      ctaLabel: "Ask for the Current Spoken English Fee",
+      ctaMessage:
+        "Hello Aisha, I would like the current Spoken English course details. Please share the fee, currency, billing basis, lesson arrangement, course or package duration, session coverage, schedule options, practice activities, feedback, homework, recordings or materials, support between lessons, and relevant payment, cancellation, rescheduling and missed-class policies. My current speaking level is [details]. I mainly need English for [details]. My time zone and preferred schedule are [details].",
+    },
+    published: {
+      eyebrow: "Current Spoken English fee",
+      heading: "See the complete cost and what it covers.",
+      inclusionsHeading: "What this fee includes",
+      lastVerifiedLabel: "Last verified",
+      validUntilLabel: "Valid until",
+      ctaLabel: "Ask About Enrolling",
     },
   },
 

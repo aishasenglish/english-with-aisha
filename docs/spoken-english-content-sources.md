@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 5).
+**Last checked:** 28 August 2026 (Step 6).
 
 ## Canonical owner facts used
 
@@ -212,6 +212,21 @@ from exactly two places, and nowhere else:
 
 **Review date.** 28 August 2026 (Step 5). Recheck this section only if a `detailsToConfirm` label
 is later added, reworded, or moved to a different confirmation state.
+
+### Step 6 — pricing section source basis
+
+`content/spokenEnglish.ts`'s `pricing` copy object and `content/spokenEnglishPricing.ts`'s
+discriminated-union record introduce no new source. The enquiry-state copy (eyebrow, heading,
+body, note, CTA label and message) is taken verbatim from the implementing prompt's own specified
+wording; the `published`-branch labels exist only as ready-to-attach copy for a record that does
+not yet exist. The single confirmed fact this section could show (online delivery) is not repeated
+here since Step 6 added no new confirmed operational fact — see
+`docs/spoken-english-offer-verification.md`'s "Pricing verification (Step 6)" section for the
+complete record of what remains unresolved and the exact condition required before any amount can
+be published.
+
+**Review date.** 28 August 2026 (Step 6). Recheck this section only if the enquiry-state copy is
+reworded, or once a genuine published pricing record is supplied.
 
 ## Positioning versus formal assessment claims
 
