@@ -245,6 +245,71 @@ applies the same stricter rules IELTS/PTE Step 7 established, on top of the gene
   fee into a batch record.** Link or reference the same authoritative `content/toeflPricing.ts`
   record instead of hand-entering an amount into `content/batches.ts`.
 
+## 9d. Spoken English-specific publication rules (Step 7)
+
+`/courses/spoken-english` no longer uses the shared `<BatchTable>` fallback —
+`components/spoken-english/SpokenEnglishAvailability.tsx` reads
+`getPublishedUpcomingBatches("spoken-english")` directly and applies the same stricter rules
+IELTS/PTE/TOEFL Step 7 established, on top of the general ones above, plus a few additional
+explicit checks:
+
+- **`duration` and `schedule` are required, not optional, for a Spoken English record to
+  display** — same as IELTS/PTE/TOEFL. A record missing either is filtered out by
+  `isCompleteSpokenEnglishIntake()` and never rendered — not shown with a "TBA" or "To be
+  confirmed" placeholder.
+- **`isCompleteSpokenEnglishIntake()` additionally re-checks `id` non-emptiness, `startDate` and
+  `verifiedAt` date-format validity, and `timezone === "Asia/Karachi"` at runtime**, on top of what
+  `getPublishedUpcomingBatches()` and the `Batch` type already guarantee — a defensive, explicit
+  completeness guard rather than trusting the type system alone. This is stricter than IELTS/PTE/
+  TOEFL's equivalent guards; if you strengthen theirs to match, do it as its own change, not bundled
+  silently into an unrelated edit.
+- **`Filling Fast` requires `statusVerifiedAt`.** Set this to today's date whenever you manually
+  confirm that remaining capacity genuinely justifies the scarcity wording — never infer it from
+  how close the start date is. If `statusVerifiedAt` is missing, `SpokenEnglishAvailability`
+  silently displays the record as the neutral `Open` instead of an unverified scarcity claim. Same
+  field IELTS/PTE/TOEFL use — see the shared comment on `statusVerifiedAt` in
+  `content/batches.ts`.
+- **No future date may be inferred from previous dates.** Do not add a new Spoken English batch by
+  extrapolating from the spacing between the closed historical records already in this file, or
+  from the existence of an old multi-course batch that happened to include the `spoken-english`
+  slug — every `startDate` must come from a real, confirmed schedule (this restates rule 8 above).
+- **One-to-one availability IS modelled by this file for Spoken English** (`format: "One-to-One"`
+  is an allowed value in the shared `Batch` type), but publishing a `"One-to-One"` record still
+  requires the same genuine owner confirmation as everything else — do not set `format:
+  "One-to-One"` merely because it is a legal value; only when Aisha has actually confirmed that
+  arrangement, its schedule, and its duration for this specific record. See Part G of the Spoken
+  English Step 7 implementing prompt: if scheduled-group and separately-arranged one-to-one
+  coaching need to be represented as genuinely distinct availability types (each with its own
+  verification date and scheduling rules) rather than both forced into this one batch record, that
+  is a future, separately owner-evidenced change — not something to build speculatively now.
+- **No published intake means the enquiry state renders, and that state does not link to
+  `/batches`.** `SpokenEnglishAvailability` only links to `/batches` when more than 3 complete,
+  published, non-past Spoken-English records genuinely exist, so a visitor is never sent to a page
+  with no additional relevant Spoken English information.
+- **Sending an enquiry is never described as a reservation, and never called a waitlist.** Both the
+  no-intake and scheduled states are careful not to imply "join the next batch," "reserve my seat,"
+  "applications are open," "limited places," "next intake coming soon," or a waitlist — none of
+  those exist as real, consent-managed systems on this site.
+- **The scheduled card always shows the neutral title "Spoken English Coaching"** regardless of
+  `format` — do not rename it per-format (e.g. "Spoken English Group Classes") unless a future step
+  explicitly separates group and one-to-one into distinct public labels with their own verified
+  copy.
+- **Same-day starts:** this codebase does not automatically treat a batch starting today as still
+  open. `isPubliclyVisible()` in `lib/batches.ts` only excludes a batch once its `startDate` is
+  strictly *before* today in Pakistan time, so a same-day batch would still show unless you
+  manually set `status: "Closed"` or `published: false` once same-day enrolment is no longer
+  accepted. There is no automated same-day cutoff — treat this as a manual daily check on the
+  morning of a start date, not a rule the code enforces for you.
+- **Expired records are not duplicated with a guessed follow-up date.** Once a batch's date passes,
+  leave it in the array (unpublished, closed, for history) rather than replacing it with a new
+  record with an invented date. The two existing Spoken-English-tagged historical records
+  (`batch-001`, `batch-003`) are examples of this.
+- **If Step 6 later publishes a fee for a specific Spoken English intake and format, never type a
+  duplicate fee into a batch record.** Link or reference the same authoritative
+  `content/spokenEnglishPricing.ts` record instead of hand-entering an amount into
+  `content/batches.ts`. Availability and pricing are deliberately separate business states — a
+  future intake never verifies a fee, and a verified fee never verifies availability.
+
 ## 10. Keep `verifiedAt` current
 
 Update `verifiedAt` to today's date whenever you check that a record's information (date, status,

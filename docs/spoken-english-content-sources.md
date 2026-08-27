@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 6).
+**Last checked:** 28 August 2026 (Step 7).
 
 ## Canonical owner facts used
 
@@ -227,6 +227,19 @@ be published.
 
 **Review date.** 28 August 2026 (Step 6). Recheck this section only if the enquiry-state copy is
 reworded, or once a genuine published pricing record is supplied.
+
+### Step 7 — availability section source basis
+
+`content/spokenEnglish.ts`'s `availability` object introduces no new source. The enquiry-state copy
+(eyebrow, heading, body, detail prompts, CTA label and message, reservation note) and the
+scheduled-state labels are taken verbatim from the implementing prompt's own specified wording. The
+scheduled-state branch reads real data from `content/batches.ts` via `lib/batches.ts`'s existing
+Pakistan-calendar helpers and `components/spoken-english/SpokenEnglishAvailability.tsx`'s own
+completeness guard — no new date, format or duration claim was authored as copy; every fact shown
+in a scheduled card comes directly from whatever batch record passes that guard.
+
+**Review date.** 28 August 2026 (Step 7). Recheck this section only if the enquiry-state copy is
+reworded, or the completeness guard's required fields change.
 
 ## Positioning versus formal assessment claims
 

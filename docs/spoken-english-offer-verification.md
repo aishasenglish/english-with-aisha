@@ -5,11 +5,11 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 6 (28 August 2026). Step 6 added the dedicated,
-fail-closed pricing section (`components/spoken-english/SpokenEnglishPricing.tsx` +
-`content/spokenEnglishPricing.ts`). It resolved no pricing field — the public state remains
-enquiry-only — and exposed no genuinely new operational offer question. See "Pricing verification
-(Step 6)" below for the complete record.
+**Last reviewed:** Spoken English Step 7 (28 August 2026). Step 7 upgraded the temporary
+enquiry-only availability block into a dedicated, date-aware, fail-closed availability section
+(`components/spoken-english/SpokenEnglishAvailability.tsx`). It resolved no availability field —
+the public state remains the detailed enquiry state — and exposed no genuinely new operational
+offer question. See "Availability verification (Step 7)" below for the complete record.
 
 ## Allowed internal states
 
@@ -166,6 +166,81 @@ Rewriting a person's quote to improve its grammar is not permitted without their
 of the final public wording — request permission for an edited version, or use a clearly approved
 excerpt instead.
 
+## Availability verification (Step 7)
+
+`components/spoken-english/SpokenEnglishAvailability.tsx` reads `content/batches.ts` directly via
+`getPublishedUpcomingBatches("spoken-english")`, then applies its own
+`isCompleteSpokenEnglishIntake()` completeness guard before ever rendering a scheduled card.
+Availability and pricing are kept as separate business states — a future intake never verifies a
+fee (Step 6 governs pricing), and a verified fee never verifies availability.
+
+- **Step 7 implementation date:** 2026-08-28.
+- **Current production state:** no verified published future intake. `content/batches.ts` contains
+  no complete, published, non-past, spoken-english-tagged record.
+- **Current public behaviour:** the detailed enquiry state — "Ask about a suitable Spoken English
+  start." — asking for the learner's speaking goal/situation, current experience and main
+  difficulty, who they need to communicate with, any deadline, country/time zone, and usual
+  availability; one WhatsApp CTA; an explicit "does not reserve a place, and no payment is
+  required" note.
+- **Historical Spoken-English-tagged records found:** `batch-001` (2026-07-05) and `batch-003`
+  (2026-08-04) — both already past, `status: "Closed"`, `published: false`, format
+  `"Live Online Group"`.
+- **Why historical formats/durations do not verify current availability:** a closed, unpublished,
+  past-dated record proves only that a group intake existed at that time — it does not confirm
+  that group delivery, that duration, or any delivery format at all is currently offered. Neither
+  historical record has been "republished" with an updated date; each stays exactly as it was
+  (Pakistan-calendar past, closed, unpublished) per the project-wide "don't invent, don't delete"
+  archival rule (`docs/updating-batches.md`).
+- **Completeness requirements for a public future option**
+  (`isCompleteSpokenEnglishIntake()` in the component, on top of `getPublishedUpcomingBatches()`'s
+  own published/non-closed/non-past/course-slug filtering): a non-empty `id`; `courseSlugs`
+  containing `"spoken-english"`; a strictly valid `YYYY-MM-DD` `startDate`; `published: true`;
+  `status` not `"Closed"`; an allowed `format` (`"Live Online Group"` or `"One-to-One"`); a
+  non-empty `duration`; a non-empty `schedule`; `timezone` exactly `"Asia/Karachi"`; a strictly
+  valid `YYYY-MM-DD` `verifiedAt`. A record failing any single check falls back to the enquiry
+  state entirely — it is never shown as a partial card with a "TBA" placeholder.
+- **Scheduled-state automatic filtering rules:** unpublished records never render; `"Closed"`
+  records never render; any date before today in Pakistan time never renders regardless of
+  `status`; eligible records are sorted chronologically; `"Filling Fast"` displays as neutral
+  `"Open"` unless the record also carries its own `statusVerifiedAt` (a separate, manual, recent
+  verification of the scarcity claim itself); a same-day start is not automatically excluded (see
+  `docs/updating-batches.md`'s "Same-day starts" note — this is a manual daily check, not something
+  the code enforces).
+- **Unresolved group, one-to-one, rolling-start, schedule, duration and response-time questions:**
+  all still open — see the claim table above (live/asynchronous format, platform, group
+  availability, one-to-one availability, level range, duration, session frequency, response time,
+  and next intake all remain `Needs owner confirmation`). This step did not resolve any of them; it
+  only built the mechanism that will display them correctly once Aisha supplies a complete record.
+- **Separation between availability and pricing:** `SpokenEnglishAvailability.tsx` never imports
+  `content/spokenEnglishPricing.ts` or renders any amount, currency or billing basis — a scheduled
+  intake card shows only start date, schedule, format, duration, status and verification date,
+  never a fee (see `components/spoken-english/SpokenEnglishPricing.tsx`, Step 6, for pricing).
+
+### QA performed (fixtures never left in production code)
+
+All fixtures below were added directly to `content/batches.ts` for local testing only, verified,
+and then fully reverted (confirmed via `grep` for `QA FIXTURE`/`qa-fixture` markers and a clean
+`git diff` showing zero difference from the tracked file) before this step's commit:
+
+- **A single complete, valid, future record** — correctly rendered one scheduled card with every
+  field (title, formatted start date, schedule + timezone together, format, duration, "Open"
+  status, "Last checked" date) and a CTA message including the intake id, formatted date, schedule,
+  and the "does not reserve a place" clarification — 20/20 targeted Playwright assertions passed,
+  0 axe-core violations.
+- **Two complete, valid, future records at different dates** — both rendered, correctly sorted
+  chronologically (earlier date first).
+- **Two additional records missing `duration` or `schedule` respectively, added alongside the two
+  complete ones** — both correctly excluded entirely (2 cards shown, not 4; no "TBA" or
+  "To be confirmed" placeholder appeared anywhere).
+- **A record with `status: "Filling Fast"` and no `statusVerifiedAt`** — correctly displayed as
+  the neutral `"Open"` status, confirming the scarcity claim fails closed exactly as required.
+
+A dedicated automated unit-test file was not added: this repository has no test runner
+(`package.json` has no `test`/`typecheck` script — see `CLAUDE.md`), matching the same conclusion
+already reached for the Step 6 pricing validator. The fixture tests above exercise the real,
+wired-up component and `lib/batches.ts` logic directly, which is the same method already
+established for IELTS/PTE/TOEFL's identical availability components.
+
 ## Pricing verification (Step 6)
 
 `content/spokenEnglishPricing.ts` is the single, gate-kept source of truth for any Spoken English
@@ -270,7 +345,7 @@ benefit.
   `content/spokenEnglish.ts` above the `delivery` object for the exact condition to re-check before
   adding them.
 
-## What the public page currently says instead (as of Spoken English Step 6)
+## What the public page currently says instead (as of Spoken English Step 7)
 
 `/courses/spoken-english` shows only:
 
@@ -327,11 +402,13 @@ benefit.
   billing basis, or "one-time fee" claim anywhere — with one CTA ("Ask for the Current Spoken
   English Fee") requesting the complete current fee details; see "Pricing verification (Step 6)"
   above for the full validation record;
-- the fail-closed, enquiry-only availability state (`components/spoken-english/
-  SpokenEnglishAvailability.tsx`, id `spoken-english-availability`), correctly showing "ask about
-  the current Spoken English option" since no Spoken English batch is published, with a
-  Spoken-English-specific WhatsApp fallback message requesting the candidate's main speaking goal,
-  current experience, country/time zone and usual availability;
+- a dedicated, date-aware, fail-closed availability section (`components/spoken-english/
+  SpokenEnglishAvailability.tsx`, id `spoken-english-availability`) currently showing the detailed
+  enquiry state — "Ask about a suitable Spoken English start." — since `content/batches.ts` has no
+  complete, published, non-past, spoken-english-tagged record; a scheduled-intake card renders
+  automatically once one genuinely exists, and disappears automatically once it is past, closed or
+  unpublished; see "Availability verification (Step 7)" above for the complete completeness-guard
+  and fixture-test record;
 - a Spoken-English-specific final CTA (`components/spoken-english/SpokenEnglishFinalCTA.tsx`) with
   its own full structured WhatsApp message (no longer reusing the hero's message, which Step 2
   shortened to a brief goal-and-difficulty invitation), plus a plain `mailto:` fallback to the

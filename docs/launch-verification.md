@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–6)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–7)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -817,6 +817,22 @@ handle; never fill these with placeholder or invented links.
   `docs/spoken-english-offer-verification.md`'s "Pricing verification (Step 6)" section for the
   complete confirmation checklist, the fixture tests performed, and the exact condition required
   before Aisha's first real fee can be published.
+- **Current availability and intake handling (Step 7)**: `components/spoken-english/
+  SpokenEnglishAvailability.tsx` replaces the Step 1 permanently-enquiry-only render with the same
+  two-state (enquiry/scheduled) pattern IELTS/PTE/TOEFL Step 7 established, reading real data from
+  `content/batches.ts` via `getPublishedUpcomingBatches("spoken-english")` plus its own
+  `isCompleteSpokenEnglishIntake()` completeness guard (id, course-slug, strict ISO date format,
+  published, not-closed, allowed format, non-empty duration and schedule, exact `"Asia/Karachi"`
+  timezone, strict ISO `verifiedAt` — stricter than the sibling IELTS/PTE/TOEFL guards, which this
+  step's spec explicitly asked for). Production currently renders the enquiry state ("Ask about a
+  suitable Spoken English start.") since no complete, published, non-past Spoken-English-tagged
+  batch exists; a scheduled card renders automatically, and disappears automatically, purely from
+  real batch data — no date, format or duration was invented. `"Filling Fast"` without its own
+  `statusVerifiedAt` still downgrades to neutral `"Open"` (verified this step with a live fixture).
+  Availability never renders a fee — that remains Step 6's responsibility exclusively. See
+  `docs/spoken-english-offer-verification.md`'s "Availability verification (Step 7)" section for
+  the complete record and fixture tests, and `docs/updating-batches.md`'s new "9d. Spoken
+  English-specific publication rules" for how to publish a real record.
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions

@@ -51,8 +51,16 @@
  * the `enquire` branch is the only one currently reachable, since no owner-approved fee record
  * exists.
  *
- * Later Spoken English steps add more sections (dedicated availability, FAQ) once their content is
- * verified against an owner confirmation -- do not pre-fill those with placeholder content.
+ * Step 7 replaces the Step 1 permanently-enquiry-only `availability` object with the same
+ * two-state (enquiry/scheduled) specialist-availability pattern IELTS/PTE/TOEFL Step 7
+ * established, reading real data from content/batches.ts via
+ * components/spoken-english/SpokenEnglishAvailability.tsx's own completeness guard. Availability
+ * and pricing remain separate business states -- a future intake never verifies a fee, and a
+ * verified fee never verifies availability.
+ *
+ * Later Spoken English steps add more sections (FAQ, final enquiry-handoff form) once their
+ * content is verified against an owner confirmation -- do not pre-fill those with placeholder
+ * content.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -143,6 +151,13 @@ export type SpokenEnglishFeedbackPoint = {
 export type SpokenEnglishImprovementPoint = {
   id: string;
   body: string;
+};
+
+/** One "include these details" prompt in the no-intake availability enquiry state
+ *  (components/spoken-english/SpokenEnglishAvailability.tsx). */
+export type SpokenEnglishAvailabilityDetail = {
+  id: string;
+  label: string;
 };
 
 /** One item in the "what the learning approach is designed around" summary
@@ -849,18 +864,44 @@ export const spokenEnglishPage = {
     },
   },
 
-  // Step 1: no confirmed Spoken English intake exists yet (content/batches.ts). Fails closed --
-  // never infers a cadence, group/private availability or a date from historical records. A
-  // dedicated SpokenEnglishAvailability component with verified intake states is a later step.
+  // Step 7: replaces the Step 1 permanently-enquiry-only placeholder with the same two-state
+  // (enquiry / scheduled) specialist-availability pattern IELTS/PTE/TOEFL Step 7 established.
+  // content/batches.ts currently has no published, non-past, complete Spoken-English-tagged
+  // record (its two spoken-english-tagged entries are historical: past dates, "Closed",
+  // unpublished), so production renders the enquiry state below. See
+  // components/spoken-english/SpokenEnglishAvailability.tsx's isCompleteSpokenEnglishIntake() for
+  // the completeness guard and docs/spoken-english-offer-verification.md for the current
+  // verification record.
   availability: {
     id: "spoken-english-availability",
     eyebrow: "Current availability",
-    heading: "Ask about the current Spoken English option.",
-    body: "No future Spoken English intake is currently published. Share your country or time zone, usual availability and main speaking situations so Aisha can confirm whether a current option may fit.",
-    note: "Format, schedule, duration, support and fee are confirmed before enrolment.",
-    ctaLabel: "Ask About Spoken English Availability",
-    message:
-      "Hi Aisha! I would like to ask about current Spoken English availability. My main speaking goal and situations are [details], my current experience is [details], my country/time zone is [details], and the days or times that usually suit me are [details]. Please confirm whether a suitable current option is available.",
+
+    // No-intake enquiry state (the one currently shown).
+    enquiryHeading: "Ask about a suitable Spoken English start.",
+    enquiryBody:
+      "No future Spoken English start date is currently confirmed on this page. Share what you need English for, your current speaking experience, time zone, usual availability and any important deadline so Aisha can confirm whether a suitable option is currently available.",
+    detailsHeading: "Include these details",
+    enquiryDetails: [
+      { id: "goal-situation", label: "Main speaking goal or real-life situation" },
+      { id: "experience-difficulty", label: "Current speaking experience and main difficulty" },
+      { id: "who-with", label: "Where and with whom you need to communicate" },
+      { id: "deadline", label: "Any interview, presentation, study, travel or work deadline" },
+      { id: "location", label: "Country and time zone" },
+      { id: "schedule-fit", label: "Days and times that usually suit you" },
+    ] as SpokenEnglishAvailabilityDetail[],
+    enquiryCtaLabel: "Check Spoken English Availability",
+    enquiryMessage:
+      "Hello Aisha, I would like to check current Spoken English availability. My main speaking goal or situation is [details]. My current speaking experience and main difficulty are [details]. I need to communicate with/for [details]. My relevant deadline, if any, is [details]. I am in [details] time zone, and the days and times that usually suit me are [details]. Please let me know whether a suitable current option is available and share its confirmed start, schedule, format and duration.",
+    reservationNote: "Sending an enquiry does not reserve a place, and no payment is required to ask.",
+
+    // Verified scheduled state (renders only once getPublishedUpcomingBatches("spoken-english")
+    // returns at least one complete record -- see components/spoken-english/
+    // SpokenEnglishAvailability.tsx's isCompleteSpokenEnglishIntake()).
+    scheduledHeading: "Review the confirmed Spoken English option.",
+    scheduledBody: "Check the start date, schedule, format, duration and Pakistan time before asking whether this option suits your speaking goals.",
+    timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
+    intakeCtaLabel: "Ask About This Spoken English Option",
+    moreAvailabilityLabel: "View all Spoken English availability",
   },
 
   // Step 1: a single strong WhatsApp action plus a plain email fallback -- a dedicated Spoken
