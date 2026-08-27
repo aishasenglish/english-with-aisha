@@ -7,6 +7,7 @@ import { formsAreConfigured, getFormEndpoint } from "@/lib/forms";
 import { leadCapture } from "@/content/leadCapture";
 import { ieltsFinalEnquiry, ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFinalEnquiry, pteFormVariant } from "@/content/pteEnquiry";
+import { toeflFinalEnquiry, toeflFormVariant } from "@/content/toeflEnquiry";
 import type { EnquirySource, EnquiryVariant } from "@/lib/enquiryQuery";
 import { track } from "@/lib/analytics/track";
 import type { AnalyticsErrorType, AnalyticsProgramme, AnalyticsSource } from "@/lib/analytics/events";
@@ -103,6 +104,26 @@ const VARIANT_CONFIG: Record<EnquiryVariant, VariantConfig> = {
     unconfiguredMessage: pteFinalEnquiry.whatsappMessage,
     successContinueMessage: pteFinalEnquiry.whatsappMessage,
     errorFallbackMessage: pteFinalEnquiry.whatsappMessage,
+  },
+  // TOEFL Step 9: deliberately absent from ANALYTICS_PROGRAMME_BY_VARIANT/
+  // ANALYTICS_SOURCE_BY_VARIANT above -- TOEFL conversion measurement belongs to a later step
+  // (mirroring PTE Step 12), so no assessment_form_start/submit/error event fires for this variant
+  // yet, and no TOEFL interaction is ever mislabelled as an "ielts"/"pte"/"general" event.
+  toefl: {
+    locked: true,
+    locationLabel: toeflFormVariant.locationLabel,
+    locationPlaceholder: toeflFormVariant.locationPlaceholder,
+    situationLabel: toeflFormVariant.situationLabel,
+    situationPlaceholder: toeflFormVariant.situationPlaceholder,
+    goalLabel: toeflFormVariant.goalLabel,
+    goalPlaceholder: toeflFormVariant.goalPlaceholder,
+    submissionSubject: toeflFormVariant.submissionSubject,
+    submitButtonLabel: "Send My TOEFL Enquiry",
+    success: toeflFormVariant.success,
+    fallback: toeflFormVariant.unconfiguredFallback,
+    unconfiguredMessage: toeflFinalEnquiry.whatsappMessage,
+    successContinueMessage: toeflFinalEnquiry.whatsappMessage,
+    errorFallbackMessage: toeflFinalEnquiry.whatsappMessage,
   },
 };
 

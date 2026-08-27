@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 8.
+**Last reviewed:** TOEFL Step 9.
 
 ## Allowed internal states
 
@@ -221,8 +221,17 @@ imported on that route) and remains removed from public authority.
   `#toefl-pricing` and `#toefl-availability` rather than duplicating any fee, date or schedule
   value), and international enquiries — reusing the shared native `<details>/<summary>`
   `FAQAccordion` with no new dependency, client state or `FAQPage`/`QAPage` structured data;
-- a TOEFL-specific final CTA (`components/toefl/TOEFLFinalCTA.tsx`) with a single WhatsApp action,
-  reusing the hero's exact message.
+- a final enquiry handoff (`components/toefl/TOEFLFinalCTA.tsx` — TOEFL Step 9, id
+  `toefl-enquiry`) that no longer reuses the hero's shorter message: it asks for six compact
+  details (institution/requirement, overall/section scores and scale, previous result or starting
+  point, planned test date and deadline, test-centre/Home Edition plan, country/time zone and
+  usual availability), then offers WhatsApp as the primary action plus exactly one
+  server-selected secondary action — the allowlisted TOEFL detailed-enquiry form
+  (`/free-diagnostic-test?programme=toefl&source=toefl-page`) when `formsAreConfigured()` is true,
+  otherwise a safely encoded `mailto:` link to the canonical `aishasenglish@gmail.com`. The
+  canonical field list and complete WhatsApp/email templates live in the new
+  `content/toeflEnquiry.ts` so they cannot drift from what the form itself sends. No reply-time,
+  acceptance or suitability promise appears anywhere in this section.
 
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
 components above), `<IncludedList>` (removed entirely), `<LearningFormats>` (never rendered on this
@@ -234,8 +243,6 @@ for the current TOEFL offer), `<PricingCard>` (removed entirely — never import
 generic 17-item `<FAQAccordion />` default `items` (the component itself is reused with
 TOEFL-specific `items`, never `generalFaqs`, on this route). None of these render "coming soon" or
 an empty heading in their place — they are simply absent until their own verified replacement step.
-The enquiry-handoff form variant remains deliberately deferred to its own later TOEFL step,
-mirroring the IELTS and PTE sequence.
 
 ## Global FAQ audit (TOEFL Step 1)
 

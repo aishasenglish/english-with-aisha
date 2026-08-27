@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–8)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–9)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -484,6 +484,32 @@ handle; never fill these with placeholder or invented links.
   establish a general tutoring portfolio as eligible for the FAQ rich-result use case). No new
   dependency or client state was added — the existing native `<details>/<summary>` `FAQAccordion`
   is reused as-is.
+- **TOEFL final CTA and enquiry handoff (TOEFL Step 9)**: `TOEFLFinalCTA.tsx` (id
+  `toefl-enquiry`) no longer reuses the hero's shorter WhatsApp message — it now uses the complete
+  canonical `content/toeflEnquiry.ts` template and requests six compact details (institution/exact
+  requirement, overall/section scores and scale, previous result or starting point, planned test
+  date and deadline, test-centre/Home Edition plan, country/time zone and usual availability).
+  Offers WhatsApp as the primary action plus exactly one server-selected secondary action —
+  `formsAreConfigured()` decides, with no client-side flash — between the allowlisted TOEFL
+  detailed-enquiry form (`/free-diagnostic-test?programme=toefl&source=toefl-page`, locking
+  "TOEFL iBT Preparation") and a safely encoded `mailto:` link to the canonical
+  `aishasenglish@gmail.com` via `lib/contact.ts`'s `emailLink()`. `lib/enquiryQuery.ts` gained a
+  `toefl` `EnquiryVariant` and `toefl-page` `EnquirySource`, mapped only from the exact query key
+  `toefl` — `toefl-essentials`/`toefl-itp`/any other unknown value falls back to the general form,
+  verified live. `components/DiagnosticForm.tsx`'s `VARIANT_CONFIG` gained a fourth `toefl` entry
+  without changing the general/IELTS/PTE entries; `app/free-diagnostic-test/page.tsx`'s
+  `PAGE_CONTENT` map gained the matching `toefl` heading/subtitle. Deliberately **no**
+  `data-analytics-*` attributes or `ANALYTICS_PROGRAMME_BY_VARIANT`/`ANALYTICS_SOURCE_BY_VARIANT`
+  entries were added for TOEFL — conversion measurement remains deferred to a later TOEFL step
+  (mirroring PTE Step 12), so no TOEFL interaction is tracked, and none is mislabelled as an IELTS,
+  PTE or general event. Verified via a temporary `.env.local` (fully removed before commit,
+  confirmed via `git status`) covering both the unconfigured (real, current) and configured
+  states, an intercepted Formspree payload (`_subject: "TOEFL iBT Coaching Enquiry"`,
+  `source: "toefl-page"`, `programme: "TOEFL iBT Preparation"`, conditional `_replyto`), and query
+  edge cases (unknown programme, unknown source, repeated array params, missing params,
+  script-like input, an extremely long string) — none rendered a raw value or selected the TOEFL
+  variant incorrectly. IELTS and PTE variants, the general form and `ContactForm` were
+  regression-tested and remain unchanged.
 - **Cross-site corrections**: `content/homeCourses.ts`'s TOEFL override
   ("Online coaching · Confirm current format and support") replaces the shared default line that
   falsely implied live delivery, group/one-to-one availability and recordings for TOEFL.

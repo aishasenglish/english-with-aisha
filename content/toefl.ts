@@ -584,15 +584,24 @@ export const toeflPage = {
       "These answers cover test choice, score requirements, preparation, feedback and the current coaching offer. Ask Aisha if your institution's requirement or deadline needs a more specific answer.",
   },
 
-  // TOEFL Step 1: a single strong WhatsApp action only — the configured-form/email dual-path
-  // DiagnosticForm.tsx supports for IELTS and PTE needs its own dedicated TOEFL enquiry-handoff
-  // step (its own field labels, success copy and submission subject, plus a safe fixed
-  // lib/enquiryQuery.ts allowlist entry), not a Step-1 addition.
+  // TOEFL Step 9: the final enquiry handoff -- offers WhatsApp first and exactly one
+  // server-selected secondary action (the allowlisted TOEFL detailed-enquiry form when Formspree
+  // is configured, otherwise a safely encoded email) via components/toefl/TOEFLFinalCTA.tsx. The
+  // canonical field list and complete message text live in content/toeflEnquiry.ts so they can't
+  // drift out of sync between WhatsApp, email and the form; this object holds only this section's
+  // own display copy. Deliberately does not import the hero's shorter message -- see
+  // toeflFinalEnquiry.whatsappMessage instead.
   finalCta: {
     id: "toefl-enquiry",
     eyebrow: "Your TOEFL next step",
-    heading: "Share your exact TOEFL iBT requirement and deadline.",
-    body: "Include the institution or programme, required overall and section scores, score scale, previous result or current starting point, test/application deadline and country or time zone.",
+    heading: "Share your TOEFL iBT requirement, starting point and deadline.",
+    body: "Send the details below so Aisha can understand your requirement and confirm whether the current coaching format, schedule and preparation approach may suit it.",
+    detailsHeading: "Include these details",
     primaryLabel: "Discuss TOEFL iBT Coaching on WhatsApp",
+    formCtaLabel: "Send a Detailed Enquiry",
+    emailCtaLabel: "Email Aisha",
+    emailAccessibleLabel: "Email Aisha about TOEFL iBT coaching",
+    responseExpectation:
+      "Aisha will use your details to respond about programme fit and the current offer. No payment is required to ask, and you can review the confirmed details before deciding.",
   },
 } as const;

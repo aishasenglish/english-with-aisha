@@ -3,6 +3,7 @@ import DiagnosticForm from "@/components/DiagnosticForm";
 import { leadCapture } from "@/content/leadCapture";
 import { ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFormVariant } from "@/content/pteEnquiry";
+import { toeflFormVariant } from "@/content/toeflEnquiry";
 import { resolveProgrammeQuery, resolveEnquirySource } from "@/lib/enquiryQuery";
 import type { EnquiryVariant } from "@/lib/enquiryQuery";
 
@@ -13,6 +14,7 @@ const PAGE_CONTENT: Record<EnquiryVariant, { heading: string; subtitle: string }
   general: { heading: leadCapture.requestPage.heading, subtitle: leadCapture.requestPage.subtitle },
   ielts: { heading: ieltsFormVariant.pageHeading, subtitle: ieltsFormVariant.pageSubtitle },
   pte: { heading: pteFormVariant.pageHeading, subtitle: pteFormVariant.pageSubtitle },
+  toefl: { heading: toeflFormVariant.pageHeading, subtitle: toeflFormVariant.pageSubtitle },
 };
 
 export const metadata: Metadata = {
