@@ -35,9 +35,20 @@
  * section) while none exist -- see docs/spoken-english-offer-verification.md's evidence-status
  * section and docs/testimonial-content-intake.md for the intake process.
  *
- * Later Spoken English steps add more sections (learning format, pricing, dedicated availability,
- * FAQ) once their content is verified against an owner confirmation -- do not pre-fill those with
- * placeholder content.
+ * Step 5 adds `delivery`: confirms the one currently owner-confirmed operational fact (coaching is
+ * online), summarises only the needs-led positioning already public in Steps 1-2, and separates
+ * both from a grouped, neutral pre-enrolment checklist of everything still `Needs owner
+ * confirmation` per docs/spoken-english-offer-verification.md. The Step 3 coaching-process and
+ * Step 4 feedback-demonstration summary items the implementing prompt offered as optional are
+ * deliberately NOT included here -- that prompt's own Part D permits them only once Step 3 is
+ * "complete, public and documented as an approved teaching approach", and
+ * docs/spoken-english-offer-verification.md still records that content as "proposed public
+ * wording... requiring Aisha's review before publication is treated as final", not owner-approved.
+ * Revisit this note (and add those two items) only once that document's Step 3 status changes.
+ *
+ * Later Spoken English steps add more sections (pricing, dedicated availability, FAQ) once their
+ * content is verified against an owner confirmation -- do not pre-fill those with placeholder
+ * content.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -128,6 +139,30 @@ export type SpokenEnglishFeedbackPoint = {
 export type SpokenEnglishImprovementPoint = {
   id: string;
   body: string;
+};
+
+/** One item in the "what the learning approach is designed around" summary
+ *  (components/spoken-english/SpokenEnglishLearningFormat.tsx) -- a description of the teaching
+ *  approach, never a promise about frequency, quantity or a package. */
+export type SpokenEnglishLearningPrinciple = {
+  id: string;
+  title: string;
+  body: string;
+};
+
+/** One question a visitor should verify before enrolling -- a question to confirm, never an
+ *  included feature. */
+export type SpokenEnglishDetailToConfirm = {
+  id: string;
+  label: string;
+};
+
+/** One scannable group of pre-enrolment questions (Delivery and people, Timing, Speaking practice
+ *  and feedback, Access and support, Commercial details). */
+export type SpokenEnglishDetailGroup = {
+  id: string;
+  heading: string;
+  items: readonly SpokenEnglishDetailToConfirm[];
 };
 
 export const spokenEnglishPage = {
@@ -691,6 +726,97 @@ export const spokenEnglishPage = {
       "A written transcript cannot show how the response sounded. Pronunciation, intelligibility, stress, rhythm, intonation, pace, pausing, listening and turn-taking require an actual spoken interaction. No audio has been assessed in this example.",
     outcomeBoundary:
       "The revision demonstrates one feedback process. It does not prove a learner result, formal level increase, interview outcome or guaranteed progress.",
+  },
+
+  // Step 5: confirms the one owner-confirmed operational fact (online), summarises only the
+  // Step 1-2 needs-led positioning, and separates both from a grouped, neutral pre-enrolment
+  // checklist -- see docs/spoken-english-offer-verification.md for the field-specific evidence
+  // behind every "Owner confirmed" vs. "Needs owner confirmation" line this content reflects.
+  delivery: {
+    id: "spoken-english-learning-format",
+    eyebrow: "Programme delivery",
+    heading: "Know how the current Spoken English option works before you enrol.",
+    body: "Spoken English coaching is provided online. The exact delivery type, schedule, practice, feedback, support and fee should be confirmed for the current option before you decide.",
+    confirmedHeading: "What is confirmed",
+    confirmedOnline: {
+      title: "Online coaching",
+      body: "The service is provided online. Include your country or time zone and usual availability when asking about the current arrangement.",
+    },
+    approachHeading: "What the learning approach is designed around",
+    approachItems: [
+      {
+        id: "real-communication-situations",
+        title: "Real communication situations",
+        body: "Priorities begin with where the learner needs English, who they need to speak with and what the communication must achieve.",
+      },
+      {
+        id: "connected-communication-skills",
+        title: "Connected communication skills",
+        body: "The learner's emphasis may draw from response building, spoken grammar, useful vocabulary, intelligibility, listening, interaction and pacing.",
+      },
+    ] as SpokenEnglishLearningPrinciple[],
+    distinctionNote:
+      "These are descriptions of the learning approach, not promises about lesson frequency, feedback quantity, group or one-to-one delivery, or a fixed package. They do not establish that every current option includes every method in the same way.",
+    confirmHeading: "Confirm these details for the current option",
+    confirmBody: "Ask Aisha to confirm the complete arrangement that applies now. A detail listed here is a question to verify, not an included feature.",
+    detailsToConfirm: [
+      {
+        id: "delivery-and-people",
+        heading: "Delivery and people",
+        items: [
+          { id: "live-or-async", label: "Whether teaching is live, asynchronous or mixed" },
+          { id: "platform", label: "Platform" },
+          { id: "group-or-one-to-one", label: "Group or one-to-one availability" },
+          { id: "age-level-suitability", label: "Learner age/level suitability" },
+          { id: "group-size", label: "Group size, if relevant" },
+        ],
+      },
+      {
+        id: "timing",
+        heading: "Timing",
+        items: [
+          { id: "schedule-timezone", label: "Schedule and time zone" },
+          { id: "session-length-frequency", label: "Session length and frequency" },
+          { id: "programme-duration", label: "Complete programme duration" },
+          { id: "start-date", label: "Current start date or arrangement" },
+        ],
+      },
+      {
+        id: "practice-and-feedback",
+        heading: "Speaking practice and feedback",
+        items: [
+          { id: "practice-structure", label: "How speaking practice is structured" },
+          { id: "rehearsal-availability", label: "Whether interview/presentation rehearsal is available" },
+          { id: "audio-requested", label: "Whether learner audio is requested or stored" },
+          { id: "feedback-method", label: "Feedback method, frequency and turnaround" },
+          { id: "homework", label: "Homework or self-practice expectations" },
+        ],
+      },
+      {
+        id: "access-and-support",
+        heading: "Access and support",
+        items: [
+          { id: "recordings", label: "Recording availability/access period" },
+          { id: "materials", label: "Materials or resource access" },
+          { id: "between-session-support", label: "Between-session support" },
+          { id: "missed-class-policy", label: "Missed-class/rescheduling/cancellation policy" },
+        ],
+      },
+      {
+        id: "commercial-details",
+        heading: "Commercial details",
+        items: [
+          { id: "fee-currency", label: "Current fee and currency" },
+          { id: "billing-basis", label: "Billing basis" },
+          { id: "payment-refund-terms", label: "Payment/refund terms" },
+        ],
+      },
+    ] as SpokenEnglishDetailGroup[],
+    cta: {
+      label: "Confirm the Current Spoken English Format",
+      message:
+        "Hi Aisha! I am interested in Spoken English coaching. Please confirm the current delivery type, platform, group or one-to-one availability, learner-level suitability, schedule and time zone, session frequency and duration, speaking-practice method, interview/presentation rehearsal availability, learner-audio requirements, feedback method and frequency, homework, recordings, materials, between-session support, missed-class/rescheduling policy, fee and billing basis. My main speaking situation is [details], my current experience is [details], my important timeline is [if any], and my country/time zone and usual availability are [details].",
+    },
   },
 
   // Step 1: no confirmed Spoken English intake exists yet (content/batches.ts). Fails closed --

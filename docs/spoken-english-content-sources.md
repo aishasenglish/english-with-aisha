@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 4).
+**Last checked:** 28 August 2026 (Step 5).
 
 ## Canonical owner facts used
 
@@ -190,6 +190,28 @@ teaching example, or real lesson transcript. No external task prompt was used.
   source, and none was consulted for this specific wording.
 - **Review date.** 28 August 2026 (Step 4). Recheck this section if the illustrative scenario's
   wording is ever revised, or if it is ever considered for reuse elsewhere on the site.
+
+### Step 5 — learning-format section source basis
+
+`content/spokenEnglish.ts`'s `delivery` object introduces no new external source. Its content comes
+from exactly two places, and nowhere else:
+
+- The single confirmed fact (`confirmedOnline`) restates `docs/spoken-english-offer-verification.md`'s
+  "Online delivery — Owner confirmed" row, itself resting on the website-purpose-level owner
+  confirmation already used identically by IELTS/PTE/TOEFL Step 1 (see "Internal source for
+  online-delivery confirmation" above).
+- The two `approachItems` restate, in shorter form, wording already public since Step 1 (the fit
+  section's situation-led framing) and Step 2 (the curriculum's connected-skills framing) — no new
+  claim is introduced, and the two items the implementing prompt made conditionally available
+  (summarising the Step 3 coaching process and Step 4 feedback review) were withheld because Step 3
+  is still recorded as "proposed public wording... requiring Aisha's review", not owner-approved
+  (see `docs/spoken-english-offer-verification.md`'s "Learning-format section field mapping").
+- Every `detailsToConfirm` label is a direct restatement of an existing "Needs owner confirmation"
+  row from `docs/spoken-english-offer-verification.md`'s claim table — none is a new fact, an
+  inference, or a value invented for visual completeness.
+
+**Review date.** 28 August 2026 (Step 5). Recheck this section only if a `detailsToConfirm` label
+is later added, reworded, or moved to a different confirmation state.
 
 ## Positioning versus formal assessment claims
 

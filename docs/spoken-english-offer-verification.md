@@ -5,10 +5,13 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 4 (28 August 2026). Step 4 added an illustrative feedback
-demonstration and a conditional verified-evidence component. It exposed no genuinely new
-operational offer question — see "Illustrative demonstration versus learner evidence" below for
-what Step 4 confirms and does not confirm.
+**Last reviewed:** Spoken English Step 5 (28 August 2026). Step 5 added the public learning-format
+section (`components/spoken-english/SpokenEnglishLearningFormat.tsx`), which confirms only the
+single "Owner confirmed" row below (online delivery) and turns every remaining "Needs owner
+confirmation" row into a public pre-enrolment question to verify — it did not resolve any of them,
+and exposed no genuinely new operational offer question. See "Learning-format section field
+mapping" below for exactly how each table row maps to (or is deliberately excluded from) that
+public section.
 
 ## Allowed internal states
 
@@ -165,7 +168,38 @@ Rewriting a person's quote to improve its grammar is not permitted without their
 of the final public wording — request permission for an edited version, or use a clearly approved
 excerpt instead.
 
-## What the public page currently says instead (as of Spoken English Step 4)
+## Learning-format section field mapping (Step 5)
+
+Every field in the table above is either rendered as the one confirmed fact, folded into the
+stable-approach summary (only where it restates Step 1/2 positioning, never an operational claim),
+or listed as a pre-enrolment question — never silently dropped and never rendered as an included
+benefit.
+
+- **Rendered as confirmed:** Online delivery only (`delivery.confirmedOnline`).
+- **Rendered as a pre-enrolment question** (`delivery.detailsToConfirm`, grouped): live/asynchronous
+  format, platform, group availability, one-to-one availability, level range, minimum age/scope,
+  duration, session frequency, recording availability/access period, speaking-practice method,
+  interview/presentation rehearsal inclusion, learner audio submission/storage, feedback
+  method/frequency, homework/self-practice expectations, fee/currency/billing basis,
+  payment/refund/rescheduling policy, and next intake (surfaced here as "current start date or
+  arrangement" — the fail-closed availability section below still carries the canonical wording for
+  this one).
+- **Deliberately excluded from this section:** testimonial consent/relevance and response-time
+  commitment — the first belongs to the conditional evidence component, not this section; the
+  second has no natural home in a pre-enrolment checklist about the *service*, and remains an open
+  question for Aisha regardless (see "Open questions for Aisha" below, unchanged).
+- **Not treated as new evidence:** the approach summary (`delivery.approachItems`) restates only
+  Step 1's fit positioning and Step 2's curriculum framing (real communication situations;
+  connected communication skills) — it does not confirm, and must never be read as confirming, any
+  operational fact about frequency, group/private delivery or a package. The Step 3 coaching-process
+  and Step 4 feedback-demonstration items the implementing prompt made available conditionally were
+  deliberately withheld this step because `docs/spoken-english-offer-verification.md`'s own record
+  (this document) still marks that content "proposed public wording... requiring Aisha's review
+  before publication is treated as final" rather than owner-approved — see the file-level comment in
+  `content/spokenEnglish.ts` above the `delivery` object for the exact condition to re-check before
+  adding them.
+
+## What the public page currently says instead (as of Spoken English Step 5)
 
 `/courses/spoken-english` shows only:
 
@@ -210,6 +244,13 @@ excerpt instead.
 - a conditional verified-evidence component (`components/spoken-english/
   SpokenEnglishVerifiedEvidence.tsx`) that currently renders nothing (no heading, no section)
   because no consent-confirmed Spoken English testimonial exists in `content/testimonials.ts` yet;
+- a learning-format section (`components/spoken-english/SpokenEnglishLearningFormat.tsx`, id
+  `spoken-english-learning-format`) confirming only that coaching is online, summarising the
+  Step 1/2 needs-led approach in two items, and listing every remaining operational fact (delivery
+  and people, timing, speaking practice and feedback, access and support, commercial details) as a
+  grouped, neutral pre-enrolment question with a hollow "to confirm" marker — never a checkmark —
+  plus one contextual WhatsApp action requesting the current arrangement; see "Learning-format
+  section field mapping" above for the complete field-by-field mapping;
 - the fail-closed, enquiry-only availability state (`components/spoken-english/
   SpokenEnglishAvailability.tsx`, id `spoken-english-availability`), correctly showing "ask about
   the current Spoken English option" since no Spoken English batch is published, with a

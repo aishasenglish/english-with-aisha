@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–4)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–5)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -781,6 +781,25 @@ handle; never fill these with placeholder or invented links.
   English-specific intake fields" for what a future genuine record would need before publication
   (including that audio/video evidence remains categorically unresolved pending a separate,
   fully-documented consent/redaction/withdrawal decision).
+- **Learning format and verified inclusions (Step 5)**: `SpokenEnglishLearningFormat.tsx` (id
+  `spoken-english-learning-format`), inserted after the conditional verified-evidence component
+  and before availability, confirms only the single owner-confirmed operational fact (online
+  delivery), in a compact panel kept intentionally narrow rather than stretched full-width;
+  summarises the stable needs-led approach in two items restating only Step 1/2 positioning (the
+  Step 3/4 process-summary items the implementing prompt allowed conditionally were withheld
+  because Step 3 remains "proposed", not owner-approved — see
+  `docs/spoken-english-offer-verification.md`'s "Learning-format section field mapping"); and lists
+  every other operational fact from that document's "Needs owner confirmation" rows as a grouped,
+  neutral pre-enrolment question (delivery and people, timing, speaking practice and feedback,
+  access and support, commercial details) using a hollow circle marker, never a checkmark, so it
+  cannot be mistaken for an included-features list. One contextual WhatsApp CTA ("Confirm the
+  Current Spoken English Format") asks Aisha to confirm the complete current arrangement; it never
+  says "Enrol now" or "Book a class", implies no urgency, and does not imply a place is available or
+  a price is fixed. No platform, group/private option, age/level eligibility, schedule, duration,
+  recording, diagnostic, practice/feedback mode or fee is presented as confirmed or included
+  anywhere in the section. `IncludedList`, `LearningFormats` and `PricingCard` remain absent from
+  this route (unchanged since Step 1) and continue to render normally on the other routes that use
+  them.
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions

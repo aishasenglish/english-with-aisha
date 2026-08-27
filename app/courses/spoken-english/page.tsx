@@ -8,6 +8,7 @@ import SpokenEnglishContextApplication from "@/components/spoken-english/SpokenE
 import SpokenEnglishCoachingProcess from "@/components/spoken-english/SpokenEnglishCoachingProcess";
 import SpokenEnglishFeedbackDemo from "@/components/spoken-english/SpokenEnglishFeedbackDemo";
 import SpokenEnglishVerifiedEvidence from "@/components/spoken-english/SpokenEnglishVerifiedEvidence";
+import SpokenEnglishLearningFormat from "@/components/spoken-english/SpokenEnglishLearningFormat";
 import SpokenEnglishAvailability from "@/components/spoken-english/SpokenEnglishAvailability";
 import SpokenEnglishFinalCTA from "@/components/spoken-english/SpokenEnglishFinalCTA";
 
@@ -38,6 +39,7 @@ export default function SpokenEnglishPage() {
       <SpokenEnglishCoachingProcess />
       <SpokenEnglishFeedbackDemo />
       <SpokenEnglishVerifiedEvidence />
+      <SpokenEnglishLearningFormat />
       <SpokenEnglishAvailability />
       <SpokenEnglishFinalCTA />
     </>
