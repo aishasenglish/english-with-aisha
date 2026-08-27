@@ -53,6 +53,20 @@ type TOEFLFeedbackArea = {
   body: string;
 };
 
+/** One tutor-diagnosis point in the illustrative feedback demonstration
+ *  (components/toefl/TOEFLFeedbackDemo.tsx). */
+type ToeflFeedbackPoint = {
+  id: string;
+  label: string;
+  body: string;
+};
+
+/** One "what changed" point in the illustrative feedback demonstration. */
+type ToeflImprovementPoint = {
+  id: string;
+  body: string;
+};
+
 export const toeflPage = {
   // "YYYY-MM-DD" -- when the format/scoring facts below were last checked against ETS's official
   // current-format pages. See docs/toefl-content-sources.md for the full per-claim URL mapping and
@@ -336,6 +350,77 @@ export const toeflPage = {
       "Tutor feedback supports preparation; it is not an official TOEFL score, score report or admission decision.",
     expectation:
       "Progress depends on the candidate's starting point, confirmed requirement, preparation time and consistent application of feedback; no TOEFL score can be guaranteed.",
+  },
+
+  // TOEFL Step 4: an original, explicitly-illustrative example created for this website — never a
+  // testimonial, never attributed to a real learner, and never given a score estimate (a single
+  // transcript can't responsibly demonstrate pronunciation, intelligibility, pace or phrasing,
+  // which require audio). Task terminology ("Write an Email") verified against ETS's current
+  // Writing task page -- see docs/toefl-content-sources.md.
+  feedbackDemo: {
+    id: "toefl-feedback-example",
+    eyebrow: "An illustrative TOEFL feedback example",
+    heading: "See how focused feedback can make a written response clearer.",
+    introduction:
+      "Useful feedback identifies what is unclear, explains why it matters and gives the candidate a manageable next action to apply.",
+    disclosure:
+      "This website-created example is for illustration only. It is not learner work, an official ETS question, a complete scored response, an official rating or a TOEFL score prediction.",
+    taskLabel: "Illustrative Write an Email practice",
+    situationHeading: "Situation",
+    situation:
+      "You registered for a Tuesday academic-writing workshop, but a required laboratory class has been moved to the same time. Write to the workshop coordinator, explain the conflict and ask whether you can attend Thursday's session instead.",
+    firstAttemptLabel: "First attempt",
+    firstAttempt: "Hello, I cannot come to the workshop because I have a lab. Change my time and tell me soon. Thanks.",
+    diagnosisHeading: "Tutor diagnosis",
+    feedbackPoints: [
+      {
+        id: "context",
+        label: "Context",
+        body: "The message mentions a workshop and lab, but it does not identify the registered Tuesday session or explain that the required lab was moved to the same time.",
+      },
+      {
+        id: "request",
+        label: "Request",
+        body: "“Change my time” is ambiguous. The coordinator needs to know that the writer is requesting Thursday's session and what to do if it is unavailable.",
+      },
+      {
+        id: "tone-clarity",
+        label: "Tone and clarity",
+        body: "The purpose is understandable, but the command can become a clear, appropriately polite request with enough information for the reader to respond.",
+      },
+    ] as ToeflFeedbackPoint[],
+    nextActionLabel: "Next revision priority",
+    nextAction:
+      "Identify the current booking, explain the exact conflict and make one specific, appropriately polite request for an alternative.",
+    revisionLabel: "Revised attempt",
+    revisedAttemptSubject: "Subject: Request to change workshop session",
+    revisedAttemptParagraphs: [
+      "Dear Workshop Coordinator,",
+      "I am registered for Tuesday's academic-writing workshop, but a required laboratory class has been moved to the same time. Could I attend Thursday's session instead? If that session is full, please let me know whether another time is available.",
+      "Thank you for your help.",
+      "Best,",
+      "[Name]",
+    ],
+    improvementHeading: "What changed",
+    improvements: [
+      { id: "specific-conflict", body: "The current registration and scheduling conflict are specific." },
+      { id: "explicit-alternative", body: "The requested Thursday alternative is explicit." },
+      { id: "appropriate-tone", body: "The tone gives the coordinator enough context to respond appropriately." },
+    ] as ToeflImprovementPoint[],
+    scoringBoundary:
+      "This comparison demonstrates a revision decision, not official TOEFL scoring. Tutor feedback cannot guarantee that a response will receive a particular score.",
+    speakingBoundary:
+      "This text example does not demonstrate Speaking feedback. Reviewing pronunciation, intelligibility, pace and phrasing requires an actual audio response.",
+  },
+
+  // TOEFL Step 4: heading copy for components/toefl/TOEFLVerifiedEvidence.tsx -- only ever
+  // rendered when at least one TOEFL-tagged, consent-confirmed content/testimonials.ts entry
+  // exists.
+  verifiedEvidence: {
+    eyebrow: "TOEFL learner experiences",
+    heading: "Preparation described by learners who completed the work.",
+    contextNote:
+      "Experiences are individual. Progress depends on the candidate's starting point, confirmed requirement, preparation time and consistent application of feedback.",
   },
 
   // TOEFL Step 1: no confirmed TOEFL intake exists yet (content/batches.ts). The shared

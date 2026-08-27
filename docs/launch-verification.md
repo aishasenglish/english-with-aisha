@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–3)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–4)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -401,6 +401,13 @@ handle; never fill these with placeholder or invented links.
   one of those remains "Needs owner confirmation" in `docs/toefl-offer-verification.md`. Tutor
   feedback is explicitly distinguished from an official TOEFL score, and the standard "no TOEFL
   score can be guaranteed" expectation statement appears once, not per stage.
+- **TOEFL feedback demonstration and evidence (TOEFL Step 4)**: `TOEFLFeedbackDemo.tsx` adds an
+  original, explicitly-illustrative `Write an Email` example (never learner work, never an ETS
+  question, never given a score estimate) with a visible boundary explaining that a text example
+  cannot demonstrate Speaking feedback (pronunciation, intelligibility and pace require actual
+  audio). `TOEFLVerifiedEvidence.tsx` renders nothing — `content/testimonials.ts` has no
+  TOEFL-tagged, consent-confirmed entry — see `docs/toefl-evidence-intake.md` for the intake
+  checklist a future genuine record must satisfy before publication.
 - **TOEFL inclusions**: `<IncludedList course={course} />` has been removed entirely from
   `/courses/toefl` — the five generic inclusion claims (live Zoom classes, weekly practice tests,
   full-length mocks, personal feedback, 1-on-1 consultation) do not render anywhere on that page.

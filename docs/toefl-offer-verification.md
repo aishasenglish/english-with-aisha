@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 3.
+**Last reviewed:** TOEFL Step 4.
 
 ## Allowed internal states
 
@@ -96,6 +96,10 @@ advice or an answer on Aisha's behalf.
   (`components/toefl/TOEFLCoachingProcess.tsx` — TOEFL Step 3), describing the teaching cycle
   without asserting any unconfirmed quantity, platform, frequency or turnaround, and without
   claiming a guaranteed score or a reproduction of ETS's scoring system;
+- an illustrative feedback demonstration and a conditional verified-evidence section
+  (`components/toefl/TOEFLFeedbackDemo.tsx`, `TOEFLVerifiedEvidence.tsx` — TOEFL Step 4), the
+  latter rendering nothing while `content/testimonials.ts` has no TOEFL-tagged, consent-confirmed
+  entry;
 - the shared, fail-closed availability fallback (`components/BatchTable.tsx`, extended in this
   step with optional `emptyStateHeading`/`emptyStateBody` props) at `id="toefl-availability"`,
   correctly showing "ask about the next suitable TOEFL start" since no TOEFL batch is published,

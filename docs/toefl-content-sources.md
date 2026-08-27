@@ -6,7 +6,7 @@ score-requirement and four-skill curriculum sections (`content/toefl.ts`,
 maintenance record, not something imported into the website — do not paste full official task
 instructions, sample prompts or examiner comments here or into the site itself.
 
-**Last checked:** 27 August 2026 (Steps 1, 2 and 3).
+**Last checked:** 27 August 2026 (Steps 1, 2, 3 and 4).
 
 **Warning:** do not use old cached TOEFL blogs, third-party "prediction file" sites, pre-2026
 coaching material or TOEFL Essentials/TOEFL ITP resources as a source for TOEFL iBT content. ETS's
@@ -252,6 +252,28 @@ matched before building the feedback categories on top of them:
   already established in `curriculum.skills`' Speaking focus areas.
 
 No new official ETS scoring rubric, sample response or task prompt was reproduced for this step.
+
+## TOEFL Step 4: feedback-demonstration sourcing
+
+`content/toefl.ts`'s `feedbackDemo` (rendered by `components/toefl/TOEFLFeedbackDemo.tsx`) is an
+original, website-created illustrative example — not sourced ETS content. Two facts were
+rechecked directly for this step:
+
+- **`Write an Email` is still a current TOEFL iBT Writing task family** — reconfirmed against
+  source 4 (`.../about/content/writing.html`) on 27 August 2026, alongside `Build a Sentence` and
+  `Write for an Academic Discussion`.
+- **Speaking evaluation depends on audio, not just text** — reconfirmed against source 5
+  (`.../about/content/speaking.html`), which describes producing speech that is "accurate and
+  clearly intelligible" and maintaining "a natural speaking pace" — both audio-dependent
+  qualities a written transcript cannot demonstrate. This directly supports
+  `feedbackDemo.speakingBoundary`'s statement that a text example cannot demonstrate Speaking
+  feedback.
+
+The illustrative scenario, both attempts (first and revised), the tutor diagnosis and the "what
+changed" points are entirely original text written for this website. None of it paraphrases,
+imitates or reproduces an official ETS question, model answer, scoring rubric or score-report
+layout. No official scoring inference is made anywhere in the demonstration — the scoring boundary
+statement explicitly disclaims that the comparison represents official TOEFL scoring.
 
 ## Conflicts between sources
 
