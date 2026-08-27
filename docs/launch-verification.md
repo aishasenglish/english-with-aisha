@@ -367,7 +367,7 @@ handle; never fill these with placeholder or invented links.
 - See `docs/pte-offer-verification.md`'s "Mobile performance and accessibility hardening" section
   for the complete finding list and QA method.
 
-## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–6)
+## High priority — before publishing a TOEFL fee, intake or format claim (TOEFL Steps 1–7)
 
 - **TOEFL positioning rebuilt**: `/courses/toefl` now uses dedicated
   `components/toefl/{TOEFLHero,TOEFLAuthorityStrip,TOEFLFit,TOEFLScoreProfile,
@@ -443,12 +443,29 @@ handle; never fill these with placeholder or invented links.
   FIXTURE" and `git status` before commit). The legacy `content/courses.ts` TOEFL `price: 10000` is
   confirmed unreachable on this route — `PricingCard` is never imported near `/courses/toefl`, and
   no TOEFL JSON-LD or `Offer` structured data exists anywhere on the site.
-- **TOEFL availability**: the page-level `<BatchTable>` wrapper now uses `id="toefl-availability"`
-  with a truthful "Current TOEFL availability" section heading and TOEFL-specific empty-state
-  heading/body/WhatsApp message (`components/BatchTable.tsx` was extended with optional
-  `emptyStateHeading`/`emptyStateBody` props, backward-compatible with every other caller). All
-  TOEFL-tagged records in `content/batches.ts` remain historical (past dates, `"Closed"`,
-  `published: false`), so the page currently and correctly shows the no-intake enquiry state.
+- **TOEFL current availability and intake handling (TOEFL Step 7)**: the page-level `<BatchTable>`
+  wrapper has been replaced entirely by `components/toefl/TOEFLAvailability.tsx` (id
+  `toefl-availability`), a dedicated server component that reads
+  `getPublishedUpcomingBatches("toefl")` directly and controls its own TOEFL-specific heading,
+  no-intake checklist and enquiry message rather than the shared cross-programme fallback. Both
+  TOEFL-tagged records in `content/batches.ts` (`batch-001`, `batch-003`) remain historical (past
+  dates, `"Closed"`, `published: false`), so production correctly renders "Ask about the next
+  suitable TOEFL start." with an 8-item "Include these details" checklist (institution, required
+  overall/section scores and scale, previous result or starting point, planned test date and
+  deadline, test-centre/Home Edition plan, country/time zone, usual availability), a single
+  WhatsApp CTA ("Check TOEFL Availability"), and an explicit "sending an enquiry does not reserve a
+  place" reassurance — no link to `/batches` since it holds no additional relevant TOEFL
+  information. `isCompleteToeflIntake()` additionally requires non-empty `duration` and `schedule`
+  before any future record could render as a card, and publishing one also requires separate owner
+  confirmation (recorded in `docs/toefl-offer-verification.md`, not a batch field) that the
+  coaching actually covers the TOEFL iBT format applicable to that intake's test-date context.
+  Verified via 11 temporary fixture records (valid, missing-schedule, missing-duration,
+  unpublished, closed, past-dated-Open, Filling-Fast with current/missing/stale
+  `statusVerifiedAt`, same-day, >3-records-triggering-the-`/batches`-link, and an unrelated-programme
+  record) — every one behaved correctly and all fixtures were fully reverted from
+  `content/batches.ts` before commit, confirmed via `grep` for "QA FIXTURE" and `git diff`. The
+  shared `<BatchTable>` itself is untouched and remains in use by the homepage, `/batches`, IELTS
+  and PTE.
 - **TOEFL FAQ**: the generic 17-item `<FAQAccordion />` has been removed entirely from
   `/courses/toefl`. No dedicated TOEFL FAQ exists yet (a later TOEFL step).
 - **Cross-site corrections**: `content/homeCourses.ts`'s TOEFL override

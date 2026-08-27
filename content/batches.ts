@@ -20,11 +20,14 @@ export type Batch = {
   verifiedAt: string;
   /**
    * "YYYY-MM-DD" — required alongside `status: "Filling Fast"` on any published record shown by a
-   * programme's specialist availability component (see components/ielts/IELTSAvailability.tsx and
-   * components/pte/PTEAvailability.tsx). "Filling Fast" is a scarcity claim, so it must carry its
-   * own recent, manual verification date separate from `verifiedAt`'s general accuracy check —
-   * never inferred from proximity to `startDate`. If absent, those components display the record
-   * as the neutral "Open" instead of rendering an unverified scarcity claim.
+   * programme's specialist availability component (see components/ielts/IELTSAvailability.tsx,
+   * components/pte/PTEAvailability.tsx and components/toefl/TOEFLAvailability.tsx). "Filling Fast"
+   * is a scarcity claim, so it must carry its own recent, manual verification date separate from
+   * `verifiedAt`'s general accuracy check — never inferred from proximity to `startDate`. If
+   * absent, those components display the record as the neutral "Open" instead of rendering an
+   * unverified scarcity claim. The repository has no enforceable freshness window for how "recent"
+   * this date must remain — a present-but-old `statusVerifiedAt` still displays as "Filling Fast"
+   * until a maintainer manually re-verifies or downgrades it; see docs/updating-batches.md.
    */
   statusVerifiedAt?: string;
 };

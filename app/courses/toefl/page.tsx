@@ -9,9 +9,8 @@ import TOEFLFeedbackDemo from "@/components/toefl/TOEFLFeedbackDemo";
 import TOEFLVerifiedEvidence from "@/components/toefl/TOEFLVerifiedEvidence";
 import TOEFLLearningFormat from "@/components/toefl/TOEFLLearningFormat";
 import TOEFLPricing from "@/components/toefl/TOEFLPricing";
-import BatchTable from "@/components/BatchTable";
+import TOEFLAvailability from "@/components/toefl/TOEFLAvailability";
 import TOEFLFinalCTA from "@/components/toefl/TOEFLFinalCTA";
-import { toeflPage } from "@/content/toefl";
 
 // Batch publication status is date-dependent (see lib/batches.ts); revalidate at least
 // daily so a page built once doesn't keep showing an intake after its date has passed.
@@ -41,25 +40,9 @@ export default function TOEFLPage() {
       <TOEFLVerifiedEvidence />
       <TOEFLLearningFormat />
       <TOEFLPricing />
+      <TOEFLAvailability />
 
-      {/* Dedicated availability and specialist FAQ are later steps */}
-      {/* TOEFL Step 1: no confirmed TOEFL intake exists yet -- the shared, fail-closed
-          BatchTable correctly shows its truthful "ask about the next available intake" state.
-          A dedicated TOEFLAvailability component (mirroring IELTS/PTE Step 7) is a later step. */}
-      <section id={toeflPage.availability.id} className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <h2 className="font-serif text-2xl md:text-3xl font-medium text-ink mb-8">
-            {toeflPage.availability.sectionHeading}
-          </h2>
-          <BatchTable
-            courseSlug="toefl"
-            fallbackMessage={toeflPage.availability.fallbackMessage}
-            emptyStateHeading={toeflPage.availability.enquiryHeading}
-            emptyStateBody={toeflPage.availability.enquiryBody}
-          />
-        </div>
-      </section>
-
+      {/* TOEFL-specific FAQ handled later */}
       <TOEFLFinalCTA />
     </>
   );

@@ -184,6 +184,67 @@ applies the same stricter rules IELTS Step 7 established, on top of the general 
   fee into a batch record.** Link or reference the same authoritative `content/ptePricing.ts`
   record instead of hand-entering an amount into `content/batches.ts`.
 
+## 9c. TOEFL-specific publication rules (Step 7)
+
+`/courses/toefl` no longer uses the shared `<BatchTable>` fallback —
+`components/toefl/TOEFLAvailability.tsx` reads `getPublishedUpcomingBatches("toefl")` directly and
+applies the same stricter rules IELTS/PTE Step 7 established, on top of the general ones above:
+
+- **`duration` and `schedule` are required, not optional, for a TOEFL record to display.** A
+  record missing either is filtered out by `isCompleteToeflIntake()` and never rendered — not
+  shown with a "TBA" or "To be confirmed" placeholder. If you don't yet know the schedule, leave
+  the record unpublished (or `duration`/`schedule` empty); the page will correctly show its
+  no-intake enquiry state instead of an incomplete card.
+- **Publishing a TOEFL record also requires confirming it covers the relevant TOEFL iBT format.**
+  The presence of `toefl` in `courseSlugs` is not proof that the actual coaching material has been
+  rebuilt around the format introduced 21 January 2026 — before setting `published: true` on any
+  TOEFL-tagged batch, separately confirm with Aisha that the coaching offered for that specific
+  intake covers the format applicable to candidates' planned test dates. Record that confirmation
+  in `docs/toefl-offer-verification.md`, not just in the batch record itself.
+- **`Filling Fast` requires `statusVerifiedAt`.** Set this to today's date whenever you manually
+  confirm that remaining capacity genuinely justifies the scarcity wording — never infer it from
+  how close the start date is. If `statusVerifiedAt` is missing, `TOEFLAvailability` silently
+  displays the record as the neutral `Open` instead of an unverified scarcity claim. This is the
+  same field IELTS and PTE use (see the shared comment on `statusVerifiedAt` in
+  `content/batches.ts`) — re-verify and update it periodically; there's no automatic expiry, so an
+  old-but-present `statusVerifiedAt` still displays as "Filling Fast" until a maintainer manually
+  re-verifies or downgrades it to `Open`.
+- **No future date may be inferred from previous dates.** Do not add a new TOEFL batch by
+  extrapolating from the spacing between the closed historical records already in this file, or
+  from the existence of an old multi-course batch that happened to include the `toefl` slug —
+  every `startDate` must come from a real, confirmed schedule (this restates rule 8 above).
+- **One-to-one availability is not modelled by this file.** `content/batches.ts`'s `Batch` type
+  and `TOEFLAvailability` only ever represent scheduled group intakes. Do not add a batch record
+  to imply one-to-one TOEFL coaching is available — that would need a separate, explicitly
+  owner-confirmed data source (whether it's currently offered, which TOEFL iBT format it covers,
+  how scheduling works, whether it has a separate fee, capacity, and whether it uses a fixed start
+  date) that doesn't exist yet. See `docs/toefl-offer-verification.md`.
+- **No published intake means the enquiry state renders, and that state does not link to
+  `/batches`.** A link to another page showing the same "nothing scheduled" information would
+  send the candidate in a conversion loop. `TOEFLAvailability` only links to `/batches` when more
+  than 3 complete, published, non-past TOEFL records genuinely exist, so a visitor is never sent to
+  a page with no additional relevant TOEFL information.
+- **Sending an enquiry is never described as a reservation, and never called a waitlist.** Both
+  the no-intake and scheduled states are careful not to imply "join the next batch," "reserve my
+  seat," "applications are open," "limited places," "next intake coming soon," or a waitlist —
+  none of those exist as real, consent-managed systems on this site.
+- **Do not label an intake card TOEFL Essentials or TOEFL ITP.** `TOEFLAvailability` currently
+  always shows the neutral "TOEFL iBT Preparation" title. Do not claim Home Edition-specific
+  support for an intake unless separately owner-confirmed for that exact record.
+- **Same-day starts:** this codebase does not automatically treat a batch starting today as still
+  open. `isPubliclyVisible()` in `lib/batches.ts` only excludes a batch once its `startDate` is
+  strictly *before* today in Pakistan time, so a same-day batch would still show unless you
+  manually set `status: "Closed"` or `published: false` once same-day enrolment is no longer
+  accepted. There is no automated same-day cutoff — treat this as a manual daily check on the
+  morning of a start date, not a rule the code enforces for you.
+- **Expired records are not duplicated with a guessed follow-up date.** Once a batch's date
+  passes, leave it in the array (unpublished, closed, for history) rather than replacing it with a
+  new record with an invented date. The two existing TOEFL-slugged historical records
+  (`batch-001`, `batch-003`) are examples of this.
+- **If Step 6 later publishes a fee for a specific TOEFL intake and format, never type a duplicate
+  fee into a batch record.** Link or reference the same authoritative `content/toeflPricing.ts`
+  record instead of hand-entering an amount into `content/batches.ts`.
+
 ## 10. Keep `verifiedAt` current
 
 Update `verifiedAt` to today's date whenever you check that a record's information (date, status,

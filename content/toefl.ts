@@ -83,6 +83,13 @@ type ToeflEnrolmentDetail = {
   label: string;
 };
 
+/** One "bring these details" checklist item in the no-intake availability state
+ *  (components/toefl/TOEFLAvailability.tsx). */
+type ToeflAvailabilityDetail = {
+  id: string;
+  label: string;
+};
+
 export const toeflPage = {
   // "YYYY-MM-DD" -- when the format/scoring facts below were last checked against ETS's official
   // current-format pages. See docs/toefl-content-sources.md for the full per-claim URL mapping and
@@ -525,19 +532,45 @@ export const toeflPage = {
     },
   },
 
-  // TOEFL Step 1: no confirmed TOEFL intake exists yet (content/batches.ts). The shared
-  // BatchTable's own generic fallback message doesn't request the exact institution/score/scale
-  // this programme needs, so this overrides it — see components/BatchTable.tsx's optional
-  // `fallbackMessage` prop. A dedicated TOEFLAvailability component (mirroring IELTS/PTE Step 7)
-  // is a later step.
+  // TOEFL Step 7: copy for components/toefl/TOEFLAvailability.tsx, replacing the TOEFL Step 1
+  // page-level <BatchTable> wrapper. Keep `id` stable -- other CTAs/links may target
+  // "#toefl-availability". Both the no-intake enquiry state and the verified scheduled state
+  // share the section id and eyebrow; only one H2 renders per state. As of this step,
+  // content/batches.ts has no published future TOEFL record (its two toefl-tagged records are
+  // both historical: past dates, "Closed", and unpublished), so production renders the no-intake
+  // enquiry state below.
   availability: {
     id: "toefl-availability",
-    sectionHeading: "Current TOEFL availability",
+    eyebrow: "Current availability",
+
+    // No-intake enquiry state (the one currently shown).
     enquiryHeading: "Ask about the next suitable TOEFL start.",
     enquiryBody:
-      "Share your confirmed TOEFL iBT requirement, test or application deadline, country/time zone and usual availability so Aisha can confirm whether a suitable option is currently available.",
-    fallbackMessage:
-      "Hi Aisha! I would like to ask about current TOEFL iBT availability. My institution/programme is [name], the required overall and section scores are [details] on the [1–6 or 0–120] scale, my test/application deadline is [date], my country/time zone is [details], and the days or times that usually suit me are [details].",
+      "No future TOEFL start date is currently confirmed on this page. Share your institution's TOEFL iBT requirement, previous result or starting point, deadline, time zone and usual availability so Aisha can confirm whether a suitable option is currently available.",
+    detailsHeading: "Include these details",
+    enquiryDetails: [
+      { id: "institution", label: "Institution or programme receiving the score" },
+      { id: "required-scores", label: "Required overall and any section scores" },
+      { id: "score-scale", label: "Required score scale: 1–6 or a still-published 0–120 requirement" },
+      { id: "starting-point", label: "Previous TOEFL result or current starting point" },
+      { id: "deadline", label: "Planned test date and application deadline" },
+      { id: "test-centre-home-edition", label: "Test-centre or Home Edition plan, if already known" },
+      { id: "location", label: "Country and time zone" },
+      { id: "schedule-fit", label: "Days and times that usually suit you" },
+    ] as ToeflAvailabilityDetail[],
+    enquiryCtaLabel: "Check TOEFL Availability",
+    enquiryMessage:
+      "Hi Aisha! I would like to ask about current TOEFL iBT availability. My institution/programme is [name], its required overall and section scores are [details] on the [1–6 or 0–120] scale, my previous TOEFL result or current starting point is [details], my planned test date and application deadline are [dates], my test-centre or Home Edition plan is [if known], my country/time zone is [details], and the days or times that usually suit me are [details]. Please confirm whether a suitable current option is available.",
+    reservationNote: "Sending an enquiry does not reserve a place, and no payment is required to ask.",
+
+    // Verified scheduled state (renders only once getPublishedUpcomingBatches("toefl") returns at
+    // least one complete record -- see components/toefl/TOEFLAvailability.tsx's
+    // isCompleteToeflIntake).
+    scheduledHeading: "Review the confirmed TOEFL intake details.",
+    scheduledBody: "Check the start date, schedule, format and Pakistan time before asking whether this intake suits your requirement.",
+    timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
+    intakeCtaLabel: "Ask About This TOEFL Intake",
+    moreAvailabilityLabel: "View all TOEFL availability",
   },
 
   // TOEFL Step 1: a single strong WhatsApp action only — the configured-form/email dual-path

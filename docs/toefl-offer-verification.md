@@ -5,7 +5,7 @@ Internal record of what the current TOEFL iBT offer can and cannot claim publicl
 on the public page, and nothing here should be read as legal advice, visa advice, admissions
 advice or an answer on Aisha's behalf.
 
-**Last reviewed:** TOEFL Step 6.
+**Last reviewed:** TOEFL Step 7.
 
 ## Allowed internal states
 
@@ -124,7 +124,39 @@ imported on that route) and remains removed from public authority.
   When Aisha supplies one, record the exact approved public wording, owner-confirmation date and a
   privacy-safe confirmation description here before flipping `status` to `"published"`.
 
-## What the public page currently says instead (as of TOEFL Step 6)
+## Availability authority and state (TOEFL Step 7)
+
+- `components/toefl/TOEFLAvailability.tsx` (id `toefl-availability`) replaces the TOEFL Step 1
+  page-level `<BatchTable>` wrapper. It reads `getPublishedUpcomingBatches("toefl")` from
+  `content/batches.ts` directly, mirroring `components/ielts/IELTSAvailability.tsx` and
+  `components/pte/PTEAvailability.tsx`'s established fail-closed pattern — `content/batches.ts`
+  remains the single, shared, publication-authoritative availability source across all three
+  programmes; TOEFL has no separate availability data file.
+- **Current public state: no-intake enquiry.** Both TOEFL-tagged records in `content/batches.ts`
+  (`batch-001`, `batch-003`) have past start dates, `status: "Closed"` and `published: false`, so
+  `isPubliclyVisible()` (`lib/batches.ts`) excludes both and `TOEFLAvailability.tsx` renders the
+  honest "Ask about the next suitable TOEFL start." enquiry panel with its 8-item "Include these
+  details" checklist and a single WhatsApp CTA ("Check TOEFL Availability").
+- `isCompleteToeflIntake()` additionally requires non-empty `duration` and `schedule` before a
+  record may render as a confirmed intake card — the generic `Batch` type allows both to be
+  omitted, but an incomplete record is treated as unpublished rather than shown with a "TBA"
+  placeholder.
+- Publishing a future TOEFL record requires, beyond the generic gates every programme shares: a
+  stable unique `id`, `toefl` in `courseSlugs`, a genuine future `startDate`, `status: "Open"` or a
+  manually re-verified `"Filling Fast"` (via `statusVerifiedAt`), confirmed `format`, `duration`
+  and `schedule`, `timezone: "Asia/Karachi"`, `published: true`, a current `verifiedAt`, **and**
+  separate owner confirmation (recorded here, not in the batch record itself — the `Batch` type has
+  no field for this) that the coaching offered for that specific intake covers the TOEFL iBT format
+  applicable to candidates' planned test dates. No such confirmation exists yet for any future
+  TOEFL date.
+- No one-to-one TOEFL availability is modelled or implied. `content/batches.ts` only represents
+  scheduled group intakes; a separate one-to-one data source (status, format coverage, scheduling,
+  fee, capacity) would need its own explicit owner confirmation before being built.
+- TOEFL pricing (`content/toeflPricing.ts`, Step 6) and TOEFL availability
+  (`content/batches.ts` + `TOEFLAvailability.tsx`, Step 7) remain two independent, separately
+  gate-kept states — a future published price does not imply a published intake, and vice versa.
+
+## What the public page currently says instead (as of TOEFL Step 7)
 
 `/courses/toefl` shows only:
 
@@ -168,11 +200,19 @@ imported on that route) and remains removed from public authority.
   language) because `content/toeflPricing.ts`'s `toeflPricing.status` is `"enquire"`; a single
   WhatsApp CTA ("Ask for the Current TOEFL Fee") requests the complete current offer alongside the
   candidate's exact requirement;
-- the shared, fail-closed availability fallback (`components/BatchTable.tsx`, extended in an
-  earlier step with optional `emptyStateHeading`/`emptyStateBody` props) at `id="toefl-availability"`,
-  correctly showing "ask about the next suitable TOEFL start" since no TOEFL batch is published,
-  with a TOEFL-specific WhatsApp fallback message requesting the exact institution, score
-  requirement, scale, deadline, time zone and usual availability;
+- a dedicated, fail-closed availability section (`components/toefl/TOEFLAvailability.tsx` — TOEFL
+  Step 7, id `toefl-availability`, replacing the earlier page-level `<BatchTable>` wrapper),
+  correctly showing "Ask about the next suitable TOEFL start." since both TOEFL-tagged
+  `content/batches.ts` records are historical (past dates, `"Closed"`, unpublished); its 8-item
+  "Include these details" checklist requests the institution, required overall/section scores and
+  scale, previous result or starting point, planned test date and deadline, test-centre/Home
+  Edition plan, country/time zone and usual availability; a single WhatsApp CTA ("Check TOEFL
+  Availability") and an explicit "sending an enquiry does not reserve a place" reassurance; no link
+  to `/batches` while it holds no additional relevant TOEFL information. A future confirmed intake
+  would render as a card (`TOEFL iBT Preparation`, `<time>`-marked start date, schedule + Pakistan
+  time, format, duration, text status, last-verified date, one intake-specific CTA) only once
+  `isCompleteToeflIntake()` and every other Part D gate — including separate owner confirmation of
+  current-format coverage — is satisfied;
 - a TOEFL-specific final CTA (`components/toefl/TOEFLFinalCTA.tsx`) with a single WhatsApp action,
   reusing the hero's exact message.
 
@@ -180,11 +220,13 @@ It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the d
 components above), `<IncludedList>` (removed entirely), `<LearningFormats>` (never rendered on this
 route — its live-group/one-to-one/Zoom/recordings/personal-feedback copy is not owner confirmation
 for the current TOEFL offer), `<PricingCard>` (removed entirely — never imported on
-`/courses/toefl`, so `content/courses.ts`'s legacy `price: 10000` cannot render there), or the
+`/courses/toefl`, so `content/courses.ts`'s legacy `price: 10000` cannot render there), the shared
+`<BatchTable>` page-level wrapper (replaced entirely by `TOEFLAvailability.tsx`, though
+`<BatchTable>` itself remains in use by the homepage, `/batches` and other programme routes), or the
 generic 17-item `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an
 empty heading in their place — they are simply absent until their own verified replacement step. A
-dedicated availability component, a specialist FAQ and the enquiry-handoff form variant all remain
-deliberately deferred to their own later TOEFL steps, mirroring the IELTS and PTE sequence.
+specialist FAQ and the enquiry-handoff form variant remain deliberately deferred to their own later
+TOEFL steps, mirroring the IELTS and PTE sequence.
 
 ## Global FAQ audit (TOEFL Step 1)
 
