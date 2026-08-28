@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 8).
+**Last checked:** 28 August 2026 (Step 9).
 
 ## Canonical owner facts used
 
@@ -253,6 +253,21 @@ answered as new copy, so this file carries no independent factual claim needing 
 
 **Review date.** 28 August 2026 (Step 8). Recheck this section only if a question's wording changes
 or a new claim is added that doesn't already trace to an earlier step's sourced position.
+
+### Step 9 — final CTA and enquiry-handoff source basis
+
+`content/spokenEnglishEnquiry.ts` introduces no new source. The final-stage fields, WhatsApp
+message, email subject/body, and form-variant labels/placeholders/success/fallback copy are taken
+verbatim from the implementing prompt's own specified wording. The locked programme label "Spoken
+English Coaching" was deliberately defined fresh (the prompt's own permitted alternative) rather
+than imported from `content/courses.ts`'s legacy `name` field ("Spoken English & Fluency"), since
+that legacy record's tagline/summary/whoFor/modules/includes/price remain non-authoritative for
+this route (see the file-level comment on that record). The corrected "what happens next" list
+(`spokenEnglishFormVariant.whatHappensNext`) removes only the exam-code/score/work-sample line from
+the shared `leadCapture` list — every other word is unchanged in spirit from the original.
+
+**Review date.** 28 August 2026 (Step 9). Recheck this section only if the enquiry fields, message
+text, or form-variant copy are reworded.
 
 ## Positioning versus formal assessment claims
 

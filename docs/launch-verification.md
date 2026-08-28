@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–8)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–9)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -848,6 +848,25 @@ handle; never fill these with placeholder or invented links.
   shared FAQ edit was needed. No `FAQPage` JSON-LD was added. See
   `docs/spoken-english-offer-verification.md`'s "Specialist FAQ (Step 8)" section for the complete
   record.
+- **Final CTA and enquiry handoff (Step 9)**: `content/spokenEnglishEnquiry.ts` centralises the
+  canonical final-stage enquiry fields (6 compact groups) and the full WhatsApp/form-fallback/email
+  message text. `components/spoken-english/SpokenEnglishFinalCTA.tsx` (rewritten to mirror
+  `TOEFLFinalCTA.tsx`/`PTEFinalCTA.tsx`) always shows WhatsApp as the primary action and decides the
+  secondary action on the server via `formsAreConfigured()` — the allowlisted detailed-enquiry link
+  (`/free-diagnostic-test?programme=spoken-english&source=spoken-english-page`) when Formspree is
+  configured, otherwise the canonical `mailto:` fallback — never both. `lib/enquiryQuery.ts` gained
+  the exact-match `"spoken-english"` programme/source allowlist entries (locked programme label
+  "Spoken English Coaching", defined fresh rather than imported from the legacy course record);
+  `components/DiagnosticForm.tsx` gained a `"spoken-english"` `VARIANT_CONFIG` entry with
+  Spoken-English-specific labels/placeholders/success/fallback copy, deliberately excluded from the
+  analytics maps until a reviewed Step 12 extension. `app/free-diagnostic-test/page.tsx`'s shared
+  "What happens next" list was given a small typed per-variant override so Spoken English visitors
+  never see the exam-code/score/work-sample line meant for the exam-preparation variants — every
+  other variant's copy is unchanged. No audio, file, payment, or sensitive third-party data is
+  requested anywhere in the form. Verified live this step with a temporary, fully-reverted
+  `.env.local` Formspree-endpoint fixture confirming both the configured and unconfigured branches
+  render correctly. See `docs/spoken-english-offer-verification.md`'s "Final CTA and enquiry
+  handoff (Step 9)" section for the complete record.
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions

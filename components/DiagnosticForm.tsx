@@ -8,6 +8,7 @@ import { leadCapture } from "@/content/leadCapture";
 import { ieltsFinalEnquiry, ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFinalEnquiry, pteFormVariant } from "@/content/pteEnquiry";
 import { toeflFinalEnquiry, toeflFormVariant } from "@/content/toeflEnquiry";
+import { spokenEnglishFinalEnquiry, spokenEnglishFormVariant } from "@/content/spokenEnglishEnquiry";
 import type { EnquirySource, EnquiryVariant } from "@/lib/enquiryQuery";
 import { track } from "@/lib/analytics/track";
 import type { AnalyticsErrorType, AnalyticsProgramme, AnalyticsSource } from "@/lib/analytics/events";
@@ -15,7 +16,12 @@ import type { AnalyticsErrorType, AnalyticsProgramme, AnalyticsSource } from "@/
 /** Which analytics programme (if any) each form variant reports as, and which resolved `source`
  *  value is expected to accompany it — PTE Step 12 generalises the previous IELTS-only analytics
  *  branch; TOEFL Step 12 extends it again. "general" has no entry: the generic form deliberately
- *  stays outside programme-specific conversion tracking (see docs/analytics-event-map.md). */
+ *  stays outside programme-specific conversion tracking (see docs/analytics-event-map.md).
+ *  "spoken-english" (Step 9) is also deliberately absent from both maps below — its
+ *  assessment_form_start/submit/error events stay off until a reviewed Step 12 extension formally
+ *  adds "spoken-english" to lib/analytics's programme/source allowlists; adding it to only one of
+ *  these two maps (or to VARIANT_CONFIG without updating analytics) would create an inconsistent
+ *  contract, so for now it is added to neither. */
 const ANALYTICS_PROGRAMME_BY_VARIANT: Partial<Record<EnquiryVariant, AnalyticsProgramme>> = {
   ielts: "ielts",
   pte: "pte",
@@ -125,6 +131,25 @@ const VARIANT_CONFIG: Record<EnquiryVariant, VariantConfig> = {
     unconfiguredMessage: toeflFinalEnquiry.whatsappMessage,
     successContinueMessage: toeflFinalEnquiry.whatsappMessage,
     errorFallbackMessage: toeflFinalEnquiry.whatsappMessage,
+  },
+  // Spoken English Step 9: deliberately absent from ANALYTICS_PROGRAMME_BY_VARIANT/
+  // ANALYTICS_SOURCE_BY_VARIANT above -- no assessment_form_* event fires for this variant until a
+  // reviewed Step 12 extension formally adds it to lib/analytics's allowlists.
+  "spoken-english": {
+    locked: true,
+    locationLabel: spokenEnglishFormVariant.locationLabel,
+    locationPlaceholder: spokenEnglishFormVariant.locationPlaceholder,
+    situationLabel: spokenEnglishFormVariant.situationLabel,
+    situationPlaceholder: spokenEnglishFormVariant.situationPlaceholder,
+    goalLabel: spokenEnglishFormVariant.goalLabel,
+    goalPlaceholder: spokenEnglishFormVariant.goalPlaceholder,
+    submissionSubject: spokenEnglishFormVariant.submissionSubject,
+    submitButtonLabel: "Send My Spoken English Enquiry",
+    success: spokenEnglishFormVariant.success,
+    fallback: spokenEnglishFormVariant.unconfiguredFallback,
+    unconfiguredMessage: spokenEnglishFinalEnquiry.whatsappMessage,
+    successContinueMessage: spokenEnglishFinalEnquiry.whatsappMessage,
+    errorFallbackMessage: spokenEnglishFinalEnquiry.whatsappMessage,
   },
 };
 

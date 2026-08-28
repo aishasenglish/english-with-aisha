@@ -5,11 +5,11 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 8 (28 August 2026). Step 8 added the dedicated eight-question
-specialist FAQ (`content/spokenEnglishFaqs.ts` + `components/spoken-english/SpokenEnglishFAQ.tsx`).
-It resolved no operational field — every changing fact is linked to its Step 5-7 section instead of
-being answered directly — and exposed no genuinely new operational offer question. See "Specialist
-FAQ (Step 8)" below for the complete record.
+**Last reviewed:** Spoken English Step 9 (28 August 2026). Step 9 turned the final section into a
+low-friction enquiry handoff and extended the shared allowlisted IELTS/PTE/TOEFL form-variant
+architecture with a locked "spoken-english" variant. It resolved no operational field and requested
+no new information beyond what Step 1 onward already asks for — see "Final CTA and enquiry handoff
+(Step 9)" below for the complete record.
 
 ## Allowed internal states
 
@@ -165,6 +165,107 @@ A Spoken English testimonial may render on the public page only when all of the 
 Rewriting a person's quote to improve its grammar is not permitted without their explicit approval
 of the final public wording — request permission for an edited version, or use a clearly approved
 excerpt instead.
+
+## Final CTA and enquiry handoff (Step 9)
+
+`content/spokenEnglishEnquiry.ts` is now the single canonical source for the final-stage enquiry
+fields and the full WhatsApp/form-fallback/email message text — `content/spokenEnglish.ts`'s
+`finalCta` holds only structural copy (eyebrow, heading, body, button labels, response
+expectation). `components/spoken-english/SpokenEnglishFinalCTA.tsx` was rewritten to mirror
+`components/toefl/TOEFLFinalCTA.tsx` and `components/pte/PTEFinalCTA.tsx` exactly.
+
+- **Step 9 implementation date:** 2026-08-28.
+- **Canonical final enquiry fields** (`spokenEnglishEnquiryFields`, exactly six compact groups):
+  main speaking situation/listener/audience; what to communicate or achieve; what currently becomes
+  difficult; what the learner can already manage, in their own words; any important timeline;
+  country/time zone/usual availability/format preference. A group or one-to-one preference is
+  requested only as a preference to confirm, never as proof either format exists.
+- **WhatsApp/form/email action logic:** WhatsApp is always the primary action
+  (`spokenEnglishFinalEnquiry.whatsappMessage`). The secondary action is decided on the server via
+  `formsAreConfigured()` — the allowlisted detailed-enquiry link
+  (`/free-diagnostic-test?programme=spoken-english&source=spoken-english-page`) when Formspree is
+  genuinely configured, otherwise the canonical `mailto:` built from `site.email` via `emailLink()`
+  with `spokenEnglishFinalEnquiry.emailSubject`/`emailBody`. Exactly two final actions ever render;
+  WhatsApp, the detailed form and email are never shown simultaneously.
+- **Form configuration fail-closed behaviour:** unchanged shared logic
+  (`lib/forms.ts`'s `isValidFormspreeEndpoint()`/`formsAreConfigured()`) — an empty, placeholder,
+  non-HTTPS, wrong-host or malformed endpoint always falls back to the email action, never a broken
+  form link. Verified live this step with a temporary local-only `.env.local` Formspree URL fixture
+  (see "QA performed" below) and confirmed reverted before this commit.
+- **Allowlisted programme and source values:** `lib/enquiryQuery.ts`'s `EnquirySource` gained
+  `"spoken-english-page"`, `EnquiryVariant` gained `"spoken-english"`, and `PROGRAMME_QUERY_MAP`
+  maps only the exact key `"spoken-english"` to the locked programme label `"Spoken English
+  Coaching"` (deliberately defined fresh, per the implementing prompt's own alternative — not
+  imported from `content/courses.ts`'s legacy `tagline`/`price`/`modules`/`includes`). Any other
+  value (wrong case, underscore, empty, unknown) falls back to the general form — confirmed live
+  this step.
+- **Privacy/data-minimisation boundaries:** the form requests no audio, files, passport/national-ID/
+  visa data, employer/client names, medical/therapy/speech-language records, payment credentials,
+  passwords or exact home address. `spokenEnglishFormVariant`'s placeholders explicitly model
+  anonymous descriptions ("my manager", "a client") rather than named third parties. The shared
+  `leadCapture.privacyNote` ("used only to respond to this enquiry... not added to a marketing
+  list") renders unchanged. No new marketing-consent checkbox was added.
+- **Confirmation that no audio/files are collected:** confirmed — no file or audio input exists on
+  the Spoken English form variant (verified live; same shared `DiagnosticForm.tsx` markup used by
+  every variant already has none).
+- **Confirmation that submission does not reserve a place or require payment:** the response
+  expectation states directly: "No payment is required to ask, sending an enquiry does not reserve
+  a place, and you can review the confirmed details before deciding." No response-time commitment
+  is made anywhere.
+- **Unresolved response-time, format, fee and availability facts:** unchanged from Steps 5-7 — all
+  remain `Needs owner confirmation` (see the claim table above). Step 9 does not resolve any of
+  them; it only builds the handoff mechanism that requests them.
+- **Shared "What happens next" correction (Part F):** `app/free-diagnostic-test/page.tsx`'s
+  `leadCapture.requestPage.whatHappensNext` list's third line ("...she may ask for an exam code,
+  current score or short work sample") is accurate for the exam-preparation variants but would
+  misleadingly imply an audio/work-sample review for Spoken English. A new typed
+  `WHAT_HAPPENS_NEXT` per-variant map was introduced in that page (general/ielts/pte/toefl keep the
+  exact original shared list unchanged; `spoken-english` uses `spokenEnglishFormVariant
+  .whatHappensNext`, which never mentions an exam code, score or work sample). No other variant's
+  copy was edited.
+- **Analytics boundary preserved:** `"spoken-english"` was added to `VARIANT_CONFIG` in
+  `components/DiagnosticForm.tsx` but deliberately NOT to `ANALYTICS_PROGRAMME_BY_VARIANT` or
+  `ANALYTICS_SOURCE_BY_VARIANT` — no `assessment_form_start`/`submit`/`error` event fires for this
+  variant, and no data-analytics-* attribute was added to `SpokenEnglishFinalCTA.tsx`, consistent
+  with every other Spoken English component built so far. This is a deliberate, reviewed decision
+  to defer analytics to Step 12 — not an oversight.
+
+### QA performed
+
+- Live Playwright script against the real (unconfigured) production build: 15 checks covering
+  exact eyebrow/heading/body/response-expectation wording, exactly 6 compact detail items verbatim,
+  no backward links to curriculum/fees/availability/FAQ, no "Book now"/"Enrol now"/"Reserve your
+  place" language, exactly 2 final action links, the WhatsApp CTA's exact label and message, and
+  (via a follow-up check) the canonical email link's exact subject/body/accessible label — all
+  passed.
+- A temporary local-only `.env.local` (`NEXT_PUBLIC_FORMSPREE_ENDPOINT` set to a structurally valid
+  `https://formspree.io/f/...` URL, never submitted to) was used to test the configured-form
+  branch: the secondary action correctly became "Send a Detailed Enquiry" linking to the exact
+  allowlisted URL, no email link rendered, exactly 2 actions remained, and navigating to that URL
+  directly confirmed the specialist page heading/subtitle, the corrected "what happens next" list
+  (no work-sample/exam-code line), the programme field locked and disabled with value "Spoken
+  English Coaching", all three specialist field labels, the specialist submit-button label, no
+  file/audio input, and the honeypot field present — 0 axe-core violations on both the final-CTA
+  page and the form page in this state. The `.env.local` fixture was deleted immediately after
+  (confirmed via `ls`) and the production build was rebuilt and re-verified against the real
+  (unconfigured) state before this commit.
+- Query-resolution edge cases tested live: `programme=spoken-english` (exact) resolves the locked
+  variant; `programme=Spoken-English`, `programme=spoken_english`, and an empty `programme=` value
+  all fall back safely to the general form; a repeated `programme=spoken-english&programme=ielts`
+  query resolves to the first value (`spoken-english`), matching the existing documented rule.
+- axe-core (wcag2a/wcag2aa/wcag22aa) on the real (unconfigured) `/courses/spoken-english` page: 0
+  violations. Full responsive matrix (320-1440px, 10 viewports): no horizontal overflow at any
+  size. No-JS check: final CTA heading renders before hydration.
+- The floating WhatsApp button's apparent overlap with the response-expectation text, observed only
+  in a `scrollIntoViewIfNeeded()`-driven screenshot, was investigated and confirmed to be the same
+  known mid-scroll artifact documented for earlier steps — at the true resting bottom-of-page
+  scroll position (and identically on the already-shipped `/courses/toefl` page), the float sits
+  over empty footer space with no text overlap at all.
+- Regression spot-check: `/`, `/free-diagnostic-test` (general, and with
+  `programme=ielts&source=ielts-page`, `programme=pte&source=pte-page`,
+  `programme=toefl&source=toefl-page`), `/courses/ielts`, `/courses/pte`, `/courses/toefl`,
+  `/courses/english-writing`, `/contact`, `/faq`, `/batches` all return 200 and render their
+  existing correct copy unchanged.
 
 ## Specialist FAQ (Step 8)
 
@@ -418,7 +519,7 @@ benefit.
   `content/spokenEnglish.ts` above the `delivery` object for the exact condition to re-check before
   adding them.
 
-## What the public page currently says instead (as of Spoken English Step 8)
+## What the public page currently says instead (as of Spoken English Step 9)
 
 `/courses/spoken-english` shows only:
 
@@ -488,19 +589,22 @@ benefit.
   offer, international enquiries) without inventing any operational detail — see "Specialist FAQ
   (Step 8)" above for the complete record;
 - a Spoken-English-specific final CTA (`components/spoken-english/SpokenEnglishFinalCTA.tsx`) with
-  its own full structured WhatsApp message (no longer reusing the hero's message, which Step 2
-  shortened to a brief goal-and-difficulty invitation), plus a plain `mailto:` fallback to the
-  canonical `aishasenglish@gmail.com` (no dedicated form variant yet — that is a later step).
+  its own full structured WhatsApp message as the primary action, and a server-decided secondary
+  action — the allowlisted detailed-enquiry form when Formspree is configured, otherwise a plain
+  `mailto:` fallback to the canonical `aishasenglish@gmail.com` — never both at once; see "Final CTA
+  and enquiry handoff (Step 9)" above for the complete record.
 
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
 components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely), the
 generic complete `<FAQAccordion />` (removed entirely), or Step 1's temporary
 `SpokenEnglishPrioritiesPreview` (deleted in Step 2, superseded by the speaking-profile and
 curriculum sections above). None of these render "coming soon" or an empty heading in their place —
-they are simply absent until their own verified replacement step. Feedback demonstration, evidence,
-learning format, pricing, a dedicated availability component upgrade, a specialist FAQ and the
-enquiry-handoff form variant all remain deliberately deferred to their own later Spoken English
-steps, mirroring the IELTS, PTE and TOEFL sequence.
+they are simply absent until their own verified replacement step. As of Step 9, every section
+originally deferred here (feedback demonstration, evidence, learning format, pricing, a dedicated
+availability component, a specialist FAQ, and the enquiry-handoff form variant) has been built —
+see the corresponding "as of Step N" section above for each. Only the conversion-measurement/
+analytics extension (mirroring IELTS/PTE/TOEFL Step 12) remains deferred to a later Spoken English
+step.
 
 ## Open questions for Aisha
 

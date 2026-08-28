@@ -1,6 +1,7 @@
 import { ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFormVariant } from "@/content/pteEnquiry";
 import { toeflFormVariant } from "@/content/toeflEnquiry";
+import { spokenEnglishFormVariant } from "@/content/spokenEnglishEnquiry";
 
 /**
  * Resolves `app/free-diagnostic-test/page.tsx`'s `?programme=...&source=...` query values against
@@ -9,7 +10,14 @@ import { toeflFormVariant } from "@/content/toeflEnquiry";
  * here (never inline in the page) before any component may treat a new query value as trusted.
  */
 
-export type EnquirySource = "homepage" | "courses-hub" | "ielts-page" | "pte-page" | "toefl-page" | "general";
+export type EnquirySource =
+  | "homepage"
+  | "courses-hub"
+  | "ielts-page"
+  | "pte-page"
+  | "toefl-page"
+  | "spoken-english-page"
+  | "general";
 
 const ALLOWED_SOURCES: readonly EnquirySource[] = [
   "homepage",
@@ -17,6 +25,7 @@ const ALLOWED_SOURCES: readonly EnquirySource[] = [
   "ielts-page",
   "pte-page",
   "toefl-page",
+  "spoken-english-page",
   "general",
 ];
 
@@ -26,15 +35,18 @@ export function resolveEnquirySource(raw: string | string[] | undefined): Enquir
   return (ALLOWED_SOURCES as readonly string[]).includes(value ?? "") ? (value as EnquirySource) : "general";
 }
 
-export type EnquiryVariant = "general" | "ielts" | "pte" | "toefl";
+export type EnquiryVariant = "general" | "ielts" | "pte" | "toefl" | "spoken-english";
 
 /** One allowlisted `programme` query key mapped to its real public programme name and variant.
  *  Only the exact key "toefl" maps to the TOEFL variant — "toefl-essentials"/"toefl-itp" (or any
- *  other unrecognised value) fall through to the general form, never selecting this variant. */
+ *  other unrecognised value) fall through to the general form, never selecting this variant. Only
+ *  the exact key "spoken-english" maps to the Spoken English variant — never a legacy tagline,
+ *  price, module or inclusion from content/courses.ts's spoken-english record. */
 const PROGRAMME_QUERY_MAP: Record<string, { programmeName: string; variant: EnquiryVariant }> = {
   ielts: { programmeName: ieltsFormVariant.programmeName, variant: "ielts" },
   pte: { programmeName: pteFormVariant.programmeName, variant: "pte" },
   toefl: { programmeName: toeflFormVariant.programmeName, variant: "toefl" },
+  "spoken-english": { programmeName: spokenEnglishFormVariant.programmeName, variant: "spoken-english" },
 };
 
 /**

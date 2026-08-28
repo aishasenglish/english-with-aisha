@@ -4,6 +4,7 @@ import { leadCapture } from "@/content/leadCapture";
 import { ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFormVariant } from "@/content/pteEnquiry";
 import { toeflFormVariant } from "@/content/toeflEnquiry";
+import { spokenEnglishFormVariant } from "@/content/spokenEnglishEnquiry";
 import { resolveProgrammeQuery, resolveEnquirySource } from "@/lib/enquiryQuery";
 import type { EnquiryVariant } from "@/lib/enquiryQuery";
 
@@ -15,6 +16,22 @@ const PAGE_CONTENT: Record<EnquiryVariant, { heading: string; subtitle: string }
   ielts: { heading: ieltsFormVariant.pageHeading, subtitle: ieltsFormVariant.pageSubtitle },
   pte: { heading: pteFormVariant.pageHeading, subtitle: pteFormVariant.pageSubtitle },
   toefl: { heading: toeflFormVariant.pageHeading, subtitle: toeflFormVariant.pageSubtitle },
+  "spoken-english": { heading: spokenEnglishFormVariant.pageHeading, subtitle: spokenEnglishFormVariant.pageSubtitle },
+};
+
+/**
+ * Spoken English Step 9, Part F: the shared `leadCapture.requestPage.whatHappensNext` list's third
+ * line ("...she may ask for an exam code, current score or short work sample") is accurate for the
+ * exam-preparation variants but would misleadingly imply an audio/work-sample review for Spoken
+ * English. A small per-variant override here (rather than editing the shared list, which stays
+ * correct for general/ielts/pte/toefl) lets this one variant show a different, equally honest list.
+ */
+const WHAT_HAPPENS_NEXT: Record<EnquiryVariant, readonly string[]> = {
+  general: leadCapture.requestPage.whatHappensNext,
+  ielts: leadCapture.requestPage.whatHappensNext,
+  pte: leadCapture.requestPage.whatHappensNext,
+  toefl: leadCapture.requestPage.whatHappensNext,
+  "spoken-english": spokenEnglishFormVariant.whatHappensNext,
 };
 
 export const metadata: Metadata = {
@@ -44,6 +61,7 @@ export default async function FreeDiagnosticPage({ searchParams }: Props) {
   const { initialProgramme, variant } = resolveProgrammeQuery(params.programme);
   const source = resolveEnquirySource(params.source);
   const { heading, subtitle } = PAGE_CONTENT[variant];
+  const whatHappensNext = WHAT_HAPPENS_NEXT[variant];
 
   return (
     <>
@@ -59,7 +77,7 @@ export default async function FreeDiagnosticPage({ searchParams }: Props) {
           <div className="bg-white rounded-md border border-stone p-6 sm:p-8 mb-6">
             <h2 className="font-serif text-lg font-medium text-ink mb-4">What happens next</h2>
             <ul className="space-y-3">
-              {leadCapture.requestPage.whatHappensNext.map((item) => (
+              {whatHappensNext.map((item) => (
                 <li key={item} className="flex items-start gap-3 text-sm sm:text-base text-ink-soft leading-relaxed">
                   <CheckIcon />
                   <span>{item}</span>

@@ -62,8 +62,12 @@
  * renders the dedicated content/spokenEnglishFaqs.ts source (eight specialist questions,
  * independent of content/faqs.ts's generalFaqs).
  *
- * Later Spoken English steps add more sections (final enquiry-handoff form) once their content is
- * verified against an owner confirmation -- do not pre-fill those with placeholder content.
+ * Step 9 moves `finalCta`'s canonical enquiry fields and full WhatsApp/form-fallback/email message
+ * text out to content/spokenEnglishEnquiry.ts (this file's `finalCta` now holds only structural
+ * copy) and extends the shared allowlisted enquiry-form architecture (lib/enquiryQuery.ts,
+ * components/DiagnosticForm.tsx, app/free-diagnostic-test/page.tsx) with a locked "spoken-english"
+ * variant -- see content/spokenEnglishEnquiry.ts's own doc comment for the full rationale.
+ * Deliberately excluded from analytics tracking until Step 12 formally extends those allowlists.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -923,40 +927,21 @@ export const spokenEnglishPage = {
   // Step 2, Part L: now carries its own complete programme-enquiry message (previously reused the
   // hero's message, which Step 2 shortened) -- the same eight-field information model as the
   // speaking-profile CTA, ending with an explicit request to confirm format, schedule and fee.
+  // Step 9: final-stage structural copy only -- the canonical enquiry fields and the full
+  // WhatsApp/form-fallback/email message text now live in content/spokenEnglishEnquiry.ts
+  // (spokenEnglishEnquiryFields / spokenEnglishFinalEnquiry) so they can't drift out of sync with
+  // the allowlisted form variant. Mirrors content/toefl.ts's finalCta shape exactly.
   finalCta: {
     id: "spoken-english-enquiry",
-    eyebrow: "Your next step",
-    heading: "Tell Aisha where speaking English matters most.",
-    body: "Share the situations, listeners and responses you need to handle, what currently feels difficult, and any important timeline. Aisha can then confirm whether a current Spoken English option may suit that requirement.",
+    eyebrow: "Your Spoken English next step",
+    heading: "Share the speaking situation you want to handle more clearly.",
+    body: "Send the details below so Aisha can understand your communication goal and confirm whether the current coaching format, schedule and approach may suit it.",
     detailsHeading: "Include these details",
-    details: [
-      { id: "goal-situations", label: "Main speaking goal and real situations" },
-      { id: "audience", label: "Who you need to communicate with" },
-      { id: "difficulty", label: "What currently becomes difficult" },
-      { id: "experience", label: "Current English experience or level, in your own words" },
-      { id: "timeline", label: "Any important interview, presentation, travel, study or work timeline" },
-      { id: "location-availability", label: "Country/time zone and usual availability" },
-      { id: "format-preference", label: "Preferred group or one-to-one format, to confirm" },
-    ],
-    primaryLabel: "Discuss Spoken English Coaching",
-    message:
-      "Hi Aisha! I would like to arrange Spoken English coaching. I need to speak English in [situation] with [listener/audience] to [communication task]. What currently becomes difficult is [details], and I can currently manage [details]. My important timeline is [if any], and my country/time zone and usual availability are [details]. Please confirm whether a current coaching option may suit this requirement, and share the format, schedule and fee.",
+    primaryLabel: "Discuss Spoken English Coaching on WhatsApp",
+    formCtaLabel: "Send a Detailed Enquiry",
     emailCtaLabel: "Email Aisha",
     emailAccessibleLabel: "Email Aisha about Spoken English coaching",
-    emailSubject: "Spoken English coaching enquiry",
-    emailBody: `Hello Aisha,
-
-I would like to ask about Spoken English coaching.
-
-Main speaking goal and real situations:
-Who I need to communicate with:
-What currently becomes difficult:
-Current English experience or level, in my own words:
-Any important timeline:
-Country/time zone and usual availability:
-Preferred group or one-to-one format, if any:
-
-Please confirm whether a current option may suit this requirement and share the format, schedule and fee.`,
-    supportingNote: "Ask first; current format, schedule and fee are confirmed before any enrolment decision.",
+    responseExpectation:
+      "Aisha will use these details to respond about programme fit and the current offer. No payment is required to ask, sending an enquiry does not reserve a place, and you can review the confirmed details before deciding.",
   },
 } as const;
