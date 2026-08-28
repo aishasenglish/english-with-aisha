@@ -27,9 +27,9 @@ import { site } from "@/content/site";
  * dedicated content/englishWritingPricing.ts, never here. Step 7 upgrades `availability` to a
  * date-aware two-state (enquire/scheduled) shape, mirroring Spoken English Step 7 exactly -- the
  * actual batch records and their completeness validation live in content/batches.ts, lib/batches.ts
- * and components/english-writing/EnglishWritingAvailability.tsx, never duplicated here. Later steps
- * add a specialist FAQ only when its claims are verified -- do not pre-fill it with placeholder
- * content.
+ * and components/english-writing/EnglishWritingAvailability.tsx, never duplicated here. Step 8 adds
+ * `faq` heading copy only -- the eight question/answer pairs live in the dedicated
+ * content/englishWritingFaqs.ts, independent of content/faqs.ts's generalFaqs.
  */
 
 /** One of the four "who this coaching may suit" context cards
@@ -832,6 +832,17 @@ export const englishWritingContent = {
     intakeCtaLabel: "Ask about this writing option",
     intakeReservationNote: "Availability is confirmed by Aisha; sending an enquiry does not reserve a place.",
     moreAvailabilityLabel: "View all English Writing availability",
+  },
+
+  // Step 8: heading copy for components/english-writing/EnglishWritingFAQ.tsx. The eight
+  // question/answer pairs themselves live in the dedicated content/englishWritingFaqs.ts,
+  // independent of content/faqs.ts's generalFaqs.
+  faq: {
+    id: "english-writing-faq",
+    eyebrow: "English Writing questions",
+    heading: "Questions to clarify before you enrol",
+    introduction:
+      "These answers explain the programme boundaries and point to the current format, pricing and availability information. Confirm changing details directly before payment.",
   },
 
   finalCta: {

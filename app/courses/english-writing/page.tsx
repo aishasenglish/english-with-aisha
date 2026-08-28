@@ -12,6 +12,7 @@ import EnglishWritingLearningFormat from "@/components/english-writing/EnglishWr
 import EnglishWritingPricing from "@/components/english-writing/EnglishWritingPricing";
 import EnglishWritingRouteGuidance from "@/components/english-writing/EnglishWritingRouteGuidance";
 import EnglishWritingAvailability from "@/components/english-writing/EnglishWritingAvailability";
+import EnglishWritingFAQ from "@/components/english-writing/EnglishWritingFAQ";
 import EnglishWritingFinalCTA from "@/components/english-writing/EnglishWritingFinalCTA";
 
 // English Writing Step 1: replaces the outcome-led generic metadata ("write clearly, correctly,
@@ -49,6 +50,7 @@ export default function EnglishWritingPage() {
       <EnglishWritingPricing />
       <EnglishWritingRouteGuidance />
       <EnglishWritingAvailability />
+      <EnglishWritingFAQ />
       <EnglishWritingFinalCTA />
     </>
   );

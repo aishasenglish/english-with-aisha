@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 7 (29 August 2026).
+**Last reviewed:** English Writing Step 8 (29 August 2026).
 
 ## Source hierarchy
 
@@ -232,6 +232,25 @@ Availability and pricing remain deliberately independent systems: neither compon
 other's data, so a scheduled intake can never make an unverified price publishable, and a verified
 price can never imply an intake is currently open.
 
+## Step 8 specialist FAQ — objection handling without new promises
+
+`content/englishWritingFaqs.ts` holds exactly eight English-Writing-specific questions, deliberately
+independent of `content/faqs.ts`'s `generalFaqs`. Each answer either:
+
+- restates a boundary already established in an earlier step (learner authorship, non-assessment
+  writing profile, the Step-4 demonstration's "teaching example, not learner evidence" disclosure,
+  the exam-route separation from IELTS/PTE/TOEFL/O-A Level), or
+- routes a genuinely unresolved operational detail (format, fee, availability, feedback method,
+  document scope, progress timeline) to its authoritative Step 5-7 section via a stable page
+  anchor, rather than answering it directly in the FAQ text.
+
+No FAQ answer duplicates a numeric price, a future date, a schedule, a feedback frequency/
+turnaround, or a revision count -- every one of those already lives exclusively in
+`content/englishWritingPricing.ts`, `content/batches.ts`, or `content/englishWriting.ts`'s
+`learningFormat`, and would drift out of date if copied into FAQ text. `FAQPage` structured data is
+deliberately not added this step (see `docs/english-writing-offer-verification.md`'s "Specialist
+FAQ (Step 8)" section) -- that decision belongs to Step 10's sitewide technical-SEO review.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -249,6 +268,8 @@ price can never imply an intake is currently open.
 - `content/batches.ts` (read-only for this record — English Writing does not own or edit shared
   batch data)
 - `lib/batches.ts` (read-only for this record — its existing helpers were already complete)
+- `content/englishWritingFaqs.ts`
+- `components/english-writing/EnglishWritingFAQ.tsx`
 - `docs/english-writing-offer-verification.md`
 - `docs/testimonial-content-intake.md` (English Writing-specific intake fields)
 

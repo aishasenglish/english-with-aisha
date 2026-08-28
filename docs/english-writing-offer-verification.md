@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 7 (29 August 2026).
+**Last reviewed:** English Writing Step 8 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -152,7 +152,7 @@ Manual validator self-test (23 cases, run against `isValidPublishedEnglishWritin
 
 Manual resolver self-test (14 cases, run against `isCompleteEnglishWritingIntake()` + the shared `getPublishedUpcomingBatches()` pipeline's logic on 29 August 2026 — not committed as a permanent test file): no English Writing records, only historical records, only unpublished records, a closed record, an invalid date, incomplete schedule (missing `duration`), incomplete schedule (missing `schedule`), wrong course slug, an invalid `verifiedAt`, a complete future record, multiple complete future records sorted chronologically, a future record plus an unrelated course's record, and page behaviour after the start date passes — all 14 cases passed, plus a separate chronological-sort-order check. A separate live fixture test (temporarily adding two complete, clearly-marked "QA fixture" `content/batches.ts` records — one `"Filling Fast"` without `statusVerifiedAt`, one `"Open"` — then fully reverting before commit) confirmed both cards render with the correct date/schedule/timezone/format/duration, sort chronologically, the unverified `"Filling Fast"` status correctly downgrades to `"Open"`, each card's CTA references its exact option/date/id without reservation language, and no horizontal overflow occurs at 320/768/1440px.
 
-## What the public page currently says instead (as of English Writing Step 7)
+## What the public page currently says instead (as of English Writing Step 8)
 
 `/courses/english-writing` shows only:
 
@@ -221,6 +221,15 @@ Manual resolver self-test (14 cases, run against `isCompleteEnglishWritingIntake
   and CTA) if a genuine future record ever passes every completeness check — currently none does;
   see the "Availability verification" section above for exactly why the two existing
   english-writing-tagged records are rejected;
+- a specialist FAQ (`components/english-writing/EnglishWritingFAQ.tsx`, id
+  `english-writing-faq`) with exactly eight English-Writing-specific questions
+  (`content/englishWritingFaqs.ts`), reusing the shared native `<details>/<summary>`
+  `FAQAccordion` with English-Writing-specific items rather than its generic default list. Answers
+  cover suitability, document scope, exam-route separation, learner authorship, writing samples,
+  practice/feedback, current format/fee/availability, and progress expectations -- every changing
+  operational fact links to its authoritative Step 5-7 section instead of duplicating a price, date
+  or schedule. No `FAQPage` structured data renders anywhere on the page (deliberately deferred to
+  Step 10 -- see the "Specialist FAQ (Step 8)" section above);
 - an English-Writing-specific final CTA (`components/english-writing/EnglishWritingFinalCTA.tsx`)
   with its own WhatsApp message and a plain `mailto:` fallback to the canonical
   `aishasenglish@gmail.com`, plus a helper note clarifying that "review the enquiry" does not mean
@@ -229,7 +238,9 @@ Manual resolver self-test (14 cases, run against `isCompleteEnglishWritingIntake
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
 components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely), the
 generic `<BatchTable>` "Upcoming Writing batches" section (removed entirely), or the complete
-generic `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty
+generic `FAQAccordion` list from `content/faqs.ts`'s `generalFaqs` (replaced by the Step 8
+English-Writing-specific eight-question set above -- the shared `FAQAccordion` component itself is
+still reused, just with different `items`). None of these render "coming soon" or an empty
 heading in their place — they are simply absent until their own verified replacement step.
 A specialist FAQ and enquiry-handoff form variant remain deliberately deferred to their own later
 English Writing steps. Step 2's public framework is not an operational promise that all areas are
@@ -244,9 +255,80 @@ group/private format, session frequency/duration, recording, assignment, feedbac
 support, fee or intake is confirmed — every one of those remains a question in the pre-enrolment
 checklist, not an answer — Step 6's pricing section is not evidence of a current fee: it fails
 closed to a pure confirmation-request state because no complete, current, owner-verified English
-Writing pricing record exists, and Step 7's availability section is not evidence of a current
-intake: it fails closed to the same enquiry state because neither existing english-writing-tagged
-`content/batches.ts` record is published, current or complete.
+Writing pricing record exists, Step 7's availability section is not evidence of a current intake:
+it fails closed to the same enquiry state because neither existing english-writing-tagged
+`content/batches.ts` record is published, current or complete, and Step 8's specialist FAQ answers
+the eight highest-value objections without inventing any operational fact those answers reference
+-- every changing detail is a link to its authoritative Step 5-7 section, never a duplicated
+amount, date or schedule.
+
+## Specialist FAQ (Step 8)
+
+`content/englishWritingFaqs.ts` holds exactly eight English-Writing-specific questions, independent
+of `content/faqs.ts`'s `generalFaqs`, rendered by `components/english-writing/EnglishWritingFAQ.tsx`
+via the shared `FAQAccordion`.
+
+- **Step 8 implementation date:** 2026-08-29.
+- **The eight specialist questions added:** `learner-suitability`, `writing-scope`,
+  `exam-route-distinction`, `authorship-boundary`, `writing-sample`, `practice-and-feedback`,
+  `current-offer`, `progress-timeline` (see `content/englishWritingFaqs.ts` for the full text of
+  each).
+- **Answers based on verified facts:** `exam-route-distinction` restates the Step-1 route-guidance
+  positioning (general writing coaching vs. IELTS/PTE/TOEFL/O-A Level) with no new claim;
+  `authorship-boundary` restates the Step 3/4 learner-authorship and non-ghostwriting boundary
+  already established; `writing-sample` restates the Step 4 "teaching demonstration, not learner
+  evidence" boundary.
+- **Answers that deliberately route unverified details to confirmation rather than answering
+  directly:** `learner-suitability` (no age/proficiency level accepted as universal);
+  `writing-scope` (dissertations/theses/publication/admissions/citation-system/business-document
+  support not automatically included); `authorship-boundary` ("the exact boundary of any feedback
+  or editing activity must be confirmed" -- no blanket "Aisha never proofreads" claim, since that
+  specific policy has not been independently confirmed); `writing-sample` (sample collection,
+  storage, retention and privacy all remain `Unverified — do not publish`); `practice-and-feedback`
+  (method, depth, frequency, turnaround and revision count all still `Unverified — do not
+  publish`); `current-offer` (links to Learning format/Pricing/Availability rather than repeating
+  any amount, date or schedule, all of which remain `Unverified — do not publish`/`No eligible
+  record — enquiry state`); `progress-timeline` (no universal timeline -- this document has no
+  evidence that would ever support one).
+- **Document-upload and privacy boundary:** `writing-sample` states directly "you do not need to
+  send a full document in your first enquiry," that "the site currently has no document-upload
+  workflow," and that assessed/confidential/personally sensitive material should not be sent until
+  Aisha confirms how a sample would be handled -- consistent with every earlier step's fail-closed
+  privacy posture (Step 4's demonstration disclosure, Step 5's access/privacy/support confirmation
+  group).
+- **Academic-integrity boundary:** `authorship-boundary` states directly that the page "presents
+  coaching that helps learners develop and revise their own writing, not a done-for-you writing
+  service," that the learner remains the author, and that the page does not offer "completion of
+  assessed work, ghostwriting, plagiarism concealment or authorship misrepresentation" -- matching
+  `contextMap.integrityNote` (Step 2) and the Step 4 demonstration's authorship note in substance.
+- **No-guaranteed-outcome boundary:** `progress-timeline` states there is "no single honest timeline
+  that applies to every learner or writing goal" and explicitly rules out "mastery, error-free
+  writing, a grade, admission, publication, promotion or employment result" -- consistent with
+  `demonstration.outcomeBoundary` (Step 4) and `coachingProcess.boundaryNote` (Step 3).
+- **Stable anchors used for changing offer details:** `#english-writing-profile` (Step 2),
+  `#english-writing-context-map` (Step 2), `#english-writing-route-guidance` (Step 1),
+  `#english-writing-coaching-process` (Step 3), `#english-writing-demonstration` (Step 4),
+  `#english-writing-learning-format` (Step 5), `#english-writing-pricing` (Step 6),
+  `#english-writing-availability` (Step 7) -- every anchor was confirmed to exist exactly once in
+  the rendered page via a live Playwright check before this step's commit. No fee, date or schedule
+  is duplicated as FAQ text; each changing fact links to its authoritative section instead.
+- **Shared FAQ contradictions corrected:** none needed. `content/faqs.ts` was searched for
+  `english-writing`/`writing` mentions and for universal claims involving live delivery, recordings,
+  group/one-to-one availability, detailed feedback, the legacy PKR 10,000 figure, recurring batches,
+  fixed response times, universal refund/rescheduling terms, universal suitability, or upload
+  invitations -- none were found; the two existing generic mentions of "English writing" (in the
+  services-overview and course-choice FAQ entries) are already neutral and were already made
+  programme-neutral by earlier IELTS/PTE/TOEFL/Spoken English Step 8 work. No edit to
+  `content/faqs.ts` was made this step. `components/FAQAccordion.tsx` already provides visible
+  `:focus-visible` styling (global `app/globals.css` rule) and already respects
+  `prefers-reduced-motion`, so no change to the shared component was needed either -- confirmed by
+  inspection, not assumed.
+- **FAQPage structured data:** deliberately not added this step. Per the implementing prompt's Part
+  F, final technical SEO belongs to Step 10, business answers may still contain verification-led
+  enquiry states that could change before then, and FAQ rich-result eligibility/search-engine
+  policy can change -- confirmed via live Playwright check that zero `FAQPage`-typed
+  `application/ld+json` blocks render anywhere on `/courses/english-writing`. Record this decision
+  for Step 10 review.
 
 ## Cross-site corrections made this step
 
@@ -361,6 +443,26 @@ changed, no closed record was reopened, and no date was generated from historica
 generic `<BatchTable>` component remains absent from the dedicated route, confirmed by inspecting
 `app/courses/english-writing/page.tsx`'s imports.
 
+## Step 8 reconciliation check
+
+Searched `content/englishWritingFaqs.ts` and the rendered FAQ section for `beginner`,
+`intermediate`, `advanced`, `adult`, `child`, `age`, `CEFR`, `placement`, `diagnostic`,
+`level test`, `assessment`, `dissertation`, `thesis`, `application`, `publication`,
+`proofreading`, `editing`, `rewriting`, `ghostwriting`, `plagiarism`, `originality`, `citation`,
+`AI detection`, `upload`, `storage`, `feedback`, `correction`, `marking`, `revisions`,
+`turnaround`, `homework`, `recordings`, `materials`, `support`, `live`, `Zoom`, `group`,
+`private`, `one-to-one`, `duration`, `frequency`, `schedule`, `start date`, `fee`, `price`,
+`payment`, `refund`, `cancellation`, `grades`, `admissions`, `promotion`, `employment`, and
+`guaranteed`. Every match is either a boundary-setting negation (e.g. "not a done-for-you writing
+service," "no document-upload workflow," "not automatically included," "no single honest
+timeline") or a routing reference to a verified Step 5-7 section -- no answer asserts an age/level/
+document-scope/delivery claim, invites document upload, offers proofreading/rewriting/ghostwriting,
+publishes a feedback method/frequency/turnaround/revision count, duplicates a price/date/schedule,
+or promises a grade/admission/publication/employment/progress-timeline outcome. `content/faqs.ts`
+was also searched for the same terms in an English-Writing-specific context; no contradiction was
+found (see the "Specialist FAQ (Step 8)" section above for the full audit). No `FAQPage`,
+`Review`, `Rating` or `Offer` structured data was added anywhere on the page.
+
 ## Open questions for Aisha
 
 See every row marked `Unverified — do not publish` above. In summary, still needed before any more
@@ -413,6 +515,7 @@ coaching cycle and feedback framework, one clearly disclosed illustrative teachi
 one verified delivery fact with a five-group pre-enrolment confirmation checklist in place of every
 unresolved operational detail, a fail-closed pricing enquiry state in place of any amount, a
 date-aware availability section that fails closed to the same enquiry state until a genuine future
-record passes every completeness check, route-selection guidance, and a WhatsApp/email path to ask
-Aisha directly — never an invented format, formal level, fixed module order, duration, fee,
-feedback promise, intake, or real learner evidence that hasn't passed the publication guard.
+record passes every completeness check, an eight-question specialist FAQ that routes every
+changing detail to those same verified sections, route-selection guidance, and a WhatsApp/email
+path to ask Aisha directly — never an invented format, formal level, fixed module order, duration,
+fee, feedback promise, intake, or real learner evidence that hasn't passed the publication guard.
