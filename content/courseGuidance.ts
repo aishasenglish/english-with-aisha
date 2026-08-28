@@ -61,7 +61,9 @@ export const courseChoiceSituations: readonly CourseChoiceSituation[] = [
     courseSlug: "english-writing",
     prompt: "The learner needs stronger grammar, structure and clarity in written English.",
     guidance: "Start with English Writing for academic, professional or everyday written communication.",
-    action: "View English Writing",
+    // English Writing Step 1: aligned to the same "Explore English Writing" anchor-text pattern
+    // used in content/coursePresentation.ts's ctaLabel.
+    action: "Explore English Writing",
   },
 ] as const;
 

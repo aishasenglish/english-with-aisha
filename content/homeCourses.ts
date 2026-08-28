@@ -40,6 +40,11 @@ export const HOME_COURSE_DELIVERY: Partial<Record<CourseSlug, string>> = {
   // docs/spoken-english-offer-verification.md, where every one of those rows is "Needs owner
   // confirmation").
   "spoken-english": "Online coaching · Confirm current format and support",
+  // English Writing Step 1: same reasoning as PTE/TOEFL/Spoken English above -- no English
+  // Writing-specific record verifies live delivery, group/one-to-one availability or recordings
+  // (see docs/english-writing-offer-verification.md, where every one of those rows is
+  // "Unverified — do not publish").
+  "english-writing": "Online coaching · Confirm current format and support",
 };
 
 // The homepage's compact corporate-training panel reuses the same shared, deliberately-hedged

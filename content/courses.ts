@@ -172,15 +172,36 @@ export const courses: Course[] = [
   },
   {
     slug: "english-writing",
-    name: "English Writing Mastery",
+    // English Writing Step 1: aligned from the legacy "English Writing Mastery" (a promised-
+    // outcome framing the dedicated page no longer makes) to the shorter nav/card label the
+    // implementing prompt recommends. This field IS safely consumed site-wide (Footer,
+    // CourseExplorer, DiagnosticForm's generic programme dropdown) -- unlike tagline/summary/
+    // whoFor/modules/includes/price below, which are confirmed unreachable by the dedicated
+    // /courses/english-writing route (it no longer imports CourseHero/CourseModules/IncludedList/
+    // PricingCard -- see app/courses/english-writing/page.tsx) and remain non-authoritative.
+    name: "English Writing",
+    // Not publication-authoritative for /courses/english-writing (English Writing Step 1) --
+    // "write clearly, correctly, confidently" presents an absolute outcome as assured. The
+    // dedicated components/english-writing/EnglishWritingHero.tsx (reading from
+    // content/englishWriting.ts's `hero`) is the only H1/hero this route renders now; CourseHero
+    // (still used by O/A Level) is the only consumer of `tagline`/`whoFor`, and no longer applies
+    // to this route. Left in place only because the shared Course type requires every record to
+    // have these fields.
     tagline: "English Writing Mastery — write clearly, correctly, confidently.",
     summary:
       "Write polished English for academics, work, or everyday life with expert guidance and feedback.",
+    // "expert guidance and feedback" and "clarity and confidence" as a promised end state are not
+    // verified -- see docs/english-writing-offer-verification.md.
     whoFor: [
       "Students writing essays and academic assignments",
       "Professionals who write emails and reports in English",
       "Anyone who wants to write with clarity and confidence",
     ],
+    // Not publication-authoritative for /courses/english-writing (English Writing Step 1) -- a
+    // fixed six-module sequence is not confirmed. The CourseModules render was removed from that
+    // page entirely; see components/english-writing/EnglishWritingPrioritiesPreview.tsx for the
+    // current temporary preview (a full verified curriculum is a later step). Left in place,
+    // uncorrected, only because the shared Course type requires this field.
     modules: [
       "Grammar that actually matters",
       "Sentence structure & punctuation",
@@ -189,12 +210,22 @@ export const courses: Course[] = [
       "Editing your own work",
       "Style and clarity",
     ],
+    // Not publication-authoritative for /courses/english-writing (English Writing Step 1) -- every
+    // claim here is "Unverified — do not publish" per docs/english-writing-offer-verification.md.
+    // The IncludedList render was removed from that page entirely; left in place only because the
+    // shared Course type and other pages' <IncludedList> still depend on every course record
+    // having an `includes` array.
     includes: [
       "Live Zoom classes (recorded)",
       "Writing assignments with detailed feedback",
       "Regular tests",
       "1-on-1 review option",
     ],
+    // Not publication-authoritative for /courses/english-writing (English Writing Step 1) -- this
+    // figure was never verified and must never be rendered on that page. The <PricingCard> render
+    // was removed from that page entirely; left in place only because the shared Course type
+    // requires every record to have a price and this page no longer imports the only component
+    // that would otherwise render it.
     price: 10000,
   },
   {

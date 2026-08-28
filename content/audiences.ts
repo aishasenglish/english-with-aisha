@@ -50,7 +50,9 @@ export const audiencePathways: AudiencePathway[] = [
     primaryCta: { label: "Explore Communication Courses", href: "/courses" },
     links: [
       { label: "Spoken English", href: "/courses/spoken-english" },
-      { label: "Writing Mastery", href: "/courses/english-writing" },
+      // English Writing Step 1: "Mastery" read as a promised end state -- aligned to the shorter
+      // safe label used elsewhere (nav, courses.ts's canonical name).
+      { label: "English Writing", href: "/courses/english-writing" },
       {
         label: "Corporate Training",
         href: whatsappLink(

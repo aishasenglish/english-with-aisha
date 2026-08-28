@@ -90,15 +90,20 @@ export const coursePresentations: CoursePresentation[] = [
       "Hi Aisha! I am interested in Spoken English coaching. The situations where I need to speak more clearly are:",
   },
   {
+    // English Writing Step 1: "Improve grammar, sentence control and structure" read as a
+    // promised outcome, "Regular writing practice with actionable feedback" asserted unverified
+    // regularity/feedback inclusions, and the WhatsApp message named the retired "English Writing
+    // Mastery" title. Aligned with the rebuilt /courses/english-writing content -- see
+    // docs/english-writing-offer-verification.md.
     slug: "english-writing",
     typeLabel: "Writing and communication",
     shortDescription:
-      "Improve grammar, sentence control and structure for clearer academic, professional and everyday writing.",
-    bestFor: "Students and professionals who want clearer written English",
-    focus: "Regular writing practice with actionable feedback",
-    ctaLabel: "View Writing Programme",
+      "Explore support for clearer sentences, stronger organisation and purposeful written English for study, work or everyday communication.",
+    bestFor: "Learners who want to strengthen general written English outside a named exam route",
+    focus: "Writing goals and priorities confirmed from the learner's context",
+    ctaLabel: "Explore English Writing",
     whatsappMessage:
-      "Hi Aisha! I'm interested in English Writing Mastery. The type of writing I want to improve is:",
+      "Hi Aisha! I'm interested in online English writing coaching. What I need to write is [details], and what I find difficult is [details].",
   },
 ];
 

@@ -47,7 +47,9 @@ export const NAV: NavItem[] = [
           // and locked form-variant label ("Spoken English Coaching") rather than "& Fluency",
           // which reads as a promised outcome.
           { label: "Spoken English Coaching", href: "/courses/spoken-english" },
-          { label: "English Writing Mastery", href: "/courses/english-writing" },
+          // English Writing Step 1: "Mastery" read as a promised end state the dedicated page no
+          // longer claims -- aligned to the shorter nav label the implementing prompt recommends.
+          { label: "English Writing", href: "/courses/english-writing" },
           {
             label: "Corporate English enquiry",
             href: whatsappLink(
