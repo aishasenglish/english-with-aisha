@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 2 (29 August 2026).
+**Last reviewed:** English Writing Step 3 (29 August 2026).
 
 ## Source hierarchy
 
@@ -88,6 +88,35 @@ misrepresent authorship.
 Detailed academic-integrity, AI-use, document-storage, privacy, feedback and editing policies still
 require owner confirmation before publication or feature development.
 
+## Step 3 coaching cycle and feedback framework
+
+The public coaching process describes five adaptable stages:
+
+1. clarify the task, reader and purpose;
+2. plan the message and reader path;
+3. produce a manageable, focused writing attempt;
+4. identify the most useful revision priorities;
+5. revise, reflect and transfer the learning to another writing situation.
+
+This is a pedagogical sequence, not evidence that every lesson, learner or package follows it, that
+writing tasks/assignments are assigned, that full drafts are submitted, or that a fixed number of
+attempts or revisions is included. Stage 3 explicitly states the page does not request or store a
+document; stage 5 explicitly states revision remains the learner's own work.
+
+Feedback is explained through four review lenses -- purpose/response, organisation/development,
+sentences/language choices, and revision/independence -- framed as questions a reviewer can ask,
+never as a scoring rubric, formal marking, or a promise of comprehensive/line-by-line correction.
+The feedback principle ("give the learner something specific... not silently replace the learner's
+writing") is a pedagogical boundary, not a statement about feedback frequency, method or delivery
+channel. The accompanying operational boundary note states that practice format, amount of writing,
+feedback method, number of revisions and turnaround must all be confirmed before enrolment, and
+that this page does not provide document upload or promise proofreading, rewriting or completion of
+assessed work.
+
+Public copy must continue to use adaptable, question-based, `possible focus` language for this
+process rather than asserting a fixed lesson format, assignment inclusion or feedback commitment
+until an owner-approved programme scope is recorded in `docs/english-writing-offer-verification.md`.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -95,6 +124,7 @@ require owner confirmation before publication or feature development.
 - `components/english-writing/EnglishWritingProfile.tsx`
 - `components/english-writing/EnglishWritingFramework.tsx`
 - `components/english-writing/EnglishWritingContextMap.tsx`
+- `components/english-writing/EnglishWritingCoachingProcess.tsx`
 - `docs/english-writing-offer-verification.md`
 
 ## Change rule

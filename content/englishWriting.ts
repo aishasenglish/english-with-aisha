@@ -13,9 +13,12 @@ import { site } from "@/content/site";
  * docs/english-writing-offer-verification.md for the full list of unverified operational facts.
  *
  * Step 2 adds a needs-led writing profile and a public development framework framed as possible
- * priorities, not a fixed syllabus. Later steps add teaching/feedback process, evidence, learning
- * format, pricing, dedicated availability and FAQ only when their claims are verified -- do not
- * pre-fill those with placeholder content.
+ * priorities, not a fixed syllabus. Step 3 adds an adaptable five-stage coaching cycle and a
+ * four-lens feedback framework -- pedagogical guidance, never a verified promise that every
+ * lesson follows the sequence or that assignments, a fixed number of drafts, or a specific
+ * feedback method/frequency/turnaround are included. Later steps add evidence, learning format,
+ * pricing, dedicated availability and FAQ only when their claims are verified -- do not pre-fill
+ * those with placeholder content.
  */
 
 /** One of the four "who this coaching may suit" context cards
@@ -66,6 +69,28 @@ export type EnglishWritingRouteLink = {
   label: string;
   href: string;
   description: string;
+};
+
+/** One of the five stages in the Step-3 writing-coaching cycle
+ *  (components/english-writing/EnglishWritingCoachingProcess.tsx). An adaptable pedagogical
+ *  sequence, not a verified universal lesson format. */
+export type EnglishWritingProcessStage = {
+  id: string;
+  number: string;
+  title: string;
+  purpose: string;
+  learnerAction: string;
+  boundary?: string;
+};
+
+/** One of the four review lenses used to explain what useful feedback can focus on. Each lens is a
+ *  question, not a scoring rubric or a promise of comprehensive correction. */
+export type EnglishWritingFeedbackLens = {
+  id: string;
+  title: string;
+  question: string;
+  examples: readonly string[];
+  boundary?: string;
 };
 
 export const englishWritingContent = {
@@ -324,6 +349,126 @@ export const englishWritingContent = {
     ] as EnglishWritingContextApplication[],
     integrityNote:
       "Coaching is intended to help learners develop and revise their own writing. It does not include completing assessed work, disguising plagiarism or helping someone misrepresent authorship.",
+  },
+
+  // Step 3: an adaptable five-stage writing-coaching cycle plus a four-lens feedback framework.
+  // This is pedagogical guidance -- it never asserts that every lesson, learner or package follows
+  // an identical sequence, includes assignments, or receives feedback of a specific method,
+  // frequency or turnaround. See docs/english-writing-offer-verification.md for every unresolved
+  // operational fact this section deliberately avoids asserting.
+  coachingProcess: {
+    id: "english-writing-coaching-process",
+    eyebrow: "From a real writing need to a revised attempt",
+    heading: "From a writing need to a more deliberate revision",
+    introduction:
+      "A useful writing-coaching cycle connects the real task with a focused attempt, review and learner revision. The exact activity and feedback arrangement should be confirmed for the current offer.",
+    stages: [
+      {
+        id: "clarify-task",
+        number: "01",
+        title: "Clarify the task, reader and purpose",
+        purpose: "Identify what needs to be written, who will read it and what the writing should achieve.",
+        learnerAction: "Describe the situation, required form, reader and any relevant constraint in plain language.",
+      },
+      {
+        id: "plan-message",
+        number: "02",
+        title: "Plan the message and reader path",
+        purpose: "Decide the main point, select relevant information and arrange it in an order the reader can follow.",
+        learnerAction: "Create a short plan using the central message, key points and intended progression.",
+      },
+      {
+        id: "focused-attempt",
+        number: "03",
+        title: "Write a manageable first attempt",
+        purpose: "Turn the plan into enough writing to reveal how meaning, sentences and organisation are working together.",
+        learnerAction: "Draft a relevant section or short response rather than trying to perfect every sentence immediately.",
+        boundary: "The size, format and method of any writing practice must be confirmed; this page does not request or store a document.",
+      },
+      {
+        id: "review-priorities",
+        number: "04",
+        title: "Identify the most useful revision priorities",
+        purpose: "Review the attempt through a small number of lenses so the next action is clear rather than overwhelming.",
+        learnerAction:
+          "Notice what already communicates successfully and select a manageable set of changes involving purpose, organisation, sentence control, language or tone.",
+      },
+      {
+        id: "revise-transfer",
+        number: "05",
+        title: "Revise, reflect and use the learning again",
+        purpose: "Make deliberate changes, compare the revised version with the purpose and carry one or two priorities into another writing situation.",
+        learnerAction: "Explain what changed, why it changed and what should be checked first next time.",
+        boundary: "Revision remains the learner's own work; coaching must not replace authorship.",
+      },
+    ] as EnglishWritingProcessStage[],
+
+    feedbackHeading: "What useful review can focus on",
+    feedbackIntroduction:
+      "Useful feedback is easier to act on when it is organised around the writing purpose rather than presented as an unexplained list of corrections.",
+    feedbackLenses: [
+      {
+        id: "purpose-response",
+        title: "Purpose and response",
+        question: "Does the writing do what the task and reader require?",
+        examples: [
+          "Relevance to the purpose",
+          "Clarity of the central message",
+          "Sufficient and appropriate information",
+          "Reader understanding or required response",
+        ],
+        boundary: "This is a review focus, not formal task scoring.",
+      },
+      {
+        id: "organisation-development",
+        title: "Organisation and development",
+        question: "Can the reader follow how the ideas are selected, developed and connected?",
+        examples: [
+          "Overall sequence",
+          "Paragraph focus",
+          "Relevant development",
+          "Cohesion without mechanical linking words",
+          "Avoiding repetition or abrupt jumps",
+        ],
+      },
+      {
+        id: "sentences-language",
+        title: "Sentences and language choices",
+        question: "Do sentence structure, grammar, punctuation and vocabulary support the intended meaning?",
+        examples: [
+          "Complete and manageable sentences",
+          "Recurring patterns that obscure meaning",
+          "Punctuation supporting sentence boundaries",
+          "Precise vocabulary",
+          "Suitable tone and formality",
+        ],
+        boundary: "This does not promise perfect grammar or correction of every surface error.",
+      },
+      {
+        id: "revision-independence",
+        title: "Revision and independence",
+        question: "Can the learner identify what to change and what to check in future writing?",
+        examples: [
+          "Choosing priorities rather than changing everything at once",
+          "Explaining the reason for a revision",
+          "Noticing recurring personal patterns",
+          "Building a manageable self-review sequence",
+          "Transferring one priority to another writing situation",
+        ],
+      },
+    ] as EnglishWritingFeedbackLens[],
+
+    feedbackPrinciple:
+      "Feedback should give the learner something specific to understand, revise and try again — not silently replace the learner's writing with the teacher's version.",
+
+    boundaryNote:
+      "The exact practice format, amount of writing, feedback method, number of revisions and turnaround must be confirmed before enrolment. This page does not provide document upload or promise proofreading, rewriting or completion of assessed work.",
+
+    cta: {
+      label: "Discuss my writing situation",
+      message:
+        "Hi Aisha! I'm interested in online English writing coaching. I need to write [type of writing] for [reader/purpose]. What currently feels difficult is [details]. I would like to ask what practice and feedback option, if any, is currently available.",
+    },
   },
 
   routeGuidance: {

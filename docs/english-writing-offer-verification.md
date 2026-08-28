@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 2 (29 August 2026).
+**Last reviewed:** English Writing Step 3 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -42,10 +42,13 @@ confirmation date and evidence source here first.
 | Programme duration | Unverified — do not publish | No English Writing-specific record exists | None | — | Confirm the current programme duration, if fixed |
 | Whether sessions are recorded | Unverified — do not publish | No English Writing-specific record exists | None. Do not say sessions are recorded | — | Confirm whether recordings are provided and, if so, for how long |
 | Fixed curriculum scope and sequence | Unverified — do not publish | No owner-confirmed English Writing lesson sequence exists | The Step 2 public framework may describe six connected **possible priorities**, but must not be called a fixed module order, complete inclusion list or identical syllabus for every learner | `content/englishWriting.ts`'s `framework`; `components/english-writing/EnglishWritingFramework.tsx` | Confirm the actual teaching scope and any fixed sequence before publishing module, lesson or coverage promises |
+| Whether every lesson follows the Step 3 five-stage cycle | Unverified — do not publish | No owner-confirmed English Writing lesson structure exists | The Step 3 public cycle may describe an **adaptable coaching framework** ("A useful writing-coaching cycle can begin with...") but must not be called the format every lesson, learner or package follows | `content/englishWriting.ts`'s `coachingProcess`; `components/english-writing/EnglishWritingCoachingProcess.tsx` | Confirm whether a genuinely fixed lesson structure exists before publishing it as a universal format |
 | Whether writing tasks are assigned | Unverified — do not publish | No English Writing-specific record exists | None. Do not say assignments are included | — | Confirm whether writing tasks/assignments are part of the current offer |
-| Feedback method, depth and frequency | Unverified — do not publish | No English Writing-specific record exists | None. Do not say "detailed feedback" is included | — | Confirm the feedback method, depth and frequency for the current offer |
-| Feedback turnaround time | Unverified — do not publish | No English Writing-specific record exists | None. Do not promise a turnaround time | — | Confirm any feedback turnaround commitment |
-| Number of drafts or revisions | Unverified — do not publish | No English Writing-specific record exists | None | — | Confirm whether a specific number of drafts/revisions is offered |
+| Whether learners submit full drafts, or whether Aisha reviews documents outside lessons | Unverified — do not publish | No English Writing-specific record exists; no document-upload feature exists in this codebase | None. The Step 3 process explicitly uses "a focused attempt", "short response" or "relevant section", never "full draft" or "document", and states the page does not request or store a document | `content/englishWriting.ts`'s `coachingProcess.stages` (stage 3's `boundary`); `components/english-writing/EnglishWritingCoachingProcess.tsx` | Confirm whether document submission or out-of-lesson review is ever offered, and what privacy/consent process would apply |
+| Feedback method, depth and frequency | Unverified — do not publish | No English Writing-specific record exists | None. Do not say "detailed feedback" is included, and do not say feedback is written, oral, live, recorded, asynchronous, comprehensive or line-by-line, or provided after every task | `content/englishWriting.ts`'s `coachingProcess.boundaryNote` | Confirm the feedback method, depth and frequency for the current offer |
+| Feedback turnaround time | Unverified — do not publish | No English Writing-specific record exists | None. Do not promise a turnaround time | `content/englishWriting.ts`'s `coachingProcess.boundaryNote` | Confirm any feedback turnaround commitment |
+| Number of drafts or revisions | Unverified — do not publish | No English Writing-specific record exists | None. The Step 3 boundary note explicitly states the number of revisions must be confirmed before enrolment | `content/englishWriting.ts`'s `coachingProcess.boundaryNote` | Confirm whether a specific number of drafts/revisions is offered |
+| Marking against a rubric, formal assessment, grading or progress reports | Unverified — do not publish | No English Writing-specific record exists | None. The Step 3 feedback lenses are framed as review questions, never task scoring, formal marking or a grade | `content/englishWriting.ts`'s `coachingProcess.feedbackLenses` | Confirm whether any formal assessment, marking or progress-reporting mechanism exists |
 | Tests or progress checks | Unverified — do not publish | No English Writing-specific record exists | None. Do not say "regular tests" | — | Confirm whether tests or progress checks are part of the current offer |
 | One-to-one review availability | Unverified — do not publish | No English Writing-specific record exists | None. Do not imply a "1-on-1 review option" exists | — | Confirm whether one-to-one review is currently offered |
 | Materials and homework | Unverified — do not publish | No English Writing-specific record exists | None | — | Confirm whether materials or homework are provided/expected |
@@ -71,8 +74,11 @@ format or teaching inclusion:
 | Six-area writing-development framework | Published as bounded educational guidance | Organises the existing broad writing positioning into purpose/task, sentence control, paragraph development, organisation/cohesion, vocabulary/tone and revision/self-review | Must not imply a fixed sequence, equal coverage, lesson count, assignments or feedback package | `content/englishWriting.ts`; `EnglishWritingFramework.tsx` |
 | Study, workplace and everyday context map | Published as bounded educational guidance | Shows how emphasis can change with writing purpose and reader | Examples are not guaranteed inclusions; exact document types remain subject to confirmation | `content/englishWriting.ts`; `EnglishWritingContextMap.tsx` |
 | Learning/authorship boundary | Published as bounded educational guidance | The site markets teaching and learner development, not completion or concealment services | No assessed-work completion, plagiarism disguise or authorship misrepresentation is offered or implied | `content/englishWriting.ts`; `EnglishWritingContextMap.tsx` |
+| Five-stage writing-coaching cycle | Published as bounded educational guidance | Organises a responsible writing-development sequence: clarify task/reader/purpose, plan, produce a focused attempt, review useful priorities, revise and transfer | Must not imply every lesson follows the sequence, that assignments or full drafts are involved, or that a fixed number of attempts is included | `content/englishWriting.ts`'s `coachingProcess.stages`; `EnglishWritingCoachingProcess.tsx` |
+| Four-lens feedback framework | Published as bounded educational guidance | Explains what useful review can focus on: purpose/response, organisation/development, sentences/language, revision/independence | Must not imply comprehensive/line-by-line correction, a specific method, frequency or turnaround, or formal scoring | `content/englishWriting.ts`'s `coachingProcess.feedbackLenses`; `EnglishWritingCoachingProcess.tsx` |
+| Feedback principle and operational boundary note | Published as bounded educational guidance | States that feedback should give the learner something specific to revise, not replace the learner's writing, and that practice format/feedback method/revision count/turnaround must be confirmed before enrolment | Must remain visible without interaction and must not be softened into an inclusion promise | `content/englishWriting.ts`'s `coachingProcess.feedbackPrinciple` / `boundaryNote`; `EnglishWritingCoachingProcess.tsx` |
 
-## What the public page currently says instead (as of English Writing Step 2)
+## What the public page currently says instead (as of English Writing Step 3)
 
 `/courses/english-writing` shows only:
 
@@ -90,6 +96,14 @@ format or teaching inclusion:
 - a study/workplace/everyday context map (`components/english-writing/
   EnglishWritingContextMap.tsx`, id `english-writing-context-map`) with explicit document-scope,
   confidentiality and academic-integrity boundaries;
+- a five-stage writing-coaching cycle and four-lens feedback framework (`components/english-writing/
+  EnglishWritingCoachingProcess.tsx`, id `english-writing-coaching-process`), presented as an
+  adaptable pedagogical sequence rather than a universal lesson format, with a feedback principle
+  ("give the learner something specific... not silently replace the learner's writing"), an
+  explicit operational boundary note (practice format, feedback method, revision count and
+  turnaround all subject to confirmation; no document upload), and its own contextual WhatsApp CTA
+  ("Discuss my writing situation") that never requests a full document or promises feedback
+  inclusion or a response time;
 - a route-guidance section (`components/english-writing/EnglishWritingRouteGuidance.tsx`, id
   `english-writing-route-guidance`) distinguishing general English Writing coaching from IELTS/PTE/
   TOEFL Writing preparation and O/A Level English, each with a real internal link;
@@ -108,10 +122,12 @@ components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed
 generic `<BatchTable>` "Upcoming Writing batches" section (removed entirely), or the complete
 generic `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty
 heading in their place — they are simply absent until their own verified replacement step.
-The exact teaching sequence, teaching/feedback process, evidence, learning format, pricing, a
-dedicated availability component, specialist FAQ and enquiry-handoff form variant remain
-deliberately deferred to their own later English Writing steps. Step 2's public framework is not an
-operational promise that all areas are included or taught in a fixed order.
+Evidence, learning format, pricing, a dedicated availability component, specialist FAQ and
+enquiry-handoff form variant remain deliberately deferred to their own later English Writing steps.
+Step 2's public framework is not an operational promise that all areas are included or taught in a
+fixed order, and Step 3's public coaching cycle and feedback framework are not a promise that every
+lesson, learner or package follows an identical sequence, includes assignments or full-draft
+review, or receives feedback of a specific method, frequency, depth or turnaround.
 
 ## Cross-site corrections made this step
 
@@ -140,6 +156,19 @@ operational promise that all areas are included or taught in a fixed order.
   already corrected during Spoken English Step 10 ("Develop practical speaking and writing" /
   "Focused support for learners working on spoken communication, language accuracy and written
   communication beyond a single examination") and required no further change for English Writing.
+
+## Step 3 reconciliation check
+
+Searched every public English Writing surface for `writing assignments with detailed feedback`,
+`regular writing practice with actionable feedback`, `regular tests`, `1-on-1 review option`,
+`unlimited feedback`, `personalised plan`, `line-by-line correction`, `feedback within 24/48
+hours`, `submit your document`, `professional proofreading` and `we rewrite your work`. No
+conflicting instance exists on `/courses/english-writing`, its dedicated components, or the
+already-corrected shared surfaces (`content/coursePresentation.ts`, `content/nav.ts`,
+`content/audiences.ts`, `content/courseGuidance.ts`, `content/homeCourses.ts`). The only remaining
+hits are inside the quarantined legacy `content/courses.ts` record (unread by the dedicated route,
+already annotated as non-authoritative) and this document's own explanatory text. No shared-surface
+file needed a further edit for Step 3.
 
 ## Open questions for Aisha
 
@@ -170,9 +199,17 @@ specific public claim can be made:
 20. Does Aisha want to commit to a stated response time for enquiries?
 21. Are there any existing English-Writing learners who have given consent for a testimonial to be
     published on this page?
+22. Does every current lesson genuinely follow a version of the five-stage coaching cycle, or does
+    practice vary enough that the public page should say so more explicitly?
+23. Are writing tasks/assignments assigned between sessions, and if so, are full drafts submitted
+    or reviewed outside the lesson itself?
+24. What is the actual feedback method (written, oral, live, recorded, asynchronous), typical
+    depth, frequency and turnaround time for the current offer?
+25. Is there a specific number of drafts or revisions included per writing attempt?
+26. Is any writing formally marked, scored or graded, and are progress reports produced?
 
 Until these are answered, the public page deliberately shows only the verified positioning, fit
-guidance, non-scored writing profile, possible-priorities framework, context mapping,
-route-selection guidance, the fail-closed availability state, and a WhatsApp/email path to ask
-Aisha directly — never an invented format, formal level, fixed module order, duration, fee,
-feedback promise or intake.
+guidance, non-scored writing profile, possible-priorities framework, context mapping, the adaptable
+coaching cycle and feedback framework, route-selection guidance, the fail-closed availability
+state, and a WhatsApp/email path to ask Aisha directly — never an invented format, formal level,
+fixed module order, duration, fee, feedback promise or intake.
