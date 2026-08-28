@@ -28,7 +28,11 @@ export const metadata: Metadata = {
     title: `${pageTitle} | ${site.brandName}`,
     description: pageDescription,
     url: pageUrl,
-    images: [{ url: "/images/og-image.jpg", width: 1200, height: 630, alt: site.brandName }],
+    // Spoken English Step 10: corrected from a declared 1200x630 that didn't match the real file --
+    // /images/og-image.jpg is actually 960x1280 (portrait), same correction already applied to
+    // app/layout.tsx during IELTS Step 10. A properly composed 1200x630 asset for this hub page
+    // specifically is a separate future decision, not required by this step.
+    images: [{ url: "/images/og-image.jpg", width: 960, height: 1280, alt: site.brandName }],
   },
 };
 

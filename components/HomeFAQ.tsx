@@ -2,25 +2,15 @@ import Link from "next/link";
 import FAQAccordion from "./FAQAccordion";
 import { homepageFaqs } from "@/content/faqs";
 
-// Server component — the accordion beneath it is native <details>/<summary>, so this
-// entire section (including the FAQPage JSON-LD) needs no client-side JavaScript.
+// Server component — the accordion beneath it is native <details>/<summary>, so this entire
+// section needs no client-side JavaScript. Spoken English Step 10: the FAQPage JSON-LD previously
+// emitted here was removed — Google announced the FAQ rich-result feature would stop appearing
+// from 7 May 2026 and removed the corresponding documentation in June 2026, so the schema had no
+// remaining Google Search consumer. No FAQ content was removed; only the now-obsolete structured
+// data. See docs/spoken-english-offer-verification.md's Step 10 section for the full record.
 export default function HomeFAQ() {
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: homepageFaqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
-
   return (
     <section className="py-14 sm:py-16 lg:py-20 px-4 bg-ivory" aria-labelledby="home-faq-heading">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
       <div className="max-w-2xl mx-auto">
         <div className="mb-7 sm:mb-10">
           <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">

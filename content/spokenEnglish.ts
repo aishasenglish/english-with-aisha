@@ -68,6 +68,14 @@
  * components/DiagnosticForm.tsx, app/free-diagnostic-test/page.tsx) with a locked "spoken-english"
  * variant -- see content/spokenEnglishEnquiry.ts's own doc comment for the full rationale.
  * Deliberately excluded from analytics tracking until Step 12 formally extends those allowlists.
+ *
+ * Step 10 adds `breadcrumb`: the single canonical source for both the visible breadcrumb
+ * (components/spoken-english/SpokenEnglishBreadcrumb.tsx) and the matching BreadcrumbList JSON-LD
+ * (app/courses/spoken-english/page.tsx) -- the only structured-data type added to this route. The
+ * page's absolute title/description/Open Graph/Twitter metadata and its dedicated
+ * 1200x630 social image (public/images/social/spoken-english-coaching.jpg) also live in
+ * app/courses/spoken-english/page.tsx's own `metadata` export, not here, mirroring
+ * app/courses/toefl/page.tsx's pattern.
  */
 
 /** One fit pathway card (components/spoken-english/SpokenEnglishFit.tsx). */
@@ -192,6 +200,19 @@ export type SpokenEnglishDetailGroup = {
 };
 
 export const spokenEnglishPage = {
+  // Step 10: single canonical source for both the visible breadcrumb
+  // (components/spoken-english/SpokenEnglishBreadcrumb.tsx) and the matching BreadcrumbList
+  // JSON-LD (app/courses/spoken-english/page.tsx) -- built from the exact same array so the
+  // visible path and structured data can never disagree. Mirrors content/toefl.ts's/
+  // content/pte.ts's `breadcrumb` field exactly. The final label "Spoken English Coaching" aligns
+  // with the page's absolute title, H1 intent and the Step 9 locked-form programme label -- not
+  // the legacy nav/course-record label "Spoken English & Fluency".
+  breadcrumb: [
+    { label: "Home", href: "/" },
+    { label: "Courses", href: "/courses" },
+    { label: "Spoken English Coaching" },
+  ],
+
   hero: {
     eyebrow: "Online Spoken English Coaching",
     // Prefers the non-emotional-outcome version per the implementing prompt's own guidance.

@@ -51,7 +51,9 @@ export const courseChoiceSituations: readonly CourseChoiceSituation[] = [
     courseSlug: "spoken-english",
     prompt: "The learner understands English but needs clearer, more confident speaking.",
     guidance: "Start with Spoken English for interviews, presentations, work or everyday communication.",
-    action: "View Spoken English",
+    // Spoken English Step 10: aligned to the preferred anchor-text pattern ("View Spoken English
+    // Coaching") used elsewhere (nav, breadcrumb, page title, coursePresentation.ts).
+    action: "View Spoken English Coaching",
   },
   {
     id: "writing",

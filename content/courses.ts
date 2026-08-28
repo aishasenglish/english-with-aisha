@@ -233,7 +233,12 @@ export const courses: Course[] = [
   },
   {
     slug: "spoken-english",
-    name: "Spoken English & Fluency",
+    // Spoken English Step 10: aligned from the legacy "Spoken English & Fluency" (a promised-
+    // outcome framing) to match the dedicated page's absolute title, breadcrumb and locked
+    // form-variant label. This field IS safely consumed site-wide (Footer, CourseExplorer,
+    // DiagnosticForm's generic programme dropdown) -- unlike tagline/summary/whoFor/modules/
+    // includes/price below, which remain non-authoritative and unchanged.
+    name: "Spoken English Coaching",
     // Not publication-authoritative for /courses/spoken-english (Spoken English Step 1) --
     // "speak without hesitation" presents hesitation-removal as a promised outcome, and "real
     // speaking fluency" is undefined. Spoken English has its own dedicated

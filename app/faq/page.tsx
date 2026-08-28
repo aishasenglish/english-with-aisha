@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import FAQAccordion from "@/components/FAQAccordion";
 import CTASection from "@/components/CTASection";
 import FadeUp from "@/components/FadeUp";
-import { generalFaqs } from "@/content/faqs";
 
 export const metadata: Metadata = {
   title: "FAQ",
@@ -10,24 +9,14 @@ export const metadata: Metadata = {
     "Frequently asked questions about English coaching with Aisha — programmes, fees, schedules, and how enquiries work.",
 };
 
+// Spoken English Step 10: the FAQPage JSON-LD previously emitted here was removed — Google
+// announced the FAQ rich-result feature would stop appearing from 7 May 2026 and removed the
+// corresponding documentation in June 2026, so the schema had no remaining Google Search consumer.
+// No FAQ content was removed; only the now-obsolete structured data. See
+// docs/spoken-english-offer-verification.md's Step 10 section for the full record.
 export default function FAQPage() {
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: generalFaqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
-
       <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
         <div className="max-w-3xl mx-auto text-center">
           <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">

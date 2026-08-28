@@ -75,12 +75,17 @@ export const coursePresentations: CoursePresentation[] = [
     // situation. Aligned with the rebuilt /courses/spoken-english content -- see
     // docs/spoken-english-offer-verification.md.
     slug: "spoken-english",
-    typeLabel: "Fluency and communication",
+    // Spoken English Step 10: "Fluency and communication" and "Develop clearer spoken English"
+    // leaned on fluency as a promised outcome ("develop" reading as something the course delivers
+    // rather than a description of focus). Aligned with the implementing prompt's suggested
+    // needs-led wording and the "View Spoken English Coaching" identity used elsewhere (nav,
+    // breadcrumb, page title).
+    typeLabel: "Spoken communication",
     shortDescription:
-      "Develop clearer spoken English for work, interviews, presentations, study and everyday interactions.",
-    bestFor: "Learners with specific real-world speaking situations",
-    focus: "Pronunciation, response-building and interaction priorities",
-    ctaLabel: "View Spoken English Programme",
+      "Focus on clearer pronunciation, response building and practical communication for work, interviews, presentations, study and everyday situations.",
+    bestFor: "Learners with a specific real-world speaking situation",
+    focus: "Pronunciation, response building and interaction priorities",
+    ctaLabel: "View Spoken English Coaching",
     whatsappMessage:
       "Hi Aisha! I am interested in Spoken English coaching. The situations where I need to speak more clearly are:",
   },

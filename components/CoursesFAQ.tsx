@@ -3,26 +3,15 @@ import FAQAccordion from "./FAQAccordion";
 import { courseHubFaqs } from "@/content/faqs";
 
 // Server component — the accordion beneath it is native <details>/<summary>, so this entire
-// section (including the FAQPage JSON-LD) needs no client-side JavaScript. Reuses five entries
-// from the one canonical FAQ source (content/faqs.ts) by stable ID; the full /faq page has
-// already been audited so this section's closing link is safe to show.
+// section needs no client-side JavaScript. Reuses five entries from the one canonical FAQ source
+// (content/faqs.ts) by stable ID; the full /faq page has already been audited so this section's
+// closing link is safe to show. Spoken English Step 10: the FAQPage JSON-LD previously emitted
+// here was removed — Google announced the FAQ rich-result feature would stop appearing from 7 May
+// 2026 and removed the corresponding documentation in June 2026, so the schema had no remaining
+// Google Search consumer. No FAQ content was removed; only the now-obsolete structured data.
 export default function CoursesFAQ() {
-  const faqJsonLd = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    mainEntity: courseHubFaqs.map((faq) => ({
-      "@type": "Question",
-      name: faq.question,
-      acceptedAnswer: { "@type": "Answer", text: faq.answer },
-    })),
-  };
-
   return (
     <section className="py-14 sm:py-16 px-4 bg-ivory" aria-labelledby="courses-faq-heading">
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
-      />
       <div className="max-w-2xl mx-auto">
         <div className="mb-7 sm:mb-10">
           <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">

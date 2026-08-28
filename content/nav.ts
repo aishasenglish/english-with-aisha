@@ -43,7 +43,10 @@ export const NAV: NavItem[] = [
       {
         heading: "Fluency and professional communication",
         links: [
-          { label: "Spoken English & Fluency", href: "/courses/spoken-english" },
+          // Spoken English Step 10: aligned to the page's own absolute title/H1 intent, breadcrumb
+          // and locked form-variant label ("Spoken English Coaching") rather than "& Fluency",
+          // which reads as a promised outcome.
+          { label: "Spoken English Coaching", href: "/courses/spoken-english" },
           { label: "English Writing Mastery", href: "/courses/english-writing" },
           {
             label: "Corporate English enquiry",

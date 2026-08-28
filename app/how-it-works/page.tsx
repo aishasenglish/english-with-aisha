@@ -7,13 +7,19 @@ import FadeUp from "@/components/FadeUp";
 export const metadata: Metadata = {
   title: "How It Works",
   description:
-    "A simple, structured path from where you are now to ready and confident. Live Zoom classes, recorded, with personal feedback and relevant practice.",
+    "A simple, structured path from where you are now to a clear next step. Live sessions, recordings, feedback and relevant practice are confirmed for your current programme option.",
 };
 
+// Spoken English Step 10: three of these five items previously asserted a universal claim
+// (live delivery on a named platform; every class recorded; personal feedback that "moves your
+// score") not verified for every current programme, including Spoken English. Reworded narrowly
+// to confirmation language without a full page redesign -- the other two items already read as
+// programme-appropriate ("may include... where appropriate"; an independent consultation offer)
+// and were left unchanged.
 const details = [
   {
-    title: "Live classes on Zoom",
-    desc: "Attend interactive live sessions where you can ask questions in real time. Every class runs on Zoom — just join from your device, wherever you are.",
+    title: "Confirmed live sessions",
+    desc: "Live sessions are confirmed for your current programme option so you can ask questions in real time. The platform and schedule are confirmed before you begin.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.867V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2v-2.867a1 1 0 00-.447-.832L15 14" />
@@ -21,8 +27,8 @@ const details = [
     ),
   },
   {
-    title: "Every class recorded",
-    desc: "Miss a class or want to revise? Watch the recording whenever you like. Every session is saved and shared with the batch.",
+    title: "Recordings, where confirmed",
+    desc: "Recording availability and how long you can access it are confirmed for your current programme option before you begin.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M15 10l4.553-2.069A1 1 0 0121 8.867V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2h14a2 2 0 002-2v-2.867a1 1 0 00-.447-.832L15 14M15 10l-3 2-3-2" />
@@ -39,8 +45,8 @@ const details = [
     ),
   },
   {
-    title: "Personal feedback",
-    desc: "I review your writing and speaking and tell you exactly what to fix. No vague comments — specific, actionable guidance that actually moves your score.",
+    title: "Feedback on your work",
+    desc: "Feedback method, frequency and turnaround are confirmed for your current programme option. The aim is specific, actionable guidance you can apply to your next attempt.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
@@ -67,7 +73,7 @@ export default function HowItWorksPage() {
             How the coaching works.
           </h1>
           <p className="text-ink-soft text-lg">
-            A simple, structured path from &ldquo;where you are now&rdquo; to &ldquo;ready and confident.&rdquo;
+            A simple, structured path from &ldquo;where you are now&rdquo; to your next confirmed step.
           </p>
         </div>
       </section>

@@ -33,9 +33,13 @@ export const courseCategories: readonly CourseCategory[] = [
   {
     id: "communication-skills",
     eyebrow: "Communication skills",
-    title: "Build stronger speaking and writing",
+    // Spoken English Step 10: "Build stronger speaking and writing" plus "improving fluency,
+    // confidence" framed these as promised personal outcomes rather than a description of the
+    // support offered. Reworded to needs-led language matching the Spoken English page's own
+    // positioning (docs/spoken-english-offer-verification.md).
+    title: "Develop practical speaking and writing",
     description:
-      "Focused support for learners improving fluency, confidence, accuracy and written communication beyond a single examination.",
+      "Focused support for learners working on spoken communication, language accuracy and written communication beyond a single examination.",
     courseSlugs: ["spoken-english", "english-writing"],
   },
 ] as const;

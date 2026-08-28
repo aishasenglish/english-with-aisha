@@ -44,7 +44,11 @@ export default function HomePage() {
 
       <CoachingProcess />
 
-      {/* Availability */}
+      {/* Availability -- Spoken English Step 10: "Upcoming live online intakes" and "the next
+          suitable group or one-to-one opening" both asserted a universal live/group/one-to-one
+          claim not verified for every programme (including Spoken English). Reworded to neutral
+          language that doesn't imply every programme is intake-based or that group/private
+          options exist. */}
       <section className="py-14 sm:py-16 lg:py-20 px-4 bg-ivory">
         <div className="max-w-5xl mx-auto">
           <FadeUp>
@@ -54,11 +58,11 @@ export default function HomePage() {
                 <span className="h-0.5 w-9 bg-coral" aria-hidden />
               </p>
               <h2 className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink mb-3">
-                Upcoming live online intakes
+                Review confirmed upcoming intakes
               </h2>
               <p className="text-ink-soft leading-relaxed">
-                Confirmed dates are listed in Pakistan Standard Time. If your programme is not
-                shown, ask Aisha about the next suitable group or one-to-one opening.
+                Confirmed future dates are listed in Pakistan Standard Time. If your programme is
+                not shown, ask Aisha whether a suitable current option is available.
               </p>
             </div>
             <BatchTable limit={3} />

@@ -11,6 +11,7 @@ Drop your photos into this folder. The website references these filenames:
 | `social/ielts-preparation.jpg` | `/courses/ielts` Open Graph / Twitter image | 1200×630px (landscape) — composed from `og-image.jpg` padded onto an ivory background, not cropped or stretched; see `docs/ielts-content-sources.md` for why |
 | `social/pte-academic-preparation.jpg` | `/courses/pte` Open Graph / Twitter image | 1200×630px (landscape) — composed the same way as the IELTS asset above, from the same `og-image.jpg` source; see `docs/pte-content-sources.md` for why |
 | `social/toefl-ibt-preparation.jpg` | `/courses/toefl` Open Graph / Twitter image | 1200×630px (landscape) — composed the same way as the IELTS/PTE assets above, from the same `og-image.jpg` source; see `docs/toefl-content-sources.md` for why |
+| `social/spoken-english-coaching.jpg` | `/courses/spoken-english` Open Graph / Twitter image | 1200×630px (landscape) — composed the same way as the IELTS/PTE/TOEFL assets above, from the same `og-image.jpg` source; see `docs/spoken-english-content-sources.md` for why |
 
 ## Testimonial Photos
 
