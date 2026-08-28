@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 1 (29 August 2026).
+**Last reviewed:** English Writing Step 2 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -15,6 +15,7 @@ professional advice, or as an answer on Aisha's behalf.
 - `Verified`
 - `Unverified — do not publish`
 - `Removed from public page`
+- `Published as bounded educational guidance`
 
 ## Verified
 
@@ -40,7 +41,7 @@ confirmation date and evidence source here first.
 | Class/session duration and frequency | Unverified — do not publish | No English Writing-specific record exists | None | — | Confirm current session length and frequency |
 | Programme duration | Unverified — do not publish | No English Writing-specific record exists | None | — | Confirm the current programme duration, if fixed |
 | Whether sessions are recorded | Unverified — do not publish | No English Writing-specific record exists | None. Do not say sessions are recorded | — | Confirm whether recordings are provided and, if so, for how long |
-| Curriculum scope and sequence | Unverified — do not publish | No English Writing-specific record exists | None beyond the Step 1 "priorities to discuss" framing | `content/englishWriting.ts`'s `prioritiesPreview` (explicitly not a curriculum) | Confirm the actual curriculum scope for a later step |
+| Fixed curriculum scope and sequence | Unverified — do not publish | No owner-confirmed English Writing lesson sequence exists | The Step 2 public framework may describe six connected **possible priorities**, but must not be called a fixed module order, complete inclusion list or identical syllabus for every learner | `content/englishWriting.ts`'s `framework`; `components/english-writing/EnglishWritingFramework.tsx` | Confirm the actual teaching scope and any fixed sequence before publishing module, lesson or coverage promises |
 | Whether writing tasks are assigned | Unverified — do not publish | No English Writing-specific record exists | None. Do not say assignments are included | — | Confirm whether writing tasks/assignments are part of the current offer |
 | Feedback method, depth and frequency | Unverified — do not publish | No English Writing-specific record exists | None. Do not say "detailed feedback" is included | — | Confirm the feedback method, depth and frequency for the current offer |
 | Feedback turnaround time | Unverified — do not publish | No English Writing-specific record exists | None. Do not promise a turnaround time | — | Confirm any feedback turnaround commitment |
@@ -59,7 +60,19 @@ confirmation date and evidence source here first.
 | Expected enquiry response time | Unverified — do not publish | No documented standard exists anywhere on the site | None. Do not promise a reply-time window | — | Confirm whether Aisha wants to commit to a stated response time |
 | Writing-specific testimonials, results or samples | Unverified — do not publish | `content/testimonials.ts` currently has no entries | None. No testimonial, quote, sample or outcome claim may appear until a real, consent-confirmed, English-Writing-tagged record exists | — | Supply a genuine testimonial with recorded consent and a `courseSlug: "english-writing"` tag before any evidence section is built |
 
-## What the public page currently says instead (as of English Writing Step 1)
+## Step 2 public guidance decisions
+
+These decisions describe non-operational learner guidance. They do not verify a package, delivery
+format or teaching inclusion:
+
+| Public guidance | Current status | Basis | Approved boundary | Files affected |
+|---|---|---|---|---|
+| Four-part writing profile | Published as bounded educational guidance | Helps a visitor describe writing type, reader/purpose, current difficulty and whether the need belongs on a named exam route | Must remain a reflection guide, never a formal assessment, diagnostic, placement or level result | `content/englishWriting.ts`; `EnglishWritingProfile.tsx` |
+| Six-area writing-development framework | Published as bounded educational guidance | Organises the existing broad writing positioning into purpose/task, sentence control, paragraph development, organisation/cohesion, vocabulary/tone and revision/self-review | Must not imply a fixed sequence, equal coverage, lesson count, assignments or feedback package | `content/englishWriting.ts`; `EnglishWritingFramework.tsx` |
+| Study, workplace and everyday context map | Published as bounded educational guidance | Shows how emphasis can change with writing purpose and reader | Examples are not guaranteed inclusions; exact document types remain subject to confirmation | `content/englishWriting.ts`; `EnglishWritingContextMap.tsx` |
+| Learning/authorship boundary | Published as bounded educational guidance | The site markets teaching and learner development, not completion or concealment services | No assessed-work completion, plagiarism disguise or authorship misrepresentation is offered or implied | `content/englishWriting.ts`; `EnglishWritingContextMap.tsx` |
+
+## What the public page currently says instead (as of English Writing Step 2)
 
 `/courses/english-writing` shows only:
 
@@ -68,9 +81,15 @@ confirmation date and evidence source here first.
   `EnglishWritingFit.tsx`), positioning the page around the candidate's own real writing situations
   (study, work, everyday, foundations) rather than a promise to "write clearly, correctly,
   confidently";
-- a temporary writing-priorities preview (`components/english-writing/
-  EnglishWritingPrioritiesPreview.tsx`, id `english-writing-priorities`) explicitly framed as "not
-  the final curriculum" — a later step will replace or expand it once the offer is verified;
+- a static four-part writing-profile guide (`components/english-writing/
+  EnglishWritingProfile.tsx`, id `english-writing-profile`) that helps visitors describe what they
+  write, the reader/purpose, current difficulty and whether the need belongs on a named exam route;
+- a six-area writing-development framework (`components/english-writing/
+  EnglishWritingFramework.tsx`, id `english-writing-framework`) framed as possible priorities, not
+  a fixed module sequence or promise of identical coverage;
+- a study/workplace/everyday context map (`components/english-writing/
+  EnglishWritingContextMap.tsx`, id `english-writing-context-map`) with explicit document-scope,
+  confidentiality and academic-integrity boundaries;
 - a route-guidance section (`components/english-writing/EnglishWritingRouteGuidance.tsx`, id
   `english-writing-route-guidance`) distinguishing general English Writing coaching from IELTS/PTE/
   TOEFL Writing preparation and O/A Level English, each with a real internal link;
@@ -89,10 +108,10 @@ components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed
 generic `<BatchTable>` "Upcoming Writing batches" section (removed entirely), or the complete
 generic `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty
 heading in their place — they are simply absent until their own verified replacement step.
-Detailed curriculum, teaching/feedback process, evidence, learning format, pricing, a dedicated
-availability component, a specialist FAQ and the enquiry-handoff form variant all remain
-deliberately deferred to their own later English Writing steps, mirroring the IELTS, PTE, TOEFL and
-Spoken English sequence.
+The exact teaching sequence, teaching/feedback process, evidence, learning format, pricing, a
+dedicated availability component, specialist FAQ and enquiry-handoff form variant remain
+deliberately deferred to their own later English Writing steps. Step 2's public framework is not an
+operational promise that all areas are included or taught in a fixed order.
 
 ## Cross-site corrections made this step
 
@@ -133,7 +152,8 @@ specific public claim can be made:
 4. What starting levels can the current offer genuinely support, and is there an age scope?
 5. What is the current programme duration and lesson frequency?
 6. Are session recordings provided, and if so, for how long can a learner access them?
-7. Is a specific curriculum/module sequence confirmed, and does it include a fixed order?
+7. Is a specific curriculum/module sequence confirmed, and does it include a fixed order? The
+   current public framework only describes possible priorities and does not answer this.
 8. Are writing tasks/assignments part of the current offer, and if so, how many/how often?
 9. What is the feedback method, depth, frequency and turnaround?
 10. Is a specific number of drafts/revisions offered per piece of writing?
@@ -152,6 +172,7 @@ specific public claim can be made:
     published on this page?
 
 Until these are answered, the public page deliberately shows only the verified positioning, fit
-guidance, a temporary priorities preview, route-selection guidance, the fail-closed availability
-state, and a WhatsApp/email path to ask Aisha directly — never an invented format, level, duration,
-fee, feedback promise or intake.
+guidance, non-scored writing profile, possible-priorities framework, context mapping,
+route-selection guidance, the fail-closed availability state, and a WhatsApp/email path to ask
+Aisha directly — never an invented format, formal level, fixed module order, duration, fee,
+feedback promise or intake.

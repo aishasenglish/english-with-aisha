@@ -12,9 +12,10 @@ import { site } from "@/content/site";
  * publication-authoritative for /courses/english-writing -- see
  * docs/english-writing-offer-verification.md for the full list of unverified operational facts.
  *
- * Later English Writing steps add more sections (full curriculum, teaching/feedback process,
- * evidence, learning format, pricing, dedicated availability, FAQ) once their content is
- * verified against an owner confirmation -- do not pre-fill those with placeholder content.
+ * Step 2 adds a needs-led writing profile and a public development framework framed as possible
+ * priorities, not a fixed syllabus. Later steps add teaching/feedback process, evidence, learning
+ * format, pricing, dedicated availability and FAQ only when their claims are verified -- do not
+ * pre-fill those with placeholder content.
  */
 
 /** One of the four "who this coaching may suit" context cards
@@ -29,13 +30,33 @@ export type EnglishWritingContextCard = {
   note?: string;
 };
 
-/** One temporary "writing priorities we can discuss" theme
- *  (components/english-writing/EnglishWritingPrioritiesPreview.tsx) -- a possible discussion area,
- *  never a guaranteed module or curriculum sequence. */
-export type EnglishWritingPriorityItem = {
+/** One explanatory prompt in the Step-2 writing profile. These are static reflection prompts,
+ *  not form controls, a scored diagnostic or a formal placement assessment. */
+export type EnglishWritingProfilePrompt = {
   id: string;
-  label: string;
-  body: string;
+  question: string;
+  helper: string;
+  examples: readonly string[];
+};
+
+/** One connected area in the Step-2 writing-development framework. The areas describe possible
+ *  priorities; they do not promise a fixed module sequence or equal coverage for every learner. */
+export type EnglishWritingDevelopmentArea = {
+  id: string;
+  title: string;
+  purpose: string;
+  possiblePriorities: readonly string[];
+  reflectionPrompt: string;
+};
+
+/** One context-to-priority mapping. Examples help learner recognition without becoming a public
+ *  inclusion list for every document type. */
+export type EnglishWritingContextApplication = {
+  id: string;
+  title: string;
+  description: string;
+  possiblePriorities: readonly string[];
+  boundary: string;
 };
 
 /** One internal route-selection link (IELTS/PTE/TOEFL/O-A Level) in
@@ -114,43 +135,195 @@ export const englishWritingContent = {
     ] as EnglishWritingContextCard[],
   },
 
-  // Step 1: a deliberately limited preview -- not the final curriculum. A later step replaces or
-  // expands this once the offer is verified. No lesson-by-lesson modules, assignment counts, test
-  // frequency, marking rubrics, feedback turnaround, citation-style training, dissertation/
-  // publication support or AI/plagiarism service appears anywhere below.
-  prioritiesPreview: {
-    id: "english-writing-priorities",
-    eyebrow: "A starting point, not a fixed curriculum",
-    heading: "Writing priorities we can discuss",
-    intro:
-      "This is not the final curriculum. The relevant priorities depend on what you need to write and the difficulties you currently face.",
-    items: [
+  // Step 2: a static starting-point guide, not an assessment, form, level test or scored
+  // diagnostic. It helps a visitor send a useful enquiry without collecting a document.
+  writingProfile: {
+    id: "english-writing-profile",
+    eyebrow: "Your writing starting point",
+    heading: "Start with your writing profile",
+    introduction:
+      "A useful starting point is not simply whether your English is strong or weak. It is what you need to write, who will read it and what becomes difficult when you try.",
+    promptsHeading: "Four details that make an enquiry more useful",
+    prompts: [
       {
-        id: "sentence-clarity",
-        label: "Sentence clarity and control",
-        body: "Building sentences that say what you mean, without unnecessary complexity.",
+        id: "writing-type",
+        question: "What do you need to write?",
+        helper: "Name the situation before trying to name your level.",
+        examples: [
+          "Study-related responses",
+          "Workplace messages or documents",
+          "Practical everyday communication",
+          "Another writing situation you can describe",
+        ],
       },
       {
-        id: "grammar-punctuation",
-        label: "Grammar and punctuation in context",
-        body: "Working on the specific patterns that affect your own writing, not a generic drill list.",
+        id: "reader-purpose",
+        question: "Who will read it, and why?",
+        helper: "Consider what the reader needs to understand or do.",
+        examples: ["Explain or inform", "Request or respond", "Describe or compare", "Present a position"],
       },
       {
-        id: "paragraph-organisation",
-        label: "Paragraph organisation and progression",
-        body: "Structuring ideas so a reader can follow your point from sentence to sentence.",
+        id: "current-difficulty",
+        question: "What currently feels difficult?",
+        helper: "A specific recurring problem is more useful than a broad label.",
+        examples: [
+          "Building complete sentences",
+          "Controlling grammar or punctuation",
+          "Connecting and developing ideas",
+          "Choosing suitable words or tone",
+          "Knowing what to revise",
+        ],
       },
       {
-        id: "purpose-audience-tone",
-        label: "Purpose, audience and tone",
-        body: "Matching how you write to who is reading it and why.",
+        id: "right-route",
+        question: "Is it general writing or a named exam need?",
+        helper: "Test and syllabus writing follow their own task-specific routes.",
+        examples: ["General written English", "IELTS, PTE or TOEFL", "O/A Level English", "Not sure yet"],
+      },
+    ] as EnglishWritingProfilePrompt[],
+    boundaryNote:
+      "This is a starting-point guide, not a formal writing assessment, certified level placement or guarantee of progress.",
+    cta: {
+      label: "Share my writing profile",
+      message:
+        "Hi Aisha! I'm interested in online English writing coaching. I mainly need to write for [study/work/everyday communication]. The type of writing is [describe it], the reader or purpose is [details], and I currently find [sentence control/organisation/tone/revision/another issue] difficult.",
+    },
+  },
+
+  // Step 2: six connected areas that explain how writing can be developed. They are possible
+  // priorities selected from the learner's context, never a fixed lesson sequence, inclusion list
+  // or promise that every area receives equal time.
+  framework: {
+    id: "english-writing-framework",
+    eyebrow: "Writing development framework",
+    heading: "The areas that shape effective writing",
+    introduction:
+      "Writing difficulties rarely sit in only one place. The relevant priorities may involve meaning, sentence control, organisation, reader awareness and revision, depending on the writing situation.",
+    areas: [
+      {
+        id: "purpose-reader-task",
+        title: "Purpose, reader and task",
+        purpose: "Make writing choices from what the text needs to achieve and what the reader needs to understand.",
+        possiblePriorities: [
+          "Clarifying the purpose of the text",
+          "Identifying the intended reader",
+          "Selecting relevant information",
+          "Recognising the form and constraints of the task",
+        ],
+        reflectionPrompt: "Can you state what the reader should understand or do after reading?",
       },
       {
-        id: "reviewing-recurring-problems",
-        label: "Reviewing recurring writing problems",
-        body: "Identifying the mistakes or habits that keep appearing across different pieces of writing.",
+        id: "sentence-control",
+        title: "Sentence control",
+        purpose: "Construct sentences that express the intended meaning without unnecessary complexity.",
+        possiblePriorities: [
+          "Complete sentence construction",
+          "Clause and verb relationships",
+          "Sentence boundaries",
+          "Grammar and punctuation that support meaning",
+        ],
+        reflectionPrompt: "Do your sentences express the idea clearly, or do they become incomplete, crowded or difficult to follow?",
       },
-    ] as EnglishWritingPriorityItem[],
+      {
+        id: "paragraph-development",
+        title: "Paragraph focus and development",
+        purpose: "Build paragraphs around a clear point and develop it with relevant supporting information.",
+        possiblePriorities: [
+          "Establishing a clear paragraph focus",
+          "Selecting supporting details",
+          "Developing rather than listing ideas",
+          "Maintaining unity from sentence to sentence",
+        ],
+        reflectionPrompt: "Can a reader identify the main point of each paragraph and see how the details support it?",
+      },
+      {
+        id: "organisation-cohesion",
+        title: "Overall organisation and cohesion",
+        purpose: "Order and connect ideas so the reader can follow how the whole text develops.",
+        possiblePriorities: [
+          "Sequencing ideas for the task and reader",
+          "Creating an appropriate opening, development and ending",
+          "Using transitions deliberately",
+          "Avoiding repetition and abrupt jumps",
+        ],
+        reflectionPrompt: "Does the reader know why each section comes next?",
+      },
+      {
+        id: "vocabulary-tone",
+        title: "Vocabulary, tone and precision",
+        purpose: "Choose language that communicates the intended meaning and fits the reader and situation.",
+        possiblePriorities: [
+          "Choosing precise rather than vague wording",
+          "Using an appropriate level of formality",
+          "Avoiding unnecessary complexity",
+          "Maintaining a consistent, suitable tone",
+        ],
+        reflectionPrompt: "Do your word choices fit the reader and purpose, or are they sometimes vague, repetitive or too formal or informal?",
+      },
+      {
+        id: "revision-self-review",
+        title: "Revision and self-review",
+        purpose: "Develop a manageable way to review purpose, organisation and recurring problems in your own draft.",
+        possiblePriorities: [
+          "Checking whether the text fulfils its purpose",
+          "Reviewing organisation before surface errors",
+          "Noticing recurring personal patterns",
+          "Making deliberate changes for clarity and precision",
+        ],
+        reflectionPrompt: "When you reread a draft, do you know what to check first and which changes matter most?",
+      },
+    ] as EnglishWritingDevelopmentArea[],
+  },
+
+  contextMap: {
+    id: "english-writing-context-map",
+    eyebrow: "Applying the framework",
+    heading: "The emphasis changes with the writing situation",
+    introduction:
+      "The same development areas can matter in different ways. Priorities should be selected from what the learner needs to write, not from a promise that every topic is always covered.",
+    contexts: [
+      {
+        id: "study",
+        title: "Study-related writing",
+        description: "For learners developing their own structured written responses outside a named test-preparation promise.",
+        possiblePriorities: [
+          "Communicating ideas in a clear structure",
+          "Developing and connecting relevant points",
+          "Using a suitable study context and tone",
+          "Strengthening the learner's own revision process",
+        ],
+        boundary:
+          "Coaching supports the learner's own skill development; it is not a service for completing assessed work on the learner's behalf.",
+      },
+      {
+        id: "workplace",
+        title: "Workplace writing",
+        description: "For professionals describing recurring difficulties in common written communication at work.",
+        possiblePriorities: [
+          "Clarifying the purpose and required response",
+          "Organising information for the reader",
+          "Using an appropriate and consistent tone",
+          "Making routine communication concise and usable",
+        ],
+        boundary:
+          "The exact document types and any confidentiality requirements must be confirmed before materials are shared.",
+      },
+      {
+        id: "everyday",
+        title: "Everyday written communication",
+        description: "For learners who want more control in practical written English used in daily situations.",
+        possiblePriorities: [
+          "Writing complete, understandable messages",
+          "Using practical sentence and paragraph control",
+          "Matching tone to the relationship and purpose",
+          "Building deliberate self-checking habits",
+        ],
+        boundary:
+          "Everyday writing takes many forms; the relevant examples and priorities should be confirmed from the learner's situation.",
+      },
+    ] as EnglishWritingContextApplication[],
+    integrityNote:
+      "Coaching is intended to help learners develop and revise their own writing. It does not include completing assessed work, disguising plagiarism or helping someone misrepresent authorship.",
   },
 
   routeGuidance: {
@@ -210,7 +383,7 @@ export const englishWritingContent = {
     helperNote: "You do not need to send a full document in the first message.",
     primaryLabel: "Discuss my writing goals",
     message:
-      "Hi Aisha! I'm interested in online English writing coaching. What I need to write is [details]. What I find difficult is [details]. My relevant deadline, if any, is [details].",
+      "Hi Aisha! I'm interested in online English writing coaching. I mainly need to write for [study/work/everyday communication]. The type of writing is [details], the reader or purpose is [details], and I currently find [sentence control/organisation/tone/revision/another issue] difficult. My relevant deadline, if any, is [details].",
     emailCtaLabel: "Email Aisha",
     emailAccessibleLabel: "Email Aisha about English writing coaching",
     emailSubject: "English writing coaching enquiry",
@@ -219,6 +392,7 @@ export const englishWritingContent = {
 I would like to ask about English writing coaching.
 
 What I need to write:
+Who will read it and why:
 What I find difficult:
 Any relevant deadline:
 

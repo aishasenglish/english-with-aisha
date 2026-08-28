@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import EnglishWritingHero from "@/components/english-writing/EnglishWritingHero";
 import EnglishWritingAuthorityStrip from "@/components/english-writing/EnglishWritingAuthorityStrip";
 import EnglishWritingFit from "@/components/english-writing/EnglishWritingFit";
-import EnglishWritingPrioritiesPreview from "@/components/english-writing/EnglishWritingPrioritiesPreview";
+import EnglishWritingProfile from "@/components/english-writing/EnglishWritingProfile";
+import EnglishWritingFramework from "@/components/english-writing/EnglishWritingFramework";
+import EnglishWritingContextMap from "@/components/english-writing/EnglishWritingContextMap";
 import EnglishWritingRouteGuidance from "@/components/english-writing/EnglishWritingRouteGuidance";
 import EnglishWritingAvailability from "@/components/english-writing/EnglishWritingAvailability";
 import EnglishWritingFinalCTA from "@/components/english-writing/EnglishWritingFinalCTA";
@@ -27,7 +29,9 @@ export default function EnglishWritingPage() {
       <EnglishWritingHero />
       <EnglishWritingAuthorityStrip />
       <EnglishWritingFit />
-      <EnglishWritingPrioritiesPreview />
+      <EnglishWritingProfile />
+      <EnglishWritingFramework />
+      <EnglishWritingContextMap />
       <EnglishWritingRouteGuidance />
       <EnglishWritingAvailability />
       <EnglishWritingFinalCTA />
