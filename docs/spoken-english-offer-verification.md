@@ -166,6 +166,162 @@ Rewriting a person's quote to improve its grammar is not permitted without their
 of the final public wording — request permission for an edited version, or use a clearly approved
 excerpt instead.
 
+## Technical SEO, metadata and internal linking (Step 10)
+
+- **Step 10 implementation date:** 2026-08-28.
+- **Final title:** `Online Spoken English Coaching | Aisha's English` — set via Next.js's absolute-
+  title syntax (`{ absolute: "..." }`) so the root layout's `%s | Aisha's English` template cannot
+  append the brand a second time.
+- **Final description:** "Online Spoken English coaching focused on pronunciation, response
+  building and practical communication for work, interviews, presentations, study and everyday
+  situations." — no guaranteed improvement, formal assessment, live/group/one-to-one format, Zoom,
+  recordings, duration, fee, start date, or native-accent claim.
+- **Canonical URL:** `https://aishasenglish.com/courses/spoken-english`, built from `site.domain`,
+  one declaration, no trailing-slash duplicate.
+- **Open Graph/Twitter values:** type `website`; title "Online Spoken English Coaching with
+  Aisha"; description "Focused on pronunciation, response building and practical communication for
+  work, interviews, presentations, study and everyday situations."; Twitter card
+  `summary_large_image`. Image: `public/images/social/spoken-english-coaching.jpg`, a genuine
+  `1200×630` file (confirmed via `sharp` metadata inspection immediately after generation), composed
+  by resizing the same site-approved `public/images/og-image.jpg` portrait (`960×1280`, unmodified
+  other than the resize) to `473×630` and centring it on a plain `#F7FAFB` (ivory) canvas — padding,
+  not cropping or stretching, following the exact IELTS/PTE/TOEFL Step 10 recipe. No AI generation,
+  retouching or identity change; no flag, classroom scene, accent graphic, certificate, rating or
+  platform logo added. Alt text: "Portrait of Aisha, the teacher behind Aisha's English" (factual,
+  built from canonical `site.founder`/`site.brandName`).
+- **Breadcrumb source and structured-data mapping:** `content/spokenEnglish.ts`'s new `breadcrumb`
+  array (`Home` → `/`, `Courses` → `/courses`, `Spoken English Coaching` → current page, no self-
+  link) feeds both the visible `components/spoken-english/SpokenEnglishBreadcrumb.tsx` and the
+  `BreadcrumbList` JSON-LD built in `app/courses/spoken-english/page.tsx` — the only structured-data
+  type added to this route. Verified live: exactly one JSON-LD script on the route, valid JSON,
+  3 ordered `ListItem` entries with absolute URLs built from `site.domain`, matching the visible
+  path exactly.
+- **Structured-data types deliberately excluded, and why:**
+  - `FAQPage`/`QAPage` — Google announced the FAQ rich-result feature would stop appearing from
+    7 May 2026 and removed the corresponding documentation in June 2026 (reconfirmed live this
+    step — see "Google Search Central guidance rechecked" below). The visible specialist FAQ
+    (Step 8) is preserved unchanged; only the obsolete schema type was never added to this route in
+    the first place, and was actively removed from three other site-wide locations (see below).
+  - `Offer` — pricing remains `enquire` (Step 6); no price/currency/availability schema may exist
+    while that holds, and none does.
+  - `AggregateRating`/`Review` — no permission-cleared, representative Spoken-English-specific
+    evidence exists (Step 4's evidence guard remains empty).
+  - `Course`/`CourseInstance` — a single detail page is not a course-list context, and no complete
+    verified intake exists (Step 7 remains enquiry-only).
+  - `Service`/`Person`/`Organization` — no canonical, visible, maintained site-wide strategy
+    justifies adding generic schema here.
+- **The June 2026 removal of Google FAQ rich results:** confirmed via direct review of current
+  Google Search Central documentation on the implementation date (28 August 2026) — the FAQ
+  rich-result feature stopped appearing from 7 May 2026 and its documentation page was removed in
+  June 2026; breadcrumb structured data remains documented and supported. As a result, the
+  pre-existing `FAQPage` JSON-LD in `components/HomeFAQ.tsx`, `components/CoursesFAQ.tsx` and
+  `app/faq/page.tsx` was removed (no other consumer of that schema was found or documented) —
+  every visible FAQ and native `<details>/<summary>` accordion in all three locations is fully
+  preserved and unchanged; only the obsolete `<script type="application/ld+json">` block and its
+  `faqJsonLd` object construction were removed from each. `app/courses/o-a-level-english/page.tsx`
+  also contains a `FAQPage` JSON-LD block; it was found during this audit but deliberately left
+  untouched — it falls outside this Spoken English step's explicit scope (the implementing prompt's
+  Part F names only the three files above), and O/A Level is out of scope for this task.
+- **Cross-site contradictions corrected** (narrowest safe edit at each canonical source, then
+  regression-tested):
+  - `app/page.tsx` (homepage availability section): "Upcoming live online intakes" / "ask Aisha
+    about the next suitable group or one-to-one opening" → "Review confirmed upcoming intakes" /
+    "Confirmed future dates are listed in Pakistan Standard Time. If your programme is not shown,
+    ask Aisha whether a suitable current option is available." (removes the universal live/group/
+    one-to-one implication).
+  - `app/how-it-works/page.tsx`: three of five "Everything that comes with each course" items
+    asserted universal claims not verified for every current programme (live delivery on a named
+    platform; every class recorded; personal feedback that "moves your score") — reworded to
+    confirmation language ("Confirmed live sessions", "Recordings, where confirmed", "Feedback on
+    your work"); the page's own metadata description and hero subtitle's "ready and confident"
+    outcome promise were also corrected. The other two items ("Relevant practice and progress
+    checks"; the consultation/1-on-1 offer) already read as programme-appropriate and were left
+    unchanged. This was a narrow correction, not a redesign of that page.
+  - `content/courseCategories.ts` (Courses hub communication-skills category): "Build stronger
+    speaking and writing" / "improving fluency, confidence, accuracy..." → "Develop practical
+    speaking and writing" / "Focused support for learners working on spoken communication, language
+    accuracy and written communication beyond a single examination."
+  - `content/coursePresentation.ts` (Spoken English card on homepage/Courses hub): `typeLabel`
+    "Fluency and communication" → "Spoken communication"; `shortDescription` "Develop clearer
+    spoken English..." → "Focus on clearer pronunciation, response building and practical
+    communication..."; `bestFor` pluralisation corrected to "a specific real-world speaking
+    situation"; `ctaLabel` "View Spoken English Programme" → "View Spoken English Coaching".
+  - `content/nav.ts` and `content/courses.ts`: the navigation link label and the canonical
+    `course.name` field were both aligned from "Spoken English & Fluency" to "Spoken English
+    Coaching" — this field is safely consumed site-wide (Footer programme links, the homepage
+    `CourseExplorer` card title and its default WhatsApp message, the general enquiry form's
+    programme dropdown), unlike `tagline`/`summary`/`whoFor`/`modules`/`includes`/`price` on the
+    same record, which remain non-authoritative and unchanged. `content/courseGuidance.ts`'s
+    "speaking" situation's `action` label was aligned to "View Spoken English Coaching" for the
+    same reason.
+  - `app/courses/page.tsx` (Courses hub metadata): its Open Graph image declared `/images/
+    og-image.jpg` as `1200×630`, but the real file is `960×1280` (portrait) — corrected to the true
+    dimensions, matching the identical correction already applied to `app/layout.tsx` during IELTS
+    Step 10. A properly composed `1200×630` asset specifically for the Courses hub is a separate
+    future decision, not required by this step.
+  - `public/images/README.md`: added the new `social/spoken-english-coaching.jpg` row so the
+    asset inventory stays accurate.
+- **Internal links verified:** the homepage (`AudiencePathways`, `CourseExplorer`), the Courses hub
+  (category card, course-choice guide), the desktop mega-menu and mobile navigation (`content/
+  nav.ts`) all link to `/courses/spoken-english` with descriptive anchor text ("Spoken English
+  Coaching", "View Spoken English Coaching", or the shorter natural variant "Spoken English" in one
+  compact chip-style card, which is not vague/misleading and was left as a natural variation).
+  Footer programme links use the corrected `course.name`. No query-string or empty-fragment link
+  variant exists. No nested link inside another clickable card was found or introduced.
+- **Google Search Central guidance rechecked (28 August 2026):** confirmed via direct review before
+  implementing — `title-link`/`snippet`: the absolute title and description identify the page topic
+  and reflect visible content without an unverified operational promise; `breadcrumb`: the visible
+  path and `BreadcrumbList` JSON-LD are built from one source and agree exactly; `sd-policies`/
+  `search-gallery`/`faqpage`: FAQ rich results are confirmed removed (7 May 2026 cutoff, June 2026
+  documentation removal) and course-list markup applies only to a genuine list/carousel context
+  with at least three courses, not a single detail page; `google-images`: the social image's alt
+  text is factual, not keyword-stuffed.
+- **Legacy fields still retained but blocked from publication:** `content/courses.ts`'s
+  spoken-english `tagline` ("Spoken English & Fluency — speak without hesitation."), `summary`,
+  `whoFor`, `modules`, `includes` and `price: 10000` remain in the file (required by the shared
+  `Course` type) but are confirmed unread by any search-facing component, metadata export, or
+  structured-data block for this route — verified live this step via a full-page HTML/metadata/
+  schema search for the literal strings "10,000", "10000" and "Spoken English & Fluency", none of
+  which appeared anywhere in the rendered output.
+- **Post-deployment validation tasks:** see `docs/launch-verification.md`'s SEO section below —
+  these require a live deployed URL and are not claimed complete from local code.
+
+### QA performed
+
+- Live Playwright script against the production build: 46 checks covering the exact absolute
+  title (brand appears exactly once), exact description with no unverified-claim language, exact
+  canonical URL, complete Open Graph/Twitter metadata (type, title, description, url, image path,
+  exact `1200×630` dimensions, factual alt text, card type), the visible breadcrumb (3 items, exact
+  path, working Home/Courses links, no self-link on the current item, `aria-current="page"`,
+  hidden separators, not an H1), the `BreadcrumbList` JSON-LD (exactly one script on the route,
+  valid JSON, 3 ordered items matching the visible path and canonical URL exactly), absence of any
+  `Offer`/`AggregateRating`/`Review`/`FAQPage`/`QAPage`/`CourseInstance`/`Course` schema anywhere on
+  the route, absence of the legacy `10,000`/`10000` value and the legacy `"Spoken English &
+  Fluency"` string anywhere in rendered HTML, absence of every listed misleading SEO phrase, and no
+  horizontal overflow across 9 viewports (320-1440px) — 45/46 passed; the one flagged check
+  ("breadcrumb path reads Home / Courses / Spoken English Coaching") was a confirmed test-script
+  artifact (the aria-hidden `/` separator's text is still captured by `.innerText()` even though it
+  is correctly hidden from assistive technology) — verified against the actual DOM text and a
+  screenshot showing the breadcrumb renders exactly as intended.
+- A separate regression script confirmed: the homepage's corrected availability copy and footer
+  identity; the desktop navigation's corrected label; the Courses hub's corrected category
+  title/description, corrected card copy, corrected `CollectionPage` JSON-LD (still valid, now
+  using the corrected name), and corrected `og:image` dimensions; `how-it-works`'s corrected
+  headings and metadata description; `/faq`'s FAQPage JSON-LD removal with the visible accordion
+  and its content fully intact; and the course-choice guide's corrected action label — 25/27
+  passed, with the 2 flagged items confirmed as the same CSS `text-transform: uppercase` innerText
+  artifact already documented for this project (verified case-insensitively).
+- axe-core (wcag2a/wcag2aa/wcag22aa): 0 violations on `/courses/spoken-english`.
+- Crawlability verified live: `https://aishasenglish.com/courses/spoken-english` appears exactly
+  once in `sitemap.xml` with the canonical host/protocol and no query string or trailing-slash
+  duplicate; `robots.txt` allows all crawling and references the sitemap; the route returns `200`
+  in the production build.
+- Simulated 200% zoom (640×480 viewport): no horizontal overflow; breadcrumb remains visible.
+- Regression spot-check: `/`, `/courses`, `/courses/ielts`, `/courses/pte`, `/courses/toefl`,
+  `/courses/english-writing`, `/courses/o-a-level-english`, `/how-it-works`, `/faq`, `/about`,
+  `/contact`, `/success-stories`, `/batches`, `/free-diagnostic-test` all return 200; TOEFL/IELTS's
+  own metadata and `BreadcrumbList` JSON-LD confirmed unaffected by the shared-file edits above.
+
 ## Final CTA and enquiry handoff (Step 9)
 
 `content/spokenEnglishEnquiry.ts` is now the single canonical source for the final-stage enquiry
@@ -519,7 +675,7 @@ benefit.
   `content/spokenEnglish.ts` above the `delivery` object for the exact condition to re-check before
   adding them.
 
-## What the public page currently says instead (as of Spoken English Step 9)
+## What the public page currently says instead (as of Spoken English Step 10)
 
 `/courses/spoken-english` shows only:
 
@@ -592,7 +748,13 @@ benefit.
   its own full structured WhatsApp message as the primary action, and a server-decided secondary
   action — the allowlisted detailed-enquiry form when Formspree is configured, otherwise a plain
   `mailto:` fallback to the canonical `aishasenglish@gmail.com` — never both at once; see "Final CTA
-  and enquiry handoff (Step 9)" above for the complete record.
+  and enquiry handoff (Step 9)" above for the complete record;
+- a visible breadcrumb (`components/spoken-english/SpokenEnglishBreadcrumb.tsx`, "Home / Courses /
+  Spoken English Coaching") immediately above the hero, matched exactly by one `BreadcrumbList`
+  JSON-LD script — the only structured-data type on this route — plus an absolute, brand-once
+  title, an aligned description, and complete page-specific Open Graph/Twitter metadata with a
+  genuine `1200×630` dedicated social image; see "Technical SEO, metadata and internal linking
+  (Step 10)" above for the complete record.
 
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
 components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely), the

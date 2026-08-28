@@ -4,7 +4,7 @@ Sources and boundary decisions behind the factual and positioning claims on `/co
 english` (`content/spokenEnglish.ts`, `components/spoken-english/*.tsx`). This is a maintenance
 record, not something imported into the website.
 
-**Last checked:** 28 August 2026 (Step 9).
+**Last checked:** 28 August 2026 (Step 10).
 
 ## Canonical owner facts used
 
@@ -268,6 +268,26 @@ the shared `leadCapture` list — every other word is unchanged in spirit from t
 
 **Review date.** 28 August 2026 (Step 9). Recheck this section only if the enquiry fields, message
 text, or form-variant copy are reworded.
+
+### Step 10 — technical SEO source basis
+
+`app/courses/spoken-english/page.tsx`'s metadata and `content/spokenEnglish.ts`'s `breadcrumb`
+array introduce no new factual claim — every word is either taken verbatim from the implementing
+prompt's specified wording, or restates a position already established and sourced in an earlier
+step (online delivery: Step 5; no formal assessment/native accent/guaranteed outcome: Steps 1-4).
+The dedicated social image (`public/images/social/spoken-english-coaching.jpg`) was generated
+programmatically with `sharp` from the same site-approved `public/images/og-image.jpg` portrait
+already used for the IELTS/PTE/TOEFL social assets, using the identical resize-and-pad recipe (see
+`docs/toefl-content-sources.md`'s "Social image and technical SEO" section for the original
+rationale) — no new photograph, AI generation or identity alteration was introduced. Current
+official Google Search Central guidance (title-link, snippet, breadcrumb, sd-policies,
+google-images, search-gallery, search/updates) was directly reviewed on the implementation date
+(28 August 2026); the FAQ rich-result removal (7 May 2026 cutoff, June 2026 documentation removal)
+was confirmed via the search-gallery/faqpage pages before any FAQPage JSON-LD was removed.
+
+**Review date.** 28 August 2026 (Step 10). Recheck this section before ever adding a new
+structured-data type to this route, and re-verify the Google Search Central guidance above before
+that decision, since search guidance can change.
 
 ## Positioning versus formal assessment claims
 

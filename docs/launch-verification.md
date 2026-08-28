@@ -668,7 +668,7 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
-## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–9)
+## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–10)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
   `components/spoken-english/{SpokenEnglishHero,SpokenEnglishAuthorityStrip,SpokenEnglishFit,
@@ -867,10 +867,64 @@ handle; never fill these with placeholder or invented links.
   `.env.local` Formspree-endpoint fixture confirming both the configured and unconfigured branches
   render correctly. See `docs/spoken-english-offer-verification.md`'s "Final CTA and enquiry
   handoff (Step 9)" section for the complete record.
+- **Technical SEO, metadata and internal linking (Step 10)**: `app/courses/spoken-english/page.tsx`
+  now declares an absolute title (`Online Spoken English Coaching | Aisha's English`), an aligned
+  description, a self-referencing canonical, and complete page-specific Open Graph/Twitter metadata
+  with a genuine `1200×630` social image (`public/images/social/spoken-english-coaching.jpg`,
+  composed with `sharp` from the same approved portrait used for IELTS/PTE/TOEFL — real dimensions
+  confirmed, not declared). A visible breadcrumb (`components/spoken-english/
+  SpokenEnglishBreadcrumb.tsx`) and a matching `BreadcrumbList` JSON-LD — the only structured-data
+  type on this route — are built from one shared `content/spokenEnglish.ts` `breadcrumb` array. No
+  `Offer`/`AggregateRating`/`Review`/`FAQPage`/`QAPage`/`Course`/`CourseInstance` schema was added.
+  The obsolete `FAQPage` JSON-LD (Google's FAQ rich result stopped appearing 7 May 2026;
+  documentation removed June 2026) was removed from `components/HomeFAQ.tsx`,
+  `components/CoursesFAQ.tsx` and `app/faq/page.tsx` — every visible FAQ and accordion is fully
+  preserved; `app/courses/o-a-level-english/page.tsx`'s own `FAQPage` block was found but left
+  untouched as out of this step's scope. Several cross-site contradictions were corrected at their
+  narrowest source: the homepage's universal "live"/"group or one-to-one" availability copy
+  (`app/page.tsx`); three universal claims on `app/how-it-works/page.tsx` (live-on-Zoom, always-
+  recorded, feedback that "moves your score") plus its "ready and confident" outcome promise;
+  the Courses hub's communication-skills category copy (`content/courseCategories.ts`) and its
+  incorrect `960×1280`-declared-as-`1200×630` Open Graph image (`app/courses/page.tsx`); the Spoken
+  English homepage/hub card copy (`content/coursePresentation.ts`); and the canonical
+  `course.name` plus the navigation label and course-choice-guide action label, all aligned from
+  "Spoken English & Fluency" to "Spoken English Coaching" (`content/courses.ts`, `content/nav.ts`,
+  `content/courseGuidance.ts`). See `docs/spoken-english-offer-verification.md`'s "Technical SEO,
+  metadata and internal linking (Step 10)" section for the complete record, including every check
+  performed and its result.
 - See `docs/spoken-english-offer-verification.md` for the complete list of unresolved Spoken
   English offer facts (delivery, level, duration, frequency, feedback, fee, policy, evidence
   consent) and `docs/spoken-english-content-sources.md` for the positioning/boundary decisions
   behind every claim on the page.
+
+## Spoken English SEO verification (Step 10)
+
+Local/code-level checks performed (see `docs/spoken-english-offer-verification.md`'s "Technical
+SEO, metadata and internal linking (Step 10)" section for full detail and exact results):
+
+- production build status and route response (`200`) confirmed;
+- rendered `<head>` metadata inspected directly (title, description, canonical, Open Graph,
+  Twitter) — all match this document's declared values exactly;
+- `BreadcrumbList` JSON-LD schema parse-checked (valid JSON, correct `@type`, 3 ordered items);
+- `sitemap.xml`/`robots.txt` checked (route appears exactly once, canonical host, crawling allowed,
+  sitemap referenced);
+- social-preview values (title/description/image path/dimensions/alt) verified against the actual
+  rendered metadata and the actual generated file's pixel dimensions (not just the declared value).
+
+**Deployment-only checks still required — not claimed complete from local code:**
+
+- Google Rich Results Test run against the live deployed URL for the `BreadcrumbList` markup;
+- Google Search Console URL Inspection for `/courses/spoken-english` after deployment;
+- production redirect behaviour for HTTP→HTTPS and www/non-www, which requires live DNS/hosting
+  access this session does not have;
+- an actual social-preview render check (Facebook Sharing Debugger / Twitter Card Validator /
+  LinkedIn Post Inspector) against the live deployed URL, since these tools fetch the real
+  production response rather than a local build;
+- resubmitting the sitemap or requesting indexing in Search Console — not performed and not
+  authorised by this step.
+
+Valid structured data does not guarantee a search-result appearance; it only makes the page
+eligible to be considered for one.
 
 ## Resolved: the CourseExplorer universal claim flagged since IELTS Step 10 (fixed in Spoken English Step 1)
 
