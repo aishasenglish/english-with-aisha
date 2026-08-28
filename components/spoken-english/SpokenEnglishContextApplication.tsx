@@ -9,7 +9,9 @@ export default function SpokenEnglishContextApplication() {
   return (
     <section
       id={contextApplication.id}
-      className="py-14 sm:py-16 px-4 bg-white"
+      // Step 11: phone padding tightened from py-14 to py-10 -- a supplementary detail section,
+      // not a primary decision point, in a long mobile scroll journey. Tablet/desktop unchanged.
+      className="py-10 sm:py-16 px-4 bg-white"
       aria-labelledby="spoken-english-context-application-heading"
     >
       <div className="max-w-5xl mx-auto">

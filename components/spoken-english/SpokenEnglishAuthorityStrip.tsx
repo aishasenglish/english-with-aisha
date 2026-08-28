@@ -29,7 +29,12 @@ export default function SpokenEnglishAuthorityStrip() {
             </li>
           ))}
         </ul>
-        <ul className="text-xs text-ink-faint leading-relaxed space-y-0.5">
+        {/* Step 11: bumped from text-xs to text-sm -- these two lines explain what the
+            qualification/role actually mean for coaching quality (decision-relevant context, not
+            a decorative label), so they belong at a readable minimum size. Contrast unaffected:
+            text-ink-faint measures 5.10:1 on white, comfortably above the 4.5:1 AA minimum at any
+            size. */}
+        <ul className="text-sm text-ink-faint leading-relaxed space-y-0.5">
           {interpretations.map((item) => (
             <li key={item.id}>{item.body}</li>
           ))}

@@ -12,7 +12,9 @@ export default function SpokenEnglishFeedbackDemo() {
   return (
     <section
       id={feedbackDemo.id}
-      className="py-14 sm:py-16 px-4 bg-white"
+      // Step 11: phone padding tightened from py-14 to py-10 -- a supplementary detail section,
+      // not a primary decision point, in a long mobile scroll journey. Tablet/desktop unchanged.
+      className="py-10 sm:py-16 px-4 bg-white"
       aria-labelledby="spoken-english-feedback-example-heading"
     >
       <div className="max-w-3xl mx-auto">
