@@ -19,9 +19,12 @@ import { site } from "@/content/site";
  * feedback method/frequency/turnaround are included. Step 4 adds one original, website-created
  * illustrative feedback demonstration (never a real learner's work) that makes the Step-3 process
  * concrete, plus a fail-closed verified-evidence path that renders nothing until a genuine,
- * consent-approved English-Writing-tagged testimonial exists. Later steps add learning format,
- * pricing, dedicated availability and FAQ only when their claims are verified -- do not pre-fill
- * those with placeholder content.
+ * consent-approved English-Writing-tagged testimonial exists. Step 5 adds a learning-format section
+ * that publishes the one verified delivery fact (online English tutoring), summarises the stable
+ * educational approach from Steps 1-4, and translates every unresolved operational detail into a
+ * pre-enrolment confirmation checklist rather than answering it. Later steps add pricing, dedicated
+ * availability and FAQ only when their claims are verified -- do not pre-fill those with
+ * placeholder content.
  */
 
 /** One of the four "who this coaching may suit" context cards
@@ -110,6 +113,23 @@ export type EnglishWritingDemonstrationChange = {
   id: string;
   title: string;
   explanation: string;
+};
+
+/** One item in the Step-5 stable-approach summary -- an educational principle established across
+ *  Steps 1-4, never a package inclusion. */
+export type EnglishWritingApproachItem = {
+  id: string;
+  title: string;
+  description: string;
+};
+
+/** One group of pre-enrolment confirmation questions (components/english-writing/
+ *  EnglishWritingLearningFormat.tsx). Every question here is unresolved and must remain a
+ *  question -- the checklist never answers what it groups. */
+export type EnglishWritingConfirmationGroup = {
+  id: string;
+  title: string;
+  questions: readonly string[];
 };
 
 export const englishWritingContent = {
@@ -574,6 +594,125 @@ export const englishWritingContent = {
       "This illustration explains a feedback principle. It does not promise that the current offer includes full-document review, line-by-line editing, a particular number of revisions or this exact written-feedback format.",
     outcomeBoundary:
       "The example demonstrates a revision process, not a learner result, grade improvement, workplace outcome or guaranteed level of progress.",
+  },
+
+  // Step 5: the one verified delivery fact, a summary of the stable educational approach already
+  // established in Steps 1-4, and a pre-enrolment confirmation checklist that turns every
+  // unresolved operational detail into a question rather than an answer. See
+  // docs/english-writing-offer-verification.md for the evidence behind the one verified fact and
+  // the complete list of items this section deliberately leaves unanswered.
+  learningFormat: {
+    id: "english-writing-learning-format",
+    eyebrow: "Learning format",
+    heading: "Confirm the current format before you enrol",
+    introduction:
+      "English Writing support is offered online. The exact session format, timing, writing practice, feedback arrangement and commercial terms should be confirmed for the current option before enrolment or payment.",
+
+    confirmedHeading: "What's confirmed",
+    confirmedFact: {
+      label: "Confirmed delivery category",
+      value: "Online English tutoring",
+      explanation:
+        "The page does not yet publish a specific platform, live/asynchronous arrangement or group/private format.",
+    },
+
+    approachHeading: "What the learning approach is built around",
+    approachItems: [
+      {
+        id: "real-situation",
+        title: "The learner's real writing situation",
+        description: "Start with what the learner needs to write, who will read it and what currently feels difficult.",
+      },
+      {
+        id: "connected-priorities",
+        title: "Connected writing priorities",
+        description:
+          "Consider purpose, sentence control, paragraph development, organisation, vocabulary, tone and revision as connected areas rather than isolated grammar exercises.",
+      },
+      {
+        id: "focused-attempts",
+        title: "Focused attempts and revision decisions",
+        description:
+          "Use manageable writing practice to identify a small number of useful priorities and support deliberate learner revision.",
+      },
+      {
+        id: "learner-authorship",
+        title: "Learner authorship",
+        description: "Help the learner understand and revise their own writing rather than replacing it with done-for-you work.",
+      },
+    ] as EnglishWritingApproachItem[],
+    approachDistinctionNote:
+      "These points describe the educational approach presented on this page. They do not confirm lesson frequency, assignments, document review, feedback method or package inclusions.",
+
+    confirmHeading: "What to confirm for the current option",
+    confirmIntroduction: "Ask these questions before making a payment so the format and expectations are clear.",
+    confirmationGroups: [
+      {
+        id: "delivery-participants",
+        title: "Delivery and participants",
+        questions: [
+          "Is the current option live, asynchronous or mixed?",
+          "Which platform is used?",
+          "Is it group, one-to-one or another arrangement?",
+          "Which learner ages and starting levels can it support?",
+          "If group-based, what is the expected group size?",
+        ],
+      },
+      {
+        id: "timing-duration",
+        title: "Timing and duration",
+        questions: [
+          "How long is each session or activity?",
+          "How often does it take place?",
+          "Is there a fixed programme duration?",
+          "Which days, times and timezone apply?",
+          "Is there a confirmed start date or rolling arrangement?",
+        ],
+      },
+      {
+        id: "practice-feedback",
+        title: "Writing practice and feedback",
+        questions: [
+          "What kind and amount of writing practice is used?",
+          "Are full documents, short sections or in-session tasks involved?",
+          "How is feedback delivered?",
+          "How often is feedback provided?",
+          "Is a turnaround time stated?",
+          "How many drafts or revisions, if any, are included?",
+          "Are tests, rubrics or progress checks used?",
+        ],
+      },
+      {
+        id: "access-privacy-support",
+        title: "Access, privacy and support",
+        questions: [
+          "Are recordings, materials or worksheets provided?",
+          "Is homework expected?",
+          "Is between-session support included?",
+          "Are learner drafts uploaded, stored or retained?",
+          "What privacy/confidentiality expectations apply before a document is shared?",
+          "What happens after a missed session?",
+        ],
+      },
+      {
+        id: "commercial-details",
+        title: "Commercial details",
+        questions: [
+          "What is the current fee and currency?",
+          "What period or number of sessions does the fee cover?",
+          "Is payment one-time, instalment-based or recurring?",
+          "What payment method is used?",
+          "What are the rescheduling, cancellation and refund terms?",
+        ],
+      },
+    ] as EnglishWritingConfirmationGroup[],
+
+    confirmCta: {
+      label: "Confirm the current writing format",
+      message:
+        "Hi Aisha! I'm interested in online English writing coaching. I mainly need to write for [study/work/everyday communication]. Before enrolling, could you please confirm the current format, timing, writing practice, feedback arrangement, fee and relevant policies?",
+    },
+    paymentHelperNote: "Confirm the current details directly before making a payment.",
   },
 
   routeGuidance: {

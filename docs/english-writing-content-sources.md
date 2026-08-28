@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 4 (29 August 2026).
+**Last reviewed:** English Writing Step 5 (29 August 2026).
 
 ## Source hierarchy
 
@@ -146,6 +146,36 @@ Two separate proof categories are deliberately kept apart on this page:
 Neither category is evidence that the current offer includes writing assignments, full-document
 review, a specific feedback method/frequency/turnaround, or any particular number of revisions.
 
+## Step 5 learning format — one verified fact, a stable approach, and a confirmation checklist
+
+Three deliberately separate pieces make up the learning-format section:
+
+1. **The one verified delivery fact** — "Online English tutoring," republished from the same
+   owner-confirmed business-purpose basis already used in the Step 1 hero. The panel explicitly
+   states that a specific platform, live/asynchronous arrangement or group/private format is not
+   yet published. This is the only claim in the section treated as `Verified`.
+2. **The stable educational approach** — a four-item summary (the learner's real writing situation,
+   connected writing priorities, focused attempts and revision decisions, learner authorship) drawn
+   directly from the bounded public guidance already established in Steps 1-4. An explicit
+   distinction note states these points describe the page's educational approach and do not confirm
+   lesson frequency, assignments, document review, feedback method or package inclusions. Public
+   copy must never use `you will receive` or `every lesson includes` for this content.
+3. **The pre-enrolment confirmation checklist** — five groups of questions (delivery/participants,
+   timing/duration, writing practice/feedback, access/privacy/support, commercial details) that
+   translate every row still marked `Unverified — do not publish` in
+   `docs/english-writing-offer-verification.md` into something a visitor can ask before paying. The
+   checklist only asks; it never answers. No unknown item is represented with a checkmark, a cross,
+   or any other marker that could imply inclusion or exclusion — a neutral hollow-circle marker is
+   used instead.
+
+This section does not verify a platform, live/asynchronous arrangement, group/private format,
+session length/frequency, programme duration, timetable, recordings, formal assessment, assigned
+writing tasks, document submission, upload/storage/privacy arrangement, feedback channel/depth/
+frequency/turnaround, number of drafts or revisions, homework, materials, between-session support,
+missed-session/rescheduling/cancellation/refund policy, fee, currency, billing basis, intake, or
+response-time commitment. Every one of those remains internally `Unverified — do not publish` in
+`docs/english-writing-offer-verification.md` regardless of this section's existence.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -156,6 +186,7 @@ review, a specific feedback method/frequency/turnaround, or any particular numbe
 - `components/english-writing/EnglishWritingCoachingProcess.tsx`
 - `components/english-writing/EnglishWritingFeedbackDemonstration.tsx`
 - `components/english-writing/EnglishWritingVerifiedEvidence.tsx`
+- `components/english-writing/EnglishWritingLearningFormat.tsx`
 - `docs/english-writing-offer-verification.md`
 - `docs/testimonial-content-intake.md` (English Writing-specific intake fields)
 

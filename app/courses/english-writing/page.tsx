@@ -8,6 +8,7 @@ import EnglishWritingContextMap from "@/components/english-writing/EnglishWritin
 import EnglishWritingCoachingProcess from "@/components/english-writing/EnglishWritingCoachingProcess";
 import EnglishWritingFeedbackDemonstration from "@/components/english-writing/EnglishWritingFeedbackDemonstration";
 import EnglishWritingVerifiedEvidence from "@/components/english-writing/EnglishWritingVerifiedEvidence";
+import EnglishWritingLearningFormat from "@/components/english-writing/EnglishWritingLearningFormat";
 import EnglishWritingRouteGuidance from "@/components/english-writing/EnglishWritingRouteGuidance";
 import EnglishWritingAvailability from "@/components/english-writing/EnglishWritingAvailability";
 import EnglishWritingFinalCTA from "@/components/english-writing/EnglishWritingFinalCTA";
@@ -38,6 +39,7 @@ export default function EnglishWritingPage() {
       <EnglishWritingCoachingProcess />
       <EnglishWritingFeedbackDemonstration />
       <EnglishWritingVerifiedEvidence />
+      <EnglishWritingLearningFormat />
       <EnglishWritingRouteGuidance />
       <EnglishWritingAvailability />
       <EnglishWritingFinalCTA />

@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 4 (29 August 2026).
+**Last reviewed:** English Writing Step 5 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -24,7 +24,7 @@ professional advice, or as an answer on Aisha's behalf.
 | Qualification | Verified | `content/site.ts`'s `qualification` | "MPhil in English Literature" | `components/english-writing/EnglishWritingAuthorityStrip.tsx` | None |
 | Professional role | Verified | `content/site.ts`'s `professionalRole` | "College Lecturer" — never "University Lecturer" | `components/english-writing/EnglishWritingAuthorityStrip.tsx` | None |
 | Public email | Verified | `content/site.ts`'s `email` | `aishasenglish@gmail.com` | `content/englishWriting.ts`'s `contact.email` (reads `site.email` directly) | None |
-| Online delivery (website-purpose level) | Verified | Owner-confirmed business purpose — the whole site markets online English tutoring in multiple domains (same basis IELTS/PTE/TOEFL/Spoken English Step 1 each used) | "Online English tutoring." No live/synchronous, platform, group/private or recording claim | `content/englishWriting.ts`'s `hero.eyebrow` | None for this fact alone |
+| Online delivery (website-purpose level) | Verified | Owner-confirmed business purpose — the whole site markets online English tutoring in multiple domains (same basis IELTS/PTE/TOEFL/Spoken English Step 1 each used) | "Online English tutoring." No live/synchronous, platform, group/private or recording claim | `content/englishWriting.ts`'s `hero.eyebrow`; also republished as the Step 5 "Confirmed delivery category" panel in `learningFormat.confirmedFact` | None for this fact alone |
 
 ## Requires owner confirmation before publication
 
@@ -86,7 +86,16 @@ format or teaching inclusion:
 | Illustrative feedback-revision demonstration | Published as bounded educational guidance — **teaching demonstration, not learner evidence** (see `docs/testimonial-content-intake.md`'s "English Writing-specific intake fields" section) | One original, website-created example (a colleague email requesting missing report data) makes the Step-3 coaching cycle concrete: an illustrative first attempt, what already communicates, three focused revision priorities, one possible learner-owned revision, and what changed | Must never be presented as a real learner, testimonial, grade, client, document or result; must never imply the exact feedback format, full-document review, line editing or a specific number of revisions is included in the current offer; the possible revision must remain framed as the learner's own, not a rewriting service | `content/englishWriting.ts`'s `demonstration`; `EnglishWritingFeedbackDemonstration.tsx` |
 | Conditional verified-evidence section | Published as a fail-closed pattern — currently renders nothing | `components/english-writing/EnglishWritingVerifiedEvidence.tsx` filters `publishedTestimonials` (from `content/testimonials.ts`, currently empty) to `courseSlug === "english-writing"` and returns `null` when no eligible record exists — no heading, wrapper or placeholder | Must never render a generic testimonial, the illustrative demonstration, or an unattributed quote as English Writing evidence; must never infer a grade, admission, promotion or publication outcome | `components/english-writing/EnglishWritingVerifiedEvidence.tsx`; `content/testimonials.ts` |
 
-## What the public page currently says instead (as of English Writing Step 4)
+## Step 5 public guidance decisions — learning format and pre-enrolment checklist
+
+| Public guidance | Current status | Basis | Approved boundary | Files affected |
+|---|---|---|---|---|
+| Confirmed-delivery-category panel | Verified | Republishes the same owner-confirmed business-purpose fact already used in the hero eyebrow: "Online English tutoring" | Must state only the delivery category, with an explicit note that platform, live/asynchronous arrangement and group/private format are not yet published — never upgraded into a platform, format or schedule claim | `content/englishWriting.ts`'s `learningFormat.confirmedFact`; `EnglishWritingLearningFormat.tsx` |
+| Stable educational-approach summary | Published as bounded educational guidance | Summarises the needs-led approach already established across Steps 1-4: the learner's real writing situation, connected writing priorities, focused attempts and revision decisions, and learner authorship | Must remain framed as the page's educational approach, with an explicit note that it does not confirm lesson frequency, assignments, document review, feedback method or package inclusions; must never use "you will receive" or "every lesson includes" | `content/englishWriting.ts`'s `learningFormat.approachItems` / `approachDistinctionNote`; `EnglishWritingLearningFormat.tsx` |
+| Pre-enrolment confirmation checklist | Published as a fail-closed pattern — every item is a question, never an answer | Five groups (delivery/participants, timing/duration, writing practice/feedback, access/privacy/support, commercial details) covering every row marked `Unverified — do not publish` above | Must never answer a listed question by implication; must use a neutral hollow marker, never a checkmark or cross, so it cannot be mistaken for an inclusion or exclusion list | `content/englishWriting.ts`'s `learningFormat.confirmationGroups`; `EnglishWritingLearningFormat.tsx` |
+| Contextual "confirm the format" CTA | Published — requests confirmation only | Asks Aisha to confirm current format, timing, writing practice, feedback arrangement, fee and relevant policies before enrolling | Must never request a document, promise a free consultation/assessment, imply availability, or imply that clicking reserves a place or starts payment | `content/englishWriting.ts`'s `learningFormat.confirmCta`; `EnglishWritingLearningFormat.tsx` |
+
+## What the public page currently says instead (as of English Writing Step 5)
 
 `/courses/english-writing` shows only:
 
@@ -125,6 +134,15 @@ format or teaching inclusion:
   currently renders nothing at all — no heading, wrapper or placeholder — because
   `content/testimonials.ts` has no record tagged `courseSlug: "english-writing"` with
   `consentConfirmed: true`;
+- a learning-format section (`components/english-writing/EnglishWritingLearningFormat.tsx`, id
+  `english-writing-learning-format`) publishing the one verified delivery fact ("Online English
+  tutoring," with an explicit note that platform, live/asynchronous arrangement and group/private
+  format are not yet published), a four-item summary of the stable educational approach from Steps
+  1-4 with an explicit approach-versus-inclusion distinction note, a five-group pre-enrolment
+  confirmation checklist (delivery/participants, timing/duration, writing practice/feedback,
+  access/privacy/support, commercial details) that only asks questions and never answers them, and
+  a contextual "Confirm the current writing format" WhatsApp CTA that requests confirmation without
+  requesting a document or implying availability, payment or a reserved place;
 - a route-guidance section (`components/english-writing/EnglishWritingRouteGuidance.tsx`, id
   `english-writing-route-guidance`) distinguishing general English Writing coaching from IELTS/PTE/
   TOEFL Writing preparation and O/A Level English, each with a real internal link;
@@ -143,15 +161,18 @@ components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed
 generic `<BatchTable>` "Upcoming Writing batches" section (removed entirely), or the complete
 generic `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty
 heading in their place — they are simply absent until their own verified replacement step.
-Learning format, pricing, a dedicated availability component, specialist FAQ and enquiry-handoff
-form variant remain deliberately deferred to their own later English Writing steps. Step 2's public
-framework is not an operational promise that all areas are included or taught in a fixed order,
-Step 3's public coaching cycle and feedback framework are not a promise that every lesson, learner
-or package follows an identical sequence, includes assignments or full-draft review, or receives
-feedback of a specific method, frequency, depth or turnaround, and Step 4's illustrative
-demonstration is not a real learner's work, testimonial, graded response, evidence of a result, or
-a promise that the demonstrated feedback format, full-document review, line editing or a specific
-number of revisions is included in the current offer.
+Pricing, a dedicated availability component, specialist FAQ and enquiry-handoff form variant remain
+deliberately deferred to their own later English Writing steps. Step 2's public framework is not an
+operational promise that all areas are included or taught in a fixed order, Step 3's public
+coaching cycle and feedback framework are not a promise that every lesson, learner or package
+follows an identical sequence, includes assignments or full-draft review, or receives feedback of a
+specific method, frequency, depth or turnaround, Step 4's illustrative demonstration is not a real
+learner's work, testimonial, graded response, evidence of a result, or a promise that the
+demonstrated feedback format, full-document review, line editing or a specific number of revisions
+is included in the current offer, and Step 5's learning-format section is not a promise that any
+platform, live/asynchronous arrangement, group/private format, session frequency/duration,
+recording, assignment, feedback method, homework, support, fee or intake is confirmed — every one
+of those remains a question in the pre-enrolment checklist, not an answer.
 
 ## Cross-site corrections made this step
 
@@ -222,6 +243,19 @@ never added to `content/testimonials.ts` and carries no `consentConfirmed`/`cour
 cannot be mistaken for a testimonial record by the publication guard. No shared-surface file needed
 an edit for Step 4.
 
+## Step 5 reconciliation check
+
+Before building the learning-format section, re-confirmed via targeted search that
+`/courses/english-writing` does not publicly render `Live Zoom classes (recorded)`, `Writing
+assignments with detailed feedback`, `Regular tests`, `1-on-1 review option`, PKR 10,000 or another
+unverified fee, `Upcoming Writing batches`, `recordings included`, `group or one-to-one`, or a fixed
+duration/frequency. None of these appear on the dedicated route; the only remaining hits are the
+already-quarantined legacy `content/courses.ts` record (unread by the dedicated route) and this
+document's own explanatory text. `content/coursePresentation.ts` and `content/homeCourses.ts` were
+re-inspected and already say "Online coaching · Confirm current format and support," consistent
+with the new learning-format section, so neither file needed an edit for Step 5. No shared
+`LearningFormats` or `IncludedList` component was imported onto the route.
+
 ## Open questions for Aisha
 
 See every row marked `Unverified — do not publish` above. In summary, still needed before any more
@@ -266,6 +300,8 @@ specific public claim can be made:
 Until these are answered, the public page deliberately shows only the verified positioning, fit
 guidance, non-scored writing profile, possible-priorities framework, context mapping, the adaptable
 coaching cycle and feedback framework, one clearly disclosed illustrative teaching demonstration,
-route-selection guidance, the fail-closed availability state, and a WhatsApp/email path to ask
-Aisha directly — never an invented format, formal level, fixed module order, duration, fee,
-feedback promise, intake, or real learner evidence that hasn't passed the publication guard.
+one verified delivery fact with a five-group pre-enrolment confirmation checklist in place of every
+unresolved operational detail, route-selection guidance, the fail-closed availability state, and a
+WhatsApp/email path to ask Aisha directly — never an invented format, formal level, fixed module
+order, duration, fee, feedback promise, intake, or real learner evidence that hasn't passed the
+publication guard.
