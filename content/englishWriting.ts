@@ -16,7 +16,10 @@ import { site } from "@/content/site";
  * priorities, not a fixed syllabus. Step 3 adds an adaptable five-stage coaching cycle and a
  * four-lens feedback framework -- pedagogical guidance, never a verified promise that every
  * lesson follows the sequence or that assignments, a fixed number of drafts, or a specific
- * feedback method/frequency/turnaround are included. Later steps add evidence, learning format,
+ * feedback method/frequency/turnaround are included. Step 4 adds one original, website-created
+ * illustrative feedback demonstration (never a real learner's work) that makes the Step-3 process
+ * concrete, plus a fail-closed verified-evidence path that renders nothing until a genuine,
+ * consent-approved English-Writing-tagged testimonial exists. Later steps add learning format,
  * pricing, dedicated availability and FAQ only when their claims are verified -- do not pre-fill
  * those with placeholder content.
  */
@@ -91,6 +94,22 @@ export type EnglishWritingFeedbackLens = {
   question: string;
   examples: readonly string[];
   boundary?: string;
+};
+
+/** One focused revision priority in the Step-4 illustrative demonstration -- an observation about
+ *  the illustrative first attempt plus the question that guides the possible revision. */
+export type EnglishWritingDemonstrationPriority = {
+  id: string;
+  title: string;
+  observation: string;
+  revisionQuestion: string;
+};
+
+/** One "what changed" item comparing the illustrative first attempt with the possible revision. */
+export type EnglishWritingDemonstrationChange = {
+  id: string;
+  title: string;
+  explanation: string;
 };
 
 export const englishWritingContent = {
@@ -469,6 +488,92 @@ export const englishWritingContent = {
       message:
         "Hi Aisha! I'm interested in online English writing coaching. I need to write [type of writing] for [reader/purpose]. What currently feels difficult is [details]. I would like to ask what practice and feedback option, if any, is currently available.",
     },
+  },
+
+  // Step 4: one original, website-created illustrative example -- not a real learner, assignment,
+  // grade, client, document or testimonial. It demonstrates teaching judgement (how purpose,
+  // reader and a few focused priorities can guide revision), never a promised feedback format,
+  // full-document review, line editing, a number of revisions, or a learner outcome. See
+  // docs/english-writing-offer-verification.md's demonstration rows and
+  // docs/testimonial-content-intake.md's "English Writing-specific intake fields" section, which
+  // records this example as "teaching demonstration -- not learner evidence" so it can never be
+  // mistaken for a consented outcome record.
+  demonstration: {
+    id: "english-writing-demonstration",
+    eyebrow: "Illustrative teaching example",
+    heading: "See how focused revision decisions can improve a message",
+    introduction:
+      "This short example shows how purpose, reader and a few focused priorities can guide revision. It demonstrates teaching judgement, not a promised feedback format or learner outcome.",
+    disclosure:
+      "This example was created for this website. It is not a real learner's work, testimonial, graded response or evidence of a result.",
+
+    situationLabel: "Situation: asking a colleague for missing information needed to complete a report",
+    goalLabel:
+      "Goal: explain what is missing, state the relevant deadline and make a clear, respectful request.",
+    scopeQualifier:
+      "The scenario is illustrative; exact writing contexts covered by the current offer must be confirmed.",
+
+    firstAttemptLabel: "Illustrative first attempt",
+    firstAttempt:
+      "Hi, I am writing because report not complete and I need data. Send me soon because tomorrow deadline. I told before but no reply. Kindly do needful.",
+
+    whatAlreadyWorksHeading: "What already communicates",
+    whatAlreadyWorks: [
+      "The writer's need is broadly visible",
+      "Urgency is communicated",
+      "The message attempts a direct request",
+    ] as readonly string[],
+
+    prioritiesHeading: "Focused revision priorities",
+    priorities: [
+      {
+        id: "context",
+        title: "Give the reader enough context",
+        observation: "The reader does not yet know which report or which information is missing.",
+        revisionQuestion: "What specific figures or details are needed, and what task depends on them?",
+      },
+      {
+        id: "timing",
+        title: "Make the request and timing precise",
+        observation: "“Soon” does not tell the reader when the information is needed.",
+        revisionQuestion: "What exact time would allow the writer to meet the deadline?",
+      },
+      {
+        id: "tone",
+        title: "Adjust tone without hiding the urgency",
+        observation: "The message can state the urgency while giving the reader a clear, respectful next action.",
+        revisionQuestion:
+          "How can the writer ask directly and also invite the colleague to say if the timing is not possible?",
+      },
+    ] as EnglishWritingDemonstrationPriority[],
+
+    revisionLabel: "One possible learner revision",
+    revision:
+      "Hello [Name], I'm completing the monthly report, but I still need the sales figures for April. Could you send them by 3 p.m. today so I can meet tomorrow's deadline? If that timing is not possible, please let me know when the figures will be available. Thank you.",
+    revisionAuthorshipNote:
+      "This is one possible revision, not the single perfect answer. In the teaching model, the learner remains the author of their own revision -- Aisha does not rewrite the learner's document for them.",
+
+    whatChangedHeading: "What changed",
+    whatChanged: [
+      { id: "context", title: "Context", explanation: "The report and missing information are identified." },
+      { id: "action", title: "Action", explanation: "The reader knows exactly what to send." },
+      { id: "timing", title: "Timing", explanation: "A precise request replaces a vague deadline." },
+      {
+        id: "tone",
+        title: "Tone",
+        explanation: "Urgency remains clear while the reader has a respectful way to respond.",
+      },
+      {
+        id: "sentence-clarity",
+        title: "Sentence clarity",
+        explanation: "Complete sentences make the request easier to follow.",
+      },
+    ] as EnglishWritingDemonstrationChange[],
+
+    formatBoundary:
+      "This illustration explains a feedback principle. It does not promise that the current offer includes full-document review, line-by-line editing, a particular number of revisions or this exact written-feedback format.",
+    outcomeBoundary:
+      "The example demonstrates a revision process, not a learner result, grade improvement, workplace outcome or guaranteed level of progress.",
   },
 
   routeGuidance: {

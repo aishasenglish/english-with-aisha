@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 3 (29 August 2026).
+**Last reviewed:** English Writing Step 4 (29 August 2026).
 
 ## Source hierarchy
 
@@ -117,6 +117,35 @@ Public copy must continue to use adaptable, question-based, `possible focus` lan
 process rather than asserting a fixed lesson format, assignment inclusion or feedback commitment
 until an owner-approved programme scope is recorded in `docs/english-writing-offer-verification.md`.
 
+## Step 4 illustrative demonstration — teaching proof, not outcome evidence
+
+Two separate proof categories are deliberately kept apart on this page:
+
+- **Teaching proof** — one original, website-created illustrative example
+  (`content/englishWriting.ts`'s `demonstration`;
+  `components/english-writing/EnglishWritingFeedbackDemonstration.tsx`). It demonstrates how Aisha
+  may identify useful priorities, how purpose and reader influence revision decisions, how feedback
+  can be organised around a small number of lenses, and how a learner's own revision can become
+  more deliberate. It does not prove a learner outcome. The example was newly written for this page
+  (a colleague email requesting missing report data) and does not imitate a supplied student's
+  work, name a real company/employee/project, or reproduce assessed academic work. A prominent
+  disclosure renders before either version of the writing, stating plainly that the example is not
+  a real learner's work, testimonial, graded response or evidence of a result. Visible format and
+  outcome boundaries state that the exact feedback format, full-document review, line editing,
+  number of revisions and any result remain unconfirmed and unguaranteed. This content is recorded
+  in `docs/testimonial-content-intake.md`'s "English Writing-specific intake fields" section as
+  `teaching demonstration — not learner evidence` so it can never be mistaken for a consented
+  outcome record.
+- **Outcome evidence** — `components/english-writing/EnglishWritingVerifiedEvidence.tsx`, a
+  fail-closed component that renders only genuine, consent-confirmed, `courseSlug:
+  "english-writing"`-tagged records from `content/testimonials.ts` and returns `null` (no heading,
+  wrapper or placeholder) while none exist. It is a wholly separate component and content source
+  from the illustrative demonstration and must never share a heading, data source or component
+  responsibility with it.
+
+Neither category is evidence that the current offer includes writing assignments, full-document
+review, a specific feedback method/frequency/turnaround, or any particular number of revisions.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -125,7 +154,10 @@ until an owner-approved programme scope is recorded in `docs/english-writing-off
 - `components/english-writing/EnglishWritingFramework.tsx`
 - `components/english-writing/EnglishWritingContextMap.tsx`
 - `components/english-writing/EnglishWritingCoachingProcess.tsx`
+- `components/english-writing/EnglishWritingFeedbackDemonstration.tsx`
+- `components/english-writing/EnglishWritingVerifiedEvidence.tsx`
 - `docs/english-writing-offer-verification.md`
+- `docs/testimonial-content-intake.md` (English Writing-specific intake fields)
 
 ## Change rule
 

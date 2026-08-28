@@ -74,6 +74,57 @@ list of unresolved prerequisites: ownership, consent to publish, consent to edit
 approved identity, employer/confidential-voice screening, redaction method, withdrawal process,
 storage/retention, and accessibility transcript/captions).
 
+## English Writing-specific intake fields (Step 4)
+
+`/courses/english-writing`'s conditional evidence component
+(`components/english-writing/EnglishWritingVerifiedEvidence.tsx`) renders an English Writing
+testimonial only when it passes every check in `docs/english-writing-offer-verification.md`'s
+evidence-eligibility rows. Collect these additional fields for any English Writing record before it
+is considered for `content/testimonials.ts` (in addition to the general fields above):
+
+- Exact programme/service the person actually used (e.g. "English Writing coaching" specifically,
+  not a related programme):
+- Learner audience: student / professional / other approved category:
+- Real writing context (e.g. "workplace emails and reports", "study-related written responses",
+  "everyday written communication") — accurate and non-sensitive, with any employer/institution
+  name removed unless separately approved:
+- Exact original quotation, word for word:
+- Approved excerpt, if different from the exact quotation (only usable with explicit approval of
+  the final public wording — never a silent grammar cleanup):
+- Approved public display name:
+- Approved context line for public display:
+- Consent-confirmation date and where the private consent record is kept (e.g. "WhatsApp message,
+  kept by Aisha outside this repository" — never paste the consent evidence itself into this file
+  or into `content/testimonials.ts`):
+- May an employer/client/institution name appear: yes / no:
+- Does the quote make a grade, admission, promotion, publication or employment-outcome claim:
+  yes / no — if yes, what specific evidence supports it:
+- Evidence supporting any other specific outcome named in the quote:
+- Does the record include a learner writing sample (original text, revised text, or both):
+  yes / no:
+- If a writing sample exists: who authored each version (learner or Aisha), whether the work was
+  assessed or confidential, and whether names, organisations, assignments and other identifiers
+  have been removed:
+- Permission to publish the original writing sample: yes / no — separately from permission to
+  publish any revised version:
+- Permission to publish the revised writing sample and any annotations: yes / no:
+- Whether search-engine indexing of any published sample is permitted: yes / no:
+- The exact claim the sample supports (e.g. "shows a learner-led revision", never an inferred grade
+  or admissions outcome unless separately evidenced):
+- Expiry/review date, if the context could become stale (e.g. a role, employer or study stage that
+  may change):
+- Withdrawal/removal process: how the person can ask for the entry to be removed, and who is
+  responsible for actioning that request.
+
+Do not add a real learner writing sample to the public site without every field above completed —
+see `docs/english-writing-offer-verification.md`'s "Writing-sample and privacy safeguards" guidance
+for the complete prerequisite list. The Step 4 illustrative feedback demonstration on
+`/courses/english-writing` (`content/englishWriting.ts`'s `demonstration`;
+`components/english-writing/EnglishWritingFeedbackDemonstration.tsx`) is recorded here as
+**teaching demonstration — not learner evidence**: it is original website-created copy with no real
+learner, company, report or confidential detail, it demonstrates teaching judgement only, and it
+must never be added to `content/testimonials.ts` or treated as a consented outcome record.
+
 ## Privacy reminders
 
 - Remove student numbers, candidate numbers, email addresses, phone numbers and school
