@@ -5,11 +5,11 @@ Internal record of what the current Spoken English offer can and cannot claim pu
 rendered on the public page, and nothing here should be read as legal, medical, speech-language or
 other professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** Spoken English Step 9 (28 August 2026). Step 9 turned the final section into a
-low-friction enquiry handoff and extended the shared allowlisted IELTS/PTE/TOEFL form-variant
-architecture with a locked "spoken-english" variant. It resolved no operational field and requested
-no new information beyond what Step 1 onward already asks for — see "Final CTA and enquiry handoff
-(Step 9)" below for the complete record.
+**Last reviewed:** Spoken English Step 10 (28 August 2026). Step 10 aligned search metadata and
+social previews with the final visible offer, added a visible/structured breadcrumb, removed
+obsolete FAQ rich-result markup, and corrected several cross-site contradictions. It resolved no
+operational field — see "Technical SEO, metadata and internal linking (Step 10)" below for the
+complete record.
 
 ## Allowed internal states
 
