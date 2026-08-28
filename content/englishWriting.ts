@@ -24,8 +24,12 @@ import { site } from "@/content/site";
  * educational approach from Steps 1-4, and translates every unresolved operational detail into a
  * pre-enrolment confirmation checklist rather than answering it. Step 6 adds pricing copy only --
  * the actual fee record, its fail-closed validation and its "enquire"/"published" gate live in the
- * dedicated content/englishWritingPricing.ts, never here. Later steps add dedicated availability
- * and FAQ only when their claims are verified -- do not pre-fill those with placeholder content.
+ * dedicated content/englishWritingPricing.ts, never here. Step 7 upgrades `availability` to a
+ * date-aware two-state (enquire/scheduled) shape, mirroring Spoken English Step 7 exactly -- the
+ * actual batch records and their completeness validation live in content/batches.ts, lib/batches.ts
+ * and components/english-writing/EnglishWritingAvailability.tsx, never duplicated here. Later steps
+ * add a specialist FAQ only when its claims are verified -- do not pre-fill it with placeholder
+ * content.
  */
 
 /** One of the four "who this coaching may suit" context cards
@@ -131,6 +135,13 @@ export type EnglishWritingConfirmationGroup = {
   id: string;
   title: string;
   questions: readonly string[];
+};
+
+/** One "include these details" prompt in the Step-7 no-intake availability enquiry state
+ *  (components/english-writing/EnglishWritingAvailability.tsx). */
+export type EnglishWritingAvailabilityDetail = {
+  id: string;
+  label: string;
 };
 
 export const englishWritingContent = {
@@ -781,14 +792,46 @@ export const englishWritingContent = {
   // availability, waiting-list, limited-places, response-time, private/group-format or free-
   // consultation claim. A dedicated date-aware availability component (mirroring the Spoken
   // English Step 7 pattern) is a later step.
+  // Step 7: date-aware availability, mirroring the exact enquiry/scheduled two-state pattern
+  // established by Spoken English Step 7 (components/spoken-english/SpokenEnglishAvailability.tsx)
+  // and IELTS/PTE/TOEFL before it. content/batches.ts currently has no complete, published,
+  // non-past english-writing-tagged record (its two english-writing-tagged entries are historical:
+  // past dates, "Closed", unpublished, and missing `schedule`), so production renders the enquiry
+  // state below. See components/english-writing/EnglishWritingAvailability.tsx's
+  // isCompleteEnglishWritingIntake() for the completeness guard and
+  // docs/english-writing-offer-verification.md for the current verification record.
   availability: {
     id: "english-writing-availability",
     eyebrow: "Current availability",
-    heading: "Confirm the current English Writing option.",
-    body: "Current English Writing availability is confirmed individually. Share your writing goal and preferred timing, and Aisha can let you know what option, if any, is currently available.",
-    ctaLabel: "Ask About English Writing Availability",
-    message:
-      "Hi Aisha! I'd like to ask about current English Writing availability. What I need to write is [details], and what I find difficult is [details]. My preferred timing is [details]. Please let me know what option, if any, is currently available.",
+
+    // No-intake enquiry state (the one currently shown).
+    enquiryHeading: "Ask about the current English Writing option",
+    enquiryBody:
+      "No future English Writing start date is currently confirmed on this page. Share what you need to write, what feels difficult and when you are usually available. Aisha can confirm whether a suitable current option exists.",
+    detailsHeading: "Include these details in your enquiry",
+    enquiryDetails: [
+      { id: "writing-need", label: "What you need to write" },
+      { id: "context", label: "Whether it's for study, work or everyday communication" },
+      { id: "difficulty", label: "The main writing difficulty" },
+      { id: "location", label: "Country and timezone" },
+      { id: "schedule-fit", label: "Usual days/times" },
+      { id: "deadline", label: "Any relevant deadline" },
+    ] as EnglishWritingAvailabilityDetail[],
+    enquiryCtaLabel: "Ask about current availability",
+    enquiryMessage:
+      "Hi Aisha! I'm interested in online English writing coaching. I mainly need to write for [study/work/everyday communication]. The type of writing is [details], and I currently find [details] difficult. My country/timezone is [details], my usual days/times are [details], and my relevant deadline, if any, is [details]. Please confirm whether a suitable current option is available and share its format, schedule and fee.",
+    reservationNote:
+      "Sending an enquiry does not reserve a place. Wait for confirmation of availability, format, schedule and fee before making a payment. No payment is required simply to ask about availability.",
+
+    // Verified scheduled state (renders only once getPublishedUpcomingBatches("english-writing")
+    // returns at least one complete record -- see components/english-writing/
+    // EnglishWritingAvailability.tsx's isCompleteEnglishWritingIntake()).
+    scheduledHeading: "Review the confirmed English Writing option.",
+    scheduledBody: "Check the start date, schedule, format and duration before asking whether this option suits your writing goals.",
+    timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
+    intakeCtaLabel: "Ask about this writing option",
+    intakeReservationNote: "Availability is confirmed by Aisha; sending an enquiry does not reserve a place.",
+    moreAvailabilityLabel: "View all English Writing availability",
   },
 
   finalCta: {

@@ -18,9 +18,14 @@ import EnglishWritingFinalCTA from "@/components/english-writing/EnglishWritingF
 // and confidently", live Zoom classes, assignments with detailed feedback -- none of which is
 // verified). Description deliberately omits any format, recording, assignment, feedback, price or
 // delivery claim -- none of that is verified yet (see docs/english-writing-offer-verification.md).
-// No revalidate export: this Step-1 page deliberately does not query content/batches.ts at all
-// (see components/english-writing/EnglishWritingAvailability.tsx), so it has no time-dependent
-// data to keep fresh.
+
+// Step 7: EnglishWritingAvailability now queries content/batches.ts, whose publication status is
+// date-dependent (a batch's start date passing, or published/status changing) -- revalidate at
+// least daily so a page built once doesn't keep showing a stale scheduled intake (or a stale
+// enquiry state after a real intake is published) after that data changes. Matches the exact
+// convention already used by app/courses/{ielts,spoken-english,toefl}/page.tsx.
+export const revalidate = 3600;
+
 export const metadata: Metadata = {
   title: "Online English Writing Coaching",
   description:

@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 6 (29 August 2026).
+**Last reviewed:** English Writing Step 7 (29 August 2026).
 
 ## Source hierarchy
 
@@ -205,6 +205,33 @@ validation must all agree before any amount is published — but the code-level 
 means even a future editorial mistake in this document (marking something "Verified" that isn't)
 cannot by itself cause an incomplete price to render publicly.
 
+## Step 7 availability — fail-closed by construction, mirroring the pricing pattern
+
+Like pricing (Step 6), availability is not safeguarded by editorial documentation alone.
+`components/english-writing/EnglishWritingAvailability.tsx` enforces the fail-closed rule in code,
+reusing the shared, already-complete resolver rather than building a second one:
+
+- `lib/batches.ts`'s `getPublishedUpcomingBatches("english-writing")` first filters
+  `content/batches.ts` down to records that are `published: true`, not `status: "Closed"`, not
+  past their `startDate` in Pakistan time, and tagged for `english-writing` specifically;
+- `isCompleteEnglishWritingIntake()` then additionally requires a non-empty `id`, an ISO
+  `startDate`, a confirmed `format` (`"Live Online Group"` or `"One-to-One"`), a non-empty
+  `duration`, a non-empty `schedule`, `timezone === "Asia/Karachi"`, and an ISO `verifiedAt` — a
+  record failing any single check renders nothing, never a partial card with a placeholder;
+- up to three complete records render as cards, sorted chronologically, each with its own
+  per-option enquiry CTA and reservation note; a fourth-and-beyond record only ever appears via a
+  "View all English Writing availability" link to `/batches`, never inline;
+- `"Filling Fast"` — the one scarcity-adjacent status the data model allows — displays as the
+  neutral `"Open"` unless the record also carries a separately verified `statusVerifiedAt`, so a
+  scarcity claim can never be inferred from how close a start date is;
+- `app/courses/english-writing/page.tsx` now sets `export const revalidate = 3600` (matching
+  IELTS/Spoken English/TOEFL) so a statically generated page cannot keep showing an intake after
+  its date has passed.
+
+Availability and pricing remain deliberately independent systems: neither component reads the
+other's data, so a scheduled intake can never make an unverified price publishable, and a verified
+price can never imply an intake is currently open.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -218,6 +245,10 @@ cannot by itself cause an incomplete price to render publicly.
 - `components/english-writing/EnglishWritingLearningFormat.tsx`
 - `content/englishWritingPricing.ts`
 - `components/english-writing/EnglishWritingPricing.tsx`
+- `components/english-writing/EnglishWritingAvailability.tsx`
+- `content/batches.ts` (read-only for this record — English Writing does not own or edit shared
+  batch data)
+- `lib/batches.ts` (read-only for this record — its existing helpers were already complete)
 - `docs/english-writing-offer-verification.md`
 - `docs/testimonial-content-intake.md` (English Writing-specific intake fields)
 

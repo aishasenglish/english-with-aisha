@@ -310,6 +310,41 @@ explicit checks:
   `content/batches.ts`. Availability and pricing are deliberately separate business states — a
   future intake never verifies a fee, and a verified fee never verifies availability.
 
+## 9e. English Writing-specific publication rules (Step 7)
+
+`/courses/english-writing` no longer uses the shared `<BatchTable>` fallback —
+`components/english-writing/EnglishWritingAvailability.tsx` reads
+`getPublishedUpcomingBatches("english-writing")` directly and applies the exact same rules as
+Spoken English Step 7 above, with no English-Writing-specific relaxation or addition:
+
+- **`duration` and `schedule` are required, not optional**, checked by
+  `isCompleteEnglishWritingIntake()`. A record missing either is filtered out and never rendered —
+  not shown with a "TBC" placeholder.
+- **`isCompleteEnglishWritingIntake()` additionally re-checks `id` non-emptiness, `startDate` and
+  `verifiedAt` date-format validity, and `timezone === "Asia/Karachi"`** at runtime, mirroring
+  Spoken English's guard exactly.
+- **`Filling Fast` requires `statusVerifiedAt`**, same rule and same shared field as every other
+  programme — see the comment on `statusVerifiedAt` in `content/batches.ts`.
+- **No future date may be inferred from previous dates.** The two existing english-writing-tagged
+  records (`batch-001`, `batch-003`) are historical multi-course batches that happened to include
+  the `english-writing` slug — their spacing must never be used to guess a new date, and neither
+  record may simply be republished, since both are also missing the required `schedule` field.
+- **One-to-one availability IS modelled by this file for English Writing** (`format: "One-to-One"`
+  is an allowed value in the shared `Batch` type), but publishing one still requires genuine owner
+  confirmation of that specific arrangement, schedule and duration — never set merely because it is
+  a legal value.
+- **No published intake means the enquiry state renders, and that state does not link to
+  `/batches`.** `EnglishWritingAvailability` only links to `/batches` when more than 3 complete,
+  published, non-past English-Writing records genuinely exist.
+- **Sending an enquiry is never described as a reservation, and never called a waitlist.**
+- **The scheduled card always shows the neutral title "English Writing Coaching"** regardless of
+  `format` — do not rename it per-format unless a future step explicitly separates group and
+  one-to-one into distinct public labels with their own verified copy.
+- **If Step 6's `content/englishWritingPricing.ts` later publishes a fee for a specific intake and
+  format, never type a duplicate fee into a batch record.** Availability and pricing remain
+  deliberately separate business states — a future intake never verifies a fee, and a verified fee
+  never verifies availability.
+
 ## 10. Keep `verifiedAt` current
 
 Update `verifiedAt` to today's date whenever you check that a record's information (date, status,

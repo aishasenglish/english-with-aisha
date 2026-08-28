@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 6 (29 August 2026).
+**Last reviewed:** English Writing Step 7 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -17,6 +17,8 @@ professional advice, or as an answer on Aisha's behalf.
 - `Removed from public page`
 - `Published as bounded educational guidance`
 - `Unverified — do not publish amount` (pricing-specific; see the Pricing verification section)
+- `No eligible record — enquiry state` (availability-specific; see the Availability verification
+  section)
 
 ## Verified
 
@@ -59,7 +61,7 @@ confirmation date and evidence source here first.
 | Permitted use of AI tools | Unverified — do not publish | No English Writing-specific record exists | None | — | Confirm any AI-tool policy before publishing one |
 | Support for dissertations, theses, applications or publication writing | Unverified — do not publish | No English Writing-specific record exists | None. Do not imply support for these document types | — | Confirm whether any of these are genuinely supported |
 | Pricing, currency, payment schedule, refunds and discounts | Unverified — do not publish amount | The legacy `PKR 10,000` in `content/courses.ts` was never verified — see that file's comment on the `price` field and the dedicated "Pricing verification" section below | None. No amount, currency, billing basis or discount | `content/courses.ts` (`price: 10000`, non-authoritative, unread by the dedicated route); `content/englishWritingPricing.ts` (the actual gate) | Confirm the current fee, currency, billing basis and policies |
-| Current/future intake and capacity | Unverified — do not publish | No owner-verified, future, published English Writing record exists in `content/batches.ts` | "Current English Writing availability is confirmed individually" (the current Step 1 enquiry-only state). Never a historical date, an inferred cadence or a scarcity claim | `content/englishWriting.ts`'s `availability` | Supply a genuine future intake record with complete required fields, or confirm coaching is arranged on enquiry only |
+| Current/future intake and capacity | No eligible record — enquiry state | No complete, owner-verified, published, non-past English Writing record exists in `content/batches.ts` (see the "Availability verification" section below for the exact resolver and current record-by-record rejection reasons) | The Step 7 enquiry-state copy in `content/englishWriting.ts`'s `availability.enquiry*` fields. Never a historical date, an inferred cadence or a scarcity claim | `content/englishWriting.ts`'s `availability`; `content/batches.ts`; `lib/batches.ts`; `components/english-writing/EnglishWritingAvailability.tsx` | Supply a genuine future intake record with every field `isCompleteEnglishWritingIntake()` requires, or continue on enquiry only |
 | Booking or consultation process | Unverified — do not publish | No English Writing-specific record exists | None. Do not imply a bookable consultation exists | — | Confirm whether a consultation/booking step exists |
 | Expected enquiry response time | Unverified — do not publish | No documented standard exists anywhere on the site | None. Do not promise a reply-time window | — | Confirm whether Aisha wants to commit to a stated response time |
 | Writing-specific testimonials, results or samples | Unverified — do not publish | `content/testimonials.ts` currently has no entries | None. No testimonial, quote, sample or outcome claim may appear until a real, consent-confirmed, English-Writing-tagged record exists | — | Supply a genuine testimonial with recorded consent and a `courseSlug: "english-writing"` tag before any evidence section is built |
@@ -132,7 +134,25 @@ Implementation approval of this pricing *section* is not confirmation of any num
 
 Manual validator self-test (23 cases, run against `isValidPublishedEnglishWritingPrice()`'s logic on 29 August 2026 — not committed as a permanent test file, matching the existing precedent that no other program pricing validator has one): enquire state, amount zero, negative amount, `NaN` amount, non-finite amount, unsupported currency, missing currency, blank option/format/billing-basis/duration label, unknown inclusion id, a confirmation-checklist question id used as an inclusion id, empty inclusion list, invalid `effectiveFrom`, invalid `verifiedAt`, `verifiedAt` before `effectiveFrom`, expired `validUntil`, `validUntil` before `effectiveFrom`, invalid `validUntil` format, blank payment note, blank policy note, and one complete valid published record — all 23 cases passed (every invalid case correctly rejected to the enquiry state; the one complete valid record correctly accepted). A separate live fixture test (temporarily setting `status: "published"` with a complete, clearly-marked "QA fixture" record, screenshotting the rendered published branch, then fully reverting before commit) confirmed the amount renders with `Intl.NumberFormat` currency formatting adjacent to its billing basis, only the two fixture-included inclusion ids render, and both the last-verified and valid-until dates render correctly.
 
-## What the public page currently says instead (as of English Writing Step 6)
+## Availability verification (Step 7)
+
+| Field | Current value |
+|---|---|
+| Current public state | Enquiry (`components/english-writing/EnglishWritingAvailability.tsx`'s first branch — `getPublishedUpcomingBatches("english-writing").filter(isCompleteEnglishWritingIntake)` returns an empty array) |
+| Eligible record IDs | None |
+| `content/batches.ts` english-writing-tagged records considered | `batch-001` (startDate `2026-07-05`, `status: "Closed"`, `published: false`, no `schedule` field) — rejected: past date, closed, unpublished, incomplete. `batch-003` (startDate `2026-08-04`, `status: "Closed"`, `published: false`, no `schedule` field) — rejected: past date, closed, unpublished, incomplete. Neither record would pass even if republished, since both are missing the required `schedule` field. |
+| Timezone/date policy | `Asia/Karachi` (Pakistan Standard Time, fixed UTC+5, no daylight saving) throughout — `lib/batches.ts`'s `pakistanTodayDateOnly()`/`parsePakistanDate()`/`formatBatchDate()`, the same helpers already used by IELTS/PTE/TOEFL/Spoken English |
+| Required schedule fields for a complete record | Non-empty `id`; `courseSlugs` includes `"english-writing"`; ISO `startDate`; `published: true`; `status !== "Closed"`; `format` is `"Live Online Group"` or `"One-to-One"`; non-empty `duration`; non-empty `schedule`; `timezone === "Asia/Karachi"`; ISO `verifiedAt` — see `components/english-writing/EnglishWritingAvailability.tsx`'s `isCompleteEnglishWritingIntake()` |
+| Expiry rules | A batch is excluded once `startDate` is strictly before today in Pakistan time, regardless of its stored `status` (`lib/batches.ts`'s `isPastBatch()`) — a statically generated page could otherwise keep showing an expired intake, which is why `app/courses/english-writing/page.tsx` now sets `export const revalidate = 3600` |
+| Status/publication rules | `published: false`, `status: "Closed"`, and any record for a different `courseSlugs` are excluded before the completeness check even runs (`lib/batches.ts`'s `getPublishedUpcomingBatches()`). `"Filling Fast"` displays as the neutral `"Open"` unless the record also carries a `statusVerifiedAt` — a scarcity claim needs its own recent, manual verification, never inferred from proximity to the start date |
+| Relationship to pricing verification | Kept wholly separate by design: a scheduled English Writing intake never makes `content/englishWritingPricing.ts`'s `englishWritingPricing` publishable, and a valid published price would never imply an intake is open. Neither component reads the other's data |
+| Reservation wording | Enquiry state: "Sending an enquiry does not reserve a place. Wait for confirmation of availability, format, schedule and fee before making a payment. No payment is required simply to ask about availability." Scheduled state (per card): "Availability is confirmed by Aisha; sending an enquiry does not reserve a place." |
+| Next review date/owner | Re-check `content/batches.ts` whenever Aisha supplies a genuine future English Writing record, or by 2026-11-29 (three months) if none has been supplied by then |
+| Affected files | `content/englishWriting.ts`'s `availability`; `content/batches.ts` (read-only, unchanged this step); `lib/batches.ts` (read-only, unchanged this step — its existing helpers were already complete and reused as-is); `components/english-writing/EnglishWritingAvailability.tsx`; `app/courses/english-writing/page.tsx` (`revalidate` added) |
+
+Manual resolver self-test (14 cases, run against `isCompleteEnglishWritingIntake()` + the shared `getPublishedUpcomingBatches()` pipeline's logic on 29 August 2026 — not committed as a permanent test file): no English Writing records, only historical records, only unpublished records, a closed record, an invalid date, incomplete schedule (missing `duration`), incomplete schedule (missing `schedule`), wrong course slug, an invalid `verifiedAt`, a complete future record, multiple complete future records sorted chronologically, a future record plus an unrelated course's record, and page behaviour after the start date passes — all 14 cases passed, plus a separate chronological-sort-order check. A separate live fixture test (temporarily adding two complete, clearly-marked "QA fixture" `content/batches.ts` records — one `"Filling Fast"` without `statusVerifiedAt`, one `"Open"` — then fully reverting before commit) confirmed both cards render with the correct date/schedule/timezone/format/duration, sort chronologically, the unverified `"Filling Fast"` status correctly downgrades to `"Open"`, each card's CTA references its exact option/date/id without reservation language, and no horizontal overflow occurs at 320/768/1440px.
+
+## What the public page currently says instead (as of English Writing Step 7)
 
 `/courses/english-writing` shows only:
 
@@ -190,11 +210,17 @@ Manual validator self-test (23 cases, run against `isValidPublishedEnglishWritin
 - a route-guidance section (`components/english-writing/EnglishWritingRouteGuidance.tsx`, id
   `english-writing-route-guidance`) distinguishing general English Writing coaching from IELTS/PTE/
   TOEFL Writing preparation and O/A Level English, each with a real internal link;
-- the fail-closed, enquiry-only availability state (`components/english-writing/
-  EnglishWritingAvailability.tsx`, id `english-writing-availability`), correctly showing that
-  availability is "confirmed individually" since no English Writing batch is published, with a
-  WhatsApp/email fallback requesting the candidate's writing goal, current difficulty and preferred
-  timing;
+- a date-aware availability section (`components/english-writing/EnglishWritingAvailability.tsx`,
+  id `english-writing-availability`) that currently renders the enquiry state — stating plainly
+  that "no future English Writing start date is currently confirmed on this page," a six-item
+  "include these details" checklist (writing need, study/work/everyday context, main difficulty,
+  country/timezone, usual days/times, deadline), one WhatsApp CTA, and a reservation note that
+  sending an enquiry does not reserve a place and no payment is required simply to ask. The same
+  component would instead render up to three complete, verified, non-past `content/batches.ts`
+  cards (start date, schedule, timezone, format, duration, status, a per-card "last checked" date
+  and CTA) if a genuine future record ever passes every completeness check — currently none does;
+  see the "Availability verification" section above for exactly why the two existing
+  english-writing-tagged records are rejected;
 - an English-Writing-specific final CTA (`components/english-writing/EnglishWritingFinalCTA.tsx`)
   with its own WhatsApp message and a plain `mailto:` fallback to the canonical
   `aishasenglish@gmail.com`, plus a helper note clarifying that "review the enquiry" does not mean
@@ -205,20 +231,22 @@ components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed
 generic `<BatchTable>` "Upcoming Writing batches" section (removed entirely), or the complete
 generic `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty
 heading in their place — they are simply absent until their own verified replacement step.
-A dedicated availability component, specialist FAQ and enquiry-handoff form variant remain
-deliberately deferred to their own later English Writing steps. Step 2's public framework is not an
-operational promise that all areas are included or taught in a fixed order, Step 3's public
-coaching cycle and feedback framework are not a promise that every lesson, learner or package
-follows an identical sequence, includes assignments or full-draft review, or receives feedback of a
-specific method, frequency, depth or turnaround, Step 4's illustrative demonstration is not a real
-learner's work, testimonial, graded response, evidence of a result, or a promise that the
-demonstrated feedback format, full-document review, line editing or a specific number of revisions
-is included in the current offer, Step 5's learning-format section is not a promise that any
-platform, live/asynchronous arrangement, group/private format, session frequency/duration,
-recording, assignment, feedback method, homework, support, fee or intake is confirmed — every one
-of those remains a question in the pre-enrolment checklist, not an answer — and Step 6's pricing
-section is not evidence of a current fee: it fails closed to a pure confirmation-request state
-because no complete, current, owner-verified English Writing pricing record exists.
+A specialist FAQ and enquiry-handoff form variant remain deliberately deferred to their own later
+English Writing steps. Step 2's public framework is not an operational promise that all areas are
+included or taught in a fixed order, Step 3's public coaching cycle and feedback framework are not
+a promise that every lesson, learner or package follows an identical sequence, includes assignments
+or full-draft review, or receives feedback of a specific method, frequency, depth or turnaround,
+Step 4's illustrative demonstration is not a real learner's work, testimonial, graded response,
+evidence of a result, or a promise that the demonstrated feedback format, full-document review,
+line editing or a specific number of revisions is included in the current offer, Step 5's
+learning-format section is not a promise that any platform, live/asynchronous arrangement,
+group/private format, session frequency/duration, recording, assignment, feedback method, homework,
+support, fee or intake is confirmed — every one of those remains a question in the pre-enrolment
+checklist, not an answer — Step 6's pricing section is not evidence of a current fee: it fails
+closed to a pure confirmation-request state because no complete, current, owner-verified English
+Writing pricing record exists, and Step 7's availability section is not evidence of a current
+intake: it fails closed to the same enquiry state because neither existing english-writing-tagged
+`content/batches.ts` record is published, current or complete.
 
 ## Cross-site corrections made this step
 
@@ -317,6 +345,22 @@ never read by `content/englishWritingPricing.ts`) and this document's own explan
 shared programme's pricing was altered, and no offer/product price schema was added to this or any
 other page.
 
+## Step 7 reconciliation check
+
+Searched every public English Writing surface for `open`, `closed`, `available`, `filling fast`,
+`next batch`, `upcoming`, `new batch`, `start date`, `registration`, `limited seats`, `seats left`,
+`reserve`, `secure your place`, `waitlist`, `group`, `cohort`, `one-to-one`, `private`,
+`individual`, `rolling`, `start anytime`, and `flexible schedule`. In the default enquiry state, the
+only matches are the enquiry copy's own neutral references (e.g. "available" inside "confirm
+whether a suitable current option is available") — no scarcity, group/private, recurring or
+rolling-enrolment claim appears. `content/batches.ts` was re-inspected in full: its two
+english-writing-tagged records (`batch-001`, `batch-003`) are both past-dated, `status: "Closed"`,
+`published: false`, and missing the required `schedule` field, so neither can render as a current
+option under any circumstance without a genuine data update. No record's `published` flag was
+changed, no closed record was reopened, and no date was generated from historical spacing. The
+generic `<BatchTable>` component remains absent from the dedicated route, confirmed by inspecting
+`app/courses/english-writing/page.tsx`'s imports.
+
 ## Open questions for Aisha
 
 See every row marked `Unverified — do not publish` above. In summary, still needed before any more
@@ -357,12 +401,18 @@ specific public claim can be made:
 27. Are there any existing English-Writing learners who could supply a genuine writing sample with
     fully documented permission for both the original and revised text (see
     `docs/testimonial-content-intake.md`'s "English Writing-specific intake fields" section)?
+28. Is there a genuine future English Writing intake to publish? If so, supply every field
+    `isCompleteEnglishWritingIntake()` requires (stable id, exact start date, confirmed
+    `"Live Online Group"` or `"One-to-One"` format, duration, schedule, and a recent
+    `verifiedAt`) rather than reopening or republishing either of the two existing closed,
+    unpublished records.
 
 Until these are answered, the public page deliberately shows only the verified positioning, fit
 guidance, non-scored writing profile, possible-priorities framework, context mapping, the adaptable
 coaching cycle and feedback framework, one clearly disclosed illustrative teaching demonstration,
 one verified delivery fact with a five-group pre-enrolment confirmation checklist in place of every
-unresolved operational detail, a fail-closed pricing enquiry state in place of any amount,
-route-selection guidance, the fail-closed availability state, and a WhatsApp/email path to ask
+unresolved operational detail, a fail-closed pricing enquiry state in place of any amount, a
+date-aware availability section that fails closed to the same enquiry state until a genuine future
+record passes every completeness check, route-selection guidance, and a WhatsApp/email path to ask
 Aisha directly — never an invented format, formal level, fixed module order, duration, fee,
 feedback promise, intake, or real learner evidence that hasn't passed the publication guard.
