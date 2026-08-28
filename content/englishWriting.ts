@@ -22,9 +22,10 @@ import { site } from "@/content/site";
  * consent-approved English-Writing-tagged testimonial exists. Step 5 adds a learning-format section
  * that publishes the one verified delivery fact (online English tutoring), summarises the stable
  * educational approach from Steps 1-4, and translates every unresolved operational detail into a
- * pre-enrolment confirmation checklist rather than answering it. Later steps add pricing, dedicated
- * availability and FAQ only when their claims are verified -- do not pre-fill those with
- * placeholder content.
+ * pre-enrolment confirmation checklist rather than answering it. Step 6 adds pricing copy only --
+ * the actual fee record, its fail-closed validation and its "enquire"/"published" gate live in the
+ * dedicated content/englishWritingPricing.ts, never here. Later steps add dedicated availability
+ * and FAQ only when their claims are verified -- do not pre-fill those with placeholder content.
  */
 
 /** One of the four "who this coaching may suit" context cards
@@ -713,6 +714,32 @@ export const englishWritingContent = {
         "Hi Aisha! I'm interested in online English writing coaching. I mainly need to write for [study/work/everyday communication]. Before enrolling, could you please confirm the current format, timing, writing practice, feedback arrangement, fee and relevant policies?",
     },
     paymentHelperNote: "Confirm the current details directly before making a payment.",
+  },
+
+  // Step 6: page-facing pricing copy only. The actual fee record (status "enquire"/"published",
+  // amount, currency, dates, validation) lives in the dedicated, fail-closed
+  // content/englishWritingPricing.ts -- never here and never in content/courses.ts's legacy
+  // `price: 10000`. See docs/english-writing-offer-verification.md's pricing section for the full
+  // confirmation checklist still needed from Aisha before a "published" record can exist.
+  pricing: {
+    id: "english-writing-pricing",
+    enquire: {
+      eyebrow: "Current fee",
+      heading: "Confirm the fee for the current writing option",
+      body: "A complete current English Writing price has not been verified for publication on this page. Ask Aisha to confirm the exact amount, currency, billing basis, what the fee covers and the relevant payment and cancellation terms before paying.",
+      note: "Confirm the complete current details directly before making a payment.",
+      ctaLabel: "Ask for the current fee",
+      ctaMessage:
+        "Hi Aisha! I'm interested in online English writing coaching. I mainly need to write for [study/work/everyday communication]. Could you please confirm the current option, exact fee and currency, billing basis, what it covers, timing, payment method and relevant cancellation/refund terms?",
+    },
+    published: {
+      eyebrow: "Current English Writing fee",
+      heading: "See the complete cost and what it covers.",
+      inclusionsHeading: "What this fee includes",
+      lastVerifiedLabel: "Last verified",
+      validUntilLabel: "Valid until",
+      ctaLabel: "Ask About Enrolling",
+    },
   },
 
   routeGuidance: {

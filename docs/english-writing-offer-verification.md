@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 5 (29 August 2026).
+**Last reviewed:** English Writing Step 6 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -16,6 +16,7 @@ professional advice, or as an answer on Aisha's behalf.
 - `Unverified — do not publish`
 - `Removed from public page`
 - `Published as bounded educational guidance`
+- `Unverified — do not publish amount` (pricing-specific; see the Pricing verification section)
 
 ## Verified
 
@@ -57,7 +58,7 @@ confirmation date and evidence source here first.
 | Proofreading, editing and ghostwriting boundaries | Unverified — do not publish | No English Writing-specific record exists | None. The page must never imply proofreading, editing or ghostwriting service | — | Confirm the exact boundary of what any current offer does and does not include |
 | Permitted use of AI tools | Unverified — do not publish | No English Writing-specific record exists | None | — | Confirm any AI-tool policy before publishing one |
 | Support for dissertations, theses, applications or publication writing | Unverified — do not publish | No English Writing-specific record exists | None. Do not imply support for these document types | — | Confirm whether any of these are genuinely supported |
-| Pricing, currency, payment schedule, refunds and discounts | Unverified — do not publish | The legacy `PKR 10,000` in `content/courses.ts` was never verified — see that file's comment on the `price` field | None. No amount, currency, billing basis or discount | `content/courses.ts` (`price: 10000`, non-authoritative, unread by the dedicated route) | Confirm the current fee, currency, billing basis and policies |
+| Pricing, currency, payment schedule, refunds and discounts | Unverified — do not publish amount | The legacy `PKR 10,000` in `content/courses.ts` was never verified — see that file's comment on the `price` field and the dedicated "Pricing verification" section below | None. No amount, currency, billing basis or discount | `content/courses.ts` (`price: 10000`, non-authoritative, unread by the dedicated route); `content/englishWritingPricing.ts` (the actual gate) | Confirm the current fee, currency, billing basis and policies |
 | Current/future intake and capacity | Unverified — do not publish | No owner-verified, future, published English Writing record exists in `content/batches.ts` | "Current English Writing availability is confirmed individually" (the current Step 1 enquiry-only state). Never a historical date, an inferred cadence or a scarcity claim | `content/englishWriting.ts`'s `availability` | Supply a genuine future intake record with complete required fields, or confirm coaching is arranged on enquiry only |
 | Booking or consultation process | Unverified — do not publish | No English Writing-specific record exists | None. Do not imply a bookable consultation exists | — | Confirm whether a consultation/booking step exists |
 | Expected enquiry response time | Unverified — do not publish | No documented standard exists anywhere on the site | None. Do not promise a reply-time window | — | Confirm whether Aisha wants to commit to a stated response time |
@@ -95,7 +96,43 @@ format or teaching inclusion:
 | Pre-enrolment confirmation checklist | Published as a fail-closed pattern — every item is a question, never an answer | Five groups (delivery/participants, timing/duration, writing practice/feedback, access/privacy/support, commercial details) covering every row marked `Unverified — do not publish` above | Must never answer a listed question by implication; must use a neutral hollow marker, never a checkmark or cross, so it cannot be mistaken for an inclusion or exclusion list | `content/englishWriting.ts`'s `learningFormat.confirmationGroups`; `EnglishWritingLearningFormat.tsx` |
 | Contextual "confirm the format" CTA | Published — requests confirmation only | Asks Aisha to confirm current format, timing, writing practice, feedback arrangement, fee and relevant policies before enrolling | Must never request a document, promise a free consultation/assessment, imply availability, or imply that clicking reserves a place or starts payment | `content/englishWriting.ts`'s `learningFormat.confirmCta`; `EnglishWritingLearningFormat.tsx` |
 
-## What the public page currently says instead (as of English Writing Step 5)
+## Pricing verification (Step 6)
+
+| Field | Current value |
+|---|---|
+| Record / status | `content/englishWritingPricing.ts`'s `englishWritingPricing.status` = `"enquire"` |
+| Option label | Not set — no `published` record exists |
+| Amount | Not set — no `published` record exists |
+| Currency | Not set — no `published` record exists |
+| Billing basis | Not set — no `published` record exists |
+| Format | Not set — no `published` record exists |
+| Learner scope | Not set — no `published` record exists |
+| Duration | Not set — no `published` record exists |
+| Sessions/timing covered | Not set — no `published` record exists |
+| Verified inclusions | None — a `published` record's `verifiedInclusionIds` may only reference `content/englishWriting.ts`'s `learningFormat.approachItems` ids (`real-situation`, `connected-priorities`, `focused-attempts`, `learner-authorship`), never `learningFormat.confirmationGroups`' question ids |
+| Payment method/timing | Not set — no `published` record exists |
+| Refund/cancellation/rescheduling policy | Not set — no `published` record exists |
+| Effective date | Not set — no `published` record exists |
+| Valid-until date | Not set — no `published` record exists |
+| Evidence source | None. The legacy `content/courses.ts` english-writing `price: 10000` is **not** evidence — it was never verified for currency, billing basis, lesson arrangement, duration, inclusions or policy, and `content/englishWritingPricing.ts` never reads it |
+| Owner approval date | None |
+| Approved public wording | None — the public page shows only the enquiry state (`content/englishWriting.ts`'s `pricing.enquire`) |
+| Reviewer | Claude Sonnet 5, English Writing Step 6 implementation, 29 August 2026 |
+| Affected files | `content/englishWritingPricing.ts` (new); `components/english-writing/EnglishWritingPricing.tsx` (new); `content/englishWriting.ts`'s `pricing` copy object |
+
+**Current default:**
+
+- Status: `Unverified — do not publish amount`.
+- Public behaviour: the enquiry state renders (`EnglishWritingPricing.tsx`'s first branch) — no amount, currency, billing basis, duration or inclusion appears anywhere on the public page, in page HTML, metadata, structured data, or any hidden attribute.
+- Legacy `PKR 10,000`: removed/non-authoritative. It remains only inside `content/courses.ts`'s quarantined english-writing record (required by the shared `Course` type) and is never read by `content/englishWritingPricing.ts` or `EnglishWritingPricing.tsx`.
+- Global `site.showPrices`/`site.currency` settings: **not evidence**. `EnglishWritingPricing.tsx` requires `site.showPrices && isValidPublishedEnglishWritingPrice(englishWritingPricing)` — `showPrices` may only ever suppress an otherwise-valid price, never substitute for verification, and no global currency setting is read by the validator at all.
+- Next owner action: confirm the complete pricing record (amount, currency, billing basis, option/format, duration, coverage, schedule, payment method/timing, and cancellation/refund/rescheduling policy) before any `published` record can be written.
+
+Implementation approval of this pricing *section* is not confirmation of any numeric fee or policy — Aisha requesting Step 6 be built does not make `PKR 10,000` or any other figure verified.
+
+Manual validator self-test (23 cases, run against `isValidPublishedEnglishWritingPrice()`'s logic on 29 August 2026 — not committed as a permanent test file, matching the existing precedent that no other program pricing validator has one): enquire state, amount zero, negative amount, `NaN` amount, non-finite amount, unsupported currency, missing currency, blank option/format/billing-basis/duration label, unknown inclusion id, a confirmation-checklist question id used as an inclusion id, empty inclusion list, invalid `effectiveFrom`, invalid `verifiedAt`, `verifiedAt` before `effectiveFrom`, expired `validUntil`, `validUntil` before `effectiveFrom`, invalid `validUntil` format, blank payment note, blank policy note, and one complete valid published record — all 23 cases passed (every invalid case correctly rejected to the enquiry state; the one complete valid record correctly accepted). A separate live fixture test (temporarily setting `status: "published"` with a complete, clearly-marked "QA fixture" record, screenshotting the rendered published branch, then fully reverting before commit) confirmed the amount renders with `Intl.NumberFormat` currency formatting adjacent to its billing basis, only the two fixture-included inclusion ids render, and both the last-verified and valid-until dates render correctly.
+
+## What the public page currently says instead (as of English Writing Step 6)
 
 `/courses/english-writing` shows only:
 
@@ -143,6 +180,13 @@ format or teaching inclusion:
   access/privacy/support, commercial details) that only asks questions and never answers them, and
   a contextual "Confirm the current writing format" WhatsApp CTA that requests confirmation without
   requesting a document or implying availability, payment or a reserved place;
+- a dedicated pricing section (`components/english-writing/EnglishWritingPricing.tsx`, id
+  `english-writing-pricing`) that currently renders only the fail-closed enquiry state — no amount,
+  currency, billing basis, duration or inclusion appears anywhere on the page — because
+  `content/englishWritingPricing.ts`'s `englishWritingPricing.status` is `"enquire"`. The enquiry
+  panel states plainly that a complete current price has not been verified for publication and asks
+  Aisha to confirm the exact amount, currency, billing basis, coverage and payment/cancellation
+  terms, with one WhatsApp CTA ("Ask for the current fee") that requests confirmation only;
 - a route-guidance section (`components/english-writing/EnglishWritingRouteGuidance.tsx`, id
   `english-writing-route-guidance`) distinguishing general English Writing coaching from IELTS/PTE/
   TOEFL Writing preparation and O/A Level English, each with a real internal link;
@@ -161,7 +205,7 @@ components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed
 generic `<BatchTable>` "Upcoming Writing batches" section (removed entirely), or the complete
 generic `<FAQAccordion />` (removed entirely). None of these render "coming soon" or an empty
 heading in their place — they are simply absent until their own verified replacement step.
-Pricing, a dedicated availability component, specialist FAQ and enquiry-handoff form variant remain
+A dedicated availability component, specialist FAQ and enquiry-handoff form variant remain
 deliberately deferred to their own later English Writing steps. Step 2's public framework is not an
 operational promise that all areas are included or taught in a fixed order, Step 3's public
 coaching cycle and feedback framework are not a promise that every lesson, learner or package
@@ -169,10 +213,12 @@ follows an identical sequence, includes assignments or full-draft review, or rec
 specific method, frequency, depth or turnaround, Step 4's illustrative demonstration is not a real
 learner's work, testimonial, graded response, evidence of a result, or a promise that the
 demonstrated feedback format, full-document review, line editing or a specific number of revisions
-is included in the current offer, and Step 5's learning-format section is not a promise that any
+is included in the current offer, Step 5's learning-format section is not a promise that any
 platform, live/asynchronous arrangement, group/private format, session frequency/duration,
 recording, assignment, feedback method, homework, support, fee or intake is confirmed — every one
-of those remains a question in the pre-enrolment checklist, not an answer.
+of those remains a question in the pre-enrolment checklist, not an answer — and Step 6's pricing
+section is not evidence of a current fee: it fails closed to a pure confirmation-request state
+because no complete, current, owner-verified English Writing pricing record exists.
 
 ## Cross-site corrections made this step
 
@@ -256,6 +302,21 @@ re-inspected and already say "Online coaching · Confirm current format and supp
 with the new learning-format section, so neither file needed an edit for Step 5. No shared
 `LearningFormats` or `IncludedList` component was imported onto the route.
 
+## Step 6 reconciliation check
+
+Searched every public English Writing surface (the dedicated route, its page HTML source including
+hidden attributes, the homepage course card, the Courses hub card, metadata and structured data) for
+`price: 10000`, `PKR 10,000`, `10,000`, `10000`, `showPrices`, `currency`, `one-time`, `per course`,
+`monthly`, `per session`, `package`, `starting from`, `fee`, `discount`, `refund`, `cancellation`,
+`reschedule`, `missed class`, `expiry`, and Offer/Product/PriceSpecification JSON-LD. No amount,
+currency, billing basis, or price-related structured data appears anywhere on the public page in the
+default (`enquire`) state — confirmed by both manual inspection and an automated Playwright sweep of
+the rendered page text and full HTML source. The only remaining hits for the legacy figure are
+inside the already-quarantined `content/courses.ts` record (required by the shared `Course` type,
+never read by `content/englishWritingPricing.ts`) and this document's own explanatory text. No
+shared programme's pricing was altered, and no offer/product price schema was added to this or any
+other page.
+
 ## Open questions for Aisha
 
 See every row marked `Unverified — do not publish` above. In summary, still needed before any more
@@ -301,7 +362,7 @@ Until these are answered, the public page deliberately shows only the verified p
 guidance, non-scored writing profile, possible-priorities framework, context mapping, the adaptable
 coaching cycle and feedback framework, one clearly disclosed illustrative teaching demonstration,
 one verified delivery fact with a five-group pre-enrolment confirmation checklist in place of every
-unresolved operational detail, route-selection guidance, the fail-closed availability state, and a
-WhatsApp/email path to ask Aisha directly — never an invented format, formal level, fixed module
-order, duration, fee, feedback promise, intake, or real learner evidence that hasn't passed the
-publication guard.
+unresolved operational detail, a fail-closed pricing enquiry state in place of any amount,
+route-selection guidance, the fail-closed availability state, and a WhatsApp/email path to ask
+Aisha directly — never an invented format, formal level, fixed module order, duration, fee,
+feedback promise, intake, or real learner evidence that hasn't passed the publication guard.

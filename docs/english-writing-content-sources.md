@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 5 (29 August 2026).
+**Last reviewed:** English Writing Step 6 (29 August 2026).
 
 ## Source hierarchy
 
@@ -176,6 +176,35 @@ missed-session/rescheduling/cancellation/refund policy, fee, currency, billing b
 response-time commitment. Every one of those remains internally `Unverified — do not publish` in
 `docs/english-writing-offer-verification.md` regardless of this section's existence.
 
+## Step 6 pricing — fail-closed by construction, not by editorial promise alone
+
+Pricing is the one area where this governance document is deliberately *not* the sole safeguard.
+`content/englishWritingPricing.ts` enforces the fail-closed rule in code:
+
+- a discriminated `"enquire" | "published"` union, defaulting to `"enquire"`;
+- a pure validator (`isValidPublishedEnglishWritingPrice()`) that a `"published"` record must pass
+  in full before any amount can render — finite positive amount, supported currency, non-empty
+  option/format/billing-basis/duration/schedule/payment/policy strings, inclusion ids that resolve
+  only against `content/englishWriting.ts`'s `learningFormat.approachItems` (never the
+  confirmation-checklist's question ids), valid ISO dates with `effectiveFrom <= verifiedAt` and (if
+  set) `effectiveFrom <= validUntil` and an unexpired `validUntil`;
+- a module-level assertion that throws immediately at build/dev-server start if the record is ever
+  set to `"published"` while failing validation, so a content mistake is caught before it ships;
+- `components/english-writing/EnglishWritingPricing.tsx` additionally requires `site.showPrices` to
+  be true, and never treats that flag (or any other global site setting) as pricing evidence in its
+  own right — it may only suppress an otherwise-valid price.
+
+The legacy `content/courses.ts` english-writing `price: 10000` field is never read by any part of
+this pricing system. Educational-approach items (`learningFormat.approachItems`) are the only valid
+source of inclusion ids for a future published price — the pre-enrolment confirmation checklist
+(`learningFormat.confirmationGroups`) is explicitly excluded from that role because its questions
+are unresolved, not confirmed inclusions.
+
+This document, `docs/english-writing-offer-verification.md`'s pricing table, and code-level
+validation must all agree before any amount is published — but the code-level fail-closed design
+means even a future editorial mistake in this document (marking something "Verified" that isn't)
+cannot by itself cause an incomplete price to render publicly.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -187,6 +216,8 @@ response-time commitment. Every one of those remains internally `Unverified — 
 - `components/english-writing/EnglishWritingFeedbackDemonstration.tsx`
 - `components/english-writing/EnglishWritingVerifiedEvidence.tsx`
 - `components/english-writing/EnglishWritingLearningFormat.tsx`
+- `content/englishWritingPricing.ts`
+- `components/english-writing/EnglishWritingPricing.tsx`
 - `docs/english-writing-offer-verification.md`
 - `docs/testimonial-content-intake.md` (English Writing-specific intake fields)
 
