@@ -32,8 +32,16 @@ import { site } from "@/content/site";
  * for the initial status of every such claim and docs/about-professional-story-intake.md for what
  * Aisha would need to supply before any of them could be published.
  *
- * Social proof, enquiry-design, SEO, and accessibility/performance hardening remain later
- * About-page steps.
+ * Step 7 replaces Step 1's short `fitBoundary` note with `learnerFit`: scenario-led route
+ * guidance answering "given my situation, where should I go next?" -- distinct from
+ * `expertiseRoutes`' broad "what areas does Aisha support?" overview. Reuses the same verified
+ * internal destinations `expertiseRoutes` and `teachingApproach.goalApplications` already link to
+ * -- never a second, independently-drifting route map. School/O Level English is deliberately
+ * absent from the visible routes below: no verified O/A Level subdomain URL has been supplied,
+ * and About did not show this route before Step 7 either, so none is introduced now -- see
+ * docs/about-fit-route-guidance.md for the full dependency record.
+ *
+ * Enquiry-design, SEO, and accessibility/performance hardening remain later About-page steps.
  */
 
 export type AboutRouteLink = {
@@ -70,6 +78,23 @@ export type VerifiedMilestone = {
   date: string;
   label: string;
   description: string;
+};
+
+// --- Learner-fit route guidance model (About Step 7) ----------------------------------------
+//
+// `signal` names who the scenario is for ("this is you if..."), never a vague "improve your
+// English" label. `links` are always real, already-live internal destinations -- never an
+// invented O/A Level subdomain. `boundary` is the scenario-specific claim/scope limit shown
+// alongside its routes (e.g. "Aisha cannot confirm which test an institution accepts") -- kept
+// with its own scenario rather than folded into one generic disclaimer, so the limit stays next
+// to the decision it actually affects.
+export type AboutFitRoute = {
+  id: string;
+  title: string;
+  signal: string;
+  guidance: string;
+  links: readonly { label: string; href: string }[];
+  boundary?: string;
 };
 
 // --- Teaching approach model (About Step 3) -------------------------------------------------
@@ -455,13 +480,91 @@ export const aboutContent = {
     closingLink: { label: "See how coaching decisions are made", href: "/how-it-works" },
   },
 
-  fitBoundary: {
-    id: "about-fit-boundary",
-    heading: "What this page can and can't confirm",
-    body: [
-      "Aisha teaches online. Whether a particular route suits you depends on your actual goal and the current programme option.",
-      "Programme pages -- or a direct enquiry -- confirm the current format, schedule, fee and availability.",
-      "No result can be guaranteed, and sending an enquiry does not reserve a place.",
+  // About Step 7: replaces the short Step 1 fitBoundary note with scenario-led route guidance.
+  // Evolved in place (same section, same position in app/about/page.tsx) rather than duplicated
+  // alongside it -- see docs/about-fit-route-guidance.md for the full design record.
+  learnerFit: {
+    id: "about-learner-fit",
+    eyebrow: "Which route fits?",
+    heading: "Which English route matches your goal?",
+    intro:
+      "Start with the situation you are preparing for. The links below help you find the most relevant programme information -- they are not a formal assessment or a guarantee that a particular option is available.",
+    routes: [
+      {
+        id: "recognised-test",
+        title: "A recognised English test is required",
+        signal:
+          "This is you if a university, employer, professional body, immigration route or other organisation has asked for a specific English test and score.",
+        guidance:
+          "Confirm the accepted test, version and required score directly with that organisation first. Once the exact test is known, the relevant programme page is the current source for format, scope, fee and availability.",
+        links: [
+          { label: "Explore IELTS Preparation", href: "/courses/ielts" },
+          { label: "Explore PTE Academic Preparation", href: "/courses/pte" },
+          { label: "Explore TOEFL iBT Preparation", href: "/courses/toefl" },
+        ],
+        boundary:
+          "Aisha cannot confirm which test an institution accepts, and coaching does not guarantee a particular score, pass, admission or visa outcome.",
+      },
+      {
+        id: "spoken-communication",
+        title: "The goal is real-life spoken communication",
+        signal:
+          "This is you if the main need is speaking practice for work, study or everyday situations, rather than preparation for a named test.",
+        guidance:
+          "Spoken English coaching is built around the learner's real speaking situations, listener and communication tasks.",
+        links: [{ label: "Explore Spoken English Coaching", href: "/courses/spoken-english" }],
+        boundary:
+          "This is coaching and practice, not a guarantee of fluency or confidence, accent removal, or a clinical speech-language assessment.",
+      },
+      {
+        id: "written-english",
+        title: "The goal is clearer written English",
+        signal:
+          "This is you if the learner wants to develop their own writing for study, work or everyday communication -- clarity, organisation, grammar, tone or revision.",
+        guidance: "English Writing coaching develops the learner's own writing through teaching and feedback.",
+        links: [{ label: "Explore English Writing Coaching", href: "/courses/english-writing" }],
+        boundary:
+          "This is teaching and coaching, not ghostwriting, assignment completion, or help bypassing academic-integrity or AI-detection controls -- and no grade, publication or workplace result is promised.",
+      },
+      {
+        id: "not-sure-yet",
+        title: "Not sure yet which route fits",
+        signal:
+          "This is you if the goal is broad, the programmes need comparing, or a parent wants to explain the situation before choosing.",
+        guidance: "Compare the current programmes, or share the situation directly so Aisha can suggest the most relevant page or next step.",
+        links: [{ label: "Compare All English Programmes", href: "/courses" }],
+        boundary: "Sending an enquiry does not reserve a place -- current availability is confirmed separately.",
+      },
+    ] as AboutFitRoute[],
+    // Rendered alongside the "not-sure-yet" route -- kept separate from the static `routes` links
+    // above because the second action is conditional on formsAreConfigured() (a server-side
+    // check, not content), exactly mirroring AboutFinalCTA.tsx's own established pattern.
+    humanEnquiry: {
+      formLabel: "Ask Aisha for a Course Recommendation",
+      formHref: "/free-diagnostic-test",
+      whatsappLabel: "Ask Aisha on WhatsApp",
+      whatsappMessage: "Hi Aisha! I would like help choosing the right English programme. My goal is:",
+      emailLabel: "Email Aisha for a Course Recommendation",
+      emailSubject: "Course recommendation request",
+      emailBody: "Hi Aisha, I would like help choosing the right English programme. My goal is:",
+    },
+    firstEnquiryHeading: "What to include in your first message",
+    firstEnquiryItems: [
+      "The learner's goal and real-life context",
+      "The exact test and required result, if a formal test is involved",
+      "A brief description of the current starting point, in your own words",
+      "The relevant deadline, if one exists",
+      "Country/time zone and general availability",
+      "A request to confirm the current format, fee and availability",
+    ],
+    outOfScopeHeading: "This teaching may not be the right service if you need…",
+    outOfScopeItems: [
+      "A guaranteed score, grade, pass, admission, visa or job result",
+      "Official advice from a test provider, university, immigration authority or professional regulator -- confirm test acceptance and requirements directly with them",
+      "Clinical speech, language, hearing, mental-health or learning-difficulty assessment or therapy",
+      "Ghostwriting, assignment completion, exam impersonation, plagiarism support, or help bypassing academic-integrity or AI-detection controls",
+      "A proofreader or editor who completes your work instead of teaching you",
+      "An instantly reserved class, confirmed schedule or accepted payment before availability and terms are confirmed",
     ],
   },
 

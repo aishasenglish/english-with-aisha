@@ -4,7 +4,7 @@ import AboutCredentials from "@/components/about/AboutCredentials";
 import AboutProfessionalStory from "@/components/about/AboutProfessionalStory";
 import AboutExpertiseRoutes from "@/components/about/AboutExpertiseRoutes";
 import AboutTeachingApproach from "@/components/about/AboutTeachingApproach";
-import AboutFitBoundary from "@/components/about/AboutFitBoundary";
+import AboutLearnerFit from "@/components/about/AboutLearnerFit";
 import AboutVerifiedEvidence from "@/components/about/AboutVerifiedEvidence";
 import AboutFinalCTA from "@/components/about/AboutFinalCTA";
 
@@ -36,7 +36,9 @@ export default function AboutPage() {
       {/* About Step 3: AboutTeachingPrinciples's temporary three-item preview was replaced by
           AboutTeachingApproach's concrete five-part method, in the same position. */}
       <AboutTeachingApproach />
-      <AboutFitBoundary />
+      {/* About Step 7: AboutFitBoundary's short "what this page can and can't confirm" note was
+          evolved into AboutLearnerFit's scenario-led route guidance, in the same position. */}
+      <AboutLearnerFit />
       {/* About Step 5: fail-closed evidence section -- renders nothing at all (no heading, no
           gap) until at least one genuine, consent-confirmed, explicitly About-featured
           testimonial exists. See docs/about-evidence-verification.md for the current count. */}
