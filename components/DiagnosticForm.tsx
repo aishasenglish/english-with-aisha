@@ -9,6 +9,7 @@ import { ieltsFinalEnquiry, ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFinalEnquiry, pteFormVariant } from "@/content/pteEnquiry";
 import { toeflFinalEnquiry, toeflFormVariant } from "@/content/toeflEnquiry";
 import { spokenEnglishFinalEnquiry, spokenEnglishFormVariant } from "@/content/spokenEnglishEnquiry";
+import { englishWritingFinalEnquiry, englishWritingFormVariant } from "@/content/englishWritingEnquiry";
 import type { EnquirySource, EnquiryVariant } from "@/lib/enquiryQuery";
 import { track } from "@/lib/analytics/track";
 import type { AnalyticsErrorType, AnalyticsProgramme, AnalyticsSource } from "@/lib/analytics/events";
@@ -17,11 +18,11 @@ import type { AnalyticsErrorType, AnalyticsProgramme, AnalyticsSource } from "@/
  *  value is expected to accompany it — PTE Step 12 generalises the previous IELTS-only analytics
  *  branch; TOEFL Step 12 extends it again. "general" has no entry: the generic form deliberately
  *  stays outside programme-specific conversion tracking (see docs/analytics-event-map.md).
- *  "spoken-english" (Step 9) is also deliberately absent from both maps below — its
- *  assessment_form_start/submit/error events stay off until a reviewed Step 12 extension formally
- *  adds "spoken-english" to lib/analytics's programme/source allowlists; adding it to only one of
- *  these two maps (or to VARIANT_CONFIG without updating analytics) would create an inconsistent
- *  contract, so for now it is added to neither. */
+ *  "spoken-english" (Step 9) and "english-writing" (Step 9) are also deliberately absent from both
+ *  maps below — their assessment_form_start/submit/error events stay off until a reviewed Step 12
+ *  extension formally adds each to lib/analytics's programme/source allowlists; adding either to
+ *  only one of these two maps (or to VARIANT_CONFIG without updating analytics) would create an
+ *  inconsistent contract, so for now they are added to neither. */
 const ANALYTICS_PROGRAMME_BY_VARIANT: Partial<Record<EnquiryVariant, AnalyticsProgramme>> = {
   ielts: "ielts",
   pte: "pte",
@@ -150,6 +151,25 @@ const VARIANT_CONFIG: Record<EnquiryVariant, VariantConfig> = {
     unconfiguredMessage: spokenEnglishFinalEnquiry.whatsappMessage,
     successContinueMessage: spokenEnglishFinalEnquiry.whatsappMessage,
     errorFallbackMessage: spokenEnglishFinalEnquiry.whatsappMessage,
+  },
+  // English Writing Step 9: deliberately absent from ANALYTICS_PROGRAMME_BY_VARIANT/
+  // ANALYTICS_SOURCE_BY_VARIANT above -- no assessment_form_* event fires for this variant until a
+  // reviewed Step 12 extension formally adds it to lib/analytics's allowlists.
+  "english-writing": {
+    locked: true,
+    locationLabel: englishWritingFormVariant.locationLabel,
+    locationPlaceholder: englishWritingFormVariant.locationPlaceholder,
+    situationLabel: englishWritingFormVariant.situationLabel,
+    situationPlaceholder: englishWritingFormVariant.situationPlaceholder,
+    goalLabel: englishWritingFormVariant.goalLabel,
+    goalPlaceholder: englishWritingFormVariant.goalPlaceholder,
+    submissionSubject: englishWritingFormVariant.submissionSubject,
+    submitButtonLabel: "Send My English Writing Enquiry",
+    success: englishWritingFormVariant.success,
+    fallback: englishWritingFormVariant.unconfiguredFallback,
+    unconfiguredMessage: englishWritingFinalEnquiry.whatsappMessage,
+    successContinueMessage: englishWritingFinalEnquiry.whatsappMessage,
+    errorFallbackMessage: englishWritingFinalEnquiry.whatsappMessage,
   },
 };
 

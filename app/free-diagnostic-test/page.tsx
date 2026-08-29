@@ -5,6 +5,7 @@ import { ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFormVariant } from "@/content/pteEnquiry";
 import { toeflFormVariant } from "@/content/toeflEnquiry";
 import { spokenEnglishFormVariant } from "@/content/spokenEnglishEnquiry";
+import { englishWritingFormVariant } from "@/content/englishWritingEnquiry";
 import { resolveProgrammeQuery, resolveEnquirySource } from "@/lib/enquiryQuery";
 import type { EnquiryVariant } from "@/lib/enquiryQuery";
 
@@ -17,14 +18,16 @@ const PAGE_CONTENT: Record<EnquiryVariant, { heading: string; subtitle: string }
   pte: { heading: pteFormVariant.pageHeading, subtitle: pteFormVariant.pageSubtitle },
   toefl: { heading: toeflFormVariant.pageHeading, subtitle: toeflFormVariant.pageSubtitle },
   "spoken-english": { heading: spokenEnglishFormVariant.pageHeading, subtitle: spokenEnglishFormVariant.pageSubtitle },
+  "english-writing": { heading: englishWritingFormVariant.pageHeading, subtitle: englishWritingFormVariant.pageSubtitle },
 };
 
 /**
  * Spoken English Step 9, Part F: the shared `leadCapture.requestPage.whatHappensNext` list's third
  * line ("...she may ask for an exam code, current score or short work sample") is accurate for the
  * exam-preparation variants but would misleadingly imply an audio/work-sample review for Spoken
- * English. A small per-variant override here (rather than editing the shared list, which stays
- * correct for general/ielts/pte/toefl) lets this one variant show a different, equally honest list.
+ * English or a document review for English Writing. A small per-variant override here (rather than
+ * editing the shared list, which stays correct for general/ielts/pte/toefl) lets each of these
+ * variants show a different, equally honest list.
  */
 const WHAT_HAPPENS_NEXT: Record<EnquiryVariant, readonly string[]> = {
   general: leadCapture.requestPage.whatHappensNext,
@@ -32,6 +35,7 @@ const WHAT_HAPPENS_NEXT: Record<EnquiryVariant, readonly string[]> = {
   pte: leadCapture.requestPage.whatHappensNext,
   toefl: leadCapture.requestPage.whatHappensNext,
   "spoken-english": spokenEnglishFormVariant.whatHappensNext,
+  "english-writing": englishWritingFormVariant.whatHappensNext,
 };
 
 export const metadata: Metadata = {

@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 8 (29 August 2026).
+**Last reviewed:** English Writing Step 9 (29 August 2026).
 
 ## Source hierarchy
 
@@ -251,6 +251,30 @@ turnaround, or a revision count -- every one of those already lives exclusively 
 deliberately not added this step (see `docs/english-writing-offer-verification.md`'s "Specialist
 FAQ (Step 8)" section) -- that decision belongs to Step 10's sitewide technical-SEO review.
 
+## Step 9 final CTA — one centralised enquiry payload, one safe secondary action
+
+`content/englishWritingEnquiry.ts` is the single source for the final-stage WhatsApp/email message
+text and the five-item enquiry-fields checklist. `content/englishWriting.ts`'s `finalCta` holds
+only structural copy (eyebrow, heading, body, button labels, response expectation) -- no message
+text or field list is duplicated between the two files.
+
+`components/english-writing/EnglishWritingFinalCTA.tsx` decides its one secondary action entirely
+on the server via `formsAreConfigured()`: the allowlisted structured-enquiry link when Formspree
+passes `lib/forms.ts`'s strict validation (HTTPS, `formspree.io` host, `/f/<id>` path, no
+placeholder text), otherwise the canonical `mailto:` fallback. This is the same fail-closed pattern
+already governing pricing (Step 6) and availability (Step 7) -- an invalid or missing endpoint can
+never silently produce a broken form link, and the two actions are never shown simultaneously.
+
+The structured-form path extends the existing shared `components/DiagnosticForm.tsx` and
+`app/free-diagnostic-test/page.tsx` architecture (the same one IELTS/PTE/TOEFL/Spoken English
+already use) via `lib/enquiryQuery.ts`'s allowlist, rather than a second form or a new route. The
+shared form's three free-text fields are relabelled per variant, not replaced with a bespoke field
+set -- English Writing's variant asks about the writing situation/difficulty, the type of writing/
+reader/purpose/deadline, and country/timezone/availability, using the same `name`/`enquiringFor`/
+`whatsapp`/`email`/`programme` fields (programme locked) every other variant already has. No file
+input, rich-text editor, document-paste field, payment field, or marketing-consent checkbox exists
+anywhere in this shared form, for any variant.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -270,6 +294,11 @@ FAQ (Step 8)" section) -- that decision belongs to Step 10's sitewide technical-
 - `lib/batches.ts` (read-only for this record — its existing helpers were already complete)
 - `content/englishWritingFaqs.ts`
 - `components/english-writing/EnglishWritingFAQ.tsx`
+- `content/englishWritingEnquiry.ts`
+- `components/english-writing/EnglishWritingFinalCTA.tsx`
+- `lib/enquiryQuery.ts` (shared — extended, not forked, for the new `"english-writing"` variant)
+- `components/DiagnosticForm.tsx` (shared — extended, not forked)
+- `app/free-diagnostic-test/page.tsx` (shared — extended, not forked)
 - `docs/english-writing-offer-verification.md`
 - `docs/testimonial-content-intake.md` (English Writing-specific intake fields)
 

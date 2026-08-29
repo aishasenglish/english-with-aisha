@@ -1,5 +1,3 @@
-import { site } from "@/content/site";
-
 /**
  * English Writing-page-specific copy (English Writing Step 1). Canonical programme identity --
  * slug, public name, route -- stays in content/courses.ts; this file only holds the sales/
@@ -29,7 +27,11 @@ import { site } from "@/content/site";
  * actual batch records and their completeness validation live in content/batches.ts, lib/batches.ts
  * and components/english-writing/EnglishWritingAvailability.tsx, never duplicated here. Step 8 adds
  * `faq` heading copy only -- the eight question/answer pairs live in the dedicated
- * content/englishWritingFaqs.ts, independent of content/faqs.ts's generalFaqs.
+ * content/englishWritingFaqs.ts, independent of content/faqs.ts's generalFaqs. Step 9 reduces
+ * `finalCta` to page-facing copy only -- the actual WhatsApp/email message text and the shared
+ * enquiry-fields list live in the dedicated content/englishWritingEnquiry.ts, which also extends
+ * the site's shared allowlisted specialist-form-variant architecture (lib/enquiryQuery.ts,
+ * components/DiagnosticForm.tsx, app/free-diagnostic-test/page.tsx).
  */
 
 /** One of the four "who this coaching may suit" context cards
@@ -845,33 +847,20 @@ export const englishWritingContent = {
       "These answers explain the programme boundaries and point to the current format, pricing and availability information. Confirm changing details directly before payment.",
   },
 
+  // Step 9: page-facing final-CTA copy only. The actual WhatsApp/email message text and the
+  // shared five-item enquiry-fields list live in the dedicated content/englishWritingEnquiry.ts,
+  // never duplicated here -- see components/english-writing/EnglishWritingFinalCTA.tsx.
   finalCta: {
     id: "english-writing-enquiry",
     eyebrow: "Your next step",
     heading: "Tell Aisha what you need to write",
-    body: "Share the writing situation, your current difficulty and any relevant deadline. Aisha can review the enquiry and confirm whether the current coaching offer is a suitable fit.",
-    helperNote: "You do not need to send a full document in the first message.",
-    primaryLabel: "Discuss my writing goals",
-    message:
-      "Hi Aisha! I'm interested in online English writing coaching. I mainly need to write for [study/work/everyday communication]. The type of writing is [details], the reader or purpose is [details], and I currently find [sentence control/organisation/tone/revision/another issue] difficult. My relevant deadline, if any, is [details].",
+    body: "Share the writing situation, reader or purpose, current difficulty and timing. Aisha can review the enquiry and confirm whether a current option may suit the requirement.",
+    detailsHeading: "Include these details",
+    primaryLabel: "Discuss my writing goals on WhatsApp",
+    formCtaLabel: "Send a Detailed Enquiry",
     emailCtaLabel: "Email Aisha",
     emailAccessibleLabel: "Email Aisha about English writing coaching",
-    emailSubject: "English writing coaching enquiry",
-    emailBody: `Hello Aisha,
-
-I would like to ask about English writing coaching.
-
-What I need to write:
-Who will read it and why:
-What I find difficult:
-Any relevant deadline:
-
-Please confirm whether a current option may suit this requirement.`,
-  },
-
-  // Read directly from the canonical site record rather than a second literal, so this can never
-  // drift out of sync with content/site.ts's own email field.
-  contact: {
-    email: site.email,
+    responseExpectation:
+      "Aisha will use these details to respond about fit and the current offer. You do not need to send a full document in the first message, sending an enquiry does not reserve a place or confirm enrolment, and format/schedule/fee should be confirmed before payment.",
   },
 } as const;

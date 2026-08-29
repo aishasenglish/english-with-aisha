@@ -2,6 +2,7 @@ import { ieltsFormVariant } from "@/content/ieltsEnquiry";
 import { pteFormVariant } from "@/content/pteEnquiry";
 import { toeflFormVariant } from "@/content/toeflEnquiry";
 import { spokenEnglishFormVariant } from "@/content/spokenEnglishEnquiry";
+import { englishWritingFormVariant } from "@/content/englishWritingEnquiry";
 
 /**
  * Resolves `app/free-diagnostic-test/page.tsx`'s `?programme=...&source=...` query values against
@@ -17,6 +18,7 @@ export type EnquirySource =
   | "pte-page"
   | "toefl-page"
   | "spoken-english-page"
+  | "english-writing-page"
   | "general";
 
 const ALLOWED_SOURCES: readonly EnquirySource[] = [
@@ -26,6 +28,7 @@ const ALLOWED_SOURCES: readonly EnquirySource[] = [
   "pte-page",
   "toefl-page",
   "spoken-english-page",
+  "english-writing-page",
   "general",
 ];
 
@@ -35,18 +38,20 @@ export function resolveEnquirySource(raw: string | string[] | undefined): Enquir
   return (ALLOWED_SOURCES as readonly string[]).includes(value ?? "") ? (value as EnquirySource) : "general";
 }
 
-export type EnquiryVariant = "general" | "ielts" | "pte" | "toefl" | "spoken-english";
+export type EnquiryVariant = "general" | "ielts" | "pte" | "toefl" | "spoken-english" | "english-writing";
 
 /** One allowlisted `programme` query key mapped to its real public programme name and variant.
  *  Only the exact key "toefl" maps to the TOEFL variant — "toefl-essentials"/"toefl-itp" (or any
  *  other unrecognised value) fall through to the general form, never selecting this variant. Only
- *  the exact key "spoken-english" maps to the Spoken English variant — never a legacy tagline,
- *  price, module or inclusion from content/courses.ts's spoken-english record. */
+ *  the exact key "spoken-english" maps to the Spoken English variant, and only the exact key
+ *  "english-writing" maps to the English Writing variant — never a legacy tagline, price, module
+ *  or inclusion from content/courses.ts's respective record. */
 const PROGRAMME_QUERY_MAP: Record<string, { programmeName: string; variant: EnquiryVariant }> = {
   ielts: { programmeName: ieltsFormVariant.programmeName, variant: "ielts" },
   pte: { programmeName: pteFormVariant.programmeName, variant: "pte" },
   toefl: { programmeName: toeflFormVariant.programmeName, variant: "toefl" },
   "spoken-english": { programmeName: spokenEnglishFormVariant.programmeName, variant: "spoken-english" },
+  "english-writing": { programmeName: englishWritingFormVariant.programmeName, variant: "english-writing" },
 };
 
 /**

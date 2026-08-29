@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 8 (29 August 2026).
+**Last reviewed:** English Writing Step 9 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -152,7 +152,7 @@ Manual validator self-test (23 cases, run against `isValidPublishedEnglishWritin
 
 Manual resolver self-test (14 cases, run against `isCompleteEnglishWritingIntake()` + the shared `getPublishedUpcomingBatches()` pipeline's logic on 29 August 2026 — not committed as a permanent test file): no English Writing records, only historical records, only unpublished records, a closed record, an invalid date, incomplete schedule (missing `duration`), incomplete schedule (missing `schedule`), wrong course slug, an invalid `verifiedAt`, a complete future record, multiple complete future records sorted chronologically, a future record plus an unrelated course's record, and page behaviour after the start date passes — all 14 cases passed, plus a separate chronological-sort-order check. A separate live fixture test (temporarily adding two complete, clearly-marked "QA fixture" `content/batches.ts` records — one `"Filling Fast"` without `statusVerifiedAt`, one `"Open"` — then fully reverting before commit) confirmed both cards render with the correct date/schedule/timezone/format/duration, sort chronologically, the unverified `"Filling Fast"` status correctly downgrades to `"Open"`, each card's CTA references its exact option/date/id without reservation language, and no horizontal overflow occurs at 320/768/1440px.
 
-## What the public page currently says instead (as of English Writing Step 8)
+## What the public page currently says instead (as of English Writing Step 9)
 
 `/courses/english-writing` shows only:
 
@@ -231,9 +231,15 @@ Manual resolver self-test (14 cases, run against `isCompleteEnglishWritingIntake
   or schedule. No `FAQPage` structured data renders anywhere on the page (deliberately deferred to
   Step 10 -- see the "Specialist FAQ (Step 8)" section above);
 - an English-Writing-specific final CTA (`components/english-writing/EnglishWritingFinalCTA.tsx`)
-  with its own WhatsApp message and a plain `mailto:` fallback to the canonical
-  `aishasenglish@gmail.com`, plus a helper note clarifying that "review the enquiry" does not mean
-  free document review, editing or written assessment.
+  centralising the five-field enquiry checklist (`content/englishWritingEnquiry.ts`), one primary
+  WhatsApp action, and exactly one server-decided secondary action -- the allowlisted structured
+  "Send a Detailed Enquiry" form link when Formspree is genuinely configured, otherwise the
+  canonical `mailto:` fallback to `aishasenglish@gmail.com` -- plus a response-expectation note
+  clarifying that a full document is not needed in the first message, that an enquiry does not
+  reserve a place or confirm enrolment, and that format/schedule/fee should be confirmed before
+  payment. When reached via the structured-form path, `app/free-diagnostic-test?programme=english-
+  writing&source=english-writing-page` locks the programme field and never calls itself a
+  diagnostic, test or assessment.
 
 It no longer shows: `<CourseHero>`/`<CourseModules>` (replaced entirely by the dedicated
 components above), `<IncludedList>` (removed entirely), `<PricingCard>` (removed entirely), the
@@ -257,10 +263,12 @@ checklist, not an answer — Step 6's pricing section is not evidence of a curre
 closed to a pure confirmation-request state because no complete, current, owner-verified English
 Writing pricing record exists, Step 7's availability section is not evidence of a current intake:
 it fails closed to the same enquiry state because neither existing english-writing-tagged
-`content/batches.ts` record is published, current or complete, and Step 8's specialist FAQ answers
-the eight highest-value objections without inventing any operational fact those answers reference
--- every changing detail is a link to its authoritative Step 5-7 section, never a duplicated
-amount, date or schedule.
+`content/batches.ts` record is published, current or complete, Step 8's specialist FAQ answers the
+eight highest-value objections without inventing any operational fact those answers reference --
+every changing detail is a link to its authoritative Step 5-7 section, never a duplicated amount,
+date or schedule -- and Step 9's final CTA is a handoff mechanism, not a resolution: it centralises
+the enquiry request and chooses a safe secondary action, but it does not confirm a format, fee,
+availability or response time that Steps 5-7 have not already verified.
 
 ## Specialist FAQ (Step 8)
 
@@ -329,6 +337,86 @@ via the shared `FAQAccordion`.
   policy can change -- confirmed via live Playwright check that zero `FAQPage`-typed
   `application/ld+json` blocks render anywhere on `/courses/english-writing`. Record this decision
   for Step 10 review.
+
+## Final CTA and enquiry handoff (Step 9)
+
+`content/englishWritingEnquiry.ts` is now the single canonical source for the final-stage enquiry
+fields and the full WhatsApp/form-fallback/email message text — `content/englishWriting.ts`'s
+`finalCta` holds only structural copy (eyebrow, heading, body, button labels, response
+expectation). `components/english-writing/EnglishWritingFinalCTA.tsx` was rewritten to mirror
+`components/spoken-english/SpokenEnglishFinalCTA.tsx`, `components/toefl/TOEFLFinalCTA.tsx` and
+`components/pte/PTEFinalCTA.tsx` exactly.
+
+- **Step 9 implementation date:** 2026-08-29.
+- **Canonical final enquiry fields** (`englishWritingEnquiryFields`, exactly five items, matching
+  the implementing prompt's own required-information list verbatim): what you need to write; who
+  will read it and what it should achieve; what currently feels difficult; any relevant deadline;
+  country/timezone and usual days/times.
+- **WhatsApp/form/email action logic:** WhatsApp is always the primary action
+  (`englishWritingFinalEnquiry.whatsappMessage`). The secondary action is decided on the server via
+  `formsAreConfigured()` — the allowlisted detailed-enquiry link
+  (`/free-diagnostic-test?programme=english-writing&source=english-writing-page`) when Formspree is
+  genuinely configured, otherwise the canonical `mailto:` built from `site.email` via `emailLink()`
+  with `englishWritingFinalEnquiry.emailSubject`/`emailBody`. Exactly two final actions ever render;
+  WhatsApp, the detailed form and email are never shown simultaneously.
+- **Form configuration fail-closed behaviour:** unchanged shared logic
+  (`lib/forms.ts`'s `isValidFormspreeEndpoint()`/`formsAreConfigured()`) — an empty, placeholder,
+  non-HTTPS, wrong-host or malformed endpoint always falls back to the email action, never a broken
+  form link. Verified live this step with a temporary local-only `.env.local` Formspree URL fixture
+  (see "Verification performed" below) and confirmed reverted before this commit.
+- **Allowlisted programme and source values:** `lib/enquiryQuery.ts`'s `EnquirySource` gained
+  `"english-writing-page"`, `EnquiryVariant` gained `"english-writing"`, and `PROGRAMME_QUERY_MAP`
+  maps only the exact key `"english-writing"` to the locked programme label `"English Writing"`
+  (deliberately defined fresh in `content/englishWritingEnquiry.ts`, not imported from
+  `content/courses.ts`'s legacy `tagline`/`price`/`modules`/`includes`). Any other value (wrong
+  case, whitespace, script/HTML-like input, excessively long input, unknown programme, missing
+  source) falls back to the general form — confirmed via a 15-case manual query-resolution
+  self-test.
+- **Shared form field relabelling, not a bespoke field set:** `components/DiagnosticForm.tsx`'s
+  three free-text fields are relabelled for this variant (`situation` → "Writing situation and
+  current difficulty"; `goalTimeline` → "Type of writing, reader/purpose and deadline, if any";
+  `location` → "Country, time zone and usual availability") rather than adding a new bespoke
+  10-field form, per the implementing prompt's own "extend the existing shared form architecture
+  rather than cloning it" instruction and matching the Spoken English Step 9 precedent exactly.
+- **Privacy/data-minimisation boundaries:** the form requests no document, file, attachment,
+  assessed-assignment text, payment/card/bank data, national ID/passport/address, employer/school
+  name, or marketing consent. No file or audio input exists on the English Writing form variant
+  (verified live; the shared `DiagnosticForm.tsx` markup used by every variant already has none).
+  The shared `leadCapture.privacyNote` ("used only to respond to this enquiry... not added to a
+  marketing list") renders unchanged. No new marketing-consent checkbox was added.
+- **Confirmation that submission does not reserve a place or require payment:** the response
+  expectation states directly: "sending an enquiry does not reserve a place or confirm enrolment,
+  and format/schedule/fee should be confirmed before payment." No response-time commitment is made
+  anywhere.
+- **Unresolved response-time, format, fee and availability facts:** unchanged from Steps 5-7 — all
+  remain `Unverified — do not publish` / `No eligible record — enquiry state` (see the tables
+  above). Step 9 does not resolve any of them; it only builds the handoff mechanism that requests
+  them.
+- **Shared "What happens next" correction (Part F):** `app/free-diagnostic-test/page.tsx`'s
+  `WHAT_HAPPENS_NEXT` map gained an `"english-writing"` override
+  (`englishWritingFormVariant.whatHappensNext`) so this variant's page never implies a document or
+  work-sample review — the shared list's exam-preparation-specific third line ("...she may ask for
+  an exam code, current score or short work sample") was never shown for this variant.
+- **Structured-form visible copy never calls this a diagnostic, test or assessment:** confirmed
+  live — the page heading reads "Send a detailed English Writing enquiry" and the subtitle
+  describes reviewing writing situation/difficulty/type/availability, never a score, level or
+  scored placement.
+- **Analytics boundary preserved:** `"english-writing"` was deliberately added to neither
+  `ANALYTICS_PROGRAMME_BY_VARIANT` nor `ANALYTICS_SOURCE_BY_VARIANT` in
+  `components/DiagnosticForm.tsx` — no `assessment_form_start/submit/error` event fires for this
+  variant until a reviewed Step 12 extension formally adds it to `lib/analytics`'s allowlists,
+  mirroring the Spoken English Step 9 precedent exactly. No writing type, difficulty, deadline,
+  timezone, contact information or message content was added to any analytics payload.
+- **Verification performed:** a temporary `.env.local` fixture (a syntactically valid but
+  non-existent `https://formspree.io/f/qatest123` endpoint) was used to exercise the
+  form-configured secondary-action branch and the structured form's locked programme, relabelled
+  fields, honeypot and absence of a file input; a real submission was attempted against that fake
+  endpoint (which genuinely fails, since the form ID does not exist) to confirm the failure path
+  preserves entered values, shows a specific error message, and offers the WhatsApp fallback
+  without ever exposing the endpoint value — no fabricated success state was shown, and no real
+  third-party submission ever succeeded or was expected to. The `.env.local` file was deleted
+  before this commit; confirmed via `grep` for the fixture value (none found) and `ls` showing only
+  `.env.example` remains.
 
 ## Cross-site corrections made this step
 
@@ -463,6 +551,22 @@ was also searched for the same terms in an English-Writing-specific context; no 
 found (see the "Specialist FAQ (Step 8)" section above for the full audit). No `FAQPage`,
 `Review`, `Rating` or `Offer` structured data was added anywhere on the page.
 
+## Step 9 reconciliation check
+
+Searched every English Writing CTA label, WhatsApp message and email template for `free
+diagnostic`, `free assessment`, `consultation`, `book`, `enrol`, `reserve`, `secure seat`, and any
+fixed response-time promise -- none found; every enquiry-related string states or implies only a
+fit/availability discussion. Checked `content/englishWritingEnquiry.ts`'s WhatsApp message and
+email body for personal data placed in a way that would leak into logs or browser history beyond
+what the visitor explicitly typed into a `wa.me`/`mailto:` link (the same pattern already accepted
+for every other program) -- no additional exposure introduced. Confirmed via `grep` that the
+Formspree endpoint value is never rendered in any English Writing page component, comment intended
+for public copy, or content string. Confirmed `lib/enquiryQuery.ts`'s new `"english-writing"` /
+`"english-writing-page"` entries only ever activate on an exact, case-sensitive match (15-case
+manual self-test, all passed) and that the existing `"ielts"`/`"pte"`/`"toefl"`/`"spoken-english"`
+entries are byte-for-byte unchanged. No file, upload, rich-text, booking, payment, CRM, chat or
+marketing-opt-in element was added anywhere in this step.
+
 ## Open questions for Aisha
 
 See every row marked `Unverified — do not publish` above. In summary, still needed before any more
@@ -516,6 +620,8 @@ one verified delivery fact with a five-group pre-enrolment confirmation checklis
 unresolved operational detail, a fail-closed pricing enquiry state in place of any amount, a
 date-aware availability section that fails closed to the same enquiry state until a genuine future
 record passes every completeness check, an eight-question specialist FAQ that routes every
-changing detail to those same verified sections, route-selection guidance, and a WhatsApp/email
-path to ask Aisha directly — never an invented format, formal level, fixed module order, duration,
-fee, feedback promise, intake, or real learner evidence that hasn't passed the publication guard.
+changing detail to those same verified sections, route-selection guidance, and a centralised final
+enquiry handoff (WhatsApp primary, a safe server-chosen secondary action) that requests exactly the
+context needed to assess fit — never an invented format, formal level, fixed module order,
+duration, fee, feedback promise, intake, response-time commitment, or real learner evidence that
+hasn't passed the publication guard.
