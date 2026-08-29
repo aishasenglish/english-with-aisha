@@ -16,9 +16,16 @@ export const metadata: Metadata = {
 // to confirmation language without a full page redesign -- the other two items already read as
 // programme-appropriate ("may include... where appropriate"; an independent consultation offer)
 // and were left unchanged.
+//
+// About Step 3: the section heading and two more items still read as universal/standing-offer
+// claims once audited against the About page's own teaching-approach section -- "Confirmed live
+// sessions" as a title (not just the conditional body text below it) reads as an assertion that
+// live delivery is confirmed, and "Consultations & 1-on-1 practice" was phrased as a standing
+// "Book a..." offer rather than an availability question. Both reworded (Option A: minimal
+// truth-safety correction, not a redesign) so the About page can safely link here.
 const details = [
   {
-    title: "Confirmed live sessions",
+    title: "Live sessions, where confirmed",
     desc: "Live sessions are confirmed for your current programme option so you can ask questions in real time. The platform and schedule are confirmed before you begin.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -54,8 +61,8 @@ const details = [
     ),
   },
   {
-    title: "Consultations & 1-on-1 practice",
-    desc: "Need focused help? Book a consultation or individual practice session with Aisha for targeted coaching on a specific skill or problem area.",
+    title: "Consultations & individual practice, where available",
+    desc: "Ask whether a consultation or individual practice session is available for your current programme option, for targeted coaching on a specific skill or problem area.",
     icon: (
       <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
         <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
@@ -92,7 +99,10 @@ export default function HowItWorksPage() {
       <section className="py-16 px-4 bg-white">
         <div className="max-w-4xl mx-auto">
           <FadeUp>
-            <SectionHeading title="Everything that comes with each course" />
+            {/* About Step 3: was "Everything that comes with each course" -- asserted every item
+                below as a universal inclusion, contradicting their own conditional body text
+                ("confirmed for your current programme option"). */}
+            <SectionHeading title="Details to confirm for your programme" />
           </FadeUp>
           <div className="grid sm:grid-cols-2 gap-6 mt-10">
             {details.map((d, i) => (

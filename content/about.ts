@@ -11,13 +11,22 @@ import { site } from "@/content/site";
  * docs/about-credential-evidence-intake.md for the template a future credential must fully satisfy
  * before it can ever appear in `publicCredentials` below.
  *
- * Step 1 was a positioning and information-architecture step. Step 2 adds a typed, fail-closed
+ * Step 1 was a positioning and information-architecture step. Step 2 added a typed, fail-closed
  * public-credential model (`PublicCredential`/`publicCredentials`/`isPublishableCredential`) so the
  * academic-qualification/professional-role/additional-training hierarchy is enforced in code, not
  * just in prose -- an incomplete or unapproved additional-training record can never render, no
- * matter what gets added to the array later. Full credential-evidence documents, teaching-
- * philosophy depth, social proof, enquiry-design, SEO, accessibility/performance hardening and
- * measurement remain later About-page steps.
+ * matter what gets added to the array later.
+ *
+ * Step 3 replaces Step 1's temporary three-item `teachingPrinciples` preview with a concrete,
+ * five-part adaptable method (`teachingApproach.principles`) plus three goal-specific application
+ * examples (`teachingApproach.goalApplications`) -- derived from stable patterns already
+ * established across the reviewed programme pages (starting-point clarification, priority
+ * selection, purposeful practice, focused review), never invented personal beliefs or
+ * autobiographical claims. See docs/about-teaching-approach-verification.md for the evidence basis
+ * and philosophy-versus-operational-inclusion classification behind every principle below.
+ *
+ * Full credential-evidence documents, social proof, enquiry-design, SEO, accessibility/performance
+ * hardening and measurement remain later About-page steps.
  */
 
 export type AboutRouteLink = {
@@ -34,10 +43,27 @@ export type AboutRouteGroup = {
   links: AboutRouteLink[];
 };
 
-export type AboutPrinciple = {
+// --- Teaching approach model (About Step 3) -------------------------------------------------
+//
+// `boundary` is optional: only principles whose source guidance names an explicit limit (see
+// docs/about-teaching-approach-verification.md) carry one. Philosophy/pedagogy statements never
+// promise an operational inclusion (live delivery, recordings, feedback frequency, homework,
+// number of attempts) -- those remain programme-page-specific per the About Step 3 prompt's
+// "Teaching principles versus course inclusions" distinction.
+export type TeachingPrinciple = {
   id: string;
+  step: string;
   title: string;
-  body: string;
+  explanation: string;
+  boundary?: string;
+};
+
+export type GoalApplication = {
+  id: "test-preparation" | "spoken-communication" | "written-english";
+  title: string;
+  description: string;
+  href: string;
+  linkLabel: string;
 };
 
 // --- Public credential model (About Step 2) ------------------------------------------------
@@ -262,27 +288,99 @@ export const aboutContent = {
       "Programme pages remain authoritative for their specific curriculum, format, price, availability and evidence -- this page introduces the routes, not the operational details.",
   },
 
-  teachingPrinciples: {
-    id: "about-teaching-principles",
+  // About Step 3: replaces the temporary three-item `teachingPrinciples` preview with a concrete,
+  // adaptable five-part method plus three goal-specific application examples. No branded/
+  // proprietary method name, no personal first-person belief statement without approval (see
+  // docs/about-teaching-approach-verification.md), and no principle promises an operational
+  // inclusion -- every `boundary` field exists precisely to keep philosophy separate from what
+  // only a programme page can verify.
+  teachingApproach: {
+    id: "about-teaching-approach",
     eyebrow: "How Aisha teaches",
-    heading: "Principles that guide the teaching",
+    heading: "A teaching approach built around the learner's real goal",
+    intro:
+      "Different goals require different priorities. An exam candidate, a learner preparing for a workplace conversation and someone developing written English should not all receive the same plan. The approach begins by clarifying the real requirement, then selecting manageable priorities and practice appropriate to that context.",
     principles: [
       {
-        id: "goal",
-        title: "Start with the learner's actual goal",
-        body: "Clarify the exam, communication situation or writing need before recommending a route.",
+        id: "clarify-requirement",
+        step: "1",
+        title: "Clarify the real requirement",
+        explanation:
+          "Begin with the situation the learner is preparing for, not a generic promise to “improve English” -- the exam, communication situation or writing need, and the intended reader, listener, task and timeline where relevant.",
+        boundary:
+          "This is not a formal diagnostic, certified placement or guaranteed recommendation, and does not involve assessing medical, speech-language or learning conditions.",
       },
       {
-        id: "manageable",
-        title: "Make complex language manageable",
-        body: "Explain patterns and priorities in clear steps appropriate to the context.",
+        id: "manageable-priorities",
+        step: "2",
+        title: "Identify manageable priorities",
+        explanation:
+          "Focus on the areas most relevant to the learner's current goal and starting point, rather than presenting every possible weakness at once.",
+        boundary:
+          "A personalised plan is described here as a pedagogical principle, not a promised inclusion -- programme pages confirm what a specific option actually includes.",
       },
       {
-        id: "practice",
+        id: "explain-reason",
+        step: "3",
+        title: "Explain the reason, not only the rule",
+        explanation:
+          "Explanations connect the language choice or task strategy to its purpose, so the learner understands why it works and what to notice next time -- not a claim that grammar or rules are unimportant.",
+      },
+      {
+        id: "purposeful-practice",
+        step: "4",
         title: "Use purposeful practice",
-        body: "Connect practice to the skill or task being developed, while confirming the exact current format separately.",
+        explanation:
+          "Practice should have a clear purpose -- such as applying a task strategy, developing a response or revising a piece of language -- not simply completing more exercises.",
+        boundary:
+          "The number, duration and format of tasks aren't promised here -- homework, mock tests, recordings and live practice remain programme-specific inclusions confirmed on each programme page.",
       },
-    ] as AboutPrinciple[],
+      {
+        id: "review-next-priority",
+        step: "5",
+        title: "Review, revise and choose the next priority",
+        explanation:
+          "When review is part of the current option, it helps the learner understand one manageable next change -- not just receive a list of corrections.",
+        boundary:
+          "Feedback availability, method, frequency and turnaround are confirmed per programme -- not every task receives detailed personal feedback, and no result or score improvement is guaranteed.",
+      },
+    ] as TeachingPrinciple[],
+    // Conceptual only -- not a promise that every lesson follows five identical stages. Rendered
+    // as a decorative, aria-hidden connector on wider screens; the semantic <ol> above already
+    // carries the real sequence for assistive technology.
+    flow: ["Goal/context", "Priorities", "Explanation", "Purposeful attempt", "Review/next step"],
+    flowBoundary:
+      "This describes the teaching logic, not a fixed package. The exact activities, delivery format, practice and feedback arrangement depend on the current programme option and should be confirmed before enrolment.",
+    goalApplicationsHeading: "Different goals, different priorities",
+    goalApplications: [
+      {
+        id: "test-preparation",
+        title: "Test preparation",
+        description:
+          "Confirm the exact test and requirement, understand the relevant task demands, identify current performance priorities and use appropriate practice.",
+        href: "/courses#language-tests",
+        linkLabel: "Explore test-preparation programmes",
+      },
+      {
+        id: "spoken-communication",
+        title: "Spoken communication",
+        description:
+          "Start with the real speaking situation, listener and communication task, then identify priorities such as response development, intelligibility or interaction where relevant.",
+        href: "/courses/spoken-english",
+        linkLabel: "Explore Spoken English Coaching",
+      },
+      {
+        id: "written-english",
+        title: "Written English",
+        description:
+          "Clarify the type of writing, reader and purpose, then focus on relevant areas such as sentence clarity, organisation, tone or revision.",
+        href: "/courses/english-writing",
+        linkLabel: "Explore English Writing",
+      },
+    ] as GoalApplication[],
+    // About Step 3 corrected app/how-it-works/page.tsx's misleading "Everything that comes with
+    // each course" heading and two standing-offer/universal-delivery items (live sessions,
+    // consultations) -- see that file's own comments -- so this link is now safe to feature.
     closingLink: { label: "See how coaching decisions are made", href: "/how-it-works" },
   },
 

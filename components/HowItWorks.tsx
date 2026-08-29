@@ -15,10 +15,14 @@ const STEPS = [
   },
   {
     number: "03",
-    title: "Learn live and practise between lessons",
+    // About Step 3: was "Learn live and practise between lessons" / "Attend live online
+    // teaching, revisit class recordings..." -- asserted live delivery and recording access as
+    // universal, which isn't verified for every current programme. Reworded to confirmation
+    // language, matching the conditional items further down this same page.
+    title: "Attend your confirmed sessions and practise between lessons",
     description:
-      "Attend live online teaching, revisit class recordings and apply the lesson through relevant speaking, writing, syllabus or test-practice tasks.",
-    label: "Live explanation followed by purposeful practice.",
+      "Attend teaching through the delivery format confirmed for your programme, and apply the lesson through relevant speaking, writing, syllabus or test-practice tasks. Recording access, where available, is confirmed for your current option.",
+    label: "Explanation followed by purposeful practice.",
   },
   {
     number: "04",

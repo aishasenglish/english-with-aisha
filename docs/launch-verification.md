@@ -1123,6 +1123,31 @@ positioning and page architecture" below). The per-card `delivery` line directly
 paragraph remains a separate, already-corrected concern — see the PTE/TOEFL/Spoken-English-
 specific `HOME_COURSE_DELIVERY` overrides.
 
+## Resolved: How It Works page and component universal-claim wording (About Step 3)
+
+`app/how-it-works/page.tsx` and `components/HowItWorks.tsx` were audited before the new About-page
+teaching-approach section (`components/about/AboutTeachingApproach.tsx`) linked to `/how-it-works`.
+Four claims still read as universal/standing-offer despite Spoken English Step 10's earlier partial
+correction to this same page:
+
+- The section heading "Everything that comes with each course" asserted every item below it as a
+  universal inclusion, contradicting the items' own already-conditional body text. Changed to
+  "Details to confirm for your programme".
+- The "Confirmed live sessions" item's *title* (as opposed to its already-conditional body copy)
+  read as an assertion that live delivery is confirmed. Changed to "Live sessions, where
+  confirmed", matching the sibling "Recordings, where confirmed" item's existing pattern.
+- "Consultations & 1-on-1 practice" was phrased as a standing "Book a consultation…" offer with no
+  availability gate. Changed to "Consultations & individual practice, where available", with body
+  copy rewritten from "Book a…" to an availability question.
+- `components/HowItWorks.tsx`'s own step 3 ("Learn live and practise between lessons" / "Attend
+  live online teaching, revisit class recordings…") asserted universal live delivery and recording
+  access. Reworded to confirmation language matching the rest of the page.
+
+This is a minimal truth-safety correction (Option A in the About Step 3 prompt), not a redesign —
+the same layout, items and icons remain. See `docs/about-teaching-approach-verification.md`'s "How
+It Works link — decision and corrections" section for the full record. An `axe-core` pass confirmed
+zero WCAG AA violations on `/how-it-works` after the change.
+
 ## Flagged during Step 12, not fixed (out of this step's scope)
 
 - **`components/PricingCard.tsx`** labels every course's price "One-time fee" (shown on the

@@ -3,7 +3,7 @@ import AboutHero from "@/components/about/AboutHero";
 import AboutCredentials from "@/components/about/AboutCredentials";
 import AboutIntroduction from "@/components/about/AboutIntroduction";
 import AboutExpertiseRoutes from "@/components/about/AboutExpertiseRoutes";
-import AboutTeachingPrinciples from "@/components/about/AboutTeachingPrinciples";
+import AboutTeachingApproach from "@/components/about/AboutTeachingApproach";
 import AboutFitBoundary from "@/components/about/AboutFitBoundary";
 import AboutFinalCTA from "@/components/about/AboutFinalCTA";
 
@@ -29,7 +29,9 @@ export default function AboutPage() {
       <AboutCredentials />
       <AboutIntroduction />
       <AboutExpertiseRoutes />
-      <AboutTeachingPrinciples />
+      {/* About Step 3: AboutTeachingPrinciples's temporary three-item preview was replaced by
+          AboutTeachingApproach's concrete five-part method, in the same position. */}
+      <AboutTeachingApproach />
       <AboutFitBoundary />
       <AboutFinalCTA />
     </>
