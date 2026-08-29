@@ -1,17 +1,23 @@
 import { site } from "@/content/site";
 
 /**
- * About-page-specific copy (About Step 1). Canonical qualification, professional role, brand
- * name, city and email are NOT duplicated here as literals -- every string below reads them
- * directly from content/site.ts so this file can never silently drift from the one owner-
- * confirmed source. See docs/about-credentials-verification.md for the verification status of
- * every authority claim shown on this page, including the specific claims this step deliberately
- * does NOT publish yet (IDP-Certified IELTS Trainer, Corporate Trainer, any years-of-experience
- * figure, learner counts, ratings, awards, examiner status).
+ * About-page-specific copy (About Step 1, extended in About Step 2). Canonical qualification,
+ * professional role, brand name, city and email are NOT duplicated here as literals -- every
+ * string below reads them directly from content/site.ts so this file can never silently drift
+ * from the one owner-confirmed source. See docs/about-credentials-verification.md for the
+ * verification status of every authority claim shown on this page, including the specific claims
+ * still NOT published (IDP-Certified IELTS Trainer, Corporate Trainer, any years-of-experience
+ * figure, learner counts, ratings, awards, examiner status), and
+ * docs/about-credential-evidence-intake.md for the template a future credential must fully satisfy
+ * before it can ever appear in `publicCredentials` below.
  *
- * This is a positioning and information-architecture step, not a full credential-evidence,
- * teaching-philosophy, social-proof, enquiry-design, SEO, accessibility/performance or
- * measurement step -- those are later About-page steps.
+ * Step 1 was a positioning and information-architecture step. Step 2 adds a typed, fail-closed
+ * public-credential model (`PublicCredential`/`publicCredentials`/`isPublishableCredential`) so the
+ * academic-qualification/professional-role/additional-training hierarchy is enforced in code, not
+ * just in prose -- an incomplete or unapproved additional-training record can never render, no
+ * matter what gets added to the array later. Full credential-evidence documents, teaching-
+ * philosophy depth, social proof, enquiry-design, SEO, accessibility/performance hardening and
+ * measurement remain later About-page steps.
  */
 
 export type AboutRouteLink = {
@@ -33,6 +39,107 @@ export type AboutPrinciple = {
   title: string;
   body: string;
 };
+
+// --- Public credential model (About Step 2) ------------------------------------------------
+//
+// Four conceptual categories exist (see docs/about-credentials-verification.md and the About
+// Step 2 prompt's "Credential hierarchy" section): academic qualification, current professional
+// role, additional training/certification (e.g. a future genuinely-evidenced IELTS credential),
+// and professional training/client work (e.g. "Corporate Trainer"). Only the first two currently
+// have a complete, owner-confirmed, publishable record -- this file models all of them as one
+// `PublicCredentialCategory` union so a future verified record slots into the same fail-closed
+// pipeline rather than getting its own bespoke array and its own bespoke gating logic.
+export type PublicCredentialCategory = "academic-qualification" | "professional-role" | "additional-training";
+
+export type PublicCredential = {
+  id: string;
+  category: PublicCredentialCategory;
+  /** The claim itself, e.g. "MPhil in English Literature" -- never the category name. */
+  label: string;
+  /** Short, learner-relevant interpretation -- never a bare, unexplained badge. */
+  context: string;
+  /**
+   * "owner-confirmed" (Aisha's own word, no document) or "evidence-confirmed" (a reviewed source
+   * document exists -- see docs/about-credential-evidence-intake.md). Deliberately never rendered
+   * as a public checkmark/badge -- a checkmark can imply independent, third-party verification
+   * that neither status actually represents. This field exists for internal documentation and
+   * future filtering only.
+   */
+  evidenceStatus: "owner-confirmed" | "evidence-confirmed";
+  /** Which programme(s) this credential may be described alongside -- e.g. an IELTS-specific
+   *  credential must never be presented as evidence for PTE/TOEFL/Spoken English/English Writing. */
+  programmeScope?: readonly string[];
+  verificationUrl?: string;
+  issuedBy?: string;
+  issuedAt?: string;
+  expiresAt?: string;
+};
+
+/** Neutral category labels shown publicly -- never "Verified" or a checkmark. */
+export const CREDENTIAL_CATEGORY_LABEL: Record<PublicCredentialCategory, string> = {
+  "academic-qualification": "Academic qualification",
+  "professional-role": "Current professional role",
+  "additional-training": "Additional verified training",
+};
+
+/**
+ * A verification URL is only ever safe to render when it's genuinely HTTPS. This does not (and
+ * cannot) confirm the link is stable, issuer-authorised or free of unnecessary personal data --
+ * those still require the manual review recorded in docs/about-credential-evidence-intake.md
+ * before a URL is ever added to a record below in the first place. This function is a final
+ * mechanical guard against a malformed or non-HTTPS value slipping through, not a substitute for
+ * that review.
+ */
+export function isSafeCredentialVerificationUrl(url: string): boolean {
+  try {
+    return new URL(url).protocol === "https:";
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Fail-closed gate every entry in `publicCredentials` is filtered through before rendering.
+ * Academic qualification and professional role are always publishable -- they're the two
+ * owner-confirmed canonical facts read from content/site.ts. Any additional-training record must
+ * independently satisfy every required field from the About Step 2 prompt's "Required fields"
+ * list (title, issuer, scope, learner-relevant context) or it is silently omitted -- never
+ * rendered as an incomplete card, a "verification pending" placeholder, or an empty section.
+ */
+export function isPublishableCredential(credential: PublicCredential): boolean {
+  if (credential.category !== "additional-training") return true;
+  if (!credential.label.trim() || !credential.context.trim() || !credential.issuedBy?.trim()) return false;
+  if (!credential.programmeScope || credential.programmeScope.length === 0) return false;
+  return true;
+}
+
+/**
+ * The only two publishable records at this step. IDP-Certified IELTS Trainer and Corporate
+ * Trainer are deliberately NOT included here -- per docs/about-credentials-verification.md,
+ * neither has a complete evidence record (exact issued title, issuer, owner-approved public
+ * wording, scope), and `isPublishableCredential()` would reject either even if someone appended
+ * them without that evidence. Adding a genuinely verified record later means appending one
+ * complete `additional-training` entry here -- never editing the gating logic to let an
+ * incomplete one through.
+ */
+export const publicCredentials: PublicCredential[] = [
+  {
+    id: "academic-qualification",
+    category: "academic-qualification",
+    label: site.qualification,
+    context:
+      "Reflects advanced academic study of texts, language and interpretation, and informs how Aisha explains language, reading and writing to learners.",
+    evidenceStatus: "owner-confirmed",
+  },
+  {
+    id: "professional-role",
+    category: "professional-role",
+    label: site.professionalRole,
+    context:
+      "Aisha currently teaches in a college setting, which keeps her connected to classroom teaching and academic standards alongside her online coaching.",
+    evidenceStatus: "owner-confirmed",
+  },
+];
 
 export const aboutContent = {
   hero: {
@@ -63,11 +170,23 @@ export const aboutContent = {
     },
   },
 
-  // Only owner-confirmed facts -- no years-teaching, learner-count, pass-rate, score-improvement,
-  // country-reached, rating or certification-logo claim. `site.city` is included because it is
-  // already a canonical public fact, per the Step 1 prompt's explicit allowance -- not treated as
-  // the page's main value proposition.
-  authorityFacts: [site.qualification, site.professionalRole, "Online English tutoring", site.city] as string[],
+  // About Step 2: replaces Step 1's flat authorityFacts pill row with a proper category
+  // hierarchy -- see `publicCredentials` above for the actual data and
+  // components/about/AboutCredentials.tsx for the rendering. "Online English tutoring" and
+  // site.city are operational/location facts, not credentials, so they're kept as plain prose
+  // (`otherConfirmedFacts` below) rather than a third card -- avoids the Step 2 prompt's explicit
+  // "do not flatten [credential categories] into one badge row" concern by never mixing an
+  // operational fact into the credential grid in the first place.
+  credentialsSection: {
+    id: "about-credentials",
+    eyebrow: "Verified facts",
+    heading: "Academic background and professional role",
+    otherConfirmedFacts: `Aisha also teaches online and is currently based in ${site.city}.`,
+    // Restrained trust explanation from the About Step 2 prompt -- not a bureaucratic disclaimer
+    // wall, and never implies independent/third-party verification.
+    trustNote:
+      "These are the qualification and professional-role details currently confirmed for public use. Programme pages explain the specific support offered for each goal.",
+  },
 
   introduction: {
     id: "about-introduction",

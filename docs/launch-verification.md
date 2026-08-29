@@ -400,12 +400,17 @@ instrumentation. The general variant still emits nothing.
 - **City / time zone**: `Lahore, Pakistan` / `PKT (GMT+5)` — likewise pre-existing and left
   unchanged.
 - **Qualification / role**: owner-confirmed as `MPhil in English Literature` and
-  `College Lecturer` — now the two canonical `content/site.ts` fields (`qualification`,
-  `professionalRole`) every credential string on the site is built from. `IDP-Certified IELTS
-  Trainer` and `Corporate Trainer` are pre-existing, left unchanged — confirm these remain
-  accurate. Note "College Lecturer" is deliberately not "Government College Lecturer" — that
-  extra distinction hasn't been separately confirmed as public; add it back only if Aisha
-  explicitly asks for it everywhere.
+  `College Lecturer` — the two canonical `content/site.ts` fields (`qualification`,
+  `professionalRole`) every credential string on the site is built from. **Update (About Step 1,
+  extended in About Step 2):** `IDP-Certified IELTS Trainer` and `Corporate Trainer` — previously
+  noted here as "pre-existing, left unchanged" — have since been removed from `site.ts`'s
+  `credentials`/`credentialsList` entirely (About Step 1), and About Step 2 additionally found and
+  removed a third, independent live occurrence of the IDP claim on `/courses/ielts` itself
+  (`components/ielts/IELTSAuthorityStrip.tsx`). Neither claim has an evidence record — see
+  `docs/about-credentials-verification.md` and `docs/about-credential-evidence-intake.md` for the
+  full status and what would be needed before either could be republished. Note "College Lecturer"
+  is deliberately not "Government College Lecturer" — that extra distinction hasn't been
+  separately confirmed as public; add it back only if Aisha explicitly asks for it everywhere.
 
 ## Social accounts
 

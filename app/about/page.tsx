@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import AboutHero from "@/components/about/AboutHero";
-import AboutAuthorityStrip from "@/components/about/AboutAuthorityStrip";
+import AboutCredentials from "@/components/about/AboutCredentials";
 import AboutIntroduction from "@/components/about/AboutIntroduction";
 import AboutExpertiseRoutes from "@/components/about/AboutExpertiseRoutes";
 import AboutTeachingPrinciples from "@/components/about/AboutTeachingPrinciples";
@@ -12,7 +12,8 @@ import AboutFinalCTA from "@/components/about/AboutFinalCTA";
 // "confidence over fear"/"speak without hesitation" outcome framing -- see
 // docs/about-credentials-verification.md for the verification status behind every claim below).
 // Kept as safe, functional Step 1 metadata only -- structured data, social-image work and full
-// technical SEO are reserved for a later About-page step.
+// technical SEO are reserved for a later About-page step. About Step 2 (credential hierarchy)
+// changed no metadata field -- title/description already read only the two owner-confirmed facts.
 export const metadata: Metadata = {
   title: "About Aisha",
   description:
@@ -23,7 +24,9 @@ export default function AboutPage() {
   return (
     <>
       <AboutHero />
-      <AboutAuthorityStrip />
+      {/* About Step 2: AboutAuthorityStrip's flat fact-pill row was replaced by
+          AboutCredentials's categorised academic/role hierarchy in the same position. */}
+      <AboutCredentials />
       <AboutIntroduction />
       <AboutExpertiseRoutes />
       <AboutTeachingPrinciples />

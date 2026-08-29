@@ -1,8 +1,11 @@
 import { site } from "@/content/site";
-import { ieltsCredential } from "@/content/ielts";
 
-// Read directly from canonical site data rather than a second copy of these strings.
-const facts: string[] = [site.qualification, site.professionalRole, ieltsCredential];
+// About Step 2 audit: "IDP-Certified IELTS Trainer" (content/ielts.ts's `ieltsCredential`) was
+// removed from this strip -- no credential asset, issuer or evidence record exists for it (see
+// docs/about-credentials-verification.md), and existing repeated use across the codebase was not
+// itself evidence. Read directly from canonical site data rather than a second copy of these
+// strings.
+const facts: string[] = [site.qualification, site.professionalRole];
 
 // Plain semantic list, not styled as interactive buttons — credentials, not actions.
 export default function IELTSAuthorityStrip() {

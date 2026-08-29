@@ -169,6 +169,18 @@ non-expired IELTS batch in `content/batches.ts` to link to (see `lib/batches.ts`
 batch record is closed and unpublished). Add one only once a real upcoming IELTS intake is
 published.
 
+## Credential correction (About Step 2)
+
+`components/ielts/IELTSAuthorityStrip.tsx` previously displayed "IDP-Certified IELTS Trainer"
+(`content/ielts.ts`'s `ieltsCredential`) alongside the two canonical facts. The About Step 2 audit
+found no credential asset, issuer, exact issued title, or evidence record for this claim anywhere
+in the repository — its repeated appearance across the codebase (this page, the shared
+`content/site.ts` default, and the homepage About preview) was not itself evidence. It has been
+removed from this page's authority strip; the strip now shows only MPhil in English Literature and
+College Lecturer, matching every other programme page. See `docs/about-credentials-verification.md`
+and `docs/about-credential-evidence-intake.md` for the full status and the evidence this claim
+would need before it could be republished, scoped only to IELTS-relevant context.
+
 ## Open questions for Aisha
 
 1. Is every current IELTS option live (synchronous), or does any option involve pre-recorded or

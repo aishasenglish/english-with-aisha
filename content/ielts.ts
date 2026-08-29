@@ -506,7 +506,14 @@ export const ieltsPage = {
   },
 } as const;
 
-/** Owner-confirmed IELTS-specific credential shown in the authority strip, alongside the
- *  canonical qualification/role from content/site.ts. Set to null and omit from the strip if
- *  this ever becomes unverifiable rather than replacing it with an unsupported claim. */
+/**
+ * IELTS-specific credential text. NOT currently rendered anywhere (About Step 2 audit found no
+ * credential asset, issuer, exact issued title or evidence record for this claim -- existing
+ * repeated use across the codebase is not itself evidence -- see
+ * docs/about-credentials-verification.md and docs/about-credential-evidence-intake.md).
+ * components/ielts/IELTSAuthorityStrip.tsx omits it until a complete, owner-approved evidence
+ * record exists; kept here only so the exact prior wording is preserved for that future review,
+ * per this constant's own original comment: "Set to null and omit from the strip if this ever
+ * becomes unverifiable rather than replacing it with an unsupported claim."
+ */
 export const ieltsCredential = "IDP-Certified IELTS Trainer" as const;

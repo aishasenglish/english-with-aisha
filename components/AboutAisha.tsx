@@ -3,23 +3,17 @@ import Button from "./Button";
 import FadeUp from "./FadeUp";
 import { whatsappLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
+import { publicCredentials, isPublishableCredential } from "@/content/about";
 
-// Titles reuse the canonical wording from content/site.ts — named fields for the two owner-
-// confirmed facts. About Step 1 removed the "IDP-Certified IELTS Trainer" and "Corporate Trainer"
-// cards that used to read site.credentialsList[2]/[3] positionally: neither claim is established
-// by any verification record (see docs/about-credentials-verification.md), and site.credentialsList
-// itself no longer carries them, so this grid now shows only the two verified facts rather than a
-// four-item grid propped up by two unverified ones.
-const CREDENTIALS = [
-  {
-    title: site.qualification,
-    copy: "Advanced study of language, literature, analysis and written expression.",
-  },
-  {
-    title: site.professionalRole,
-    copy: "Classroom teaching experience grounded in clear explanation, structured practice and academic standards.",
-  },
-];
+// About Step 1 removed the "IDP-Certified IELTS Trainer" and "Corporate Trainer" cards that used
+// to read site.credentialsList[2]/[3] positionally: neither claim is established by any
+// verification record (see docs/about-credentials-verification.md). About Step 2 goes further --
+// this grid now reads content/about.ts's `publicCredentials` (the exact same typed, fail-closed
+// records /about's own AboutCredentials.tsx renders) instead of a second, separately maintained
+// label/copy list, so the homepage preview and the full About page can never drift into
+// contradictory wording. A future genuinely-evidenced additional-training record would appear
+// here too, the same way it would on /about, once it passes `isPublishableCredential()`.
+const CREDENTIALS = publicCredentials.filter(isPublishableCredential);
 
 const VALUE_POINTS = [
   {
@@ -86,15 +80,15 @@ export default function AboutAisha() {
         <FadeUp delay={150}>
           <ul className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 mb-10 sm:mb-12">
             {CREDENTIALS.map((credential) => (
-              <li key={credential.title} className="flex gap-3 p-4 border border-stone rounded-md">
+              <li key={credential.id} className="flex gap-3 p-4 border border-stone rounded-md">
                 <div className="w-9 h-9 flex items-center justify-center rounded-sm bg-amber-tint text-amber-dark shrink-0">
                   <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M12 14l9-5-9-5-9 5 9 5zm0 0l6.16-3.422A12.083 12.083 0 0121 15c0 1.79-.402 3.484-1.121 5.001M12 14l-6.16-3.422A12.083 12.083 0 003 15c0 1.79.402 3.484 1.121 5.001M12 14v7" />
                   </svg>
                 </div>
                 <div>
-                  <p className="font-serif text-sm font-medium text-ink mb-1">{credential.title}</p>
-                  <p className="text-sm text-ink-soft leading-relaxed">{credential.copy}</p>
+                  <p className="font-serif text-sm font-medium text-ink mb-1">{credential.label}</p>
+                  <p className="text-sm text-ink-soft leading-relaxed">{credential.context}</p>
                 </div>
               </li>
             ))}
