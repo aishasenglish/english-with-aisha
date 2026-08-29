@@ -213,7 +213,12 @@ export const aboutContent = {
       // public/images/README.md for the recorded dimensions and
       // docs/about-credentials-verification.md's portrait section for the full history.
       src: "/images/about-aisha.jpeg",
-      alt: `${site.founder}, English teacher and ${site.professionalRole}`,
+      // About Step 6: aligned with the recommended concise, factual pattern and with the
+      // homepage hero/About-preview portraits' alt text ("Aisha, online English teacher and
+      // College Lecturer") -- no promotional adjective, no unverified role, and the qualification
+      // is deliberately omitted here since it isn't visually observable and is already stated in
+      // the adjacent hero body copy above.
+      alt: `${site.founder}, online English teacher and ${site.professionalRole}`,
       width: 490,
       height: 468,
     },

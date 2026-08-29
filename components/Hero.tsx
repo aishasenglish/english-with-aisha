@@ -103,9 +103,14 @@ export default function Hero() {
                 doesn't shift; width is derived from aspect-[3/4], matching the source's own
                 1083x1452 (~3:4) ratio, so nothing is stretched or cropped beyond a light trim. */}
             <div className="relative z-10 h-[230px] md:h-[420px] lg:h-[460px] max-w-full aspect-[3/4] rounded-xl overflow-hidden shadow-sm">
+              {/* About Step 6: alt text previously said "English Literature lecturer", which is
+                  not the canonical professional role -- "College Lecturer" is (see
+                  content/site.ts's professionalRole). "English Literature" describes the
+                  qualification's subject, not the job title; conflating the two here implied an
+                  unverified role. Corrected to the canonical role. */}
               <Image
                 src="/images/aisha-prof.jpeg"
-                alt="Aisha, online English teacher and English Literature lecturer"
+                alt="Aisha, online English teacher and College Lecturer"
                 fill
                 priority
                 sizes="(max-width: 767px) 170px, (max-width: 1023px) 320px, 350px"

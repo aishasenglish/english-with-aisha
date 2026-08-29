@@ -50,9 +50,14 @@ export default function AboutAisha() {
         <div className="md:grid md:grid-cols-[38%_1fr] md:gap-10 lg:gap-12 md:items-start mb-10 sm:mb-12">
           <FadeUp className="mb-6 md:mb-0">
             <div className="relative w-full max-w-xs md:max-w-none mx-auto aspect-[3/4] rounded-md overflow-hidden">
+              {/* About Step 6: alt text previously said "English Literature specialist", which
+                  overstates scope -- neither the MPhil nor the College Lecturer role establishes
+                  "specialist" status in every English Literature context. Simplified to factual
+                  identity wording, matching the pattern used for the homepage hero and About
+                  hero portraits. */}
               <Image
                 src="/images/aisha-headshot.jpg"
-                alt="Aisha, English Literature specialist and online English teacher"
+                alt="Aisha, online English teacher and College Lecturer"
                 fill
                 sizes="(max-width: 767px) 320px, (max-width: 1023px) 38vw, 32vw"
                 className="object-cover"
