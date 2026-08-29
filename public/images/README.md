@@ -4,8 +4,10 @@ Drop your photos into this folder. The website references these filenames:
 
 | Filename | Used on | Recommended size |
 |---|---|---|
-| `aisha-hero.jpg` | Home page hero | 800×1067px (portrait, 3:4) |
-| `aisha-cutout-placeholder.png` | Home page hero (right-column cutout portrait) | Transparent-background PNG, portrait, ~1000px tall |
+| `aisha-hero.jpg` | `/courses/o-a-level-english` hero (not the homepage — this row was mislabeled before this update) | 800×1067px (portrait, 3:4) |
+| `aisha-cutout-placeholder.png` | No longer referenced by any page (was superseded by `aishaa.png`, itself now superseded by `aisha-prof.jpeg` below) | Transparent-background PNG, portrait, ~1000px tall — left in place, unused |
+| `aishaa.png` | No longer referenced by any page (superseded on the homepage by `aisha-prof.jpeg` below) | 896×1195px (portrait, transparent-background cutout) — left in place, unused |
+| `aisha-prof.jpeg` | Home page hero (next to "Expert English Coaching for Exams, School and Confident Communication.") | 1083×1452px (portrait, ~3:4) — a real photo with its own natural background (not a transparent cutout), so `components/Hero.tsx` frames it in a fixed-aspect `object-cover` card with rounded corners rather than floating it directly over the circular colour wash |
 | `aisha-about.jpg` | No longer referenced by any page (superseded on the About page by `about-aisha.jpeg` below) | 1086×1448px (portrait, 3:4) — left in place, unused, rather than deleted; the file itself is unchanged |
 | `about-aisha.jpeg` | About page hero (next to "Meet Aisha, your online English teacher") | 490×468px (near-square, ~1.05:1) — the hero reserves a 3:4 `object-cover` container unchanged by this swap, so this image is cropped to fill it rather than stretched |
 | `og-image.jpg` | Default Open Graph / Twitter image (root layout, inherited by pages without their own) | Currently 960×1280px (portrait) — declared as such in `app/layout.tsx`; a genuinely landscape 1200×630px replacement would let more pages use the `summary_large_image` Twitter card type |

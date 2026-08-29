@@ -94,15 +94,24 @@ export default function Hero() {
               className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[85%] w-[85%] -z-10 rounded-full bg-sea-wash"
               aria-hidden="true"
             />
-            <Image
-              src="/images/aishaa.png"
-              alt="Aisha, online English teacher and English Literature lecturer"
-              width={896}
-              height={1195}
-              priority
-              sizes="(max-width: 767px) 170px, (max-width: 1023px) 320px, 350px"
-              className="relative z-10 w-auto max-w-full h-auto max-h-[230px] md:max-h-[420px] lg:max-h-[460px] object-contain"
-            />
+            {/* aisha-prof.jpeg is a real photo with its own natural background (not the
+                transparent-cutout PNG this used to be), so it's framed as a proper photo card --
+                fixed aspect-ratio box, object-cover so it fills the frame without distorting, and
+                rounded-xl + overflow-hidden for a soft, polished edge -- rather than floating
+                directly over the circular colour wash via object-contain. Heights match the
+                original max-h-[230px]/420px/460px footprint exactly so the rest of the hero layout
+                doesn't shift; width is derived from aspect-[3/4], matching the source's own
+                1083x1452 (~3:4) ratio, so nothing is stretched or cropped beyond a light trim. */}
+            <div className="relative z-10 h-[230px] md:h-[420px] lg:h-[460px] max-w-full aspect-[3/4] rounded-xl overflow-hidden shadow-sm">
+              <Image
+                src="/images/aisha-prof.jpeg"
+                alt="Aisha, online English teacher and English Literature lecturer"
+                fill
+                priority
+                sizes="(max-width: 767px) 170px, (max-width: 1023px) 320px, 350px"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
         </div>
       </div>
