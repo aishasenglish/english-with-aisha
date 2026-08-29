@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 9 (29 August 2026).
+**Last reviewed:** English Writing Step 10 (29 August 2026).
 
 ## Source hierarchy
 
@@ -275,6 +275,30 @@ reader/purpose/deadline, and country/timezone/availability, using the same `name
 input, rich-text editor, document-paste field, payment field, or marketing-consent checkbox exists
 anywhere in this shared form, for any variant.
 
+## Step 10 technical SEO — one identity, agreeing everywhere
+
+`content/englishWriting.ts`'s `breadcrumb` array is the single source for both the visible
+breadcrumb and the `BreadcrumbList` JSON-LD in `app/courses/english-writing/page.tsx` -- they can
+never disagree because both read the same three-item array. This is the only structured-data type
+this route emits.
+
+The page's absolute title, description, canonical URL, and Open Graph/Twitter fields are set
+directly in `app/courses/english-writing/page.tsx`'s `metadata` export rather than inherited from
+the root layout's generic multi-programme description -- every field reflects only what Steps 1-9
+have actually verified (online tutoring; no platform, format, fee, or intake claim). The social
+image (`public/images/social/english-writing-coaching.jpg`) was generated using the identical
+`sharp`-based recipe already used for the IELTS/PTE/TOEFL/Spoken English assets -- the same source
+portrait, the same ivory padding, no new photography, no fabricated rating/testimonial/certificate
+graphic.
+
+`FAQPage`, `QAPage`, `Course`, `CourseInstance`, `Offer`, `Product`, `Review`, `AggregateRating`,
+`Service`, `Person`, `Organization`, `WebSite` and `Article` structured data are all deliberately
+absent from this route, for the reasons recorded in
+`docs/english-writing-offer-verification.md`'s "Technical SEO, metadata and internal linking (Step
+10)" section. None of these can be added later merely because a schema generator or checklist
+suggests it -- each one requires the underlying operational fact (a verified price, a qualifying
+course-list architecture, consented review evidence, etc.) to exist first.
+
 ## Files governed by this record
 
 - `content/englishWriting.ts`
@@ -299,6 +323,9 @@ anywhere in this shared form, for any variant.
 - `lib/enquiryQuery.ts` (shared — extended, not forked, for the new `"english-writing"` variant)
 - `components/DiagnosticForm.tsx` (shared — extended, not forked)
 - `app/free-diagnostic-test/page.tsx` (shared — extended, not forked)
+- `components/english-writing/EnglishWritingBreadcrumb.tsx`
+- `public/images/social/english-writing-coaching.jpg`
+- `public/images/README.md`
 - `docs/english-writing-offer-verification.md`
 - `docs/testimonial-content-intake.md` (English Writing-specific intake fields)
 

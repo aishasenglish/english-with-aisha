@@ -150,6 +150,19 @@ export const englishWritingContent = {
   slug: "english-writing",
   label: "English Writing",
 
+  // Step 10: single canonical source for both the visible breadcrumb
+  // (components/english-writing/EnglishWritingBreadcrumb.tsx) and the matching BreadcrumbList
+  // JSON-LD (app/courses/english-writing/page.tsx) -- built from the exact same array so the
+  // visible path and structured data can never disagree. Mirrors content/spokenEnglish.ts's,
+  // content/toefl.ts's and content/pte.ts's `breadcrumb` field exactly. The final label "English
+  // Writing" aligns with the page's absolute title, H1 intent and the Step 9 locked-form
+  // programme label -- not the legacy course-record label "English Writing Mastery".
+  breadcrumb: [
+    { label: "Home", href: "/" },
+    { label: "Courses", href: "/courses" },
+    { label: "English Writing" },
+  ],
+
   hero: {
     eyebrow: "Online English tutoring",
     heading: "Online English Writing Coaching",

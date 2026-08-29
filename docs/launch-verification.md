@@ -926,6 +926,38 @@ SEO, metadata and internal linking (Step 10)" section for full detail and exact 
 Valid structured data does not guarantee a search-result appearance; it only makes the page
 eligible to be considered for one.
 
+## English Writing SEO verification (Step 10)
+
+Local/code-level checks performed (see `docs/english-writing-offer-verification.md`'s "Technical
+SEO, metadata and internal linking (Step 10)" section for full detail and exact results):
+
+- production build status and route response (`200`) confirmed;
+- rendered `<head>` metadata inspected directly (title, description, canonical, Open Graph,
+  Twitter) — all match this document's declared values exactly;
+- `BreadcrumbList` JSON-LD schema parse-checked (valid JSON, correct `@type`, 3 ordered items);
+- `sitemap.xml`/`robots.txt` checked (route appears exactly once, canonical host, crawling allowed,
+  sitemap referenced);
+- social-preview values (title/description/image path/dimensions/alt) verified against the actual
+  rendered metadata and the actual generated file's pixel dimensions (not just the declared value);
+- re-confirmed the FAQPage JSON-LD removal from `components/HomeFAQ.tsx`, `components/
+  CoursesFAQ.tsx` and `app/faq/page.tsx` (completed during Spoken English Step 10) remains in
+  place and unaffected by this step.
+
+**Deployment-only checks still required — not claimed complete from local code:**
+
+- Google Rich Results Test run against the live deployed URL for the `BreadcrumbList` markup;
+- Google Search Console URL Inspection for `/courses/english-writing` after deployment;
+- production redirect behaviour for HTTP→HTTPS and www/non-www, which requires live DNS/hosting
+  access this session does not have;
+- an actual social-preview render check (Facebook Sharing Debugger / Twitter Card Validator /
+  LinkedIn Post Inspector) against the live deployed URL, since these tools fetch the real
+  production response rather than a local build;
+- resubmitting the sitemap or requesting indexing in Search Console — not performed and not
+  authorised by this step.
+
+Valid structured data does not guarantee a search-result appearance; it only makes the page
+eligible to be considered for one.
+
 ## Resolved: the CourseExplorer universal claim flagged since IELTS Step 10 (fixed in Spoken English Step 1)
 
 `components/CourseExplorer.tsx` (the homepage's programme grid) previously stated: "Every

@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 9 (29 August 2026).
+**Last reviewed:** English Writing Step 10 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -152,10 +152,14 @@ Manual validator self-test (23 cases, run against `isValidPublishedEnglishWritin
 
 Manual resolver self-test (14 cases, run against `isCompleteEnglishWritingIntake()` + the shared `getPublishedUpcomingBatches()` pipeline's logic on 29 August 2026 — not committed as a permanent test file): no English Writing records, only historical records, only unpublished records, a closed record, an invalid date, incomplete schedule (missing `duration`), incomplete schedule (missing `schedule`), wrong course slug, an invalid `verifiedAt`, a complete future record, multiple complete future records sorted chronologically, a future record plus an unrelated course's record, and page behaviour after the start date passes — all 14 cases passed, plus a separate chronological-sort-order check. A separate live fixture test (temporarily adding two complete, clearly-marked "QA fixture" `content/batches.ts` records — one `"Filling Fast"` without `statusVerifiedAt`, one `"Open"` — then fully reverting before commit) confirmed both cards render with the correct date/schedule/timezone/format/duration, sort chronologically, the unverified `"Filling Fast"` status correctly downgrades to `"Open"`, each card's CTA references its exact option/date/id without reservation language, and no horizontal overflow occurs at 320/768/1440px.
 
-## What the public page currently says instead (as of English Writing Step 9)
+## What the public page currently says instead (as of English Writing Step 10)
 
 `/courses/english-writing` shows only:
 
+- a visible Home / Courses / English Writing breadcrumb (`components/english-writing/
+  EnglishWritingBreadcrumb.tsx`) above the hero, matched exactly by one `BreadcrumbList` JSON-LD
+  block built from the same `content/englishWriting.ts` `breadcrumb` array -- the only structured
+  data this route emits;
 - an English-Writing-specific hero, compact authority strip and fit section
   (`components/english-writing/EnglishWritingHero.tsx`, `EnglishWritingAuthorityStrip.tsx`,
   `EnglishWritingFit.tsx`), positioning the page around the candidate's own real writing situations
@@ -418,6 +422,116 @@ expectation). `components/english-writing/EnglishWritingFinalCTA.tsx` was rewrit
   before this commit; confirmed via `grep` for the fixture value (none found) and `ls` showing only
   `.env.example` remains.
 
+## Technical SEO, metadata and internal linking (Step 10)
+
+- **Step 10 implementation date:** 2026-08-29.
+- **Final title:** `Online English Writing Coaching | Aisha's English` — set via Next.js's
+  absolute-title syntax (`{ absolute: "..." }`) so the root layout's `%s | Aisha's English`
+  template cannot append the brand a second time.
+- **Final description:** "Online English writing coaching for learners working on sentence
+  clarity, organisation, tone and revision for study, work or everyday communication." — no
+  guaranteed improvement, formal assessment, live/group/one-to-one format, Zoom, recordings,
+  duration, fee, start date, or age/level claim.
+- **Canonical URL:** `https://aishasenglish.com/courses/english-writing`, built from
+  `site.domain`, one declaration, no trailing-slash duplicate, no query parameter, no fragment.
+- **Open Graph/Twitter values:** type `website`; title "Online English Writing Coaching";
+  description "Explore needs-led English writing support for clearer sentences, stronger
+  organisation and purposeful writing for study, work or everyday communication."; Twitter card
+  `summary_large_image`. Image: `public/images/social/english-writing-coaching.jpg`, a genuine
+  `1200×630` file (confirmed via `sharp` metadata inspection immediately after generation), composed
+  by resizing the same site-approved `public/images/og-image.jpg` portrait (`960×1280`, unmodified
+  other than the resize) to `473×630` and centring it on a plain `#F7FAFB` (ivory) canvas — padding,
+  not cropping or stretching, following the exact IELTS/PTE/TOEFL/Spoken English Step 10 recipe. No
+  AI generation, retouching or identity change; no flag, classroom scene, certificate, rating or
+  platform logo added. Alt text: "Portrait of Aisha, the teacher behind Aisha's English" (factual,
+  built from canonical `site.founder`/`site.brandName`).
+- **Breadcrumb source and structured-data mapping:** `content/englishWriting.ts`'s new
+  `breadcrumb` array (`Home` → `/`, `Courses` → `/courses`, `English Writing` → current page, no
+  self-link) feeds both the visible `components/english-writing/EnglishWritingBreadcrumb.tsx` and
+  the `BreadcrumbList` JSON-LD built in `app/courses/english-writing/page.tsx` — the only
+  structured-data type added to this route. Verified live: exactly one JSON-LD script on the
+  route, valid JSON, 3 ordered `ListItem` entries with absolute URLs built from `site.domain`,
+  matching the visible path exactly.
+- **Structured-data types deliberately excluded, and why:**
+  - `FAQPage`/`QAPage` — Google announced the FAQ rich-result feature stopped appearing from 7 May
+    2026 and removed the corresponding documentation in June 2026 (reconfirmed live this step —
+    see "Google Search Central guidance rechecked" below). The specialist visible FAQ (Step 8) is
+    preserved unchanged; this route never had `FAQPage` markup to remove, and the sitewide removal
+    from `components/HomeFAQ.tsx`, `components/CoursesFAQ.tsx` and `app/faq/page.tsx` was already
+    completed during Spoken English Step 10 — re-confirmed unchanged this step (both files' own
+    comments record the earlier removal; no `FAQPage` string appears in either).
+  - `Offer` — pricing remains `enquire` (Step 6); no price/currency/availability schema may exist
+    while that holds, and none does.
+  - `AggregateRating`/`Review` — no permission-cleared, representative English-Writing-specific
+    evidence exists (Step 4's evidence guard remains empty).
+  - `Course`/`CourseInstance` — a single detail page is not a course-list context, and no complete
+    verified intake exists (Step 7 remains enquiry-only). No repository-wide compliant
+    `ItemList`/carousel summary page exists for the Courses hub either, so isolated `Course` markup
+    here would not satisfy Google's documented course-list eligibility requirements.
+  - `Service`/`Person`/`Organization`/`WebSite` — no canonical, visible, maintained site-wide
+    strategy justifies duplicating generic schema here; `WebSite` site-name preference belongs on
+    the home page, not repeated per programme page.
+  - `Article` — this is a programme/sales page, not an article.
+- **Cross-site contradictions re-verified, none newly required this step:** `app/how-it-works/
+  page.tsx` and `app/page.tsx`'s homepage availability section were already corrected to
+  confirmation-language wording ("confirmed for your current programme option", "Confirmed live
+  sessions", "Feedback on your work") during Spoken English Step 10 — re-checked this step and
+  confirmed they make no universal claim that would misrepresent English Writing's verification
+  state, so no further edit was needed. `content/coursePresentation.ts`, `content/homeCourses.ts`,
+  `content/courseCategories.ts`, `content/courseGuidance.ts`, `content/nav.ts` and
+  `content/audiences.ts` were all re-inspected for `english-writing` entries and found already
+  correct from Steps 1/5 (name "English Writing", no "Mastery", no guaranteed-improvement or
+  regular-feedback language, no legacy price, "Online coaching · Confirm current format and
+  support" wording, correct canonical route) — no edit made.
+- **Internal links verified:** the homepage (`AudiencePathways`, `CourseExplorer`), the Courses hub
+  (category card, course-choice guide), the desktop mega-menu and mobile navigation (`content/
+  nav.ts`) all link to `/courses/english-writing` with descriptive anchor text ("English Writing",
+  "Explore English Writing"). Footer programme links use the corrected `course.name`. No
+  query-string or empty-fragment link variant exists. No nested link inside another clickable card
+  was found or introduced. Confirmed live: 3 links to `/courses/english-writing` on the homepage
+  and 3 on the Courses hub.
+- **Google Search Central guidance rechecked (29 August 2026):** confirmed via direct review before
+  implementing — `title-link`/`snippet`: the absolute title and description identify the page
+  topic and reflect visible content without an unverified operational promise; `breadcrumb`: the
+  visible path and `BreadcrumbList` JSON-LD are built from one source and agree exactly;
+  `sd-policies`/`search-gallery`/`faqpage`: FAQ rich results are confirmed removed (7 May 2026
+  cutoff, June 2026 documentation removal) and course-list markup applies only to a genuine
+  list/carousel context with at least three courses, not a single detail page; `google-images`:
+  the social image's alt text is factual, not keyword-stuffed; `canonicalization`: the canonical is
+  HTTPS, self-referencing, host-consistent, and matches the sitemap entry exactly.
+- **Legacy fields still retained but blocked from publication:** `content/courses.ts`'s
+  english-writing `tagline` ("English Writing Mastery — write clearly, correctly, confidently."),
+  `summary`, `whoFor`, `modules`, `includes` and `price: 10000` remain in the file (required by the
+  shared `Course` type) but are confirmed unread by any search-facing component, metadata export,
+  or structured-data block for this route — verified live this step via a full-page HTML/metadata/
+  schema search for the literal strings "10,000", "10000" and "English Writing Mastery", none of
+  which appeared anywhere in the rendered output.
+- **Post-deployment validation tasks:** run Google's Rich Results Test and Schema Markup Validator
+  against the live deployed `https://aishasenglish.com/courses/english-writing` URL once
+  published, and confirm the page is indexed/inspected correctly in Search Console — these require
+  a live deployed URL and are not claimed complete from local code.
+
+### QA performed
+
+- Live Playwright script against the production build: 49 checks covering the exact absolute
+  title (brand appears exactly once), exact description, exact self-referencing HTTPS canonical
+  with no query/fragment, exact and matching Open Graph/Twitter title/description/URL, the social
+  image's declared dimensions matching its real file, no localhost/staging URL anywhere in the
+  rendered HTML, exactly one JSON-LD block that is valid/parseable `BreadcrumbList` schema with
+  correctly ordered absolute-URL `ListItem` entries matching the visible breadcrumb exactly and no
+  price/review data inside it, absence of `FAQPage`/`QAPage`/`Course`/`CourseInstance`/`Offer`/
+  `Product`/`Review`/`AggregateRating` markup, a visible breadcrumb nav rendering exactly once
+  above the H1 with a non-linked `aria-current="page"` final item, exactly one page H1, internal
+  links from the homepage and Courses hub, zero horizontal overflow across 8 viewports
+  (320px-1440px), zero console errors, a zero-violation axe-core scan
+  (wcag2a/wcag2aa/wcag22aa), all eleven prior-step section anchors still present, the canonical
+  route appearing exactly once in the generated sitemap with the correct HTTPS host, and
+  `robots.txt` allowing crawling and referencing the correct sitemap — all 49 checks passed.
+- `npm run lint`, `npm run build` and `npm run test:analytics` (27/27) all passed; the build output
+  confirms `/courses/english-writing` remains static with its existing `1h` revalidate.
+- Regression-checked `/courses/{ielts,pte,toefl,spoken-english,o-a-level-english}` all still return
+  200 after this step's changes.
+
 ## Cross-site corrections made this step
 
 - `content/courses.ts`: canonical `name` corrected from "English Writing Mastery" to "English
@@ -567,6 +681,23 @@ manual self-test, all passed) and that the existing `"ielts"`/`"pte"`/`"toefl"`/
 entries are byte-for-byte unchanged. No file, upload, rich-text, booking, payment, CRM, chat or
 marketing-opt-in element was added anywhere in this step.
 
+## Step 10 reconciliation check
+
+Searched every `english-writing` URL and link label sitewide, plus `English Writing Mastery`,
+`Writing Mastery`, `perfect`, `polished` and `error-free` in a page-metadata/schema context; the
+only remaining hits for the legacy phrases are inside the already-quarantined `content/courses.ts`
+record (confirmed unread by any metadata export or structured-data block for this route) and this
+document's own explanatory text. Searched the full rendered page HTML for
+`application/ld+json`/`Course`/`CourseInstance`/`Offer`/`Review`/`AggregateRating`/`FAQPage`/
+`QAPage`/`BreadcrumbList` -- only one `BreadcrumbList` block exists, and no other type appears.
+Confirmed OG/Twitter image file paths resolve to a real, correctly-dimensioned asset (`sharp`
+metadata inspection: 1200×630). Confirmed no legacy `price: 10000`/`PKR 10,000` exposure, no
+live/Zoom/recording/group/private claim, and no duplicate/repeated title-like heading or second H1
+anywhere in the rendered output. Confirmed the sitemap and `robots.txt` reference the correct
+canonical route and host, and that the `?programme=english-writing&source=english-writing-page`
+form-query variant never becomes a separate canonical page (the query string is not part of any
+`alternates.canonical` declaration).
+
 ## Open questions for Aisha
 
 See every row marked `Unverified — do not publish` above. In summary, still needed before any more
@@ -622,6 +753,7 @@ date-aware availability section that fails closed to the same enquiry state unti
 record passes every completeness check, an eight-question specialist FAQ that routes every
 changing detail to those same verified sections, route-selection guidance, and a centralised final
 enquiry handoff (WhatsApp primary, a safe server-chosen secondary action) that requests exactly the
-context needed to assess fit — never an invented format, formal level, fixed module order,
-duration, fee, feedback promise, intake, response-time commitment, or real learner evidence that
-hasn't passed the publication guard.
+context needed to assess fit, and one visible/structured breadcrumb identity that agrees with the
+page's search metadata exactly — never an invented format, formal level, fixed module order,
+duration, fee, feedback promise, intake, response-time commitment, unsupported structured-data
+type, or real learner evidence that hasn't passed the publication guard.
