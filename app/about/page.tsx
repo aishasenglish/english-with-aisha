@@ -5,6 +5,7 @@ import AboutProfessionalStory from "@/components/about/AboutProfessionalStory";
 import AboutExpertiseRoutes from "@/components/about/AboutExpertiseRoutes";
 import AboutTeachingApproach from "@/components/about/AboutTeachingApproach";
 import AboutFitBoundary from "@/components/about/AboutFitBoundary";
+import AboutVerifiedEvidence from "@/components/about/AboutVerifiedEvidence";
 import AboutFinalCTA from "@/components/about/AboutFinalCTA";
 
 // About Step 1: replaces the previous short generic biography (no unsupported "for years",
@@ -36,6 +37,10 @@ export default function AboutPage() {
           AboutTeachingApproach's concrete five-part method, in the same position. */}
       <AboutTeachingApproach />
       <AboutFitBoundary />
+      {/* About Step 5: fail-closed evidence section -- renders nothing at all (no heading, no
+          gap) until at least one genuine, consent-confirmed, explicitly About-featured
+          testimonial exists. See docs/about-evidence-verification.md for the current count. */}
+      <AboutVerifiedEvidence />
       <AboutFinalCTA />
     </>
   );

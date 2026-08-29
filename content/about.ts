@@ -460,6 +460,20 @@ export const aboutContent = {
     ],
   },
 
+  // About Step 5: section copy only -- the actual eligible-entry data lives in
+  // content/testimonials.ts's `aboutTestimonials` (consent-confirmed AND explicitly
+  // `aboutFeatured`). components/about/AboutVerifiedEvidence.tsx renders none of this at all
+  // (no heading, no intro, no divider) while that array is empty -- see
+  // docs/about-evidence-verification.md for the current eligible count.
+  verifiedEvidence: {
+    id: "about-verified-evidence",
+    eyebrow: "Shared experiences",
+    heading: "Experiences shared with permission",
+    intro:
+      "These comments are shown in the wording and identity format approved for publication. Individual experiences do not guarantee the same result for another learner.",
+    successStoriesLink: { label: "Read more learner and parent experiences", href: "/success-stories" },
+  },
+
   finalCta: {
     id: "about-final-cta",
     eyebrow: "Next step",

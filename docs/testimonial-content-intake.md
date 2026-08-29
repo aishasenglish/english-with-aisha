@@ -4,9 +4,10 @@ This document is for Aisha's use when collecting and approving student or parent
 testimonials for publication. **It is not imported into the website** — it is a private
 planning file for deciding what goes into `content/testimonials.ts`.
 
-No testimonials currently exist in the codebase. The homepage social-proof section and the
-`/success-stories` page are both built to stay truthfully empty until entries are added here
-first, reviewed, and then entered into `content/testimonials.ts` with `consentConfirmed: true`.
+No testimonials currently exist in the codebase. The homepage social-proof section, the `/about`
+evidence section and the `/success-stories` page are all built to stay truthfully empty until
+entries are added here first, reviewed, and then entered into `content/testimonials.ts` with
+`consentConfirmed: true`.
 
 Do not add a testimonial to `content/testimonials.ts` unless the entry below has permission
 recorded as "yes" and personal identifiers have been removed from any evidence.
@@ -125,6 +126,58 @@ for the complete prerequisite list. The Step 4 illustrative feedback demonstrati
 learner, company, report or confidential detail, it demonstrates teaching judgement only, and it
 must never be added to `content/testimonials.ts` or treated as a consented outcome record.
 
+## About-page-specific intake fields (About Step 5)
+
+`/about`'s conditional evidence component (`components/about/AboutVerifiedEvidence.tsx`) renders a
+testimonial only when it passes every check below, in addition to the general fields above. Having
+`consentConfirmed: true` alone is **not** sufficient for About — About featuring must be separately
+and explicitly approved, and is never inferred from `featured` (homepage), `courseSlug`, or
+audience type. Collect these fields for any record before setting `aboutFeatured: true`:
+
+- Suitable for About-page trust evidence: yes/no
+- About-page feature approved by person/guardian: yes/no
+- `aboutFeatured` approved: yes/no
+- What the quote demonstrates about Aisha's teaching:
+- Exact programme/service context:
+- Does the quote include a result/outcome: yes/no
+- Evidence supporting outcome:
+- Does it imply causation: yes/no
+- Approved display name:
+- Approved context line:
+- Minor status/guardian permission:
+- Employer/institution/client naming permission:
+- Image/media permission separate from quote permission:
+- Exact public quote:
+- Consent record location outside repository:
+- Consent confirmation date:
+- Review/expiry date:
+- Withdrawal/removal process:
+- Final reviewer/date:
+
+Do not paste real consent messages, private contact data or unredacted evidence into this file or
+into `content/testimonials.ts`.
+
+An item is not suitable for About merely because it is positive — it should primarily help a
+visitor understand Aisha as a teacher (clarity of explanation, organisation, usefulness of
+guidance, respectfulness/professionalism, relevance of practice, or how a learner/parent
+experienced communication with her). Avoid curating for About a quote that focuses only on a bare
+score/grade with no teaching context, an unrelated administrative interaction, a programme no
+longer offered, a minor's identity or a sensitive learning difficulty, a company/client name
+without publication permission, a personal friendship/family relationship, or a generic "best
+teacher" statement with no provenance.
+
+A record scoped to one programme's own evidence section (e.g. an IELTS-specific record used by
+`components/ielts/IELTSVerifiedEvidence.tsx`) is not automatically eligible for About just because
+it is consent-confirmed — About eligibility is a separate, explicit decision, and vice versa: an
+About-featured record does not automatically become eligible for a programme-specific section
+merely because it names that programme.
+
+For a learner under the relevant age of consent, the learner's own message is never sufficient
+permission — parent/guardian consent must be separately obtained and recorded, identity details
+minimised (prefer a context such as "Parent of an O Level learner" when appropriate and approved),
+and no school name, exact class, location, timetable or other identifying combination, or the
+child's own photograph, published by default.
+
 ## Privacy reminders
 
 - Remove student numbers, candidate numbers, email addresses, phone numbers and school
@@ -152,5 +205,14 @@ Once an entry above has permission confirmed, add it to the `testimonials` array
 - `image` — optional filename only, placed in `public/images/testimonials/` (never a stock photo
   or generated avatar).
 - `featured` — set `true` to include it in the homepage's curated selection (max 3 shown there).
+- `aboutFeatured` — set `true` only once the About-page-specific intake fields above are answered
+  and "About-page feature approved by person/guardian" is "yes" — independent of `featured`; set
+  neither, either, or both depending on what was actually approved. Included in the `/about`
+  page's own curated selection (max 3 shown there, see `content/about.ts`'s
+  `ABOUT_TESTIMONIAL_LIMIT`).
 - `consentConfirmed` — set `true` only once the "Permission to publish on website" answer above
   is "yes" and it's on record.
+
+Once added, update `docs/about-evidence-verification.md`'s eligible-entry table if `aboutFeatured`
+was set — that document is the current-state verification record for `/about`'s evidence section
+specifically.
