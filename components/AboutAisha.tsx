@@ -49,7 +49,14 @@ export default function AboutAisha() {
 
         <div className="md:grid md:grid-cols-[38%_1fr] md:gap-10 lg:gap-12 md:items-start mb-10 sm:mb-12">
           <FadeUp className="mb-6 md:mb-0">
-            <div className="relative w-full max-w-xs md:max-w-none mx-auto aspect-[3/4] rounded-md overflow-hidden">
+            {/* A4.jpeg is near-square (469x468, ~1:1) -- the previous aspect-[3/4] container
+                (paired with md:max-w-none, which let the box grow to the full 38% grid column
+                width with no cap) forced a much taller, wider frame than the source photo, so
+                object-cover had to scale it up well beyond its natural size to cover the box --
+                reading as oversized and stretched. aspect-square matches the source ratio almost
+                exactly (only a couple of percent trimmed per side), and md:max-w-sm caps the
+                physical size on desktop instead of letting it fill the entire grid column. */}
+            <div className="relative w-full max-w-xs md:max-w-sm mx-auto aspect-square rounded-md overflow-hidden">
               {/* About Step 6: alt text previously said "English Literature specialist", which
                   overstates scope -- neither the MPhil nor the College Lecturer role establishes
                   "specialist" status in every English Literature context. Simplified to factual
@@ -59,8 +66,8 @@ export default function AboutAisha() {
                 src="/images/A4.jpeg"
                 alt="Aisha, online English teacher and College Lecturer"
                 fill
-                sizes="(max-width: 767px) 320px, (max-width: 1023px) 38vw, 32vw"
-                className="w-full h-full object-cover"
+                sizes="(max-width: 767px) 320px, 384px"
+                className="w-full h-full object-cover object-top"
               />
             </div>
           </FadeUp>
