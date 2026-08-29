@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import AboutHero from "@/components/about/AboutHero";
 import AboutCredentials from "@/components/about/AboutCredentials";
-import AboutIntroduction from "@/components/about/AboutIntroduction";
+import AboutProfessionalStory from "@/components/about/AboutProfessionalStory";
 import AboutExpertiseRoutes from "@/components/about/AboutExpertiseRoutes";
 import AboutTeachingApproach from "@/components/about/AboutTeachingApproach";
 import AboutFitBoundary from "@/components/about/AboutFitBoundary";
@@ -27,7 +27,10 @@ export default function AboutPage() {
       {/* About Step 2: AboutAuthorityStrip's flat fact-pill row was replaced by
           AboutCredentials's categorised academic/role hierarchy in the same position. */}
       <AboutCredentials />
-      <AboutIntroduction />
+      {/* About Step 4: AboutIntroduction's brief two-paragraph biography was replaced by
+          AboutProfessionalStory's deeper current-context narrative and professional-context
+          blocks, in the same position. */}
+      <AboutProfessionalStory />
       <AboutExpertiseRoutes />
       {/* About Step 3: AboutTeachingPrinciples's temporary three-item preview was replaced by
           AboutTeachingApproach's concrete five-part method, in the same position. */}

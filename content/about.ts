@@ -25,8 +25,15 @@ import { site } from "@/content/site";
  * autobiographical claims. See docs/about-teaching-approach-verification.md for the evidence basis
  * and philosophy-versus-operational-inclusion classification behind every principle below.
  *
- * Full credential-evidence documents, social proof, enquiry-design, SEO, accessibility/performance
- * hardening and measurement remain later About-page steps.
+ * Step 4 replaces Step 1's brief `introduction` with `professionalStory`: a concise current-context
+ * narrative plus up to three professional-context blocks and an (currently empty) evidenced-
+ * milestone timeline. No teaching-start date, institution name, brand-launch date, learner count
+ * or personal-motivation quote is invented -- see docs/about-professional-experience-verification.md
+ * for the initial status of every such claim and docs/about-professional-story-intake.md for what
+ * Aisha would need to supply before any of them could be published.
+ *
+ * Social proof, enquiry-design, SEO, and accessibility/performance hardening remain later
+ * About-page steps.
  */
 
 export type AboutRouteLink = {
@@ -41,6 +48,28 @@ export type AboutRouteGroup = {
   label: string;
   cue: string;
   links: AboutRouteLink[];
+};
+
+// --- Professional story model (About Step 4) ------------------------------------------------
+//
+// `links` is optional and only used by the "different-goals" context, as a short linked summary
+// rather than a repeat of Step 1's full route cards. `VerifiedMilestone` exists so a future,
+// genuinely evidenced timeline has somewhere typed to live -- `professionalStory.milestones`
+// stays an empty array until at least two qualify (see the Step 4 prompt's "Timeline decision"),
+// and components/about/AboutProfessionalStory.tsx renders no timeline container at all while it
+// is empty.
+export type ProfessionalContext = {
+  id: "college-teaching" | "online-tutoring" | "different-goals";
+  title: string;
+  description: string;
+  links?: readonly { label: string; href: string }[];
+};
+
+export type VerifiedMilestone = {
+  id: string;
+  date: string;
+  label: string;
+  description: string;
 };
 
 // --- Teaching approach model (About Step 3) -------------------------------------------------
@@ -214,15 +243,52 @@ export const aboutContent = {
       "These are the qualification and professional-role details currently confirmed for public use. Programme pages explain the specific support offered for each goal.",
   },
 
-  introduction: {
-    id: "about-introduction",
-    eyebrow: "About Aisha",
-    heading: "A little about my background",
-    // First person, no invented institution, precise year or personal-hardship narrative.
-    paragraphs: [
-      `I teach English in a college setting and online through ${site.brandName}. My academic background in English Literature shapes how I explain language, reading and writing, while each learner's actual goal determines which programme or starting point may be relevant.`,
-      "I work with exam candidates and learners strengthening everyday or professional communication, always starting from what a learner actually needs rather than a fixed lesson script -- and every programme's own page confirms its current format before you decide.",
-    ],
+  // About Step 4: deepens (does not duplicate) Step 1's brief introduction into a proper
+  // professional-story section -- current confirmed context first, never an invented chronology.
+  // No teaching-start date, college name, brand-launch date, learner count or personal-motivation
+  // quote is stated anywhere below -- none is verified (see
+  // docs/about-professional-experience-verification.md's initial-status table and
+  // docs/about-professional-story-intake.md for exactly what Aisha would need to supply before any
+  // of those could ever be published).
+  professionalStory: {
+    id: "about-professional-story",
+    eyebrow: "Professional context",
+    heading: "Teaching English across different learner goals",
+    narrative: `Aisha's current professional work includes teaching as a ${site.professionalRole} and offering online English tutoring through ${site.brandName}. Her ${site.qualification} provides an academic foundation for close reading, interpretation and language-focused explanation. On this website, learners can explore separate routes for recognised English tests, spoken communication and written English, because each goal requires different priorities.`,
+    contexts: [
+      {
+        id: "college-teaching",
+        title: "College teaching",
+        // No institution name, department, tenure or duration -- none is approved for public use.
+        description: `College teaching keeps Aisha engaged with learners in an academic environment while she also supports online enquiries through ${site.brandName}.`,
+      },
+      {
+        id: "online-tutoring",
+        title: "Online English tutoring",
+        // Deliberately does not say sessions are live, name a platform, claim recordings, or
+        // promise a response time -- none of that is verified at the site-wide level.
+        description: `${site.brandName} provides an online starting point for learners to explore goal-specific English support and confirm the current option directly.`,
+      },
+      {
+        id: "different-goals",
+        title: "Different English goals",
+        // Describes the routes as current service breadth, never as proof of experience duration
+        // -- see docs/about-professional-experience-verification.md's "Biography versus service
+        // scope" note. A short linked summary, not a repeat of Step 1's full route cards.
+        description:
+          "The website separates test preparation, spoken communication and writing because the task, learner profile and useful practice differ across those goals.",
+        links: [
+          { label: "Test preparation", href: "/courses#language-tests" },
+          { label: "Spoken English", href: "/courses/spoken-english" },
+          { label: "English Writing", href: "/courses/english-writing" },
+        ],
+      },
+    ] as ProfessionalContext[],
+    // Empty until at least two milestones have verified dates, approved exact public wording, and
+    // genuine relevance to a learner's decision -- see the Step 4 prompt's "Timeline decision".
+    // components/about/AboutProfessionalStory.tsx renders no timeline container at all while this
+    // stays empty -- never a "Present" card, an estimated date, or a single-item timeline.
+    milestones: [] as VerifiedMilestone[],
   },
 
   expertiseRoutes: {
