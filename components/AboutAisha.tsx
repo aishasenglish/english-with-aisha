@@ -56,11 +56,11 @@ export default function AboutAisha() {
                   identity wording, matching the pattern used for the homepage hero and About
                   hero portraits. */}
               <Image
-                src="/images/aisha-headshot.jpg"
+                src="/images/A4.jpeg"
                 alt="Aisha, online English teacher and College Lecturer"
                 fill
                 sizes="(max-width: 767px) 320px, (max-width: 1023px) 38vw, 32vw"
-                className="object-cover"
+                className="w-full h-full object-cover"
               />
             </div>
           </FadeUp>
