@@ -11,7 +11,9 @@ import { englishWritingContent } from "@/content/englishWriting";
 // assignment, draft count, feedback method/frequency/turnaround, document upload, homework,
 // platform, recording or outcome claim appears anywhere -- see
 // docs/english-writing-offer-verification.md for the unresolved operational facts this section
-// deliberately avoids asserting.
+// deliberately avoids asserting. Step 12: the contextual CTA carries fixed data-analytics-*
+// attributes read by the shared delegated listener -- never the writing type, reader, difficulty
+// or desired-feedback details.
 export default function EnglishWritingCoachingProcess() {
   const { coachingProcess } = englishWritingContent;
 
@@ -113,6 +115,9 @@ export default function EnglishWritingCoachingProcess() {
           href={whatsappLink(coachingProcess.cta.message)}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="whatsapp_click"
+          data-analytics-section="coaching_process"
+          data-analytics-intent="discuss_goal"
           className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
         >
           {coachingProcess.cta.label}

@@ -17,9 +17,13 @@ import { englishWritingEnquiryFields, englishWritingFinalEnquiry } from "@/conte
 // client-side -- so there's no flash of the wrong action and no client bundle needed for this
 // decision. Availability and the specialist FAQ are deliberately not linked again: they
 // immediately precede this section, so a second link back would be a conversion loop backwards
-// through content the candidate has already read. No data-analytics-* attributes are added here --
-// "english-writing" is deliberately absent from lib/analytics's programme/source allowlists until
-// a reviewed Step 12 extension (see content/englishWritingEnquiry.ts's doc comment).
+// through content the candidate has already read.
+//
+// Step 12: all three actions carry fixed data-analytics-* attributes read by the shared delegated
+// listener -- never the WhatsApp/mailto destination, prefilled message, subject or body. The
+// configured-form Link additionally carries a fixed data-analytics-source ("english-writing-page")
+// since that route is shared by every instrumented programme and needs its own resolved source to
+// distinguish which programme initiated the click -- never the raw `?source=` query value.
 export default function EnglishWritingFinalCTA() {
   const { finalCta } = englishWritingContent;
   const formConfigured = formsAreConfigured();
@@ -61,6 +65,9 @@ export default function EnglishWritingFinalCTA() {
             href={whatsappLink(englishWritingFinalEnquiry.whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="final_enquiry"
+            data-analytics-intent="discuss_goal"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
           >
             {finalCta.primaryLabel}
@@ -69,6 +76,10 @@ export default function EnglishWritingFinalCTA() {
           {formConfigured ? (
             <Link
               href="/free-diagnostic-test?programme=english-writing&source=english-writing-page"
+              data-analytics-event="assessment_cta_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="request_assessment"
+              data-analytics-source="english-writing-page"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.formCtaLabel}
@@ -77,6 +88,9 @@ export default function EnglishWritingFinalCTA() {
             <a
               href={emailLink(englishWritingFinalEnquiry.emailSubject, englishWritingFinalEnquiry.emailBody, site.email)}
               aria-label={finalCta.emailAccessibleLabel}
+              data-analytics-event="email_click"
+              data-analytics-section="final_enquiry"
+              data-analytics-intent="send_email"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
             >
               {finalCta.emailCtaLabel}

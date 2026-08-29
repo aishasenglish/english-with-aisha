@@ -13,7 +13,9 @@ import { englishWritingPricing, isValidPublishedEnglishWritingPrice } from "@/co
 // malformed or expired "published" record fails safely back to the enquiry panel rather than
 // rendering a partial or stale price. Never imports the generic PricingCard or
 // content/courses.ts's legacy english-writing `price` field. Mirrors
-// components/spoken-english/SpokenEnglishPricing.tsx exactly.
+// components/spoken-english/SpokenEnglishPricing.tsx exactly. Step 12: both branches' CTA carry
+// fixed data-analytics-* attributes read by the shared delegated listener -- never the amount,
+// currency, billing basis, inclusions or policy text.
 export default function EnglishWritingPricing() {
   const { pricing } = englishWritingContent;
 
@@ -40,6 +42,9 @@ export default function EnglishWritingPricing() {
               href={whatsappLink(enquire.ctaMessage)}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics-event="whatsapp_click"
+              data-analytics-section="pricing"
+              data-analytics-intent="ask_fee"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
             >
               {enquire.ctaLabel}
@@ -126,6 +131,9 @@ export default function EnglishWritingPricing() {
             href={whatsappLink(enquiryMessage)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="pricing"
+            data-analytics-intent="ask_fee"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
           >
             {published.ctaLabel}

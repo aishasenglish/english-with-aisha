@@ -3,6 +3,8 @@ import { englishWritingContent } from "@/content/englishWriting";
 
 // Static reflection content, not form controls or a scored diagnostic. Keeping this as a Server
 // Component makes the whole profile available in the initial HTML without adding client JavaScript.
+// Step 12: the "Share my writing profile" CTA carries fixed data-analytics-* attributes read by
+// the shared delegated listener -- never the selected/written profile details.
 export default function EnglishWritingProfile() {
   const { writingProfile } = englishWritingContent;
 
@@ -62,6 +64,9 @@ export default function EnglishWritingProfile() {
           href={whatsappLink(writingProfile.cta.message)}
           target="_blank"
           rel="noopener noreferrer"
+          data-analytics-event="whatsapp_click"
+          data-analytics-section="writing_profile"
+          data-analytics-intent="share_writing_profile"
           className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
         >
           {writingProfile.cta.label}

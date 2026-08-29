@@ -7,7 +7,9 @@ import { englishWritingContent } from "@/content/englishWriting";
 // already public in Steps 1-4 (no icon, positive but non-promissory), and a grouped, neutral
 // pre-enrolment checklist using a hollow "to confirm" marker rather than a checkmark so it can never
 // be mistaken for a list of included features. No platform, format, schedule, recording, feedback,
-// fee or intake detail is presented as confirmed here.
+// fee or intake detail is presented as confirmed here. Step 12: the contextual CTA carries fixed
+// data-analytics-* attributes read by the shared delegated listener -- never the visitor's format
+// questions or visible operational details.
 export default function EnglishWritingLearningFormat() {
   const { learningFormat } = englishWritingContent;
 
@@ -104,6 +106,9 @@ export default function EnglishWritingLearningFormat() {
               href={whatsappLink(learningFormat.confirmCta.message)}
               target="_blank"
               rel="noopener noreferrer"
+              data-analytics-event="whatsapp_click"
+              data-analytics-section="learning_format"
+              data-analytics-intent="ask_format"
               className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink mb-3"
             >
               {learningFormat.confirmCta.label}

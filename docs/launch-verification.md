@@ -34,17 +34,19 @@ add both routes to `app/sitemap.ts`.
   whatever a visitor submits through the contact or recommendation-request form. No endpoint is
   currently configured (see `.env.example`), so no data is actually being sent anywhere yet.
 
-### Analytics activation checklist (IELTS Step 12; extended to PTE in PTE Step 12 and to TOEFL in TOEFL Step 12)
+### Analytics activation checklist (IELTS Step 12; extended to PTE in PTE Step 12, to TOEFL in TOEFL Step 12, and to English Writing in English Writing Step 12)
 
-`lib/analytics/` implements a strict, typed event contract shared by the IELTS, PTE and TOEFL
-enquiry journeys (see `docs/analytics-event-map.md` for the full funnel and per-action
-instrumentation tables for all three programmes) — `components/analytics/AnalyticsListener.tsx`
+`lib/analytics/` implements a strict, typed event contract shared by the IELTS, PTE, TOEFL and
+English Writing enquiry journeys (see `docs/analytics-event-map.md` for the full funnel and
+per-action instrumentation tables for all four programmes) — `components/analytics/AnalyticsListener.tsx`
 (one delegated click listener, mounted once in `app/layout.tsx`),
 `components/analytics/ProgrammePageViewTracker.tsx` (fires `programme_view` once per navigation to
-`/courses/ielts`, `/courses/pte` or `/courses/toefl` — one small typed component mounted with a
-different `programme`/`pagePath` prop pair on each page, replacing the earlier IELTS-only
-`IELTSPageViewTracker.tsx`), and `components/DiagnosticForm.tsx`'s IELTS-, PTE- and TOEFL-variant
-form-lifecycle events. **All of it is currently inert, for all three programmes.**
+`/courses/ielts`, `/courses/pte`, `/courses/toefl` or `/courses/english-writing` — one small typed
+component mounted with a different `programme`/`pagePath` prop pair on each page, replacing the
+earlier IELTS-only `IELTSPageViewTracker.tsx`), and `components/DiagnosticForm.tsx`'s IELTS-,
+PTE-, TOEFL- and English-Writing-variant form-lifecycle events. Spoken English remains
+deliberately absent from all of this pending its own separately reviewed Step 12 extension — it is
+not touched by this step. **All of it is currently inert, for all four instrumented programmes.**
 `lib/analytics/config.ts`'s `analyticsIsApproved()` is hard-coded `false`, so
 `lib/analytics/track.ts`'s `track()` never dispatches anything beyond an opt-in local
 `console.debug` (itself off by default, and never active in a production build regardless of the
@@ -245,6 +247,70 @@ behaves as documented (fires only the approved events, no more).
   **zero violations**, with all `wcag2a`/`wcag2aa`/`wcag22aa`-tagged rules passing — confirming
   Step 11's hardening work and this step's instrumentation additions together introduced no new
   accessibility regression.
+
+**English Writing evidence (English Writing Step 12):**
+
+- `npm run test:analytics` — 34/34 checks passed (up from 27, all originals still passing
+  unchanged): every real event name still accepted; a minimal valid English Writing payload
+  accepted; all four programmes accepted on `/free-diagnostic-test` with their own matching
+  `source`; an unrecognised programme (`spoken-english`) rejected outright — confirming Spoken
+  English was not silently added as a side effect of this step; a programme paired with a
+  *different* programme's own detail page rejected outright for every one of the six new
+  cross-programme pairs involving `english-writing`; a *known* source value belonging to a
+  different programme rejected outright for every one of the five new combinations involving
+  `english-writing-page`; valid section/intent/source/error_type combinations kept for English
+  Writing, including the two genuinely new bounded values this step adds — the `writing_profile`
+  section paired with the new `share_writing_profile` intent, and the `coaching_process` section
+  correctly reusing the existing `discuss_goal` intent rather than a cosmetic duplicate; an
+  exhaustive English-Writing-specific sensitive-key injection attempt (covering every field named
+  in `docs/analytics-event-map.md`'s sensitive-data warning — writing type/context, reader,
+  purpose, difficulty, deadline, document text, and around 40 other candidate keys plus a nested
+  `form_data` object) fully stripped down to exactly `page_path`/`programme`/`source`; confirmation
+  that adding English Writing support does not itself activate a provider; and `resolvePagePath`
+  correctly resolves `/courses/english-writing` while continuing to return nothing for
+  `/courses/spoken-english` (annotated as uninstrumented pending its own Step 12) and never
+  returning a path carrying a query string, fragment or trailing slash for any of the new English
+  Writing cases.
+- A live Playwright pass against a local production build (`npm run build && npm run start`) with
+  no `.env.local` present (26/26 checks) confirmed: zero requests to any of 14 known analytics/
+  advertising/session-replay domains while browsing `/courses/english-writing` and
+  `/free-diagnostic-test?programme=english-writing&source=english-writing-page`; no
+  `window.gtag`/`window.dataLayer`/`window.fbq`; all 8 instrumented CTAs (hero, writing-profile,
+  coaching-process, learning-format, pricing, availability, final-WhatsApp, final-secondary) carry
+  exactly their documented fixed `data-analytics-*` values, with every value on the page checked
+  against a hard-coded allowlist rather than merely spot-checked; zero `data-analytics-*`
+  attributes on the Fit, FAQ and route-guidance sections; zero console errors after clicking an
+  instrumented CTA (a `target="_blank"` WhatsApp popup was opened and closed as part of the click);
+  zero console/hydration errors on route entry; `/courses/spoken-english` confirmed to still carry
+  zero `data-analytics-*` attributes; `/courses/ielts`, `/courses/pte` and `/courses/toefl`
+  confirmed unaffected (still carrying their own attributes); and the detailed English Writing
+  enquiry-form route renders its correct heading with zero analytics requests.
+- Form-state fixture pass (a temporary, non-committed `.env.local` setting only
+  `NEXT_PUBLIC_FORMSPREE_ENDPOINT=https://formspree.io/f/qatest123`, deleted before this step's
+  commit and confirmed via `ls .env*` showing only `.env.example` remains; 5/5 checks): with a
+  configured endpoint, the final CTA's secondary action correctly switches to the internal form
+  link and carries `assessment_cta_click`/`final_enquiry`/`request_assessment`/
+  `english-writing-page`; no analytics debug log appears in a production build regardless of the
+  `NEXT_PUBLIC_ANALYTICS_DEBUG` flag, since `next start` always sets `NODE_ENV=production`, which
+  structurally disables that opt-in `console.debug` path; and a genuine submission attempt against
+  the fake (syntactically valid, non-existent) Formspree endpoint was confirmed to fail honestly —
+  no fabricated success — preserving entered values, showing a `role="alert"` error, with the only
+  POST request going to `formspree.io` and zero analytics requests firing at any point during the
+  failed-submission flow, confirming `assessment_form_submit` cannot fire without a genuine
+  provider-confirmed success.
+- Confirmed via `grep` that `lib/analytics/config.ts`'s `analyticsIsApproved()` still returns a
+  hard-coded `false` after every change in this step.
+- Confirmed via `git status --porcelain` after the fixture revert that only the expected files
+  changed: `app/courses/english-writing/page.tsx`, `components/DiagnosticForm.tsx`, seven
+  `components/english-writing/*.tsx` files, `lib/analytics/events.ts`, `lib/analytics/pagePaths.ts`
+  and `scripts/analytics-selftest.mts` — `lib/analytics/config.ts`, `lib/analytics/track.ts` and
+  `components/analytics/AnalyticsListener.tsx` needed no changes at all, since this step is a pure,
+  additive extension of the existing shared architecture.
+- Instrumentation coverage (production build, default unconfigured-Formspree/enquire-pricing/
+  no-intake-availability state): exactly 8 `data-analytics-*`-carrying elements render — hero,
+  writing-profile, coaching-process, learning-format, pricing, availability, final-WhatsApp and
+  final-email — one more than IELTS/PTE/TOEFL's 7, accounting for the additional writing-profile
+  CTA this route has that the others don't.
 
 ### Colour-contrast fixes found during the PTE Step 12 audit (unrelated to analytics)
 

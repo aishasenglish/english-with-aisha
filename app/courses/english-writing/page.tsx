@@ -15,6 +15,7 @@ import EnglishWritingRouteGuidance from "@/components/english-writing/EnglishWri
 import EnglishWritingAvailability from "@/components/english-writing/EnglishWritingAvailability";
 import EnglishWritingFAQ from "@/components/english-writing/EnglishWritingFAQ";
 import EnglishWritingFinalCTA from "@/components/english-writing/EnglishWritingFinalCTA";
+import ProgrammePageViewTracker from "@/components/analytics/ProgrammePageViewTracker";
 import { site } from "@/content/site";
 import { englishWritingContent } from "@/content/englishWriting";
 
@@ -100,6 +101,10 @@ export default function EnglishWritingPage() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {/* English Writing Step 12: the only Client Component leaf this page adds -- fires
+          programme_view once per navigation to this route, through the same shared tracker
+          IELTS/PTE/TOEFL use. Every other section below stays server-rendered. */}
+      <ProgrammePageViewTracker programme="english-writing" pagePath="/courses/english-writing" />
       <EnglishWritingBreadcrumb />
       <EnglishWritingHero />
       <EnglishWritingAuthorityStrip />

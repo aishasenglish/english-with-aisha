@@ -5,7 +5,7 @@ Internal record of what the current English Writing offer can and cannot claim p
 rendered on the public page, and nothing here should be read as legal, academic-integrity or other
 professional advice, or as an answer on Aisha's behalf.
 
-**Last reviewed:** English Writing Step 11 (29 August 2026).
+**Last reviewed:** English Writing Step 12 (29 August 2026).
 
 > No operational claim moves from this document into public copy until its evidence/source and
 > approved wording are recorded here first.
@@ -616,6 +616,56 @@ evidence verification gate was made in this step. Real-device testing (actual iO
 Chrome hardware, a screen reader other than the automated axe-core scan, and field Core Web Vitals
 data) was not performed in this environment and remains a genuine limitation — see the "unresolved"
 note at the end of this document.
+
+## Conversion measurement and launch readiness (Step 12)
+
+Extended the existing IELTS/PTE/TOEFL privacy-first analytics foundation (`lib/analytics/`) to
+support English Writing as a fourth first-class programme, without activating any provider or
+collecting any personal, writing or document content. Spoken English was deliberately **not**
+touched — it remains absent from every analytics union pending its own separately reviewed Step
+12. See `docs/analytics-event-map.md` for the full combined event map (now including a dedicated
+"Per-action instrumentation — English Writing" table) and `docs/launch-verification.md`'s
+"Analytics activation checklist" for the complete testing evidence. Summary:
+
+- `lib/analytics/events.ts`'s `AnalyticsProgramme`, `AnalyticsPagePath` and `AnalyticsSource`
+  unions now include `"english-writing"`, `"/courses/english-writing"` and
+  `"english-writing-page"` respectively, with the same cross-programme consistency validation
+  IELTS/PTE/TOEFL Step 12 established now rejecting every impossible English-Writing/IELTS/PTE/
+  TOEFL combination (verified in both directions for all four programmes). `lib/analytics/
+  pagePaths.ts`'s `resolvePagePath()` was extended the same way.
+- Eight English Writing conversion actions (hero, writing-profile, coaching-process,
+  learning-format, pricing, availability, final-WhatsApp, final-email/form) carry the same
+  controlled `data-analytics-*` attributes IELTS/PTE/TOEFL already use — read by the existing
+  single delegated `AnalyticsListener.tsx`, no new per-CTA client code. Two genuinely new bounded
+  values were added — a `writing_profile` section paired with a new `share_writing_profile`
+  intent, and a `coaching_process` section reusing the already-existing `discuss_goal` intent
+  rather than inventing a cosmetic duplicate. `ProgrammePageViewTracker` now also mounts on
+  `/courses/english-writing` with fixed `programme="english-writing"`/
+  `pagePath="/courses/english-writing"` props — the only Client Component leaf this step adds to
+  the route. `DiagnosticForm.tsx`'s English Writing variant (already present since Step 9) now
+  emits `assessment_form_start`/`assessment_form_error`/`assessment_form_submit` exactly as the
+  IELTS/PTE/TOEFL variants do; the general and Spoken English variants still emit nothing. The
+  legacy internal event names (`assessment_form_*`, `assessment_cta_click`, the `diagnostic_form`
+  section) are preserved for cross-programme reporting continuity only — they never appear in
+  visitor-facing English Writing copy, which always says "enquiry," never "assessment," "test" or
+  "diagnostic."
+- `analyticsIsApproved()` remains hard-coded `false` — the shipped production build sends zero
+  analytics, advertising or session-replay requests, creates no analytics cookie or storage key,
+  and every event resolves to a silent no-op (or an opt-in local `console.debug`, never active in
+  production). Live-tested: 34/34 self-test checks (up from 27), 26/26 Playwright checks against a
+  production build (zero tracker requests across every instrumented route, exact correct payloads
+  for every English Writing CTA), plus 5/5 checks against a temporary Formspree fixture confirming
+  a genuine submission failure never fires `assessment_form_submit` and never contacts an
+  analytics endpoint. An exhaustive synthetic sensitive-key injection test — covering writing
+  type/context, reader, purpose, difficulty, deadline, document text and around 40 other candidate
+  fields plus a nested object — confirmed the sanitiser strips every one of them down to exactly
+  `page_path`/`programme`/`source`. Zero regression to IELTS/PTE/TOEFL events or to Spoken
+  English's continued total absence from the event contract.
+- No provider, consent design, privacy notice, cookie notice, retention setting, account
+  ownership, advertising/remarketing decision or session-recording decision has been approved —
+  all remain explicitly unresolved (see `docs/launch-verification.md`'s activation-checklist
+  table). This step did not resolve, and could not resolve, any of them, and did not change any
+  public-facing offer fact, price, availability record or verified-evidence gate.
 
 ## Cross-site corrections made this step
 

@@ -61,7 +61,9 @@ function intakeEnquiryMessage(batchId: string, formattedDate: string): string {
 // components/spoken-english/SpokenEnglishAvailability.tsx and components/toefl/
 // TOEFLAvailability.tsx exactly. Pricing (content/englishWritingPricing.ts) stays a wholly separate
 // verification system -- a scheduled intake here never makes a price publishable, and a verified
-// price never implies an intake is open.
+// price never implies an intake is open. Step 12: both the no-intake and per-intake CTAs carry
+// fixed data-analytics-* attributes read by the shared delegated listener -- never the intake ID,
+// date, schedule, timezone, format, duration or status.
 export default function EnglishWritingAvailability() {
   const { availability } = englishWritingContent;
   const completeIntakes = getPublishedUpcomingBatches("english-writing").filter(isCompleteEnglishWritingIntake);
@@ -105,6 +107,9 @@ export default function EnglishWritingAvailability() {
             href={whatsappLink(availability.enquiryMessage)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="availability"
+            data-analytics-intent="ask_availability"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3.5 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral mb-4"
           >
             {availability.enquiryCtaLabel}
@@ -179,6 +184,9 @@ export default function EnglishWritingAvailability() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${availability.intakeCtaLabel} — starting ${formattedDate}`}
+                  data-analytics-event="whatsapp_click"
+                  data-analytics-section="availability"
+                  data-analytics-intent="ask_intake"
                   className="flex min-h-12 w-full items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-4 py-3 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral mb-3"
                 >
                   {availability.intakeCtaLabel}

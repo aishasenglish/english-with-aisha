@@ -1,18 +1,20 @@
 /**
- * Strict, allowlisted event contract for the shared IELTS/PTE/TOEFL conversion funnel (IELTS
- * Step 12, extended to PTE in PTE Step 12 and to TOEFL in TOEFL Step 12). This is the only place
- * event names, programmes, sections, intents and payload keys are defined — no caller may invent
- * a new event name, add a new payload key, or pass an unbounded string value. A fourth programme
- * would need its own reviewed addition here, following the same pattern PTE's and TOEFL's
- * additions established — never a raw string passed through from a component. See
+ * Strict, allowlisted event contract for the shared IELTS/PTE/TOEFL/English-Writing conversion
+ * funnel (IELTS Step 12, extended to PTE in PTE Step 12, to TOEFL in TOEFL Step 12, and to English
+ * Writing in English Writing Step 12). This is the only place event names, programmes, sections,
+ * intents and payload keys are defined — no caller may invent a new event name, add a new payload
+ * key, or pass an unbounded string value. A future programme would need its own reviewed addition
+ * here, following the same pattern each of these additions established — never a raw string passed
+ * through from a component. Spoken English remains deliberately absent — it has not yet had its
+ * own reviewed Step 12 extension; do not add it as a side effect of another programme's task. See
  * docs/analytics-event-map.md for the human-readable funnel definition and reporting notes, and
  * docs/launch-verification.md for why every event currently resolves to a silent no-op (no
  * provider, consent approach or privacy notice has been approved — see lib/analytics/track.ts).
  *
  * Absolutely nothing defined here may carry a name, email address, phone/WhatsApp number, exact
- * country/city/time zone, IELTS/PTE/TOEFL score, deadline, free-text value, prefilled message,
- * form value, or a complete URL/query string. Every value below is a short, fixed, non-sensitive
- * code.
+ * country/city/time zone, IELTS/PTE/TOEFL score, writing type/context/reader/purpose/difficulty,
+ * deadline, free-text value, prefilled message, form value, or a complete URL/query string. Every
+ * value below is a short, fixed, non-sensitive code.
  */
 
 /** The seven events a caller may record. `generate_lead` is deliberately not a callable event —
@@ -37,10 +39,11 @@ const ANALYTICS_EVENT_NAMES = new Set<AnalyticsEventName>([
   "assessment_form_submit",
 ]);
 
-/** "ielts" and "pte" (PTE Step 12), extended with "toefl" (TOEFL Step 12). A future programme
- *  would need its own reviewed addition here — never a raw string passed through from a
- *  component. */
-export type AnalyticsProgramme = "ielts" | "pte" | "toefl";
+/** "ielts" and "pte" (PTE Step 12), extended with "toefl" (TOEFL Step 12) and "english-writing"
+ *  (English Writing Step 12). A future programme would need its own reviewed addition here —
+ *  never a raw string passed through from a component. "spoken-english" is deliberately absent
+ *  until its own reviewed Step 12 extension. */
+export type AnalyticsProgramme = "ielts" | "pte" | "toefl" | "english-writing";
 
 /** A controlled pathname mapping — never `window.location.href`, `document.URL`, or a query
  *  string. See lib/analytics/track.ts's `resolvePagePath()`, the only place this is derived. */
@@ -48,22 +51,26 @@ export type AnalyticsPagePath =
   | "/courses/ielts"
   | "/courses/pte"
   | "/courses/toefl"
+  | "/courses/english-writing"
   | "/free-diagnostic-test";
 
-/** Which page paths are valid for a given programme. `/free-diagnostic-test` is shared by all
- *  three programmes (the detailed enquiry form each locks to its own variant); each programme
- *  detail page is exclusive to its own programme. Used by `sanitizeAnalyticsPayload()` below
- *  to reject an impossible combination like `programme: "pte"` with `page_path: "/courses/ielts"`
- *  outright, rather than silently letting it through. */
+/** Which page paths are valid for a given programme. `/free-diagnostic-test` is shared by every
+ *  instrumented programme (the detailed enquiry form each locks to its own variant); each
+ *  programme detail page is exclusive to its own programme. Used by `sanitizeAnalyticsPayload()`
+ *  below to reject an impossible combination like `programme: "pte"` with
+ *  `page_path: "/courses/ielts"` outright, rather than silently letting it through. */
 const VALID_PAGE_PATHS_BY_PROGRAMME: Record<AnalyticsProgramme, readonly AnalyticsPagePath[]> = {
   ielts: ["/courses/ielts", "/free-diagnostic-test"],
   pte: ["/courses/pte", "/free-diagnostic-test"],
   toefl: ["/courses/toefl", "/free-diagnostic-test"],
+  "english-writing": ["/courses/english-writing", "/free-diagnostic-test"],
 };
 
 export type AnalyticsSection =
   | "hero"
   | "score_profile"
+  | "writing_profile"
+  | "coaching_process"
   | "learning_format"
   | "pricing"
   | "availability"
@@ -73,6 +80,8 @@ export type AnalyticsSection =
 const ANALYTICS_SECTIONS = new Set<AnalyticsSection>([
   "hero",
   "score_profile",
+  "writing_profile",
+  "coaching_process",
   "learning_format",
   "pricing",
   "availability",
@@ -83,6 +92,7 @@ const ANALYTICS_SECTIONS = new Set<AnalyticsSection>([
 export type AnalyticsIntent =
   | "discuss_goal"
   | "share_score_profile"
+  | "share_writing_profile"
   | "ask_format"
   | "ask_fee"
   | "ask_availability"
@@ -94,6 +104,7 @@ export type AnalyticsIntent =
 const ANALYTICS_INTENTS = new Set<AnalyticsIntent>([
   "discuss_goal",
   "share_score_profile",
+  "share_writing_profile",
   "ask_format",
   "ask_fee",
   "ask_availability",
@@ -104,21 +115,29 @@ const ANALYTICS_INTENTS = new Set<AnalyticsIntent>([
 ]);
 
 /** The resolved, allowlisted source — never the raw `?source=` query value. */
-export type AnalyticsSource = "ielts-page" | "pte-page" | "toefl-page" | "general";
+export type AnalyticsSource = "ielts-page" | "pte-page" | "toefl-page" | "english-writing-page" | "general";
 
-const ANALYTICS_SOURCES = new Set<AnalyticsSource>(["ielts-page", "pte-page", "toefl-page", "general"]);
+const ANALYTICS_SOURCES = new Set<AnalyticsSource>([
+  "ielts-page",
+  "pte-page",
+  "toefl-page",
+  "english-writing-page",
+  "general",
+]);
 
 /** Which resolved source values are valid for a given programme — "general" is neutral and
  *  allowed for any, but "ielts-page" may only ever accompany `programme: "ielts"`, "pte-page"
- *  only `programme: "pte"`, and "toefl-page" only `programme: "toefl"`. A known source value that
- *  belongs to a *different* programme is a cross-programme mismatch (e.g. a compromised or
- *  miscopied `data-analytics-source` attribute) and rejects the whole payload — see
+ *  only `programme: "pte"`, "toefl-page" only `programme: "toefl"`, and "english-writing-page"
+ *  only `programme: "english-writing"`. A known source value that belongs to a *different*
+ *  programme is a cross-programme mismatch (e.g. a compromised or miscopied
+ *  `data-analytics-source` attribute) and rejects the whole payload — see
  *  `sanitizeAnalyticsPayload()` — rather than being silently dropped the way a genuinely
  *  unrecognised string like `"referral-campaign-42"` is. */
 const VALID_SOURCES_BY_PROGRAMME: Record<AnalyticsProgramme, readonly AnalyticsSource[]> = {
   ielts: ["ielts-page", "general"],
   pte: ["pte-page", "general"],
   toefl: ["toefl-page", "general"],
+  "english-writing": ["english-writing-page", "general"],
 };
 
 export type AnalyticsErrorType = "configuration" | "network" | "provider" | "validation";
@@ -166,7 +185,14 @@ export function sanitizeAnalyticsPayload(input: {
   source?: unknown;
   error_type?: unknown;
 }): AnalyticsPayload | null {
-  if (input.programme !== "ielts" && input.programme !== "pte" && input.programme !== "toefl") return null;
+  if (
+    input.programme !== "ielts" &&
+    input.programme !== "pte" &&
+    input.programme !== "toefl" &&
+    input.programme !== "english-writing"
+  ) {
+    return null;
+  }
   const programme = input.programme;
 
   // Reject outright rather than drop-and-continue: an unrecognised page path for this programme

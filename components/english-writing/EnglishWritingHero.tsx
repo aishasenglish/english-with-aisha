@@ -3,7 +3,10 @@ import { whatsappLink } from "@/lib/whatsapp";
 import { englishWritingContent } from "@/content/englishWriting";
 
 // Copy-led hero (English Writing Step 1) -- no photograph, no stock image, no learner-count
-// badge. Server component, no client JavaScript required.
+// badge. Server component, no client JavaScript required. Step 12: the primary WhatsApp action
+// carries fixed data-analytics-* attributes read by the shared delegated listener
+// (components/analytics/AnalyticsListener.tsx) -- never the prefilled message or destination. The
+// secondary same-page anchor link is not instrumented (internal navigation, not a conversion).
 export default function EnglishWritingHero() {
   const { hero } = englishWritingContent;
 
@@ -24,6 +27,9 @@ export default function EnglishWritingHero() {
             href={whatsappLink(hero.primaryCta.message)}
             target="_blank"
             rel="noopener noreferrer"
+            data-analytics-event="whatsapp_click"
+            data-analytics-section="hero"
+            data-analytics-intent="discuss_goal"
             className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide px-6 py-3 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
           >
             {hero.primaryCta.label}
