@@ -17,7 +17,9 @@ export default function EnglishWritingFeedbackDemonstration() {
   return (
     <section
       id={demonstration.id}
-      className="py-14 sm:py-16 px-4 bg-white"
+      // Step 11: phone padding tightened from py-14 to py-10 -- a supplementary detail section,
+      // not a primary decision point, in a long mobile scroll journey. Tablet/desktop unchanged.
+      className="py-10 sm:py-16 px-4 bg-white"
       aria-labelledby="english-writing-demonstration-heading"
     >
       <div className="max-w-5xl mx-auto">
@@ -44,7 +46,10 @@ export default function EnglishWritingFeedbackDemonstration() {
         <div className="max-w-2xl mb-8">
           <p className="text-sm text-ink-soft leading-relaxed mb-1">{demonstration.situationLabel}</p>
           <p className="text-sm text-ink-soft leading-relaxed mb-1">{demonstration.goalLabel}</p>
-          <p className="text-xs text-ink-faint leading-relaxed">{demonstration.scopeQualifier}</p>
+          {/* Step 11: bumped from text-xs to text-sm -- this qualifies the illustrative-example
+              disclosure above and must read as clearly as the surrounding boundary copy, not as a
+              decorative footnote. */}
+          <p className="text-sm text-ink-faint leading-relaxed">{demonstration.scopeQualifier}</p>
         </div>
 
         {/* First attempt and possible revision: stacked on phones/tablets, a two-column comparison

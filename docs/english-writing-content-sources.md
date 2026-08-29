@@ -4,7 +4,7 @@ Internal governance record for the learner-facing guidance on
 `/courses/english-writing`. This document separates educational content structure from verified
 facts about Aisha's current offer.
 
-**Last reviewed:** English Writing Step 10 (29 August 2026).
+**Last reviewed:** English Writing Step 11 (29 August 2026).
 
 ## Source hierarchy
 
@@ -298,6 +298,17 @@ absent from this route, for the reasons recorded in
 10)" section. None of these can be added later merely because a schema generator or checklist
 suggests it -- each one requires the underlying operational fact (a verified price, a qualifying
 course-list architecture, consented review evidence, etc.) to exist first.
+
+## Step 11 mobile performance and accessibility hardening — no content or claim changes
+
+Step 11 was a route-wide hardening pass, not a content step: it changed shared-chrome route
+membership (`lib/routeChrome.ts`), two `text-xs`→`text-sm` decision-critical text-size fixes, and
+selective phone-only padding reductions on supplementary-detail sections. It introduced no new
+copy, no new claim, no new section, no new client component and no new dependency. See
+`docs/english-writing-offer-verification.md`'s "Mobile performance and accessibility hardening
+(Step 11)" section for the complete finding list and QA results, and
+`docs/launch-verification.md`'s "English Writing mobile performance and accessibility hardening
+(English Writing Step 11)" section for the sitewide cross-reference.
 
 ## Files governed by this record
 

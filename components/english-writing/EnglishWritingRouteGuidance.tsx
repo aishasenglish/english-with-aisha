@@ -11,7 +11,9 @@ export default function EnglishWritingRouteGuidance() {
   return (
     <section
       id={routeGuidance.id}
-      className="py-14 sm:py-16 px-4 bg-ivory"
+      // Step 11: phone padding tightened from py-14 to py-10 -- a redirect/informational section,
+      // not a primary decision point, in a long mobile scroll journey. Tablet/desktop unchanged.
+      className="py-10 sm:py-16 px-4 bg-ivory"
       aria-labelledby="english-writing-route-guidance-heading"
     >
       <div className="max-w-3xl mx-auto">

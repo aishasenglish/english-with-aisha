@@ -72,7 +72,11 @@ export default function EnglishWritingAvailability() {
     return (
       <section
         id={availability.id}
-        className="py-14 sm:py-16 px-4 bg-white"
+        // Step 11: phone padding tightened from py-14 to py-10 in this enquiry branch -- a
+        // supplementary detail section, not a primary decision point. The scheduled-intake branch
+        // below keeps the fuller py-14, matching precedent (the scheduled state carries more
+        // decision weight -- an actual date/format/CTA a visitor may act on immediately).
+        className="py-10 sm:py-16 px-4 bg-white"
         aria-labelledby="english-writing-availability-heading"
       >
         <div className="max-w-2xl mx-auto">
@@ -179,7 +183,10 @@ export default function EnglishWritingAvailability() {
                 >
                   {availability.intakeCtaLabel}
                 </a>
-                <p className="text-xs text-ink-faint">{availability.intakeReservationNote}</p>
+                {/* Step 11: bumped from text-xs to text-sm -- a reservation/no-payment rule is
+                    decision-critical, not decorative, and must not read smaller than the
+                    top-level enquiry-state reservationNote above, which is already text-sm. */}
+                <p className="text-sm text-ink-faint leading-relaxed">{availability.intakeReservationNote}</p>
               </article>
             );
           })}

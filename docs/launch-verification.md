@@ -668,6 +668,80 @@ handle; never fill these with placeholder or invented links.
   technique, and `page.goto()` hash-only re-navigation not triggering native fragment scroll the
   way a real click or fresh load does).
 
+## English Writing mobile performance and accessibility hardening (English Writing Step 11)
+
+- **`/courses/english-writing` added to the shared route-chrome list**:
+  `lib/routeChrome.ts`'s `PROGRAMME_DETAIL_ROUTES_WITH_OWN_CHROME` now reads
+  `["/courses/ielts", "/courses/pte", "/courses/toefl", "/courses/spoken-english",
+  "/courses/english-writing"]`. `components/WhatsAppFloat.tsx` and `components/UtilityBar.tsx`
+  needed no code change — both already read this list generically — so the generic floating
+  WhatsApp button is now suppressed and the phone-width utility bar is now hidden on
+  `/courses/english-writing` exactly as they already were on the other four hardened routes.
+  Confirmed live: the float and mobile utility-bar link are absent on this route at phone and
+  desktop widths, still present on the homepage, and IELTS/PTE/TOEFL/Spoken English remain
+  unaffected.
+- **Header "live" claim re-checked, no edit needed**: `components/Header.tsx`'s global brand
+  subtitle already reads "ONLINE ENGLISH COACHING" (corrected during an earlier programme's Step
+  11) — re-confirmed this step that it does not assert a universal synchronous-delivery claim that
+  would contradict English Writing's own unverified format state.
+- **Two decision-critical text sizes bumped from `text-xs` to `text-sm`**, found by manually
+  classifying every `text-xs` occurrence across the route's components against the established
+  decorative-vs-decision-critical distinction: `EnglishWritingAvailability.tsx`'s per-card
+  `intakeReservationNote` ("Availability is confirmed by Aisha; sending an enquiry does not
+  reserve a place.") — a reservation/no-payment rule, not decoration, and previously smaller than
+  the equivalent top-level enquiry-state reservation note; and
+  `EnglishWritingFeedbackDemonstration.tsx`'s `scopeQualifier` ("The scenario is illustrative;
+  exact writing contexts covered by the current offer must be confirmed.") — a boundary statement
+  qualifying the prominent illustrative-example disclosure immediately above it. Every other
+  `text-xs` occurrence on the route (eyebrows, "Possible focus"/"Possible emphasis"/"Possible
+  priorities" category labels, `<dt>`-style field labels, the pricing "Last verified/Valid until"
+  provenance line, the `<Link>` "View all availability" text) was compared against the identical,
+  already-hardened pattern in Spoken English's own Step 11 and confirmed decorative/provenance-
+  level, not decision-critical, so was left unchanged for consistency.
+- **Selective mobile padding reduction**: phone padding tightened from `py-14` to `py-10` (`sm`
+  and above unchanged) on seven supplementary-detail sections — `EnglishWritingFramework`,
+  `EnglishWritingContextMap`, `EnglishWritingCoachingProcess`, `EnglishWritingFeedbackDemonstration`,
+  `EnglishWritingLearningFormat`, `EnglishWritingRouteGuidance`, `EnglishWritingFAQ` — and on the
+  no-intake branch only of `EnglishWritingAvailability` (its scheduled-intake branch keeps the
+  fuller `py-14`, since an actual date/format/CTA a visitor may act on immediately carries more
+  decision weight). `EnglishWritingHero`, `EnglishWritingFit`, `EnglishWritingProfile`,
+  `EnglishWritingVerifiedEvidence`, `EnglishWritingPricing` and `EnglishWritingFinalCTA` were left
+  at their original spacing as primary decision points or the final enquiry — this exactly mirrors
+  the classification already applied to Spoken English's equivalent sections in its own Step 11.
+- **Combined-fixture conditional-branch test** (a long published English Writing price with 4
+  verified inclusions; four scheduled English Writing intakes including a verified "Filling Fast"
+  status and long schedule/duration text, exercising both the 3-card cap and the "view all
+  availability" link; and one consent-confirmed English Writing testimonial with a long quote —
+  fully reverted via direct edits back to the original tracked content, confirmed via `git status`/
+  `git diff` showing zero residue and a `grep` for the fixture markers finding none): all three
+  branches rendered correctly together with zero horizontal overflow at every required width and
+  zero axe-core violations.
+- **Overflow, zoom and reflow**: zero horizontal overflow confirmed at all 11 required viewports
+  (320×568 through 1440px desktop), at a 320×256 "400% reflow" equivalent, and at a 640px
+  viewport used as a reliable proxy for 200% zoom on a 1280px-authored layout. One test-methodology
+  artifact was investigated and confirmed a non-issue this step: `document.documentElement.style
+  .zoom = "2"` was tried first and rejected once it misreported `scrollWidth` in a way inconsistent
+  with a real halved-viewport check on the same page — a Chromium/Playwright emulation limitation,
+  not a genuine overflow defect (a different but related test-methodology caution — a
+  non-representative `font-size: 200%` technique — was separately documented for TOEFL Step 11;
+  see its note above).
+- **Illustrative writing-example semantics preserved**: the demonstration's two panels remain
+  plain `<article>` elements with no `<blockquote>` (would falsely imply real quotation) and no
+  `<pre>`/code-style block for ordinary prose — confirmed unchanged this step.
+- **FAQ, skip link and reduced motion re-verified**: native `<details>/<summary>` opens/closes via
+  Enter with a ≥44px summary target; the skip link is present; hover-transition duration collapses
+  to a near-zero value under `prefers-reduced-motion: reduce` (Chromium reports this in scientific
+  notation, e.g. `"1e-05s"`, rather than `"0s"` — checked numerically via `parseFloat()` rather than
+  a naive string comparison, to avoid a false failure from that reporting format).
+- **No new client component, dependency or analytics** was added — confirmed zero `"use client"`
+  directives anywhere in `components/english-writing/*.tsx`, so the route remains exactly as
+  server-rendered as before this step; the shared `DiagnosticForm`'s English Writing variant was
+  not re-tested from scratch here (it was already fixture-tested against a temporary Formspree
+  endpoint during Step 9 and uses the same shared, already-hardened form markup — ≥16px input
+  text, disabled/preselected programme field, honeypot correctly hidden — as every other variant).
+- See `docs/english-writing-offer-verification.md`'s "Mobile performance and accessibility
+  hardening (Step 11)" section for the complete finding list and QA results.
+
 ## High priority — before publishing a Spoken English fee, intake or format claim (Spoken English Steps 1–10)
 
 - **Spoken English positioning rebuilt**: `/courses/spoken-english` now uses dedicated
