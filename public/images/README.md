@@ -6,7 +6,8 @@ Drop your photos into this folder. The website references these filenames:
 |---|---|---|
 | `aisha-hero.jpg` | Home page hero | 800×1067px (portrait, 3:4) |
 | `aisha-cutout-placeholder.png` | Home page hero (right-column cutout portrait) | Transparent-background PNG, portrait, ~1000px tall |
-| `aisha-about.jpg` | About page | 1086×1448px (portrait, 3:4) — corrected during About Step 1; previously documented here as 800×1000 (4:5), but direct inspection of the actual file found 3:4 |
+| `aisha-about.jpg` | No longer referenced by any page (superseded on the About page by `about-aisha.jpeg` below) | 1086×1448px (portrait, 3:4) — left in place, unused, rather than deleted; the file itself is unchanged |
+| `about-aisha.jpeg` | About page hero (next to "Meet Aisha, your online English teacher") | 490×468px (near-square, ~1.05:1) — the hero reserves a 3:4 `object-cover` container unchanged by this swap, so this image is cropped to fill it rather than stretched |
 | `og-image.jpg` | Default Open Graph / Twitter image (root layout, inherited by pages without their own) | Currently 960×1280px (portrait) — declared as such in `app/layout.tsx`; a genuinely landscape 1200×630px replacement would let more pages use the `summary_large_image` Twitter card type |
 | `social/ielts-preparation.jpg` | `/courses/ielts` Open Graph / Twitter image | 1200×630px (landscape) — composed from `og-image.jpg` padded onto an ivory background, not cropped or stretched; see `docs/ielts-content-sources.md` for why |
 | `social/pte-academic-preparation.jpg` | `/courses/pte` Open Graph / Twitter image | 1200×630px (landscape) — composed the same way as the IELTS asset above, from the same `og-image.jpg` source; see `docs/pte-content-sources.md` for why |

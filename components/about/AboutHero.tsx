@@ -41,19 +41,22 @@ export default function AboutHero() {
           </div>
         </div>
 
-        {/* Stable 3:4 aspect-ratio container -- the actual file measures 1086x1448 (3:4), not the
-            4:5 ratio public/images/README.md previously documented; verified with sharp before
-            implementation and corrected there rather than stretching or cropping the portrait to
-            fit a wrong assumed ratio. */}
-        <div className="order-1 md:order-2 w-full max-w-[280px] sm:max-w-xs md:max-w-none mx-auto">
-          <div className="relative w-full aspect-[3/4] rounded-md overflow-hidden bg-surface-tint">
+        {/* about-aisha.jpeg is near-square (490x468, ~1.05:1) -- the previous aspect-[3/4]
+            container forced a much taller frame than the source photo, so `object-cover` had to
+            scale the image up ~1.3x just to cover the height, cropping ~90px off each side and
+            reading as an over-zoomed close-up. `aspect-square` matches the source ratio almost
+            exactly (only a ~2% trim per side), so the photo now scales and crops correctly without
+            the artificial zoom. `md:max-w-sm` (was `md:max-w-none`) also caps the physical size on
+            desktop instead of letting it fill the entire grid column. */}
+        <div className="order-1 md:order-2 w-full max-w-[280px] sm:max-w-xs md:max-w-sm mx-auto">
+          <div className="relative w-full h-full aspect-square rounded-md overflow-hidden bg-surface-tint">
             <Image
               src={hero.portrait.src}
               alt={hero.portrait.alt}
               fill
               priority
               sizes="(max-width: 767px) 280px, (max-width: 1023px) 40vw, 380px"
-              className="object-cover"
+              className="w-full h-full object-cover object-top"
             />
           </div>
         </div>

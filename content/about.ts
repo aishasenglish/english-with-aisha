@@ -43,13 +43,17 @@ export const aboutContent = {
     // see the "Current-page audit" section of the About Step 1 prompt this replaces.
     body: `Aisha holds an ${site.qualification} and works as a ${site.professionalRole}. Through ${site.brandName}, she helps learners explore focused online support for recognised English tests, spoken communication and written English.`,
     portrait: {
-      // Documented in public/images/README.md as 800x1000 (4:5); the actual file measures
-      // 1086x1448 (3:4) -- verified directly with sharp before implementation, and the README
-      // entry has been corrected to match rather than trusting the stale documented ratio.
-      src: "/images/aisha-about.jpg",
+      // Swapped to the newer supplied portrait (About hero image update). Actual file measures
+      // 490x468 (near-square, ~1.05:1) -- verified directly with sharp before implementation.
+      // components/about/AboutHero.tsx's container uses `aspect-square` (not the original
+      // aspect-[3/4], which forced a ~1.3x crop/zoom against this near-square source and read as
+      // an over-zoomed close-up) -- see that component's own comment for the fix. See
+      // public/images/README.md for the recorded dimensions and
+      // docs/about-credentials-verification.md's portrait section for the full history.
+      src: "/images/about-aisha.jpeg",
       alt: `${site.founder}, English teacher and ${site.professionalRole}`,
-      width: 1086,
-      height: 1448,
+      width: 490,
+      height: 468,
     },
     primaryCta: { label: "Explore English Programmes", href: "/courses" },
     secondaryCta: {

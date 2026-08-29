@@ -64,9 +64,28 @@ portrait. Direct inspection with `sharp` before implementation found the actual 
 **1086×1448px (3:4)**, not 4:5. `public/images/README.md` has been corrected to record the true
 dimensions and ratio, and `app/about`'s hero reserves a 3:4 aspect-ratio container (not 4:5) so the
 portrait is never stretched or cropped to a wrong assumed ratio. No new image was generated — the
-existing genuine portrait is used as-is.
+existing genuine portrait was used as-is at the time.
 
-## Open questions for Aisha
+**Update (hero image swap):** `content/about.ts`'s `hero.portrait.src` now points to
+`public/images/about-aisha.jpeg` instead, per a direct request to update the hero image next to
+the "Meet Aisha, your online English teacher" heading. Direct inspection with `sharp` found this
+file measures **490×468px** (near-square, ~1.05:1) — not 3:4. Per the request, the hero's existing
+`aspect-[3/4]`/`object-cover` container was kept exactly as-is rather than resized, so the new
+image is cropped by `object-cover` to fill that taller frame; nothing is stretched. `aisha-about.jpg`
+was left in place, unused, rather than deleted, since removing a file wasn't requested. Both
+`public/images/README.md` and `content/about.ts` were updated to record the new file, its actual
+dimensions, and that this crop behaviour is expected. Identity/alt text (`Aisha, English teacher
+and College Lecturer`) is unchanged — the new photo is still of Aisha.
+
+**Correction (over-zoomed crop fixed):** the `aspect-[3/4]` container kept above was flagged as
+displaying "too large and overly zoomed-in" once live — correctly so: covering a 3:4 frame (ratio
+0.75) with a 1.047-ratio source forced `object-cover` to scale the image up ~1.3x just to satisfy
+the taller dimension, cropping roughly 90px off each side at typical rendered sizes and reading as
+a tight, zoomed-in close-up rather than a natural portrait crop. `components/about/AboutHero.tsx`
+now uses `aspect-square` instead, which matches the 490×468 source almost exactly (only ~2% is
+trimmed per side), plus `object-top` so the framing favours the face if any crop remains, plus a
+`md:max-w-sm` cap (was `md:max-w-none`) so the image no longer scales up to fill the entire desktop
+grid column. Verified visually via Playwright screenshots at 1280×900 and 390×844 after the fix.
 
 1. Is "IDP-Certified IELTS Trainer" a real, current certification? If so, what evidence (a
    certificate, IDP registration reference, or equivalent) can be recorded here before it is
