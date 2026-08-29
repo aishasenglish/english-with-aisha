@@ -1,4 +1,8 @@
-# English with Aisha — Website
+# AISHAS ENGLISH — Website
+
+<!-- Brand-name standardisation: the public display brand is "AISHAS ENGLISH" (no apostrophe) --
+     see docs/brand-name-standard.md. This repository's folder name and package.json's `name`
+     field remain "english-with-aisha" unchanged; only public-facing brand copy was updated. -->
 
 A production-ready marketing website for English coaching built with Next.js, TypeScript, and Tailwind CSS.
 

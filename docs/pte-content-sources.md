@@ -205,9 +205,10 @@ Confirmed via direct fetch of the current pages before implementing:
   `app/courses/pte/page.tsx` is generated from the exact same `ptePage.breadcrumb` array
   `components/pte/PTEBreadcrumb.tsx` renders visibly, so the two can never disagree.
 - `title-link` / `snippet`: current guidance favours concise, descriptive, non-stuffed titles and
-  unique, accurate descriptions — the new absolute title (`Online PTE Academic Preparation |
-  Aisha's English`) and description avoid score, price, recording or availability promises per
-  Steps 2-9's own safeguards.
+  unique, accurate descriptions — the absolute title (`Online PTE Academic Preparation |
+  AISHAS ENGLISH` — brand-name standardisation updated this from `| Aisha's English`) and
+  description avoid score, price, recording or availability promises per Steps 2-9's own
+  safeguards.
 
 ## Recheck requirement
 

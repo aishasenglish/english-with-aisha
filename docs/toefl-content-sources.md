@@ -350,12 +350,13 @@ reviewed for TOEFL Step 8's structured-data decision, re-confirmed here):
   courses; a single TOEFL detail page is not a course-list implementation, so none was added here
   (any future Courses-hub list-markup project is separately scoped, outside this step).
 - `title-link` / `snippet`: the absolute title
-  (`Online TOEFL iBT Preparation | Aisha's English`) and description were written to identify the
+  (`Online TOEFL iBT Preparation | AISHAS ENGLISH` — brand-name standardisation updated this from
+  `| Aisha's English`) and description were written to identify the
   page topic, reflect visible four-skill content, and provide a natural next step without a
   score, price, recording or availability promise — see `app/courses/toefl/page.tsx`'s
   `metadata` export.
-- `google-images`: the social image's alt text (`Portrait of Aisha, the teacher behind Aisha's
-  English`) is factual and derived from canonical `site.founder`/`site.brandName` fields, not
+- `google-images`: the social image's alt text (`Portrait of Aisha, the teacher behind AISHAS
+  ENGLISH`) is factual and derived from canonical `site.founder`/`site.brandName` fields, not
   keyword-stuffed.
 
 ### Cross-site corrections made for this step

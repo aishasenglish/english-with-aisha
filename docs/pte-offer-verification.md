@@ -215,7 +215,8 @@ remains fully inert pending owner/legal approval.
 ## Technical SEO, metadata and internal linking (PTE Step 10)
 
 `app/courses/pte/page.tsx` now declares an absolute page title (`Online PTE Academic Preparation
-| Aisha's English`, bypassing the root `%s | Aisha's English` template), a page-specific
+| AISHAS ENGLISH` — brand-name standardisation updated this from `| Aisha's English`, bypassing
+the root `%s | AISHAS ENGLISH` template), a page-specific
 description, page-specific Open Graph/Twitter metadata, and the new dedicated
 `public/images/social/pte-academic-preparation.jpg` social image (`1200×630`, replacing the
 inherited portrait `og-image.jpg`) — see `docs/pte-content-sources.md`'s "Social image and

@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { NAV, headerWhatsappMessage } from "@/content/nav";
 import { whatsappLink } from "@/lib/whatsapp";
+import { site } from "@/content/site";
 
 function ChevronIcon({ className = "" }: { className?: string }) {
   return (
@@ -149,8 +150,11 @@ export default function Header() {
                 className="h-[26px] sm:h-[28px] w-auto"
               />
               <span className="flex flex-col justify-center leading-tight">
+                {/* Brand-name standardisation: reads the canonical site.brandName ("AISHAS
+                    ENGLISH", no apostrophe) rather than a second hard-coded literal, so this
+                    header can never drift from the one source of truth again. */}
                 <span className="font-sans font-bold text-sm text-charcoal tracking-wider whitespace-nowrap">
-                  AISHA&apos;S ENGLISH
+                  {site.brandName}
                 </span>
                 <span className="text-[9px] font-medium text-muted tracking-widest whitespace-nowrap">
                   {/* TOEFL Step 11: "LIVE" asserted a universal synchronous-delivery claim this

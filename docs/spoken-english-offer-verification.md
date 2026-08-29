@@ -169,9 +169,10 @@ excerpt instead.
 ## Technical SEO, metadata and internal linking (Step 10)
 
 - **Step 10 implementation date:** 2026-08-28.
-- **Final title:** `Online Spoken English Coaching | Aisha's English` — set via Next.js's absolute-
-  title syntax (`{ absolute: "..." }`) so the root layout's `%s | Aisha's English` template cannot
-  append the brand a second time.
+- **Final title:** `Online Spoken English Coaching | AISHAS ENGLISH` (brand-name standardisation
+  updated this from `| Aisha's English`) — set via Next.js's absolute-title syntax
+  (`{ absolute: "..." }`) so the root layout's `%s | AISHAS ENGLISH` template cannot append the
+  brand a second time.
 - **Final description:** "Online Spoken English coaching focused on pronunciation, response
   building and practical communication for work, interviews, presentations, study and everyday
   situations." — no guaranteed improvement, formal assessment, live/group/one-to-one format, Zoom,
@@ -187,8 +188,9 @@ excerpt instead.
   other than the resize) to `473×630` and centring it on a plain `#F7FAFB` (ivory) canvas — padding,
   not cropping or stretching, following the exact IELTS/PTE/TOEFL Step 10 recipe. No AI generation,
   retouching or identity change; no flag, classroom scene, accent graphic, certificate, rating or
-  platform logo added. Alt text: "Portrait of Aisha, the teacher behind Aisha's English" (factual,
-  built from canonical `site.founder`/`site.brandName`).
+  platform logo added. Alt text: "Portrait of Aisha, the teacher behind AISHAS ENGLISH" (factual,
+  built from canonical `site.founder`/`site.brandName` — automatically follows the brand-name
+  standardisation update since both are read dynamically, not duplicated as a literal).
 - **Breadcrumb source and structured-data mapping:** `content/spokenEnglish.ts`'s new `breadcrumb`
   array (`Home` → `/`, `Courses` → `/courses`, `Spoken English Coaching` → current page, no self-
   link) feeds both the visible `components/spoken-english/SpokenEnglishBreadcrumb.tsx` and the

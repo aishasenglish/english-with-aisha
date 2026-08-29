@@ -34,7 +34,7 @@ export const revalidate = 3600;
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses/english-writing`;
 
-// Step 10: an absolute title (bypasses the root layout's "%s | Aisha's English" template) so the
+// Step 10: an absolute title (bypasses the root layout's "%s | AISHAS ENGLISH" template) so the
 // search-facing title stays exactly this, never accidentally lengthened. Description, social
 // title/description and the social image are all deliberately distinct from the generic
 // root-layout metadata other pages inherit -- see docs/english-writing-content-sources.md and
@@ -46,7 +46,7 @@ const pageUrl = `${base}/courses/english-writing`;
 // this page doesn't have; course-list structured data requires an ItemList/carousel summary page
 // this repository doesn't yet implement, so isolated Course markup here would be non-compliant).
 export const metadata: Metadata = {
-  title: { absolute: "Online English Writing Coaching | Aisha's English" },
+  title: { absolute: `Online English Writing Coaching | ${site.brandName}` },
   description:
     "Online English writing coaching for learners working on sentence clarity, organisation, tone and revision for study, work or everyday communication.",
   alternates: { canonical: "/courses/english-writing" },

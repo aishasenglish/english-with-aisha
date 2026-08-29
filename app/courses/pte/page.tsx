@@ -24,7 +24,7 @@ export const revalidate = 3600;
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses/pte`;
 
-// PTE Step 10: an absolute title (bypasses the root layout's "%s | Aisha's English" template) so
+// PTE Step 10: an absolute title (bypasses the root layout's "%s | AISHAS ENGLISH" template) so
 // the search-facing title stays exactly this, never accidentally lengthened. Description, social
 // title/description and the social image are all deliberately distinct from the generic
 // root-layout metadata other pages inherit -- see docs/pte-content-sources.md and
@@ -33,7 +33,7 @@ const pageUrl = `${base}/courses/pte`;
 // FAQPage, QAPage or CourseInstance markup, per the current official Google guidance reviewed for
 // this step.
 export const metadata: Metadata = {
-  title: { absolute: "Online PTE Academic Preparation | Aisha's English" },
+  title: { absolute: `Online PTE Academic Preparation | ${site.brandName}` },
   description:
     "Online PTE Academic preparation with current task guidance, four-skill practice and computer-test routines. Ask Aisha about current format, fees and availability.",
   alternates: { canonical: "/courses/pte" },

@@ -674,8 +674,9 @@ handle; never fill these with placeholder or invented links.
   variant incorrectly. IELTS and PTE variants, the general form and `ContactForm` were
   regression-tested and remain unchanged.
 - **TOEFL technical SEO, metadata and internal linking (TOEFL Step 10)**: `/courses/toefl` now
-  declares an explicit absolute title (`Online TOEFL iBT Preparation | Aisha's English`,
-  bypassing the root `%s | Aisha's English` template), a truthful description ("Online TOEFL iBT
+  declares an explicit absolute title (`Online TOEFL iBT Preparation | AISHAS ENGLISH` —
+  brand-name standardisation updated this from `Aisha's English`,
+  bypassing the root `%s | AISHAS ENGLISH` template), a truthful description ("Online TOEFL iBT
   preparation centred on Reading, Listening, Writing and Speaking and your institution's confirmed
   score requirement. Ask about current availability."), a self-referencing canonical, and complete
   TOEFL-specific Open Graph/Twitter metadata pointing to a genuine `1200×630`
@@ -1013,7 +1014,8 @@ handle; never fill these with placeholder or invented links.
   render correctly. See `docs/spoken-english-offer-verification.md`'s "Final CTA and enquiry
   handoff (Step 9)" section for the complete record.
 - **Technical SEO, metadata and internal linking (Step 10)**: `app/courses/spoken-english/page.tsx`
-  now declares an absolute title (`Online Spoken English Coaching | Aisha's English`), an aligned
+  now declares an absolute title (`Online Spoken English Coaching | AISHAS ENGLISH` —
+  brand-name standardisation updated this from `Aisha's English`), an aligned
   description, a self-referencing canonical, and complete page-specific Open Graph/Twitter metadata
   with a genuine `1200×630` social image (`public/images/social/spoken-english-coaching.jpg`,
   composed with `sharp` from the same approved portrait used for IELTS/PTE/TOEFL — real dimensions

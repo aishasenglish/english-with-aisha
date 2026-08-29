@@ -24,7 +24,7 @@ export const revalidate = 3600;
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses/toefl`;
 
-// TOEFL Step 10: an absolute title (bypasses the root layout's "%s | Aisha's English" template) so
+// TOEFL Step 10: an absolute title (bypasses the root layout's "%s | AISHAS ENGLISH" template) so
 // the search-facing title stays exactly this, never accidentally lengthened. Description, social
 // title/description and the social image are all deliberately distinct from the generic
 // root-layout metadata other pages inherit -- see docs/toefl-content-sources.md and
@@ -33,7 +33,7 @@ const pageUrl = `${base}/courses/toefl`;
 // Review, FAQPage, QAPage or CourseInstance markup, per the current official Google guidance
 // reviewed for this step.
 export const metadata: Metadata = {
-  title: { absolute: "Online TOEFL iBT Preparation | Aisha's English" },
+  title: { absolute: `Online TOEFL iBT Preparation | ${site.brandName}` },
   description:
     "Online TOEFL iBT preparation centred on Reading, Listening, Writing and Speaking and your institution's confirmed score requirement. Ask about current availability.",
   alternates: { canonical: "/courses/toefl" },

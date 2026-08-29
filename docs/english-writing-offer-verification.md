@@ -425,9 +425,10 @@ expectation). `components/english-writing/EnglishWritingFinalCTA.tsx` was rewrit
 ## Technical SEO, metadata and internal linking (Step 10)
 
 - **Step 10 implementation date:** 2026-08-29.
-- **Final title:** `Online English Writing Coaching | Aisha's English` — set via Next.js's
-  absolute-title syntax (`{ absolute: "..." }`) so the root layout's `%s | Aisha's English`
-  template cannot append the brand a second time.
+- **Final title:** `Online English Writing Coaching | AISHAS ENGLISH` (brand-name standardisation
+  updated this from `| Aisha's English`) — set via Next.js's absolute-title syntax
+  (`{ absolute: "..." }`) so the root layout's `%s | AISHAS ENGLISH` template cannot append the
+  brand a second time.
 - **Final description:** "Online English writing coaching for learners working on sentence
   clarity, organisation, tone and revision for study, work or everyday communication." — no
   guaranteed improvement, formal assessment, live/group/one-to-one format, Zoom, recordings,
@@ -443,8 +444,9 @@ expectation). `components/english-writing/EnglishWritingFinalCTA.tsx` was rewrit
   other than the resize) to `473×630` and centring it on a plain `#F7FAFB` (ivory) canvas — padding,
   not cropping or stretching, following the exact IELTS/PTE/TOEFL/Spoken English Step 10 recipe. No
   AI generation, retouching or identity change; no flag, classroom scene, certificate, rating or
-  platform logo added. Alt text: "Portrait of Aisha, the teacher behind Aisha's English" (factual,
-  built from canonical `site.founder`/`site.brandName`).
+  platform logo added. Alt text: "Portrait of Aisha, the teacher behind AISHAS ENGLISH" (factual,
+  built from canonical `site.founder`/`site.brandName` — automatically follows the brand-name
+  standardisation update since both are read dynamically, not duplicated as a literal).
 - **Breadcrumb source and structured-data mapping:** `content/englishWriting.ts`'s new
   `breadcrumb` array (`Home` → `/`, `Courses` → `/courses`, `English Writing` → current page, no
   self-link) feeds both the visible `components/english-writing/EnglishWritingBreadcrumb.tsx` and

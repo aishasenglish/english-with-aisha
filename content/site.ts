@@ -6,7 +6,13 @@ const qualification = "MPhil in English Literature";
 const professionalRole = "College Lecturer";
 
 export const site = {
-  brandName: "Aisha's English",
+  // Brand-name standardisation: the approved public display brand is "AISHAS ENGLISH" (no
+  // apostrophe) -- retires "Aisha's English", "Aisha's English", "AISHA'S ENGLISH" and "English
+  // with Aisha" everywhere this field is read from. The approved no-space compact identifier is
+  // "AISHASENGLISH", documented in docs/brand-name-standard.md -- not added as its own field here
+  // since no real consumer currently needs it (no social handle exists to build with it; add the
+  // field only when a genuine technical consumer requires the no-space form).
+  brandName: "AISHAS ENGLISH",
   domain: "aishasenglish.com",
   tagline: "Master English. Open the world.",
   founder: "Aisha",

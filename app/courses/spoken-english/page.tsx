@@ -24,7 +24,7 @@ export const revalidate = 3600;
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses/spoken-english`;
 
-// Step 10: an absolute title (bypasses the root layout's "%s | Aisha's English" template) so the
+// Step 10: an absolute title (bypasses the root layout's "%s | AISHAS ENGLISH" template) so the
 // search-facing title stays exactly this, never accidentally lengthened. Description, social
 // title/description and the social image are all deliberately distinct from the generic
 // root-layout metadata other pages inherit -- see docs/spoken-english-content-sources.md and
@@ -34,7 +34,7 @@ const pageUrl = `${base}/courses/spoken-english`;
 // official Google guidance reviewed for this step (FAQ rich results stopped appearing 7 May 2026
 // and their documentation was removed in June 2026).
 export const metadata: Metadata = {
-  title: { absolute: "Online Spoken English Coaching | Aisha's English" },
+  title: { absolute: `Online Spoken English Coaching | ${site.brandName}` },
   description:
     "Online Spoken English coaching focused on pronunciation, response building and practical communication for work, interviews, presentations, study and everyday situations.",
   alternates: { canonical: "/courses/spoken-english" },

@@ -20,7 +20,7 @@ import { ieltsPage } from "@/content/ielts";
 const base = `https://${site.domain}`;
 const pageUrl = `${base}/courses/ielts`;
 
-// IELTS Step 10: an absolute title (bypasses the root layout's "%s | Aisha's English" template)
+// IELTS Step 10: an absolute title (bypasses the root layout's "%s | AISHAS ENGLISH" template)
 // so the search-facing title stays exactly this, never accidentally lengthened. Description,
 // social title/description and the social image are all deliberately distinct from the generic
 // root-layout metadata other pages inherit -- see docs/ielts-content-sources.md and
@@ -29,7 +29,7 @@ const pageUrl = `${base}/courses/ielts`;
 // FAQPage, QAPage or CourseInstance markup, per the current official Google guidance reviewed for
 // this step.
 export const metadata: Metadata = {
-  title: { absolute: "Online IELTS Preparation | Aisha's English" },
+  title: { absolute: `Online IELTS Preparation | ${site.brandName}` },
   description:
     "Online Academic and General Training IELTS preparation with structured practice and specific Writing and Speaking feedback. Ask Aisha about current availability.",
   alternates: { canonical: "/courses/ielts" },
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
         url: "/images/social/ielts-preparation.jpg",
         width: 1200,
         height: 630,
-        alt: "Portrait of Aisha, the teacher behind Aisha's English",
+        alt: `Portrait of ${site.founder}, the teacher behind ${site.brandName}`,
       },
     ],
   },

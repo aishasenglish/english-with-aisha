@@ -230,7 +230,7 @@ export const aboutContent = {
     eyebrow: "Where to start",
     heading: "What you can explore with Aisha",
     intro:
-      "Aisha's English covers three broad routes. Each programme page below remains the current, authoritative source for its own format, fee and availability -- this page only helps you find the right one.",
+      `${site.brandName} covers three broad routes. Each programme page below remains the current, authoritative source for its own format, fee and availability -- this page only helps you find the right one.`,
     groups: [
       {
         id: "tests",
