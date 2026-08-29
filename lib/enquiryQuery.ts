@@ -19,6 +19,7 @@ export type EnquirySource =
   | "toefl-page"
   | "spoken-english-page"
   | "english-writing-page"
+  | "about-page"
   | "general";
 
 const ALLOWED_SOURCES: readonly EnquirySource[] = [
@@ -29,6 +30,7 @@ const ALLOWED_SOURCES: readonly EnquirySource[] = [
   "toefl-page",
   "spoken-english-page",
   "english-writing-page",
+  "about-page",
   "general",
 ];
 

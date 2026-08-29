@@ -541,7 +541,10 @@ export const aboutContent = {
     // check, not content), exactly mirroring AboutFinalCTA.tsx's own established pattern.
     humanEnquiry: {
       formLabel: "Ask Aisha for a Course Recommendation",
-      formHref: "/free-diagnostic-test",
+      // About Step 8: added the same ?source=about-page label content/aboutEnquiry.ts's own
+      // configured-form link uses, for consistency -- both links originate from this page and
+      // open the identical generic, unlocked form variant.
+      formHref: "/free-diagnostic-test?source=about-page",
       whatsappLabel: "Ask Aisha on WhatsApp",
       whatsappMessage: "Hi Aisha! I would like help choosing the right English programme. My goal is:",
       emailLabel: "Email Aisha for a Course Recommendation",
@@ -582,18 +585,9 @@ export const aboutContent = {
     successStoriesLink: { label: "Read more learner and parent experiences", href: "/success-stories" },
   },
 
-  finalCta: {
-    id: "about-final-cta",
-    eyebrow: "Next step",
-    heading: "Find the English support that fits your goal",
-    body: "Explore the programme pages for current, goal-specific information. If you are unsure where to begin, share the learner's goal and current situation so Aisha can suggest the most relevant page or next step.",
-    primaryCta: { label: "Compare English Programmes", href: "/courses" },
-    secondaryCta: {
-      label: "Ask Aisha on WhatsApp",
-      message: "Hi Aisha! I'd like help choosing the right English programme. My goal is:",
-    },
-    // Only shown when formsAreConfigured() -- the general (unlocked) enquiry variant, never
-    // labelled a diagnostic or assessment in visible copy.
-    tertiaryLink: { label: "Send a Detailed Enquiry", href: "/free-diagnostic-test" },
-  },
+  // About Step 8: the final-CTA content that used to live here (`finalCta`) has been migrated to
+  // content/aboutEnquiry.ts entirely, not duplicated alongside it -- that file is now the one
+  // canonical source components/about/AboutFinalCTA.tsx reads from. See
+  // docs/about-enquiry-handoff.md for the full three-level hierarchy this replaced the old
+  // three-equal-button version with.
 } as const;
