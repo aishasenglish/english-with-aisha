@@ -5,10 +5,11 @@ import { whatsappLink } from "@/lib/whatsapp";
 import { site } from "@/content/site";
 
 // Titles reuse the canonical wording from content/site.ts — named fields for the two owner-
-// confirmed facts, and the fixed tail of site.credentialsList for the other two credentials
-// (site.credentialsList is always [qualification, professionalRole, "IDP-Certified IELTS
-// Trainer", "Corporate Trainer"], so indices 2 and 3 are stable) — rather than a positional
-// index into every slot, which silently breaks if the array's shape ever changes again.
+// confirmed facts. About Step 1 removed the "IDP-Certified IELTS Trainer" and "Corporate Trainer"
+// cards that used to read site.credentialsList[2]/[3] positionally: neither claim is established
+// by any verification record (see docs/about-credentials-verification.md), and site.credentialsList
+// itself no longer carries them, so this grid now shows only the two verified facts rather than a
+// four-item grid propped up by two unverified ones.
 const CREDENTIALS = [
   {
     title: site.qualification,
@@ -17,14 +18,6 @@ const CREDENTIALS = [
   {
     title: site.professionalRole,
     copy: "Classroom teaching experience grounded in clear explanation, structured practice and academic standards.",
-  },
-  {
-    title: site.credentialsList[2], // "IDP-Certified IELTS Trainer"
-    copy: "Focused preparation informed by IELTS task requirements and assessment criteria.",
-  },
-  {
-    title: site.credentialsList[3], // "Corporate Trainer"
-    copy: "Practical English support for interviews, presentations, professional writing and workplace communication.",
   },
 ];
 
@@ -76,10 +69,9 @@ export default function AboutAisha() {
           <FadeUp delay={100}>
             <div className="space-y-4">
               <p className="text-base sm:text-lg text-charcoal leading-relaxed">
-                I&apos;m Aisha, a {site.professionalRole.toLowerCase()} with an {site.qualification}{" "}
-                and an IDP-certified IELTS trainer, based in Lahore. I teach school students,
-                examination candidates and professionals through live online coaching that turns
-                complex language rules into clear, practical skills.
+                I&apos;m Aisha, a {site.professionalRole.toLowerCase()} with an {site.qualification},
+                based in Lahore. I teach school students, examination candidates and professionals
+                online, helping make complex language rules easier to explain and apply.
               </p>
               <p className="text-base text-ink-soft leading-relaxed">
                 My approach combines subject knowledge with structured practice and specific

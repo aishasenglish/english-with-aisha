@@ -12,9 +12,17 @@ export const site = {
   founder: "Aisha",
   qualification,
   professionalRole,
-  credentials: `${qualification} • ${professionalRole} • IDP-Certified IELTS Trainer • Corporate Trainer`,
+  // About Step 1: "IDP-Certified IELTS Trainer" and "Corporate Trainer" were removed from this
+  // central default -- neither is established by any verification record in this repository (see
+  // docs/about-credentials-verification.md), so keeping them in the one string/array every
+  // sitewide credential display reads from was causing accidental sitewide publication of an
+  // unverified claim (homepage Hero.tsx's credential ribbon and components/AboutAisha.tsx's
+  // credential-card grid both consumed this without their own gating). Only the two owner-
+  // confirmed facts remain here; a genuinely verified additional credential should be added back
+  // as its own explicitly gated record, not appended to this default pair.
+  credentials: `${qualification} • ${professionalRole}`,
   /** Same credentials as `credentials`, split for layouts that render them as compact wrapping items. */
-  credentialsList: [qualification, professionalRole, "IDP-Certified IELTS Trainer", "Corporate Trainer"],
+  credentialsList: [qualification, professionalRole],
   city: "Lahore, Pakistan",
   timezone: "PKT (GMT+5)",
   /** Canonical business timezone for batch-date comparison/formatting — see lib/batches.ts. */
