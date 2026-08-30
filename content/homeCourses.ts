@@ -9,8 +9,8 @@ import type { CourseSlug } from "@/content/coursePresentation";
  * than duplicated.
  */
 export const HOME_COURSE_ORDER: CourseSlug[] = [
-  "o-a-level-english",
   "ielts",
+  "o-a-level-english",
   "spoken-english",
   "pte",
   "toefl",

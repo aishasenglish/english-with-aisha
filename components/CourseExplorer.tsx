@@ -23,6 +23,45 @@ const CARDS = HOME_COURSE_ORDER.map((slug) => {
   };
 });
 
+const IELTS_CARD = CARDS.find((card) => card.slug === "ielts")!;
+const OTHER_CARDS = CARDS.filter((card) => card.slug !== "ielts");
+
+function ProgrammeCard({ card }: { card: (typeof CARDS)[number] }) {
+  return (
+    <article className="flex flex-col rounded-md border border-stone bg-white p-5 transition-colors hover:border-line-strong sm:p-6">
+      <span className="mb-2 font-serif text-xs font-medium uppercase tracking-[0.10em] text-teal">
+        {card.category}
+      </span>
+      <h4 className="mb-2 text-xl font-medium tracking-[0.01em] text-ink">{card.name}</h4>
+      <p className="mb-4 text-base leading-relaxed text-ink-soft">{card.description}</p>
+
+      <p className="mb-2 text-sm text-ink-soft">
+        <span className="font-medium text-ink">Best for:</span> {card.bestFor}
+      </p>
+      <p className="mb-4 text-sm text-ink-soft">{card.feature}</p>
+
+      <p className="mb-5 border-t border-stone pt-4 text-xs text-muted">{card.delivery}</p>
+
+      <div className="mt-auto flex flex-col gap-3">
+        <Link
+          href={card.href}
+          className="inline-flex min-h-12 w-full items-center justify-center rounded-sm bg-coral px-4 py-3 text-center font-serif text-xs font-medium uppercase tracking-wide text-white transition-colors hover:bg-amber-dark"
+        >
+          {card.ctaLabel}
+        </Link>
+        <a
+          href={whatsappLink(card.whatsappMessage)}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex min-h-12 w-full items-center justify-center rounded-sm border-2 border-ink px-4 py-3 text-center font-serif text-xs font-medium uppercase tracking-wide text-ink transition-colors hover:bg-ink hover:text-white"
+        >
+          Ask About This Programme
+        </a>
+      </div>
+    </article>
+  );
+}
+
 export default function CourseExplorer() {
   return (
     <section className="pt-12 sm:pt-16 lg:pt-20 pb-14 sm:pb-16 lg:pb-20 px-4" id="courses">
@@ -60,40 +99,20 @@ export default function CourseExplorer() {
           .
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {CARDS.map((c) => (
-            <article key={c.slug} className="flex flex-col rounded-md border border-stone hover:border-line-strong transition-colors p-5 sm:p-6 bg-white">
-              <span className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-teal mb-2">
-                {c.category}
-              </span>
-              <h3 className="text-xl font-medium tracking-[0.01em] text-ink mb-2">{c.name}</h3>
-              <p className="text-base text-ink-soft leading-relaxed mb-4">{c.description}</p>
+        <div className="mb-10 sm:mb-12">
+          <h3 className="mb-5 text-xl font-medium text-ink sm:text-2xl">IELTS Programme</h3>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+            <ProgrammeCard card={IELTS_CARD} />
+          </div>
+        </div>
 
-              <p className="text-sm text-ink-soft mb-2">
-                <span className="font-medium text-ink">Best for:</span> {c.bestFor}
-              </p>
-              <p className="text-sm text-ink-soft mb-4">{c.feature}</p>
-
-              <p className="text-xs text-muted pt-4 mb-5 border-t border-stone">{c.delivery}</p>
-
-              <div className="mt-auto flex flex-col gap-3">
-                <Link
-                  href={c.href}
-                  className="w-full min-h-12 inline-flex items-center justify-center text-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3 transition-colors"
-                >
-                  {c.ctaLabel}
-                </Link>
-                <a
-                  href={whatsappLink(c.whatsappMessage)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full min-h-12 inline-flex items-center justify-center text-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3 transition-colors"
-                >
-                  Ask About This Programme
-                </a>
-              </div>
-            </article>
-          ))}
+        <div>
+          <h3 className="mb-5 text-xl font-medium text-ink sm:text-2xl">Other Programmes</h3>
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+            {OTHER_CARDS.map((card) => (
+              <ProgrammeCard key={card.slug} card={card} />
+            ))}
+          </div>
         </div>
 
         <div className="mt-8 sm:mt-10 rounded-md border border-stone bg-ivory p-6 sm:p-8 flex flex-col md:flex-row md:items-center gap-5 md:gap-8">

@@ -1,20 +1,26 @@
 import Image from "next/image";
 import Link from "next/link";
 import { whatsappLink } from "@/lib/whatsapp";
-import { site } from "@/content/site";
 
 const TRUST_POINTS = [
-  "Live online classes on Zoom",
-  "Recordings available after every class",
-  "Regular practice with personal feedback",
+  "Live online lessons",
+  "Personal feedback",
+  "All four IELTS skills",
 ];
 
 const HERO_WHATSAPP_MESSAGE =
-  "Hi Aisha! I'd like help choosing the right English programme. My goal is:";
+  "Hi Aisha! I'd like a free personalised IELTS recommendation. My current level, target band and test date are:";
 
 function TickIcon() {
   return (
-    <svg className="w-5 h-5 text-coral shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+    <svg
+      className="h-4 w-4 shrink-0 text-teal"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2.25}
+      aria-hidden="true"
+    >
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
     </svg>
   );
@@ -23,65 +29,55 @@ function TickIcon() {
 export default function Hero() {
   return (
     <section className="bg-white text-ink" aria-labelledby="hero-heading">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Plain document order (no CSS `order` overrides) so the value proposition and
-            CTAs precede the portrait in both the DOM and on screen for phones — the grid
-            simply lays the same two blocks side by side once there's room for it. */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-[1.1fr_1fr] gap-8 md:gap-10 lg:gap-14 items-center py-7 sm:py-9 lg:py-12">
-          <div className="w-full text-left">
-            <ul className="flex flex-wrap items-center gap-x-2.5 gap-y-1.5 text-xs sm:text-sm font-medium text-ink-soft mb-4 sm:mb-5">
-              {site.credentialsList.map((credential, i) => (
-                <li key={credential} className="flex items-center gap-2.5">
-                  {i > 0 && (
-                    <span className="text-line-strong" aria-hidden="true">
-                      •
-                    </span>
-                  )}
-                  {credential}
-                </li>
-              ))}
-            </ul>
-
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="grid items-center gap-9 py-9 sm:py-11 md:grid-cols-2 md:gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-14 lg:py-12">
+          <div className="w-full max-w-2xl text-left">
             <h1
               id="hero-heading"
-              className="font-serif text-[2rem] sm:text-4xl lg:text-[2.75rem] font-medium leading-[1.15] tracking-[-0.015em] text-ink mb-4 sm:mb-6"
+              className="mb-5 text-[2.55rem] font-semibold leading-[1.03] tracking-[-0.035em] text-ink sm:mb-6 sm:text-5xl lg:text-[3.5rem] xl:text-[4rem]"
             >
-              Expert English Coaching for Exams, School and Confident Communication.
+              <span className="block">Your IELTS goal.</span>
+              <span className="block text-teal">A clear plan to get there.</span>
             </h1>
 
-            <p className="text-base sm:text-[1.0625rem] font-normal leading-relaxed text-ink-soft mb-6 sm:mb-8">
-              Prepare for IELTS, PTE, TOEFL and O/A Level English, or improve your spoken,
-              written and professional communication through personalised live online teaching.
+            <p className="mb-6 max-w-xl text-base font-normal leading-relaxed text-ink-soft sm:mb-7 sm:text-lg">
+              Live online coaching with Aisha. Focused practice, personal feedback, and support
+              across all four skills.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 mb-7 sm:mb-9">
-              <Link
-                href="/#choose-your-path"
-                className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm bg-coral px-6 py-3
-                           text-sm font-medium tracking-[0.02em] text-white text-center whitespace-nowrap
-                           transition-colors duration-[250ms] ease-out
-                           hover:bg-amber-dark
-                           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
-              >
-                Find My Programme
-              </Link>
+            <div className="mb-2.5 flex flex-col gap-3 sm:flex-row">
               <a
                 href={whatsappLink(HERO_WHATSAPP_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex w-full sm:w-auto min-h-12 items-center justify-center rounded-sm border-2 border-ink px-6 py-3
-                           text-sm font-medium tracking-[0.02em] text-ink text-center whitespace-nowrap
-                           transition-colors duration-[250ms] ease-out
-                           hover:bg-ink hover:text-white
-                           focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-3 whitespace-nowrap rounded-md bg-teal px-6 py-3 text-center text-sm font-medium tracking-[0.01em] text-white transition-colors duration-[250ms] ease-out hover:bg-sea-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal sm:w-auto"
               >
-                WhatsApp Aisha
+                Get My Free Recommendation
+                <svg
+                  className="h-4 w-4"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                  aria-hidden="true"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5 5 5-5 5" />
+                </svg>
               </a>
+              <Link
+                href="/#courses"
+                className="inline-flex min-h-12 w-full items-center justify-center whitespace-nowrap rounded-md border-2 border-teal px-6 py-3 text-center text-sm font-medium tracking-[0.01em] text-teal transition-colors duration-[250ms] ease-out hover:bg-sea-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal sm:w-auto"
+              >
+                View Programmes
+              </Link>
             </div>
 
-            <ul className="flex flex-col gap-2.5 pt-5 border-t border-line">
+            <p className="mb-6 text-xs text-ink-faint sm:mb-7">No payment required to ask.</p>
+
+            <div className="mb-4 h-px w-16 bg-line-strong" aria-hidden="true" />
+            <ul className="flex flex-col gap-2.5 sm:flex-row sm:flex-wrap sm:gap-x-6 sm:gap-y-3">
               {TRUST_POINTS.map((point) => (
-                <li key={point} className="flex items-center gap-2.5 text-sm text-ink-soft">
+                <li key={point} className="flex items-center gap-2 text-sm text-ink-soft">
                   <TickIcon />
                   {point}
                 </li>
@@ -89,32 +85,15 @@ export default function Hero() {
             </ul>
           </div>
 
-          <div className="relative flex w-full items-center justify-center">
-            <div
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[85%] w-[85%] -z-10 rounded-full bg-sea-wash"
-              aria-hidden="true"
-            />
-            {/* aisha-prof.jpeg is a real photo with its own natural background (not the
-                transparent-cutout PNG this used to be), so it's framed as a proper photo card --
-                fixed aspect-ratio box, object-cover so it fills the frame without distorting, and
-                rounded-xl + overflow-hidden for a soft, polished edge -- rather than floating
-                directly over the circular colour wash via object-contain. Heights match the
-                original max-h-[230px]/420px/460px footprint exactly so the rest of the hero layout
-                doesn't shift; width is derived from aspect-[3/4], matching the source's own
-                1083x1452 (~3:4) ratio, so nothing is stretched or cropped beyond a light trim. */}
-            <div className="relative z-10 h-[230px] md:h-[420px] lg:h-[460px] max-w-full aspect-[3/4] rounded-xl overflow-hidden shadow-sm">
-              {/* About Step 6: alt text previously said "English Literature lecturer", which is
-                  not the canonical professional role -- "College Lecturer" is (see
-                  content/site.ts's professionalRole). "English Literature" describes the
-                  qualification's subject, not the job title; conflating the two here implied an
-                  unverified role. Corrected to the canonical role. */}
+          <div className="relative flex h-[390px] w-full items-end justify-center overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-sea-wash to-surface-tint sm:h-[460px] md:h-[500px] lg:h-[530px]">
+            <div className="relative h-[94%] w-[88%] max-w-[430px]">
               <Image
-                src="/images/aisha-prof.jpeg"
-                alt="Aisha, online English teacher and College Lecturer"
+                src="/images/aisha-home-hero.png"
+                alt="Aisha, online English teacher"
                 fill
-                priority
-                sizes="(max-width: 767px) 170px, (max-width: 1023px) 320px, 350px"
-                className="w-full h-full object-cover"
+                preload
+                sizes="(max-width: 767px) 88vw, (max-width: 1023px) 42vw, 430px"
+                className="object-contain object-bottom"
               />
             </div>
           </div>

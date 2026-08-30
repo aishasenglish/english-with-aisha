@@ -12,7 +12,7 @@ it's actually consumed in code, not what its name suggests.
 | Filename | Actual dimensions / ratio | Role | Current consumer(s) | Alt decision | Container / crop | Loading priority |
 |---|---|---|---|---|---|---|
 | `about-aisha.jpeg` | 490×468px, ~1.05:1 (near-square) | Full About-page hero portrait | `/about` hero (`components/about/AboutHero.tsx`, via `content/about.ts`'s `hero.portrait`) | Informative: "Aisha, online English teacher and College Lecturer" | `aspect-square` `object-cover object-top`, ~2% trim per side (matches source almost exactly — not stretched into the 3:4 ratio the file's own name might suggest) | `priority` — confirmed the genuine LCP element on both mobile (390px) and desktop (1440px) via `PerformanceObserver`, not assumed from source inspection |
-| `aisha-prof.jpeg` | 1083×1452px, ~3:4 | Homepage hero portrait | `/` (`components/Hero.tsx`) | Informative: "Aisha, online English teacher and College Lecturer" (About Step 6: corrected from "...and English Literature lecturer", which stated an unverified role — "College Lecturer" is the canonical role; "English Literature" describes the qualification's subject, not a job title) | `aspect-[3/4]` `object-cover`, fixed height per breakpoint (230/420/460px) | `priority` (unchanged by this step — homepage hero, reasonably assumed above-the-fold; not re-measured this step, which was scoped to the About route) |
+| `aisha-home-hero.png` | 684×984px, ~0.70 (transparent-background cropped portrait) | Homepage hero portrait | `/` (`components/Hero.tsx`) | Informative: "Aisha, online English teacher" | `object-contain object-bottom` inside a softly tinted rounded panel, fixed panel height per breakpoint (390/460/500/530px) | `preload` — homepage hero is above the fold |
 | `aisha-headshot.jpg` | 1086×1448px, 3:4 | Homepage "About Aisha" preview portrait | `/` (`components/AboutAisha.tsx`) | Informative: "Aisha, online English teacher and College Lecturer" (About Step 6: corrected from "...English Literature specialist...", which overstated scope — neither the MPhil nor the College Lecturer role establishes "specialist" status) | `aspect-[3/4]` `object-cover`, `max-w-xs md:max-w-none` | Not `priority` (below the fold on the homepage) |
 | `aisha-about.jpg` | 1086×1448px, 3:4 | Not currently used — was the original About-page hero portrait before it was swapped to `about-aisha.jpeg` above | None | — | — | — |
 | `aisha-hero.jpg` | 865×1280px, ~0.676 (not 3:4 — previously mis-documented here as 800×1067/3:4; corrected) | O/A Level hero portrait | `/courses/o-a-level-english` (`app/courses/o-a-level-english/page.tsx`) | "Aisha, specialist online O and A Level English teacher" — **flagged, not fixed**: "specialist" may overstate scope; this page is explicitly out of this step's scope (O/A Level subdomain work is deferred) | `aspect-[4/5]` (0.8) applied to a source measuring ~0.676 — a real ratio mismatch on that page, also flagged and not fixed here | `priority` (not re-verified this step) |
@@ -27,7 +27,8 @@ alt-text decision first:
 | Filename | Actual dimensions / ratio | Note |
 |---|---|---|
 | `aisha-cutout-placeholder.png` | 896×1195px, ~3:4 (transparent-background cutout) | Heavy (~715 KB) placeholder asset — avoid by default even if a use case appears; re-export/optimise first |
-| `aishaa.png` | 1224×1285px, ~0.95 (near-square, transparent-background cutout) | Heavy (~1.6 MB) — avoid by default; superseded on the homepage hero by `aisha-prof.jpeg` |
+| `aisha-prof.jpeg` | 1083×1452px, ~3:4 | Former homepage hero portrait; superseded by `aisha-home-hero.png` |
+| `aishaa.png` | 1224×1285px, ~0.95 (near-square, transparent-background cutout) | Heavy (~1.6 MB) — avoid by default; superseded by the homepage hero assets |
 | `aisha-cafe.jpg` | 960×1280px, 3:4 | No current role assigned |
 | `aisha-hands.jpg` | 1086×1448px, 3:4 | No current role assigned |
 | `aisha-home.jpg` | 885×1280px, ~0.69 | No current role assigned |
@@ -53,11 +54,12 @@ confirmation still required from Aisha, and browser/performance test results.
 
 ## Testimonial Photos
 
-There are no testimonials in the codebase yet — see `docs/testimonial-content-intake.md` for
-how Aisha adds one. Once a specific person has approved their photo for publication, drop it
-into a subfolder `images/testimonials/` and reference its filename in that person's `image`
-field in `content/testimonials.ts`. There is no fixed filename list — each entry names its own
-file. Photos should be square (1:1 ratio), minimum 88×88px. They render at 44×44px.
+| Filename | Actual dimensions / ratio | Role | Current consumer(s) | Alt decision | Container / crop | Loading priority |
+|---|---|---|---|---|---|---|
+| `student-review.jpeg` | 960×1280px, 3:4 | Abdul Basit's IELTS testimonial portrait | Homepage IELTS student-experience card (`components/HomeIELTSBenefits.tsx`, via `content/homeIELTS.ts`) | Informative: "Abdul Basit, IELTS Batch student" | Circular 112/128px crop, `object-cover object-[center_42%]` | Not `preload` (below the fold) |
+
+See `docs/testimonial-content-intake.md` for the evidence and consent requirements that apply
+before publishing additional testimonial photos.
 
 ## Tips
 
