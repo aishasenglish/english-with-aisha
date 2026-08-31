@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
 import Hero from "@/components/Hero";
 import HomeIELTSBenefits from "@/components/HomeIELTSBenefits";
-import AudiencePathways from "@/components/AudiencePathways";
-import ProgrammeMatcher from "@/components/ProgrammeMatcher";
 import CourseExplorer from "@/components/CourseExplorer";
 import LearningFormats from "@/components/LearningFormats";
 import AboutAisha from "@/components/AboutAisha";
@@ -35,8 +33,6 @@ export default function HomePage() {
     <>
       <Hero />
       <HomeIELTSBenefits />
-      <AudiencePathways />
-      <ProgrammeMatcher />
       <CourseExplorer />
       <LearningFormats />
 
