@@ -3,9 +3,9 @@ import Hero from "@/components/Hero";
 import HomeIELTSBenefits from "@/components/HomeIELTSBenefits";
 import CourseExplorer from "@/components/CourseExplorer";
 import LearningFormats from "@/components/LearningFormats";
+import HomeGettingStarted from "@/components/HomeGettingStarted";
 import AboutAisha from "@/components/AboutAisha";
 import TestimonialsSection from "@/components/TestimonialsSection";
-import CoachingProcess from "@/components/CoachingProcess";
 import BatchTable from "@/components/BatchTable";
 import LeadCaptureSection from "@/components/LeadCaptureSection";
 import HomeFAQ from "@/components/HomeFAQ";
@@ -35,12 +35,11 @@ export default function HomePage() {
       <HomeIELTSBenefits />
       <CourseExplorer />
       <LearningFormats />
+      <HomeGettingStarted />
 
       <AboutAisha />
 
       <TestimonialsSection />
-
-      <CoachingProcess />
 
       {/* Availability -- Spoken English Step 10: "Upcoming live online intakes" and "the next
           suitable group or one-to-one opening" both asserted a universal live/group/one-to-one
