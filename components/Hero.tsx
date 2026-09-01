@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { IELTS_RECOMMENDATION_MESSAGE } from "@/content/homeCtas";
 import { whatsappLink } from "@/lib/whatsapp";
 
 const TRUST_POINTS = [
@@ -7,9 +8,6 @@ const TRUST_POINTS = [
   "Personal feedback",
   "All four IELTS skills",
 ];
-
-const HERO_WHATSAPP_MESSAGE =
-  "Hi Aisha! I'd like a free personalised IELTS recommendation. My current level, target band and test date are:";
 
 function TickIcon() {
   return (
@@ -47,7 +45,7 @@ export default function Hero() {
 
             <div className="mb-2.5 flex flex-col gap-3 sm:flex-row">
               <a
-                href={whatsappLink(HERO_WHATSAPP_MESSAGE)}
+                href={whatsappLink(IELTS_RECOMMENDATION_MESSAGE)}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex min-h-12 w-full items-center justify-center gap-3 whitespace-nowrap rounded-md bg-teal px-6 py-3 text-center text-sm font-medium tracking-[0.01em] text-white transition-colors duration-[250ms] ease-out hover:bg-sea-deep focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal sm:w-auto"
