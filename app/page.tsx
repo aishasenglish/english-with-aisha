@@ -36,6 +36,7 @@ export default function HomePage() {
       <CourseExplorer />
       <LearningFormats />
       <HomeGettingStarted />
+      <HomeFAQ />
 
       <AboutAisha />
 
@@ -68,7 +69,6 @@ export default function HomePage() {
       </section>
 
       <LeadCaptureSection />
-      <HomeFAQ />
       <CTASection eyebrow="Your next step" />
     </>
   );

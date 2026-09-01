@@ -18,19 +18,55 @@ export type FAQ = {
 // backed by content/courses.ts or an explicitly approved site decision; see the Step 12
 // implementation prompt's "do not retain an answer simply because it already exists" rule.
 export const faqs: FAQ[] = [
-  // --- Homepage closing FAQ: the six questions most likely to stop an enrolment ---
+  // --- Homepage FAQ: five concise answers to the doubts most likely to stop an IELTS enquiry ---
   {
-    // Corrected (PTE Step 8): "live online" asserted synchronous delivery across every named
-    // programme, but live/synchronous delivery is not owner-confirmed for PTE (see
-    // docs/pte-offer-verification.md's "Delivery platform" / "Live/asynchronous format" rows,
-    // both "Needs owner confirmation"). Removed "live" rather than leaving an unconfirmed
-    // universal claim this global answer can't back up for every programme it names.
+    id: "ielts-level-unknown",
+    question: "Can I join if I don’t know my current English level?",
+    answer:
+      "Yes. Share your experience and target band, and Aisha will recommend a suitable starting point.",
+    published: true,
+    homepage: true,
+  },
+  {
+    id: "ielts-preparation-duration",
+    question: "How long will IELTS preparation take?",
+    answer:
+      "It depends on your current level, target band and available study time. Aisha will discuss a realistic preparation plan with you.",
+    published: true,
+    homepage: true,
+  },
+  {
+    id: "fees-and-schedules",
+    question: "How much does coaching cost?",
+    answer:
+      "Fees depend on the programme and lesson format. Ask for the available options and full fee before deciding.",
+    published: true,
+    homepage: true,
+  },
+  {
+    id: "international-students",
+    question: "Can I join from outside Pakistan?",
+    answer:
+      "Yes. Lessons are online. Share your time zone so Aisha can check whether the available schedule suits you.",
+    published: true,
+    homepage: true,
+  },
+  {
+    id: "grade-guarantee",
+    question: "Do you guarantee an IELTS band score?",
+    answer:
+      "No. Results depend on your starting point, preparation and test performance. Coaching provides structured guidance, practice and feedback—not a guaranteed score.",
+    published: true,
+    homepage: true,
+  },
+
+  // --- Broader questions retained for the full FAQ and Courses hub ---
+  {
     id: "programmes-taught",
     question: "Which learners and programmes do you teach?",
     answer:
       "Aisha teaches online English across school examinations, IELTS and related tests, spoken English, English writing and professional communication. Choose a programme from the website or send your goal if you are unsure where it fits.",
     published: true,
-    homepage: true,
   },
   {
     id: "choosing-programme",
@@ -38,35 +74,6 @@ export const faqs: FAQ[] = [
     answer:
       "Start with the learner's exact requirement: school examination, named language test, speaking goal or writing goal. If you are still unsure, share the current situation and preferred timeline so Aisha can recommend the most relevant next step.",
     published: true,
-    homepage: true,
-  },
-  {
-    id: "international-students",
-    question: "Can learners join from outside Pakistan?",
-    answer:
-      "Yes, teaching is online. Current schedules are shown or confirmed in Pakistan Standard Time, so international learners should include their country or time zone when enquiring.",
-    published: true,
-    homepage: true,
-  },
-  {
-    // Corrected (PTE Step 8): "can differ by programme, learning format and intake" asserted a
-    // specific, unconfirmed reason for price variation. Rewritten to state only what's actually
-    // confirmed — Aisha confirms the complete current fee before enrolment — without asserting
-    // why it might vary.
-    id: "fees-and-schedules",
-    question: "How are course fees confirmed?",
-    answer:
-      "Aisha confirms the complete current fee, billing basis and payment details for your specific programme and option before you decide whether to enrol.",
-    published: true,
-    homepage: true,
-  },
-  {
-    id: "grade-guarantee",
-    question: "Do you guarantee a grade, band or score?",
-    answer:
-      "No responsible teacher can guarantee a result. Aisha provides structured teaching, practice and feedback, while progress also depends on the learner's starting point, available time and consistent participation.",
-    published: true,
-    homepage: true,
   },
   {
     id: "enquiry-details",
@@ -74,7 +81,6 @@ export const faqs: FAQ[] = [
     answer:
       "Include the learner's programme or exam, current level or score if known, country or time zone, target and preferred starting date. Parents should also include the student's school level, board or syllabus where relevant.",
     published: true,
-    homepage: true,
   },
 
   // --- Additional questions shown only on the full /faq page ---

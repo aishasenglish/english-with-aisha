@@ -1,41 +1,43 @@
-import Link from "next/link";
-import FAQAccordion from "./FAQAccordion";
+import FAQAccordion from "@/components/FAQAccordion";
 import { homepageFaqs } from "@/content/faqs";
+import { whatsappLink } from "@/lib/whatsapp";
 
-// Server component — the accordion beneath it is native <details>/<summary>, so this entire
-// section needs no client-side JavaScript. Spoken English Step 10: the FAQPage JSON-LD previously
-// emitted here was removed — Google announced the FAQ rich-result feature would stop appearing
-// from 7 May 2026 and removed the corresponding documentation in June 2026, so the schema had no
-// remaining Google Search consumer. No FAQ content was removed; only the now-obsolete structured
-// data. See docs/spoken-english-offer-verification.md's Step 10 section for the full record.
+const FAQ_WHATSAPP_MESSAGE =
+  "Hi Aisha! I still have a question about your IELTS coaching. My question is:";
+
 export default function HomeFAQ() {
   return (
-    <section className="py-14 sm:py-16 lg:py-20 px-4 bg-ivory" aria-labelledby="home-faq-heading">
-      <div className="max-w-2xl mx-auto">
-        <div className="mb-7 sm:mb-10">
-          <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
+    <section
+      className="bg-surface-tint px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
+      aria-labelledby="home-faq-heading"
+    >
+      <div className="mx-auto max-w-3xl">
+        <div className="mb-8 sm:mb-10">
+          <p className="mb-3 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">
             Before you begin
-            <span className="h-0.5 w-9 bg-coral" aria-hidden="true" />
+            <span className="h-px w-11 bg-teal" aria-hidden="true" />
           </p>
-          <h2 id="home-faq-heading" className="font-serif text-[1.75rem] sm:text-3xl md:text-4xl font-medium text-ink mb-3">
-            Questions students and parents often ask
+          <h2
+            id="home-faq-heading"
+            className="text-[1.9rem] font-semibold tracking-[-0.025em] text-ink sm:text-4xl"
+          >
+            A few questions, answered.
           </h2>
-          <p className="text-ink-soft leading-relaxed">
-            These answers explain the general process. Programme-specific schedules, fees and
-            requirements are confirmed before enrolment.
-          </p>
         </div>
 
         <FAQAccordion items={homepageFaqs} />
 
-        <p className="mt-6 text-center">
-          <Link
-            href="/faq"
-            className="text-sm font-medium text-teal hover:text-ink underline underline-offset-4"
+        <div className="mt-7 border-t border-line pt-6 sm:flex sm:items-center sm:justify-between sm:gap-8">
+          <p className="text-base font-semibold text-ink">Still have a question?</p>
+          <a
+            href={whatsappLink(FAQ_WHATSAPP_MESSAGE)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-2 inline-flex min-h-11 items-center text-sm font-semibold text-teal underline decoration-sea-edge underline-offset-4 transition-colors hover:text-sea-deep sm:mt-0"
           >
-            View all frequently asked questions
-          </Link>
-        </p>
+            Ask Aisha on WhatsApp
+          </a>
+        </div>
       </div>
     </section>
   );
