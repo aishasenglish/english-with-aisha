@@ -58,13 +58,13 @@ export default function AboutAisha() {
                 physical size on desktop instead of letting it fill the entire grid column. */}
             <div className="relative w-full max-w-xs md:max-w-sm mx-auto aspect-square rounded-md overflow-hidden">
               {/* About Step 6: alt text previously said "English Literature specialist", which
-                  overstates scope -- neither the MPhil nor the College Lecturer role establishes
+                  overstates scope -- neither the MPhil nor the Government Lecturer role establishes
                   "specialist" status in every English Literature context. Simplified to factual
                   identity wording, matching the pattern used for the homepage hero and About
                   hero portraits. */}
               <Image
                 src="/images/A4.jpeg"
-                alt="Aisha, online English teacher and College Lecturer"
+                alt="Aisha, online English teacher and Government Lecturer"
                 fill
                 sizes="(max-width: 767px) 320px, 384px"
                 className="w-full h-full object-cover object-top"

@@ -1,9 +1,8 @@
 // Owner-confirmed canonical facts — the only public qualification and role. Every credential
 // string elsewhere in the site is built from these two, not repeated as a separate literal.
-// Do not append "Government" to professionalRole unless the owner separately confirms that
-// distinction should be public everywhere.
+// The owner has confirmed the public role wording used across the website.
 const qualification = "MPhil in English Literature";
-const professionalRole = "College Lecturer";
+const professionalRole = "Government Lecturer";
 
 export const site = {
   // Brand-name standardisation: the approved public display brand is "AISHAS ENGLISH" (no

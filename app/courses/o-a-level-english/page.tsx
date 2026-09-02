@@ -817,8 +817,8 @@ export default function OALevelEnglishPage() {
             <div className="relative max-w-sm mx-auto lg:mx-0">
               <div className="rounded-md overflow-hidden shadow-xl bg-white">
                 <Image
-                  src="/images/aisha-thoughtful.jpg"
-                  alt="Aisha teaching an O and A Level English class"
+                  src="/images/aisha-about-3.jpg"
+                  alt="Aisha seated in a wicker chair against a green backdrop"
                   width={480}
                   height={640}
                   className="w-full h-auto object-cover"

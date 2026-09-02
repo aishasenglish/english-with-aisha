@@ -241,7 +241,7 @@ export const aboutContent = {
       src: "/images/about-aisha.jpeg",
       // About Step 6: aligned with the recommended concise, factual pattern and with the
       // homepage hero/About-preview portraits' alt text ("Aisha, online English teacher and
-      // College Lecturer") -- no promotional adjective, no unverified role, and the qualification
+      // Government Lecturer") -- no promotional adjective, no unverified role, and the qualification
       // is deliberately omitted here since it isn't visually observable and is already stated in
       // the adjacent hero body copy above.
       alt: `${site.founder}, online English teacher and ${site.professionalRole}`,

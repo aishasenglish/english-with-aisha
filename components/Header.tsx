@@ -143,7 +143,7 @@ export default function Header() {
         <Brand />
 
         <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex" aria-label="Primary navigation">
-          <Link href="/courses/ielts" className={navLinkClass(pathname === "/courses/ielts")}>
+          <Link href="/courses/ielts" aria-current={pathname === "/courses/ielts" ? "page" : undefined} className={navLinkClass(pathname === "/courses/ielts")}>
             IELTS Coaching
           </Link>
 
@@ -194,7 +194,7 @@ export default function Header() {
           </div>
 
           {DESKTOP_NAV.slice(1).map((item) => (
-            <Link key={item.href} href={item.href} className={navLinkClass(pathname === item.href)}>
+            <Link key={item.href} href={item.href} aria-current={pathname === item.href ? "page" : undefined} className={navLinkClass(pathname === item.href)}>
               {item.label}
             </Link>
           ))}
@@ -260,7 +260,7 @@ export default function Header() {
                     </ul>
                   )}
                 </li>
-                <li><Link href="/about" onClick={closeMobile} className="flex min-h-14 items-center text-base font-semibold text-ink hover:text-teal">About Aisha</Link></li>
+                <li><Link href="/about" aria-current={pathname === "/about" ? "page" : undefined} onClick={closeMobile} className={`flex min-h-14 items-center text-base font-semibold hover:text-teal ${pathname === "/about" ? "text-teal" : "text-ink"}`}>About Aisha</Link></li>
                 <li><Link href="/faq" onClick={closeMobile} className="flex min-h-14 items-center text-base font-semibold text-ink hover:text-teal">FAQs</Link></li>
                 <li><Link href="/contact" onClick={closeMobile} className="flex min-h-14 items-center text-base font-semibold text-ink hover:text-teal">Contact</Link></li>
               </ul>
