@@ -1,35 +1,18 @@
+import Link from "next/link";
 import FAQAccordion from "@/components/FAQAccordion";
 import { ieltsFaqs } from "@/content/ieltsFaqs";
-import { ieltsPage } from "@/content/ielts";
+import { ieltsProgrammePage } from "@/content/ielts";
 
-// Server component. Reuses the shared native <details>/<summary> FAQAccordion — its markup and
-// styling are appropriate here — with an IELTS-specific `items` prop rather than its default
-// generalFaqs. No client-side state, no search box, no categories or nested accordions, and no
-// FAQPage JSON-LD (IELTS Step 8: current official Google structured-data guidance does not list
-// FAQ rich results as a supported feature for a tutoring portfolio — see the implementation
-// prompt's Part E). No "Still have questions?" block either, since IELTSFinalCTA follows directly.
 export default function IELTSFAQ() {
-  const { faq } = ieltsPage;
+  const { faq } = ieltsProgrammePage;
 
   return (
-    <section
-      id={faq.id}
-      className="py-14 sm:py-16 px-4 bg-ivory"
-      aria-labelledby="ielts-faq-heading"
-    >
-      <div className="max-w-3xl mx-auto">
-        <div className="mb-8 sm:mb-10">
-          <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
-            {faq.eyebrow}
-            <span className="h-0.5 w-9 bg-coral" aria-hidden="true" />
-          </p>
-          <h2 id="ielts-faq-heading" className="font-serif text-2xl sm:text-3xl font-medium text-ink mb-3">
-            {faq.heading}
-          </h2>
-          <p className="text-ink-soft leading-relaxed">{faq.introduction}</p>
-        </div>
-
-        <FAQAccordion items={ieltsFaqs} />
+    <section id={faq.id} className="bg-white px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24" aria-labelledby="ielts-faq-heading">
+      <div className="mx-auto max-w-3xl">
+        <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">{faq.eyebrow}<span className="h-px w-10 bg-teal" aria-hidden="true" /></p>
+        <h2 id="ielts-faq-heading" className="text-[clamp(2rem,4vw,3.5rem)] font-semibold tracking-[-0.035em] text-ink">{faq.heading}</h2>
+        <div className="mt-9"><FAQAccordion items={ieltsFaqs} /></div>
+        <Link href={faq.allFaqHref} className="mt-6 inline-flex min-h-11 items-center text-sm font-semibold text-teal underline decoration-sea-edge underline-offset-4 hover:text-sea-deep hover:decoration-teal">{faq.allFaqLabel}</Link>
       </div>
     </section>
   );

@@ -20,6 +20,13 @@ export const aboutBenefits = [
   },
 ] as const;
 
+export const approvedIeltsTestimonial = {
+  quote: "Aisha is a brilliant teacher who delivers a 5-star IELTS coaching experience. Her mastery of the IELTS format is excellent, and she is a remarkably helpful and cooperative mentor who genuinely invests in her students’ success.",
+  rating: 5,
+  name: "Abdul Basit",
+  context: "IELTS Batch student",
+} as const;
+
 export const aboutSlides = [
   { src: "/images/aisha-about.jpg", alt: "Aisha seated in a wicker chair in a warm studio setting", width: 1086, height: 1448 },
   { src: "/images/aisha-about-0.jpeg", alt: "Aisha receiving a professional certificate from a colleague", width: 1200, height: 775 },

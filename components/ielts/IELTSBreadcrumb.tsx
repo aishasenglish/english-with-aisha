@@ -1,33 +1,19 @@
 import Link from "next/link";
 import { ieltsPage } from "@/content/ielts";
 
-// Server component. Visible breadcrumb matching the BreadcrumbList JSON-LD emitted once in
-// app/courses/ielts/page.tsx -- both read from the same content/ielts.ts `breadcrumb` array so
-// the visible path and the structured data can never disagree. Placed above the hero rather than
-// inside it, so it doesn't compete with the H1 for attention.
 export default function IELTSBreadcrumb() {
-  const { breadcrumb } = ieltsPage;
-
   return (
-    <nav aria-label="Breadcrumb" className="bg-white border-b border-line px-4 py-2.5">
-      <ol className="max-w-3xl mx-auto flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm text-ink-faint">
-        {breadcrumb.map((crumb, i) => {
-          const isLast = i === breadcrumb.length - 1;
+    <nav aria-label="Breadcrumb" className="bg-white px-4 pt-5 sm:px-6 sm:pt-7 lg:px-8">
+      <ol className="mx-auto flex max-w-[1200px] flex-wrap items-center gap-x-2 gap-y-1 text-sm text-ink-faint">
+        {ieltsPage.breadcrumb.map((crumb, index) => {
+          const isLast = index === ieltsPage.breadcrumb.length - 1;
           return (
-            <li key={crumb.label} className="flex items-center gap-1.5">
-              {i > 0 && (
-                <span aria-hidden="true" className="text-ink-faint">
-                  /
-                </span>
-              )}
+            <li key={crumb.label} className="flex items-center gap-2">
+              {index > 0 && <span aria-hidden="true">/</span>}
               {isLast || !("href" in crumb) ? (
-                <span aria-current="page" className="text-ink font-medium">
-                  {crumb.label}
-                </span>
+                <span aria-current="page" className="font-medium text-ink">{crumb.label}</span>
               ) : (
-                <Link href={crumb.href} className="hover:text-ink hover:underline underline-offset-2">
-                  {crumb.label}
-                </Link>
+                <Link href={crumb.href} className="inline-flex min-h-11 items-center hover:text-teal hover:underline focus-visible:outline-teal">{crumb.label}</Link>
               )}
             </li>
           );

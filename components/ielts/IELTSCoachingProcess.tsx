@@ -1,68 +1,25 @@
-import { ieltsPage } from "@/content/ielts";
+import { ieltsProgrammePage } from "@/content/ielts";
 
-// Server component, no interaction required. Two-column grid at sm+ and held there through
-// desktop (not expanded to four columns) — each stage's body is a full explanatory sentence plus
-// a result line, so four narrow columns would make paragraphs cramped and tall; two columns keep
-// comfortable line lengths while still reading 01-04 left-to-right, top-to-bottom.
 export default function IELTSCoachingProcess() {
-  const { process } = ieltsPage;
+  const { process } = ieltsProgrammePage;
 
   return (
-    // border-b: a plain divider before the ivory IELTSFeedbackDemo section that follows,
-    // matching the established Footer/CTASection seam pattern used elsewhere on this page.
-    <section
-      id={process.id}
-      className="py-14 sm:py-16 px-4 bg-white border-b border-line"
-      aria-labelledby="ielts-coaching-process-heading"
-    >
-      <div className="max-w-5xl mx-auto">
-        <div className="max-w-2xl mb-8 sm:mb-10">
-          <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center gap-3 mb-3">
-            {process.eyebrow}
-            <span className="h-0.5 w-9 bg-coral" aria-hidden="true" />
-          </p>
-          <h2 id="ielts-coaching-process-heading" className="font-serif text-2xl sm:text-3xl font-medium text-ink mb-3">
-            {process.heading}
-          </h2>
-          <p className="text-ink-soft leading-relaxed">{process.introduction}</p>
+    <section id={process.id} className="border-y border-line bg-surface-tint px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24" aria-labelledby="ielts-process-heading">
+      <div className="mx-auto max-w-[1200px]">
+        <div className="max-w-3xl">
+          <p className="mb-4 flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">{process.eyebrow}<span className="h-px w-10 bg-teal" aria-hidden="true" /></p>
+          <h2 id="ielts-process-heading" className="text-[clamp(2rem,4vw,3.5rem)] font-semibold tracking-[-0.035em] text-ink">{process.heading}</h2>
+          <p className="mt-5 max-w-[65ch] text-base leading-relaxed text-ink-soft sm:text-lg">{process.introduction}</p>
         </div>
-
-        <ol className="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6 mb-10 sm:mb-12">
-          {process.steps.map((step) => (
-            <li key={step.id} className="flex gap-4 border border-stone rounded-md bg-white p-5 sm:p-6">
-              <span
-                aria-hidden="true"
-                className="shrink-0 w-11 h-11 rounded-md border border-teal/30 bg-white flex items-center justify-center font-serif text-base font-medium text-teal"
-              >
-                {step.number}
-              </span>
-              <div className="min-w-0">
-                <h3 className="font-serif text-lg font-medium text-ink mb-1.5">{step.title}</h3>
-                <p className="text-sm text-ink-soft leading-relaxed mb-2.5">{step.body}</p>
-                <p className="text-sm font-medium text-teal">{step.result}</p>
-              </div>
+        <ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+          {process.steps.map((step, index) => (
+            <li key={step.number} className={`relative border-t border-line pt-5 lg:px-7 ${index === 0 ? "lg:pl-0" : "lg:border-l"}`}>
+              <span className="text-sm font-semibold text-teal">{step.number}</span>
+              <h3 className="mt-4 text-xl font-semibold tracking-[-0.02em] text-ink">{step.title}</h3>
+              <p className="mt-3 text-sm leading-relaxed text-ink-soft sm:text-base">{step.body}</p>
             </li>
           ))}
         </ol>
-
-        {/* Feedback-by-skill subsection */}
-        <div className="max-w-2xl mb-6">
-          <h3 className="font-serif text-xl font-medium text-ink mb-2">{process.feedbackHeading}</h3>
-          <p className="text-ink-soft leading-relaxed">{process.feedbackIntroduction}</p>
-        </div>
-
-        <div className="grid sm:grid-cols-2 gap-5 sm:gap-6 mb-8">
-          {process.feedbackAreas.map((area) => (
-            <article key={area.id} className="bg-ivory border border-stone rounded-md p-5 sm:p-6">
-              <p className="text-xs font-semibold uppercase tracking-wide text-teal mb-2">{area.title}</p>
-              <p className="text-sm text-ink-soft leading-relaxed">{area.body}</p>
-            </article>
-          ))}
-        </div>
-
-        <p className="text-ink-soft text-sm sm:text-base leading-relaxed max-w-2xl">
-          {process.expectation}
-        </p>
       </div>
     </section>
   );

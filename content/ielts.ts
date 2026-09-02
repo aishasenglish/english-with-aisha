@@ -517,3 +517,134 @@ export const ieltsPage = {
  * becomes unverifiable rather than replacing it with an unsupported claim."
  */
 export const ieltsCredential = "IDP-Certified IELTS Trainer" as const;
+
+/**
+ * Focused public sales-page copy. The earlier `ieltsPage` object remains the source for the
+ * breadcrumb and the verified feedback example, while this layer removes the repeated
+ * document-style explanations from the rendered page.
+ */
+export const ieltsProgrammePage = {
+  hero: {
+    eyebrow: "Live online IELTS coaching",
+    heading: "Prepare for IELTS with a clear plan—and feedback that shows you what to fix.",
+    body: "Prepare for Academic or General Training IELTS through focused lessons, timed practice and personal feedback across all four skills.",
+    primaryLabel: "Get My IELTS Recommendation",
+    secondaryLabel: "See What’s Included",
+    secondaryHref: "#programme",
+    trustLine: "12+ years’ experience · MPhil English Literature · Online IELTS coaching",
+  },
+  fit: {
+    id: "ielts-fit",
+    eyebrow: "Is this for you?",
+    heading: "Stop guessing what to practise next.",
+    body: "Random practice does not always lead to a better score. You need to understand which skills are holding you back and what to change in your next attempt.",
+    supporting: "This programme is for candidates who want their preparation to follow a reason. Instead of collecting more practice papers, you will use each lesson and review to decide where your next effort will be most useful.",
+    points: [
+      "Your Writing or Speaking score is not improving.",
+      "Your scores are uneven across the four skills.",
+      "You are retaking IELTS and need a more focused approach.",
+      "You have a target score and deadline but no clear study plan.",
+    ],
+    panelHeading: "Before you begin",
+    panelBody: "Share whether you need Academic or General Training, your target score, any previous section scores and your test or application deadline.",
+    note: "Not sure which test version you need? Confirm the requirement with the university, employer or organisation receiving your result.",
+  },
+  programme: {
+    id: "programme",
+    eyebrow: "What you’ll work on",
+    heading: "Build all four skills for the way IELTS tests them.",
+    introduction: "Your preparation will combine clear explanations, focused practice, test strategy and review. The emphasis will depend on your starting point, score profile and deadline. You will still work across the whole test, but lesson time can give more attention to the areas that are limiting your result.",
+    versionNote: "Listening and Speaking are shared across both versions. Reading and Writing preparation will match the version you are taking.",
+    skills: [
+      {
+        id: "listening",
+        title: "Listening",
+        body: "Improve your ability to follow information, anticipate answers, maintain attention and review recurring mistakes. You will learn to recognise why an answer was missed instead of only checking whether it was right or wrong.",
+        points: ["Question and answer prediction", "Main ideas and important details", "Accurate answer handling", "Timed listening practice"],
+      },
+      {
+        id: "reading",
+        title: "Reading",
+        body: "Develop faster, more accurate reading based on evidence rather than assumptions. Practice will help you connect each answer to the text and make better decisions when time is limited.",
+        points: ["Common question types", "Locating relevant evidence", "Understanding main ideas and writer position", "Time management"],
+      },
+      {
+        id: "writing",
+        title: "Writing",
+        body: "Learn how to plan, organise and improve your response through specific feedback. Each review gives you a manageable priority, so the next piece of writing has a clear purpose.",
+        points: ["Task analysis and planning", "Clear paragraph development", "Vocabulary and grammatical control", "Timed writing and editing"],
+      },
+      {
+        id: "speaking",
+        title: "Speaking",
+        body: "Build relevant, natural and well-developed answers across all three parts of the test. Guided practice helps you extend ideas without relying on memorised responses that do not fit the question.",
+        points: ["Fluency and coherence", "Vocabulary and grammatical range", "Pronunciation and intelligibility", "Timed speaking practice"],
+      },
+    ],
+  },
+  feedback: {
+    id: "ielts-feedback-example",
+    eyebrow: "Feedback you can use",
+    heading: "See what useful IELTS feedback looks like.",
+    introduction: "Useful feedback does more than identify a mistake. It explains why the response is weak and gives you a clear action for your next attempt. The example below shows how a vague idea can become more precise, connected and easier for the reader to follow.",
+    context: "Illustrative Task 2 opening sentence",
+    firstLabel: "First attempt",
+    firstAttempt: ieltsPage.feedbackDemo.firstAttempt,
+    feedbackLabel: "Aisha’s feedback",
+    feedbackPoints: ieltsPage.feedbackDemo.feedbackPoints,
+    nextAction: ieltsPage.feedbackDemo.nextAction,
+    revisedLabel: "Revised attempt",
+    revisedAttempt: ieltsPage.feedbackDemo.revisedAttempt,
+    improvements: ieltsPage.feedbackDemo.improvements,
+    disclosure: "Illustrative example created for this website. It is not an official IELTS task or band-score prediction.",
+  },
+  process: {
+    id: "ielts-coaching-process",
+    eyebrow: "How it works",
+    heading: "A focused path from your starting point to test day.",
+    introduction: "Your plan can change as your work improves. These four stages keep preparation focused while allowing Aisha to adjust the emphasis when a new weakness or priority becomes clear.",
+    steps: [
+      { number: "01", title: "Share your goal", body: "Tell Aisha your test version, required score, previous result and deadline." },
+      { number: "02", title: "Identify your priorities", body: "Understand which skills and question types require the most attention." },
+      { number: "03", title: "Learn and practise", body: "Apply clear strategies through focused activities and timed IELTS tasks." },
+      { number: "04", title: "Use your feedback", body: "Correct important weaknesses and apply the changes in your next attempt." },
+    ],
+  },
+  teacher: {
+    eyebrow: "Meet your teacher",
+    heading: "Experienced guidance. Personal attention.",
+    paragraphs: [
+      "I’m Aisha, an MPhil-qualified English lecturer with more than 12 years of English coaching experience. I help IELTS candidates understand what is limiting their performance and turn that understanding into focused practice.",
+      "My teaching is structured, patient and direct. You should know what you are working on, why it matters and what to change in your next attempt.",
+      "That means I do not treat every mistake as equally important. We focus first on the changes that can make your response clearer, more accurate and better suited to the task.",
+    ],
+    aboutLabel: "More About Aisha",
+    aboutHref: "/about",
+  },
+  options: {
+    id: "availability",
+    eyebrow: "Current IELTS options",
+    heading: "Find the support that fits your preparation.",
+    fallback: "IELTS coaching is provided online. Current format, schedule, duration, feedback arrangements, availability and fee will be confirmed before you enrol.",
+    primaryLabel: "Get My IELTS Recommendation",
+    secondaryLabel: "Ask Aisha on WhatsApp",
+    supportingNote: "No payment is required to ask. You can review the complete details before deciding.",
+    secondaryMessage: "Hi Aisha! I would like to ask about the current IELTS coaching options, including format, schedule, duration, feedback arrangements, availability and fee. I need [Academic or General Training], my target score is [score], and my deadline is [date].",
+  },
+  faq: {
+    id: "ielts-faq",
+    eyebrow: "IELTS questions",
+    heading: "A few questions before you begin.",
+    allFaqLabel: "View All Frequently Asked Questions",
+    allFaqHref: "/faq",
+  },
+  finalCta: {
+    id: "ielts-enquiry",
+    eyebrow: "Your IELTS next step",
+    heading: "Get a preparation plan built around your goal.",
+    body: "Share your target score, current level and deadline. Aisha will recommend the most suitable next step and confirm the available format, schedule and fee.",
+    primaryLabel: "Get My IELTS Recommendation",
+    secondaryLabel: "Ask Aisha on WhatsApp",
+    supportingText: "No payment is required to ask.",
+  },
+} as const;
