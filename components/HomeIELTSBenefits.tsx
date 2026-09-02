@@ -70,7 +70,7 @@ export default function HomeIELTSBenefits() {
           ))}
         </div>
 
-        <figure className="mx-auto grid max-w-5xl items-center gap-7 overflow-hidden rounded-2xl border border-sea-edge bg-sea-wash p-6 sm:p-8 md:grid-cols-[auto_1fr] md:gap-9 lg:p-10">
+        <figure id="student-experience" className="mx-auto grid max-w-5xl items-center gap-7 overflow-hidden rounded-2xl border border-sea-edge bg-sea-wash p-6 sm:p-8 md:grid-cols-[auto_1fr] md:gap-9 lg:p-10">
           <div className="relative mx-auto h-28 w-28 shrink-0 overflow-hidden rounded-full border-4 border-white shadow-sm sm:h-32 sm:w-32">
             <Image
               src={ieltsStudentExperience.image}

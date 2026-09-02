@@ -1,3 +1,5 @@
+import { IELTS_RECOMMENDATION_MESSAGE } from "@/content/homeCtas";
+
 export const homeGettingStarted = {
   eyebrow: "Getting started",
   heading: "From your first message to your first lesson.",
@@ -20,6 +22,5 @@ export const homeGettingStarted = {
   ],
   ctaLabel: "Get My Free Recommendation",
   supportingLine: "No payment required to ask. Review your options before deciding.",
-  whatsappMessage:
-    "Hi Aisha! I'd like a free programme recommendation. My goal, current level, deadline and usual availability are: [details].",
+  whatsappMessage: IELTS_RECOMMENDATION_MESSAGE,
 } as const;

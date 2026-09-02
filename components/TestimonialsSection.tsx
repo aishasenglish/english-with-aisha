@@ -39,7 +39,7 @@ export default function TestimonialsSection() {
 
         {hasMoreStories && (
           <Link
-            href="/success-stories"
+            href="/#student-experience"
             className="font-serif text-sm font-medium uppercase tracking-wide border-b-2 border-coral min-h-11 hover:text-amber-dark inline-flex items-center gap-2"
           >
             Read More Student Stories

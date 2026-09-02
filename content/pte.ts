@@ -576,7 +576,7 @@ export const ptePage = {
     scheduledBody: "Check the start date, schedule, format and time zone before asking about this intake.",
     timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
     intakeCtaLabel: "Ask About This PTE Intake",
-    moreAvailabilityLabel: "View all PTE availability",
+    moreAvailabilityLabel: "Ask about additional PTE availability",
   },
 
   // PTE Step 8: heading copy for components/pte/PTEFAQ.tsx. The eight question/answer pairs

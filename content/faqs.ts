@@ -114,7 +114,7 @@ export const faqs: FAQ[] = [
     id: "new-batches",
     question: "How often do new batches start?",
     answer:
-      "New intake dates are published only once confirmed, so how often they open can vary by programme. Ask about the next confirmed start date, or check current published availability on the batches page.",
+      "New intake dates are published only once confirmed, so how often they open can vary by programme. Ask about the next confirmed start date, or check the availability section on the relevant programme page.",
     published: true,
   },
   {

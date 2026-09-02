@@ -7,7 +7,7 @@ const linkClass =
 export default function AudiencePathways() {
   return (
     <section
-      id="choose-your-path"
+      id="programme-guidance"
       className="bg-ivory py-14 sm:py-16 lg:py-20 px-4"
       aria-labelledby="audience-pathways-heading"
     >

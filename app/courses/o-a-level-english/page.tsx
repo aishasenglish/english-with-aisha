@@ -5,7 +5,6 @@ import FadeUp from "@/components/FadeUp";
 import IncludedList from "@/components/IncludedList";
 import BatchTable from "@/components/BatchTable";
 import GroupedFAQAccordion, { type FAQGroup } from "@/components/GroupedFAQAccordion";
-import CTASection from "@/components/CTASection";
 import { courses } from "@/content/courses";
 import { site } from "@/content/site";
 import { whatsappLink } from "@/lib/whatsapp";
@@ -34,12 +33,19 @@ export const metadata: Metadata = {
     url: pageUrl,
     images: [
       {
-        url: "/images/og-o-a-level.jpg",
-        width: 1200,
-        height: 630,
+        url: "/images/og-image.jpg",
+        width: 960,
+        height: 1280,
         alt: `O & A Level English — ${site.brandName}`,
       },
     ],
+  },
+  twitter: {
+    card: "summary",
+    title: `O & A Level English Tuition Online | ${site.brandName}`,
+    description:
+      "Online O Level, IGCSE and A Level English coaching for Cambridge and Edexcel students.",
+    images: ["/images/og-image.jpg"],
   },
 };
 
@@ -240,7 +246,7 @@ const methodSteps = [
 const parentItems = [
   {
     title: "An honest working grade, not encouragement",
-    body: "After the first assessment you will be told the grade your child is currently working at — including when that is uncomfortable to hear. A tutor who tells you everything is going well for six months is not doing you a service.",
+    body: "After the first marked task you will be told the grade your child is currently working at — including when that is uncomfortable to hear. A tutor who tells you everything is going well for six months is not doing you a service.",
   },
   {
     title: "Evidence you can read yourself",
@@ -294,7 +300,7 @@ const faqGroups: FAQGroup[] = [
         id: "oal-parent-try-before-committing",
         question: "Can we try before committing?",
         answer:
-          "Yes. Start with the free assessment — your child completes a short written task, I mark it properly, and you receive an honest read on where they currently stand and whether I can genuinely help. There is no obligation attached to it.",
+          "Ask Aisha to confirm whether a trial lesson or initial work review is currently available. Review the confirmed format and fee before deciding.",
       },
       {
         id: "oal-parent-retaking",
@@ -453,19 +459,16 @@ export default function OALevelEnglishPage() {
               ))}
             </ul>
             <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center lg:justify-start">
-              <Button href="/free-diagnostic-test" variant="coral" size="lg" className="w-full sm:w-auto">
-                Book a Free Assessment
-              </Button>
               <Button
                 href={whatsappLink(
-                  "Hi Aisha! I'd like to ask about O/A Level English coaching. Could you share the batch dates, fees, and how the assessment works?"
+                  "Hi Aisha! I'd like to ask about O/A Level and IGCSE English coaching. The student's level, board, syllabus and exam date are:"
                 )}
-                variant="outline"
+                variant="coral"
                 size="lg"
                 external
-                className="border-ink text-ink hover:bg-ink hover:text-white w-full sm:w-auto"
+                className="w-full sm:w-auto"
               >
-                Chat on WhatsApp
+                Ask About School English
               </Button>
             </div>
           </div>
@@ -878,11 +881,13 @@ export default function OALevelEnglishPage() {
         </div>
       </section>
 
-      <CTASection
-        title="Find out where your child actually stands."
-        subtitle="Start with a free assessment — a short written task, properly marked, and an honest read on the grade they are currently working at. Or message me directly and we will talk it through first."
-        whatsappMessage="Hi Aisha! I'd like to book a free assessment for O/A Level English."
-      />
+      <section className="border-t border-line bg-surface-tint px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 className="mb-4 text-[1.9rem] font-semibold tracking-[-0.025em] text-ink sm:text-4xl">Discuss the learner’s English goals with Aisha.</h2>
+          <p className="mb-7 text-base leading-relaxed text-ink-soft sm:text-lg">Share the student’s level, board, syllabus, exam date and current concerns. Aisha will confirm the most relevant next step and current availability.</p>
+          <a href={whatsappLink("Hi Aisha! I'd like to ask about O/A Level and IGCSE English coaching. The student's level, board, syllabus, exam date and current concerns are:")} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 w-full items-center justify-center rounded-[10px] bg-teal px-6 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-sea-deep sm:w-auto">Ask About School English</a>
+        </div>
+      </section>
     </>
   );
 }

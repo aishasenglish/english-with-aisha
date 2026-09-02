@@ -1,42 +1,72 @@
 import type { Metadata } from "next";
-import FAQAccordion from "@/components/FAQAccordion";
-import CTASection from "@/components/CTASection";
-import FadeUp from "@/components/FadeUp";
+import GroupedFAQAccordion, { type FAQGroup } from "@/components/GroupedFAQAccordion";
+import HomeFinalCTA from "@/components/HomeFinalCTA";
+import { selectPublishedFaqs } from "@/content/faqs";
+
+const title = "IELTS Coaching FAQs | Aisha’s English";
+const description =
+  "Answers about IELTS preparation, online lesson formats, schedules, fees, enrolment and Aisha’s other English programmes.";
 
 export const metadata: Metadata = {
-  title: "FAQ",
-  description:
-    "Frequently asked questions about English coaching with Aisha — programmes, fees, schedules, and how enquiries work.",
+  title: { absolute: title },
+  description,
+  alternates: { canonical: "/faq" },
+  openGraph: { title, description, url: "/faq" },
+  twitter: { title, description },
 };
 
-// Spoken English Step 10: the FAQPage JSON-LD previously emitted here was removed — Google
-// announced the FAQ rich-result feature would stop appearing from 7 May 2026 and removed the
-// corresponding documentation in June 2026, so the schema had no remaining Google Search consumer.
-// No FAQ content was removed; only the now-obsolete structured data. See
-// docs/spoken-english-offer-verification.md's Step 10 section for the full record.
+const faqGroups: FAQGroup[] = [
+  {
+    label: "IELTS preparation",
+    faqs: selectPublishedFaqs([
+      "ielts-level-unknown",
+      "ielts-preparation-duration",
+      "grade-guarantee",
+      "ielts-formats",
+      "personal-feedback",
+      "mock-exams",
+    ]),
+  },
+  {
+    label: "Formats and schedules",
+    faqs: selectPublishedFaqs([
+      "international-students",
+      "live-or-recorded",
+      "missed-class",
+      "new-batches",
+      "one-to-one-help",
+      "platform",
+      "programme-format-schedule",
+    ]),
+  },
+  {
+    label: "Fees and enrolment",
+    faqs: selectPublishedFaqs(["fees-and-schedules", "fees-payment", "enquiry-details"]),
+  },
+  {
+    label: "Other programmes",
+    faqs: selectPublishedFaqs(["programmes-taught", "choosing-programme", "choosing-language-test"]),
+  },
+];
+
 export default function FAQPage() {
   return (
     <>
-      <section className="bg-white text-ink pt-28 pb-16 lg:pt-36 lg:pb-20 px-4 border-b border-line">
-        <div className="max-w-3xl mx-auto text-center">
-          <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4">
-            Frequently asked questions.
-          </h1>
-          <p className="text-ink-soft text-lg">
-            Everything you need to know before getting started.
-          </p>
+      <section className="border-b border-line bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">Before you begin</p>
+          <h1 className="mb-4 text-[2.2rem] font-semibold tracking-[-0.03em] text-ink sm:text-5xl">Frequently asked questions.</h1>
+          <p className="text-base leading-relaxed text-ink-soft sm:text-lg">Clear answers about IELTS coaching, current options and other English programmes.</p>
         </div>
       </section>
 
-      <section className="py-20 px-4 bg-ivory">
-        <div className="max-w-2xl mx-auto">
-          <FadeUp>
-            <FAQAccordion />
-          </FadeUp>
+      <section className="bg-surface-tint px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-3xl">
+          <GroupedFAQAccordion groups={faqGroups} />
         </div>
       </section>
 
-      <CTASection />
+      <HomeFinalCTA />
     </>
   );
 }

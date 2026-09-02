@@ -18,7 +18,7 @@ function ArrowIcon() {
 
 export default function HomeGettingStarted() {
   return (
-    <section className="bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-18" aria-labelledby="getting-started-heading">
+    <section id="getting-started" className="bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-18" aria-labelledby="getting-started-heading">
       <div className="mx-auto max-w-6xl">
         <div className="mx-auto mb-9 max-w-3xl text-center sm:mb-11">
           <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">

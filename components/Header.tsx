@@ -3,460 +3,274 @@
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { NAV, headerWhatsappMessage } from "@/content/nav";
-import { whatsappLink } from "@/lib/whatsapp";
+import { usePathname } from "next/navigation";
+import { DESKTOP_NAV, IELTS_RECOMMENDATION_HREF, OTHER_PROGRAMMES } from "@/content/nav";
 import { site } from "@/content/site";
 
-function ChevronIcon({ className = "" }: { className?: string }) {
+function ChevronIcon({ open }: { open: boolean }) {
   return (
-    <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+    <svg
+      className={`h-4 w-4 transition-transform ${open ? "rotate-180" : ""}`}
+      viewBox="0 0 20 20"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.8"
+      aria-hidden="true"
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="m5.5 7.5 4.5 4.5 4.5-4.5" />
     </svg>
   );
 }
 
-const coursesItem = NAV[0];
-const plainLinks = NAV.slice(1);
-const whatsappHref = whatsappLink(headerWhatsappMessage);
+function MenuIcon({ open }: { open: boolean }) {
+  return (
+    <svg className="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
+      {open ? (
+        <path strokeLinecap="round" d="M6 6l12 12M18 6 6 18" />
+      ) : (
+        <path strokeLinecap="round" d="M4 7h16M4 12h16M4 17h16" />
+      )}
+    </svg>
+  );
+}
+
+function Brand() {
+  return (
+    <Link href="/" className="flex min-h-11 shrink-0 items-center gap-3" aria-label={`${site.brandName} home`}>
+      <Image src="/images/logo-mark.png" alt="" width={58} height={40} className="h-7 w-auto sm:h-8" />
+      <span className="leading-none">
+        <span className="block whitespace-nowrap text-[0.82rem] font-semibold tracking-[0.12em] text-ink sm:text-sm">
+          {site.brandName}
+        </span>
+        <span className="mt-1 block whitespace-nowrap text-[0.57rem] font-medium tracking-[0.16em] text-ink-faint">
+          ONLINE ENGLISH COACHING
+        </span>
+      </span>
+    </Link>
+  );
+}
 
 export default function Header() {
-  const [open, setOpen] = useState<number | null>(null);
-  const [stuck, setStuck] = useState(false);
-  const [drawer, setDrawer] = useState(false);
-  const [drawerOpen, setDrawerOpen] = useState<number | null>(null);
+  const pathname = usePathname();
+  const [scrolled, setScrolled] = useState(false);
+  const [desktopProgrammesOpen, setDesktopProgrammesOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileProgrammesOpen, setMobileProgrammesOpen] = useState(false);
+  const programmesRef = useRef<HTMLDivElement>(null);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
-  const drawerRef = useRef<HTMLDivElement>(null);
-  const wasOpenRef = useRef(false);
-  const hoverOpenedRef = useRef<number | null>(null);
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null);
+  const mobileWasOpenRef = useRef(false);
+
+  const isCurrent = (href: string) =>
+    href === "/courses" ? pathname === "/courses" : pathname === href || pathname.startsWith(`${href}/`);
 
   useEffect(() => {
-    const onScroll = () => setStuck(window.scrollY > 8);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    const handleScroll = () => setScrolled(window.scrollY > 8);
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Escape closes both the desktop mega menu and the mobile drawer.
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
-      setOpen(null);
-      setDrawer(false);
+    const handlePointerDown = (event: PointerEvent) => {
+      if (!programmesRef.current?.contains(event.target as Node)) setDesktopProgrammesOpen(false);
     };
-    document.addEventListener("keydown", onKey);
-    return () => document.removeEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", handlePointerDown);
+    return () => document.removeEventListener("pointerdown", handlePointerDown);
   }, []);
 
-  // Close (and reset) the drawer if the viewport grows into a breakpoint that no longer uses it.
   useEffect(() => {
-    const mql = window.matchMedia("(min-width: 768px)");
-    const onChange = (e: MediaQueryListEvent) => {
-      if (e.matches) {
-        setDrawer(false);
-        setDrawerOpen(null);
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setDesktopProgrammesOpen(false);
+      setMobileOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 1280px)");
+    const handleChange = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        setMobileOpen(false);
+        setMobileProgrammesOpen(false);
       }
     };
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
+    desktop.addEventListener("change", handleChange);
+    return () => desktop.removeEventListener("change", handleChange);
   }, []);
 
-  // Lock background scroll while the drawer is open, restoring whatever inline value was there before.
   useEffect(() => {
-    if (!drawer) return;
-    const previous = document.body.style.overflow;
+    if (!mobileOpen) return;
+    const previousOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    const frame = requestAnimationFrame(() => firstMobileLinkRef.current?.focus());
     return () => {
-      document.body.style.overflow = previous;
+      cancelAnimationFrame(frame);
+      document.body.style.overflow = previousOverflow;
     };
-  }, [drawer]);
+  }, [mobileOpen]);
 
-  // Hide the rest of the page from assistive technology and keyboard navigation while the drawer is open.
   useEffect(() => {
-    if (!drawer) return;
-    const drawerEl = drawerRef.current;
-    const madeInert: HTMLElement[] = [];
-    Array.from(document.body.children).forEach((child) => {
-      const el = child as HTMLElement;
-      if (el !== drawerEl && !el.hasAttribute("inert")) {
-        el.setAttribute("inert", "");
-        madeInert.push(el);
-      }
-    });
-    return () => {
-      madeInert.forEach((el) => el.removeAttribute("inert"));
-    };
-  }, [drawer]);
-
-  // Move focus into the drawer when it opens, preferring the close button.
-  useEffect(() => {
-    if (!drawer) return;
-    closeButtonRef.current?.focus();
-  }, [drawer]);
-
-  // Trap Tab focus inside the drawer while it is open.
-  useEffect(() => {
-    if (!drawer) return;
-    const container = drawerRef.current;
-    if (!container) return;
-    const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key !== "Tab") return;
-      const focusables = Array.from(
-        container.querySelectorAll<HTMLElement>(
-          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-        )
-      );
-      if (focusables.length === 0) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-    document.addEventListener("keydown", onKeyDown);
-    return () => document.removeEventListener("keydown", onKeyDown);
-  }, [drawer]);
-
-  // Restore focus to the menu button once the drawer finishes closing.
-  useEffect(() => {
-    if (drawer) {
-      wasOpenRef.current = true;
+    if (mobileOpen) {
+      mobileWasOpenRef.current = true;
       return;
     }
-    if (!wasOpenRef.current) return;
-    wasOpenRef.current = false;
-    const raf = requestAnimationFrame(() => menuButtonRef.current?.focus());
-    return () => cancelAnimationFrame(raf);
-  }, [drawer]);
+    if (!mobileWasOpenRef.current) return;
+    mobileWasOpenRef.current = false;
+    const frame = requestAnimationFrame(() => menuButtonRef.current?.focus());
+    return () => cancelAnimationFrame(frame);
+  }, [mobileOpen]);
+
+  const closeMobile = () => {
+    setMobileOpen(false);
+    setMobileProgrammesOpen(false);
+  };
+
+  const navLinkClass = (active: boolean) =>
+    `inline-flex min-h-11 items-center rounded-lg px-3 text-[0.92rem] font-medium transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal ${
+      active ? "text-teal" : "text-ink hover:text-teal"
+    }`;
 
   return (
-    <>
-      <header
-        className={`sticky top-0 z-40 bg-white border-b border-stone transition-shadow ${
-          stuck ? "shadow-md" : ""
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3 md:gap-4 lg:gap-6 h-16 xl:h-20">
-            <Link href="/" className="flex min-h-11 flex-row items-center gap-3.5 shrink-0">
-              <Image
-                src="/images/logo-mark.png"
-                alt=""
-                width={58}
-                height={40}
-                className="h-[26px] sm:h-[28px] w-auto"
-              />
-              <span className="flex flex-col justify-center leading-tight">
-                {/* Brand-name standardisation: reads the canonical site.brandName ("AISHAS
-                    ENGLISH", no apostrophe) rather than a second hard-coded literal, so this
-                    header can never drift from the one source of truth again. */}
-                <span className="font-sans font-bold text-sm text-charcoal tracking-wider whitespace-nowrap">
-                  {site.brandName}
-                </span>
-                <span className="text-[9px] font-medium text-muted tracking-widest whitespace-nowrap">
-                  {/* TOEFL Step 11: "LIVE" asserted a universal synchronous-delivery claim this
-                      site-wide brand subtitle can't back up for every programme (see
-                      docs/toefl-offer-verification.md, docs/pte-offer-verification.md and
-                      docs/ielts-offer-verification.md, where live/synchronous delivery is
-                      "Needs owner confirmation"). Removed rather than left unconfirmed. */}
-                  ONLINE ENGLISH COACHING
-                </span>
-              </span>
+    <header
+      className={`fixed inset-x-0 top-0 z-50 h-[70px] border-b bg-white/[0.86] backdrop-blur-[12px] transition-[border-color,box-shadow] xl:h-[92px] ${
+        scrolled ? "border-line shadow-[0_8px_30px_rgba(26,26,26,0.07)]" : "border-transparent"
+      }`}
+    >
+      <div className="mx-auto flex h-full max-w-[1200px] items-center px-4 sm:px-6 lg:px-8">
+        <Brand />
+
+        <nav className="hidden min-w-0 flex-1 items-center justify-center gap-1 xl:flex" aria-label="Primary navigation">
+          <Link href="/courses/ielts" className={navLinkClass(pathname === "/courses/ielts")}>
+            IELTS Coaching
+          </Link>
+
+          <div
+            ref={programmesRef}
+            className="relative flex items-center"
+            onMouseEnter={() => setDesktopProgrammesOpen(true)}
+            onMouseLeave={() => setDesktopProgrammesOpen(false)}
+            onBlur={(event) => {
+              if (!event.currentTarget.contains(event.relatedTarget as Node)) setDesktopProgrammesOpen(false);
+            }}
+          >
+            <Link href="/courses" className={`${navLinkClass((pathname.startsWith("/courses/") && pathname !== "/courses/ielts") || pathname === "/courses")} pr-1`}>
+              Other Programmes
             </Link>
+            <button
+              type="button"
+              aria-label="Toggle Other Programmes menu"
+              aria-expanded={desktopProgrammesOpen}
+              aria-controls="desktop-programmes-menu"
+              onClick={() => setDesktopProgrammesOpen((open) => !open)}
+              className="flex h-11 w-9 items-center justify-center rounded-lg text-ink transition-colors hover:text-teal focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal"
+            >
+              <ChevronIcon open={desktopProgrammesOpen} />
+            </button>
 
-            {/* Tablets, 768–1279px: simplified inline nav, no mega menu, no hamburger. */}
-            <nav className="hidden md:flex xl:hidden items-center gap-1 ml-1 h-full" aria-label="Main">
-              <Link
-                href="/courses"
-                className="h-full flex items-center px-2.5 font-serif font-normal uppercase tracking-wider text-sm text-ink hover:text-coral transition-colors"
-              >
-                Courses
-              </Link>
-              <Link
-                href="/about"
-                className="h-full flex items-center px-2.5 font-serif font-normal uppercase tracking-wider text-sm text-ink hover:text-coral transition-colors"
-              >
-                About
-              </Link>
-            </nav>
-
-            {/* Desktop, 1280px+: full primary navigation and Courses mega menu. */}
-            <nav className="hidden xl:flex items-center gap-1 ml-4 h-full" aria-label="Main">
-              {NAV.map((item, i) =>
-                item.href ? (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => setOpen(null)}
-                    className="h-full flex items-center px-3 font-serif font-normal uppercase tracking-wider text-sm text-ink hover:text-coral transition-colors"
-                  >
-                    {item.label}
-                  </Link>
-                ) : (
-                  <div
-                    key={item.label}
-                    className="relative h-full flex items-center"
-                    onMouseEnter={() => {
-                      hoverOpenedRef.current = i;
-                      setOpen(i);
-                    }}
-                    onMouseLeave={() => {
-                      hoverOpenedRef.current = null;
-                      setOpen((o) => (o === i ? null : o));
-                    }}
-                    onBlur={(e) => {
-                      if (!e.currentTarget.contains(e.relatedTarget as Node)) {
-                        setOpen((o) => (o === i ? null : o));
-                      }
-                    }}
-                  >
-                    <button
-                      className="h-full flex items-center gap-1.5 px-3 font-serif font-normal uppercase tracking-wider text-sm text-ink hover:text-coral transition-colors relative whitespace-nowrap"
-                      aria-expanded={open === i}
-                      aria-controls={`mega-panel-${i}`}
-                      onClick={() => {
-                        // A real mouse click always fires onMouseEnter a couple of milliseconds
-                        // beforehand, which already opened this panel via a ref (not yet-committed
-                        // state, so `open` here can still be stale). Without this guard the click's
-                        // own toggle would instantly close what hovering just opened. Keyboard/touch
-                        // clicks never touch the ref, so they still toggle normally.
-                        if (hoverOpenedRef.current === i) {
-                          hoverOpenedRef.current = null;
-                          return;
-                        }
-                        setOpen((o) => (o === i ? null : i));
-                      }}
-                    >
-                      {item.label}
-                      <ChevronIcon
-                        className={`w-4 h-4 shrink-0 transition-transform ${open === i ? "rotate-180" : ""}`}
-                      />
-                      <span
-                        className={`absolute left-3 right-3 bottom-0 h-[3px] bg-coral origin-left transition-transform duration-200 ${
-                          open === i ? "scale-x-100" : "scale-x-0"
-                        }`}
-                      />
-                    </button>
-
-                    {open === i && (
-                      <div
-                        id={`mega-panel-${i}`}
-                        className="absolute top-full left-0 z-50 pt-2 w-[min(720px,92vw)]"
-                      >
-                        <div className="bg-white border border-stone border-t-[3px] border-t-coral shadow-xl p-8">
-                          <div className="grid grid-cols-3 gap-8">
-                            {item.columns!.map((col) => (
-                              <div key={col.heading}>
-                                <p className="text-[13px] uppercase tracking-[0.10em] text-muted font-medium mb-3">
-                                  {col.heading}
-                                </p>
-                                <ul className="flex flex-col gap-0.5">
-                                  {col.links.map((l) => (
-                                    <li key={l.label}>
-                                      {l.external ? (
-                                        <a
-                                          href={l.href}
-                                          target="_blank"
-                                          rel="noopener noreferrer"
-                                          className="block -ml-2.5 px-2.5 py-2 rounded-sm hover:bg-amber-tint group"
-                                        >
-                                          <span className="block text-sm font-medium text-ink group-hover:text-amber-dark">
-                                            {l.label}
-                                          </span>
-                                          {l.note && (
-                                            <span className="block text-xs text-muted mt-0.5 group-hover:text-amber-dark/85">
-                                              {l.note}
-                                            </span>
-                                          )}
-                                        </a>
-                                      ) : (
-                                        <Link
-                                          href={l.href}
-                                          onClick={() => setOpen(null)}
-                                          className="block -ml-2.5 px-2.5 py-2 rounded-sm hover:bg-amber-tint group"
-                                        >
-                                          <span className="block text-sm font-medium text-ink group-hover:text-amber-dark">
-                                            {l.label}
-                                          </span>
-                                          {l.note && (
-                                            <span className="block text-xs text-muted mt-0.5 group-hover:text-amber-dark/85">
-                                              {l.note}
-                                            </span>
-                                          )}
-                                        </Link>
-                                      )}
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            ))}
-                          </div>
-
-                          {item.feature && (
-                            <div className="mt-6 pt-5 border-t border-stone flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-                              <div>
-                                <p className="font-serif text-[0.68rem] font-medium uppercase tracking-[0.10em] text-amber-dark mb-1">
-                                  {item.feature.eyebrow}
-                                </p>
-                                <p className="text-sm text-muted">{item.feature.body}</p>
-                              </div>
-                              <Link
-                                href={item.feature.cta.href}
-                                onClick={() => setOpen(null)}
-                                className="shrink-0 inline-flex min-h-11 items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
-                              >
-                                {item.feature.cta.label}
-                              </Link>
-                            </div>
-                          )}
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                )
-              )}
-            </nav>
-
-            <div className="flex items-center gap-3 ml-auto">
-              <Link
-                href="/#choose-your-path"
-                className="hidden xl:inline-flex items-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 transition-colors"
-              >
-                Find Your Programme
-              </Link>
-              <a
-                href={whatsappHref}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp Aisha"
-                className="hidden md:inline-flex items-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-2.5 min-h-11 transition-colors"
-              >
-                <span className="xl:hidden">WhatsApp</span>
-                <span className="hidden xl:inline">WhatsApp Aisha</span>
-              </a>
-              <button
-                ref={menuButtonRef}
-                onClick={() => setDrawer(true)}
-                aria-label="Open menu"
-                aria-expanded={drawer}
-                aria-controls="mobile-navigation"
-                className="md:hidden w-12 h-12 flex items-center justify-center border border-line-strong rounded-sm text-ink shrink-0"
-              >
-                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-                </svg>
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {drawer && (
-        <div
-          ref={drawerRef}
-          id="mobile-navigation"
-          className="fixed inset-0 z-50 md:hidden"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Site navigation"
-        >
-          <div className="absolute inset-0 bg-ink/60" onClick={() => setDrawer(false)} aria-hidden />
-          <div className="absolute top-0 right-0 bottom-0 w-[min(100%,22rem)] bg-white overflow-y-auto overscroll-contain shadow-2xl">
-            <div className="flex items-center justify-between h-16 px-4 border-b border-stone">
-              <span className="font-serif font-medium text-ink">Menu</span>
-              <button
-                ref={closeButtonRef}
-                onClick={() => setDrawer(false)}
-                aria-label="Close menu"
-                className="w-11 h-11 flex items-center justify-center text-ink"
-              >
-                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <nav className="px-4 pt-2 pb-[max(1.25rem,env(safe-area-inset-bottom))]" aria-label="Mobile">
-              {coursesItem.columns!.map((col, i) => (
-                <div key={col.heading} className="border-b border-stone">
-                  <button
-                    onClick={() => setDrawerOpen((o) => (o === i ? null : i))}
-                    aria-expanded={drawerOpen === i}
-                    aria-controls={`mobile-accordion-panel-${i}`}
-                    className="w-full flex items-center justify-between min-h-12 font-serif font-medium text-ink text-left"
-                  >
-                    {col.heading}
-                    <ChevronIcon
-                      className={`w-4 h-4 shrink-0 transition-transform ${drawerOpen === i ? "rotate-180" : ""}`}
-                    />
-                  </button>
-                  {drawerOpen === i && (
-                    <div id={`mobile-accordion-panel-${i}`} className="pb-3">
-                      <ul>
-                        {col.links.map((l) => (
-                          <li key={l.label}>
-                            {l.external ? (
-                              <a
-                                href={l.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                onClick={() => setDrawer(false)}
-                                className="flex items-center min-h-11 text-sm text-ink pl-2"
-                              >
-                                {l.label}
-                              </a>
-                            ) : (
-                              <Link
-                                href={l.href}
-                                onClick={() => setDrawer(false)}
-                                className="flex items-center min-h-11 text-sm text-ink pl-2"
-                              >
-                                {l.label}
-                              </Link>
-                            )}
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
+            {desktopProgrammesOpen && (
+              <div id="desktop-programmes-menu" className="absolute left-0 top-full w-[19.5rem] pt-3">
+                <div className="rounded-2xl border border-line bg-white p-2 shadow-[0_18px_45px_rgba(26,26,26,0.12)]">
+                  <ul>
+                    {OTHER_PROGRAMMES.map((item, index) => (
+                      <li key={item.label} className={index === 1 ? "mt-1 border-t border-line pt-1" : ""}>
+                        {item.external ? (
+                          <a href={item.href} target="_blank" rel="noopener noreferrer" className="flex min-h-11 items-center rounded-xl px-3.5 py-2 text-sm font-medium text-ink transition-colors hover:bg-sea-wash hover:text-sea-deep focus-visible:outline-2 focus-visible:outline-teal">
+                            {item.label}
+                          </a>
+                        ) : (
+                          <Link href={item.href} onClick={() => setDesktopProgrammesOpen(false)} className={`flex min-h-11 items-center rounded-xl px-3.5 py-2 text-sm font-medium transition-colors hover:bg-sea-wash hover:text-sea-deep focus-visible:outline-2 focus-visible:outline-teal ${isCurrent(item.href) ? "bg-sea-wash text-sea-deep" : "text-ink"}`}>
+                            {item.label}
+                          </Link>
+                        )}
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-              ))}
-
-              {plainLinks.map((item) => (
-                <Link
-                  key={item.label}
-                  href={item.href!}
-                  onClick={() => setDrawer(false)}
-                  className="flex items-center min-h-12 font-serif font-medium text-ink border-b border-stone"
-                >
-                  {item.label}
-                </Link>
-              ))}
-
-              <div className="pt-5 flex flex-col gap-3">
-                <Link
-                  href="/#choose-your-path"
-                  onClick={() => setDrawer(false)}
-                  className="flex items-center justify-center min-h-12 rounded-sm border-2 border-ink text-ink font-serif font-medium uppercase tracking-wide text-xs px-4 py-3"
-                >
-                  Find Your Programme
-                </Link>
-                <a
-                  href={whatsappHref}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  onClick={() => setDrawer(false)}
-                  className="flex items-center justify-center min-h-12 rounded-sm bg-coral text-white font-serif font-medium uppercase tracking-wide text-xs px-4 py-3"
-                >
-                  WhatsApp Aisha
-                </a>
               </div>
+            )}
+          </div>
+
+          {DESKTOP_NAV.slice(1).map((item) => (
+            <Link key={item.href} href={item.href} className={navLinkClass(pathname === item.href)}>
+              {item.label}
+            </Link>
+          ))}
+        </nav>
+
+        <a
+          href={IELTS_RECOMMENDATION_HREF}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="ml-4 hidden min-h-11 shrink-0 items-center justify-center rounded-[10px] bg-teal px-5 text-sm font-semibold text-white transition-colors hover:bg-sea-deep active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal xl:inline-flex"
+        >
+          Get My Free Recommendation
+        </a>
+
+        <button
+          ref={menuButtonRef}
+          type="button"
+          aria-label={mobileOpen ? "Close navigation" : "Open navigation"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-navigation"
+          onClick={() => setMobileOpen((open) => !open)}
+          className="ml-auto flex h-11 w-11 items-center justify-center rounded-lg border border-line-strong text-ink transition-colors hover:border-sea-edge hover:text-teal active:bg-sea-wash focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal xl:hidden"
+        >
+          <MenuIcon open={mobileOpen} />
+        </button>
+      </div>
+
+      {mobileOpen && (
+        <div id="mobile-navigation" className="fixed inset-x-0 top-[70px] z-40 h-[calc(100dvh-70px)] xl:hidden">
+          <button type="button" aria-label="Close navigation" onClick={closeMobile} className="absolute inset-0 h-full w-full bg-ink/35" />
+          <div role="dialog" aria-modal="true" aria-label="Site navigation" className="absolute right-0 top-0 h-full w-[min(100%,28rem)] overflow-y-auto overscroll-contain border-l border-line bg-white px-4 pb-[max(1.5rem,env(safe-area-inset-bottom))] pt-3 shadow-2xl sm:px-6">
+            <nav aria-label="Mobile navigation">
+              <ul className="divide-y divide-line">
+                <li>
+                  <Link ref={firstMobileLinkRef} href="/courses/ielts" onClick={closeMobile} className="flex min-h-14 items-center text-base font-semibold text-ink hover:text-teal">
+                    IELTS Coaching
+                  </Link>
+                </li>
+                <li className="py-1">
+                  <div className="flex items-center">
+                    <Link href="/courses" onClick={closeMobile} className="flex min-h-14 flex-1 items-center text-base font-semibold text-ink hover:text-teal">
+                      Other Programmes
+                    </Link>
+                    <button type="button" aria-label="Toggle Other Programmes" aria-expanded={mobileProgrammesOpen} aria-controls="mobile-programmes-menu" onClick={() => setMobileProgrammesOpen((open) => !open)} className="flex h-11 w-11 items-center justify-center rounded-lg text-ink hover:text-teal focus-visible:outline-2 focus-visible:outline-teal">
+                      <ChevronIcon open={mobileProgrammesOpen} />
+                    </button>
+                  </div>
+                  {mobileProgrammesOpen && (
+                    <ul id="mobile-programmes-menu" className="mb-2 rounded-xl bg-surface-tint p-2">
+                      {OTHER_PROGRAMMES.map((item) => (
+                        <li key={item.label}>
+                          {item.external ? (
+                            <a href={item.href} target="_blank" rel="noopener noreferrer" onClick={closeMobile} className="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-ink hover:bg-sea-wash hover:text-sea-deep">
+                              {item.label}
+                            </a>
+                          ) : (
+                            <Link href={item.href} onClick={closeMobile} className="flex min-h-11 items-center rounded-lg px-3 text-sm font-medium text-ink hover:bg-sea-wash hover:text-sea-deep">
+                              {item.label}
+                            </Link>
+                          )}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+                <li><Link href="/about" onClick={closeMobile} className="flex min-h-14 items-center text-base font-semibold text-ink hover:text-teal">About Aisha</Link></li>
+                <li><Link href="/faq" onClick={closeMobile} className="flex min-h-14 items-center text-base font-semibold text-ink hover:text-teal">FAQs</Link></li>
+                <li><Link href="/contact" onClick={closeMobile} className="flex min-h-14 items-center text-base font-semibold text-ink hover:text-teal">Contact</Link></li>
+              </ul>
+              <a href={IELTS_RECOMMENDATION_HREF} target="_blank" rel="noopener noreferrer" onClick={closeMobile} className="mt-5 flex min-h-12 w-full items-center justify-center rounded-[10px] bg-teal px-5 text-center text-sm font-semibold text-white transition-colors hover:bg-sea-deep active:translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-teal">
+                Get My Free Recommendation
+              </a>
             </nav>
           </div>
         </div>
       )}
-    </>
+    </header>
   );
 }

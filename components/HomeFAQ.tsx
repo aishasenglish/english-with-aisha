@@ -8,6 +8,7 @@ const FAQ_WHATSAPP_MESSAGE =
 export default function HomeFAQ() {
   return (
     <section
+      id="faqs"
       className="bg-surface-tint px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20"
       aria-labelledby="home-faq-heading"
     >

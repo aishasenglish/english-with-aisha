@@ -580,7 +580,7 @@ export const toeflPage = {
     scheduledBody: "Check the start date, schedule, format and Pakistan time before asking whether this intake suits your requirement.",
     timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
     intakeCtaLabel: "Ask About This TOEFL Intake",
-    moreAvailabilityLabel: "View all TOEFL availability",
+    moreAvailabilityLabel: "Ask about additional TOEFL availability",
   },
 
   // TOEFL Step 8: heading copy for components/toefl/TOEFLFAQ.tsx. The eight question/answer

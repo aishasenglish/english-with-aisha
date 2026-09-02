@@ -40,7 +40,7 @@ export const aboutEnquiry = {
   // it a "diagnostic test".
   configuredForm: {
     label: "Send a Detailed Enquiry",
-    href: "/free-diagnostic-test?source=about-page",
+    href: "/contact",
   },
   // Secondary action, email fallback -- shown instead of a silently broken form link when
   // Formspree is absent or invalid. Built with lib/contact.ts's emailLink() (safe encoding of

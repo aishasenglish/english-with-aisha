@@ -1,3 +1,4 @@
+import { IELTS_RECOMMENDATION_MESSAGE } from "@/content/homeCtas";
 import { site } from "@/content/site";
 
 /**
@@ -247,11 +248,10 @@ export const aboutContent = {
       width: 490,
       height: 468,
     },
-    primaryCta: { label: "Explore English Programmes", href: "/courses" },
+    primaryCta: { label: "Explore IELTS Coaching", href: "/courses/ielts" },
     secondaryCta: {
-      label: "Ask Aisha a Question",
-      message:
-        "Hi Aisha! I have a question about your teaching and which English programme may suit me. My question is:",
+      label: "Get My Free Recommendation",
+      message: IELTS_RECOMMENDATION_MESSAGE,
     },
   },
 
@@ -477,7 +477,7 @@ export const aboutContent = {
     // About Step 3 corrected app/how-it-works/page.tsx's misleading "Everything that comes with
     // each course" heading and two standing-offer/universal-delivery items (live sessions,
     // consultations) -- see that file's own comments -- so this link is now safe to feature.
-    closingLink: { label: "See how coaching decisions are made", href: "/how-it-works" },
+    closingLink: { label: "Explore IELTS Coaching", href: "/courses/ielts" },
   },
 
   // About Step 7: replaces the short Step 1 fitBoundary note with scenario-led route guidance.
@@ -544,7 +544,7 @@ export const aboutContent = {
       // About Step 8: added the same ?source=about-page label content/aboutEnquiry.ts's own
       // configured-form link uses, for consistency -- both links originate from this page and
       // open the identical generic, unlocked form variant.
-      formHref: "/free-diagnostic-test?source=about-page",
+      formHref: "/contact",
       whatsappLabel: "Ask Aisha on WhatsApp",
       whatsappMessage: "Hi Aisha! I would like help choosing the right English programme. My goal is:",
       emailLabel: "Email Aisha for a Course Recommendation",
@@ -582,7 +582,7 @@ export const aboutContent = {
     heading: "Experiences shared with permission",
     intro:
       "These comments are shown in the wording and identity format approved for publication. Individual experiences do not guarantee the same result for another learner.",
-    successStoriesLink: { label: "Read more learner and parent experiences", href: "/success-stories" },
+    successStoriesLink: { label: "Read a student experience", href: "/#student-experience" },
   },
 
   // About Step 8: the final-CTA content that used to live here (`finalCta`) has been migrated to

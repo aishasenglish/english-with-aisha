@@ -6,9 +6,18 @@ import { site } from "@/content/site";
 import { whatsappLink } from "@/lib/whatsapp";
 
 export const metadata: Metadata = {
-  title: "Contact",
-  description:
-    "Get in touch with Aisha — the fastest way is WhatsApp. Or send a message using the contact form.",
+  title: { absolute: "Contact Aisha | Aisha’s English" },
+  description: "Contact Aisha about live online IELTS coaching and other English programmes by WhatsApp or email.",
+  alternates: { canonical: "/contact" },
+  openGraph: {
+    title: "Contact Aisha | Aisha’s English",
+    description: "Contact Aisha about live online IELTS coaching and other English programmes by WhatsApp or email.",
+    url: "/contact",
+  },
+  twitter: {
+    title: "Contact Aisha | Aisha’s English",
+    description: "Contact Aisha about live online IELTS coaching and other English programmes by WhatsApp or email.",
+  },
 };
 
 export default function ContactPage() {

@@ -202,7 +202,7 @@ export default function EnglishWritingAvailability() {
 
         {hasMore && (
           <Link
-            href="/batches"
+            href="/contact"
             className="inline-flex min-h-11 items-center text-sm font-medium text-teal hover:text-ink underline underline-offset-2"
           >
             {availability.moreAvailabilityLabel}

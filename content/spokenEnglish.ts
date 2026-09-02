@@ -929,7 +929,7 @@ export const spokenEnglishPage = {
     scheduledBody: "Check the start date, schedule, format, duration and Pakistan time before asking whether this option suits your speaking goals.",
     timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
     intakeCtaLabel: "Ask About This Spoken English Option",
-    moreAvailabilityLabel: "View all Spoken English availability",
+    moreAvailabilityLabel: "Ask about additional Spoken English availability",
   },
 
   // Step 8: heading copy for components/spoken-english/SpokenEnglishFAQ.tsx. The eight

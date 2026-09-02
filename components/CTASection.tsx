@@ -18,7 +18,7 @@ export default function CTASection({
   title = "Ready to choose the right English support?",
   subtitle = "Share the learner's goal, current situation and preferred timeline. Aisha will recommend a suitable programme and confirm the current format, schedule and fee before you decide.",
   primaryLabel = "Request a Free Course Recommendation",
-  primaryHref = "/free-diagnostic-test",
+  primaryHref = "/courses/ielts",
   secondaryLabel = "Ask Aisha on WhatsApp",
   whatsappMessage = "Hi Aisha! I would like help choosing an English programme. The learner's goal is [goal], their current situation is [level/exam/details], and they hope to begin by [date].",
   supportingNote = "No payment is required to ask. Review the current details before deciding.",

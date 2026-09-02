@@ -76,10 +76,10 @@ export default function BatchTable({
           </a>
           {!hideViewAllLink && (
             <Link
-              href="/batches"
+              href="/contact"
               className="inline-flex min-h-12 items-center justify-center rounded-sm border-2 border-ink text-ink hover:bg-ink hover:text-white font-medium px-5 py-3 transition-colors"
             >
-              View All Availability Details
+              View Contact Options
             </Link>
           )}
         </div>

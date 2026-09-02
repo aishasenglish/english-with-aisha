@@ -1,219 +1,143 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import ServiceCard from "@/components/ServiceCard";
-import CourseChoiceGuide from "@/components/CourseChoiceGuide";
-import CorporateEnquiryPanel from "@/components/CorporateEnquiryPanel";
-import CoursesFAQ from "@/components/CoursesFAQ";
-import CTASection from "@/components/CTASection";
-import { courseCategories, coursesForCategory, type CourseCategoryId } from "@/content/courseCategories";
 import { courses } from "@/content/courses";
+import { getCoursePresentation } from "@/content/coursePresentation";
+import { corporateEnquiry } from "@/content/courseGuidance";
+import { IELTS_RECOMMENDATION_HREF, PROFESSIONAL_ENQUIRY_HREF } from "@/content/nav";
 import { site } from "@/content/site";
 
-const base = `https://${site.domain}`;
-const pageUrl = `${base}/courses`;
-const pageTitle = "Online English Courses and Tutoring";
-// TOEFL Step 10: "Compare live online English support" asserted a universal "live" claim that
-// contradicts TOEFL's verified offer (only online delivery is confirmed -- see
-// docs/toefl-offer-verification.md). Removed "live" rather than leaving an unconfirmed universal
-// claim this cross-programme description can't back up for every named programme.
-const pageDescription =
-  "Compare online English support for O Level, IGCSE and A Level students, IELTS, PTE and TOEFL candidates, and learners improving speaking, writing or workplace communication.";
+const title = "Online English Programmes | Aisha’s English";
+const description =
+  "Explore IELTS coaching first, plus online support for O/A Level and IGCSE English, PTE, TOEFL, spoken English and English writing.";
+const pageUrl = `https://${site.domain}/courses`;
 
 export const metadata: Metadata = {
-  title: pageTitle,
-  description: pageDescription,
+  title: { absolute: title },
+  description,
   alternates: { canonical: "/courses" },
-  openGraph: {
-    type: "website",
-    title: `${pageTitle} | ${site.brandName}`,
-    description: pageDescription,
-    url: pageUrl,
-    // Spoken English Step 10: corrected from a declared 1200x630 that didn't match the real file --
-    // /images/og-image.jpg is actually 960x1280 (portrait), same correction already applied to
-    // app/layout.tsx during IELTS Step 10. A properly composed 1200x630 asset for this hub page
-    // specifically is a separate future decision, not required by this step.
-    images: [{ url: "/images/og-image.jpg", width: 960, height: 1280, alt: site.brandName }],
-  },
+  openGraph: { type: "website", title, description, url: pageUrl },
+  twitter: { title, description },
 };
 
-// Visible hub order, flattened from the canonical category configuration rather than a second
-// manually-maintained list — School English, then Language Tests, then Communication Skills,
-// matching content/courseCategories.ts exactly.
+const otherProgrammeSlugs = [
+  "o-a-level-english",
+  "pte",
+  "toefl",
+  "spoken-english",
+  "english-writing",
+] as const;
+
 const collectionPageJsonLd = {
   "@context": "https://schema.org",
   "@type": "CollectionPage",
   "@id": `${pageUrl}#webpage`,
   url: pageUrl,
-  name: pageTitle,
-  description: pageDescription,
+  name: title,
+  description,
   mainEntity: {
     "@type": "ItemList",
     itemListOrder: "https://schema.org/ItemListOrderAscending",
-    numberOfItems: courseCategories.flatMap((c) => c.courseSlugs).length,
-    itemListElement: courseCategories
-      .flatMap((c) => c.courseSlugs)
-      .map((slug, i) => {
-        const course = courses.find((c) => c.slug === slug)!;
-        return {
-          "@type": "ListItem",
-          position: i + 1,
-          name: course.name,
-          url: `${base}/courses/${course.slug}`,
-        };
-      }),
+    numberOfItems: 6,
+    itemListElement: ["ielts", ...otherProgrammeSlugs].map((slug, index) => {
+      const course = courses.find((item) => item.slug === slug)!;
+      return {
+        "@type": "ListItem",
+        position: index + 1,
+        name: course.name,
+        url: `${pageUrl}/${slug}`,
+      };
+    }),
   },
 };
 
-type GoalChoice = {
-  label: string;
-  title: string;
-  description: string;
-  action: string;
-  href: `#${CourseCategoryId}`;
-};
-
-const GOAL_CHOICES: GoalChoice[] = [
-  {
-    label: "School English",
-    title: "O Level, IGCSE, AS and A Level",
-    description:
-      "For students preparing for board-specific English papers and parents looking for structured academic support.",
-    action: "View School English",
-    href: "#school-english",
-  },
-  {
-    label: "Language tests",
-    title: "IELTS, PTE and TOEFL",
-    description: "For study, migration or professional test requirements where a defined score is needed.",
-    action: "Compare Test Preparation",
-    href: "#language-tests",
-  },
-  {
-    label: "Communication skills",
-    title: "Spoken English and Writing",
-    description:
-      "For learners who want clearer speaking, stronger writing or more confidence in academic and professional situations.",
-    action: "Explore Communication Skills",
-    href: "#communication-skills",
-  },
-];
-
-// Layout per category — the single School English programme gets a constrained "featured"
-// width instead of stretching one card across a full grid; the two test-prep/communication
-// groups use a real grid whose column count matches how many cards they actually hold. At the
-// 640-1023px "two-plus-one" width, language-tests' third (odd) card is centred and widened
-// instead of sitting orphaned in an otherwise-empty row.
-const CATEGORY_GRID_CLASSES: Record<CourseCategoryId, string> = {
-  "school-english": "grid grid-cols-1 max-w-2xl mx-auto",
-  "language-tests":
-    "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6 [&>*:last-child]:sm:col-span-2 [&>*:last-child]:sm:max-w-md [&>*:last-child]:sm:mx-auto [&>*:last-child]:lg:col-span-1 [&>*:last-child]:lg:max-w-none [&>*:last-child]:lg:mx-0",
-  "communication-skills": "grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6",
-};
-
-const LANGUAGE_TESTS_NOTE =
-  "Choose the test required by the organisation receiving your score. If more than one test is accepted, ask Aisha which preparation route best matches your current skills and timeline.";
-
-const CTA_WHATSAPP_MESSAGE =
-  "Hi Aisha! I am comparing your English programmes. My goal is [goal or exam], my current situation is [details], and I hope to begin by [date]. Which programme would you recommend?";
+function ArrowIcon() {
+  return (
+    <svg className="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 12h14m-5-5 5 5-5 5" />
+    </svg>
+  );
+}
 
 export default function CoursesPage() {
+  const ielts = getCoursePresentation("ielts");
+
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageJsonLd) }} />
 
-      {/* Hero */}
-      <section className="bg-white text-ink pt-28 pb-14 lg:pt-36 lg:pb-16 px-4 border-b border-line">
-        <div className="max-w-3xl mx-auto text-center">
-          <p className="font-serif text-xs font-medium uppercase tracking-[0.10em] text-ink-faint flex items-center justify-center gap-3 mb-3">
-            Live online English programmes
-            <span className="h-0.5 w-9 bg-coral" aria-hidden="true" />
-          </p>
-          <h1 className="font-serif text-4xl md:text-5xl font-medium mb-4 leading-[1.1]">
-            Choose the English support that matches your goal.
+      <section className="border-b border-line bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">All programmes</p>
+          <h1 className="mb-4 text-[2.2rem] font-semibold tracking-[-0.03em] text-ink sm:text-5xl">
+            Start with the English support that matches your goal.
           </h1>
-          <p className="text-ink-soft text-lg leading-relaxed mb-3">
-            Explore school-English tuition, international test preparation, and focused speaking
-            or writing support. Each programme page explains who it is for, what it covers and
-            how to ask about the current format.
+          <p className="text-base leading-relaxed text-ink-soft sm:text-lg">
+            IELTS is Aisha’s main coaching focus. Other programmes remain available for learners preparing for school exams, other English tests, speaking and writing goals.
           </p>
-          <p className="text-ink-faint text-sm">Not sure where to begin? Start with your goal below.</p>
         </div>
       </section>
 
-      {/* Goal-based category navigator */}
-      <section className="py-12 sm:py-14 px-4 bg-ivory" aria-label="Choose your goal">
-        {/* Single column through tablet (spec: "a single column is acceptable in portrait" —
-            three equal columns are reserved for desktop width, not forced at 768px). */}
-        <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-5 sm:gap-6">
-          {GOAL_CHOICES.map((choice) => (
-            <article key={choice.href} className="flex flex-col h-full bg-white border border-stone rounded-md p-6">
-              <p className="text-xs font-semibold uppercase tracking-wide text-teal mb-2">{choice.label}</p>
-              <p className="font-serif text-lg font-medium text-ink mb-2">{choice.title}</p>
-              <p className="text-sm text-ink-soft leading-relaxed mb-5">{choice.description}</p>
-              <Link
-                href={choice.href}
-                className="mt-auto inline-flex min-h-12 w-full items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white text-sm font-medium tracking-wide text-center px-5 py-3 transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-coral"
-              >
-                {choice.action}
-              </Link>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      {/* Grouped programmes */}
-      {courseCategories.map((category, i) => {
-        const categoryCourses = coursesForCategory(category);
-        return (
-          <section
-            key={category.id}
-            id={category.id}
-            aria-labelledby={`${category.id}-heading`}
-            className={`py-14 sm:py-16 px-4 ${i % 2 === 0 ? "bg-white" : "bg-ivory"}`}
-          >
-            <div className="max-w-6xl mx-auto">
-              <div className="max-w-2xl mb-8 sm:mb-10">
-                <p className="text-xs font-semibold uppercase tracking-wide text-teal mb-2">{category.eyebrow}</p>
-                <h2 id={`${category.id}-heading`} className="font-serif text-2xl sm:text-3xl font-medium text-ink mb-3">
-                  {category.title}
-                </h2>
-                <p className="text-ink-soft leading-relaxed">{category.description}</p>
+      <section className="bg-white px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20" aria-labelledby="ielts-feature-heading">
+        <div className="mx-auto max-w-[1200px]">
+          <article className="overflow-hidden rounded-2xl border border-sea-edge bg-sea-wash p-6 sm:p-8 lg:p-10">
+            <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-14">
+              <div>
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">Main focus</p>
+                <h2 id="ielts-feature-heading" className="mb-4 text-3xl font-semibold tracking-[-0.025em] text-ink sm:text-4xl">IELTS Coaching</h2>
+                <p className="max-w-2xl text-base leading-relaxed text-ink-soft sm:text-lg">{ielts.shortDescription}</p>
               </div>
-
-              <div className={CATEGORY_GRID_CLASSES[category.id]}>
-                {categoryCourses.map((course) => (
-                  <ServiceCard key={course.slug} course={course} />
-                ))}
+              <div className="rounded-xl border border-white/80 bg-white/80 p-5 sm:p-6">
+                <p className="mb-2 text-sm font-semibold text-ink">Best for</p>
+                <p className="mb-5 text-sm leading-relaxed text-ink-soft sm:text-base">{ielts.bestFor}</p>
+                <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                  <Link href="/courses/ielts" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-[10px] bg-teal px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-sea-deep">
+                    View IELTS Programme <ArrowIcon />
+                  </Link>
+                  <a href={IELTS_RECOMMENDATION_HREF} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center justify-center rounded-[10px] border-2 border-teal px-5 py-3 text-sm font-semibold text-teal transition-colors hover:bg-sea-wash">
+                    Get My Free Recommendation
+                  </a>
+                </div>
               </div>
-
-              {category.id === "language-tests" && (
-                <p className="text-sm text-ink-faint leading-relaxed mt-6 sm:mt-8 max-w-2xl">
-                  {LANGUAGE_TESTS_NOTE}
-                </p>
-              )}
             </div>
-          </section>
-        );
-      })}
+          </article>
+        </div>
+      </section>
 
-      <CourseChoiceGuide />
-      <CorporateEnquiryPanel />
+      <section className="bg-surface-tint px-4 py-14 sm:px-6 sm:py-16 lg:px-8 lg:py-20" aria-labelledby="other-programmes-heading">
+        <div className="mx-auto max-w-[1200px]">
+          <div className="mb-8 max-w-2xl sm:mb-10">
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.14em] text-teal">Other programmes</p>
+            <h2 id="other-programmes-heading" className="mb-3 text-[1.9rem] font-semibold tracking-[-0.025em] text-ink sm:text-4xl">More ways to learn with Aisha.</h2>
+            <p className="text-base leading-relaxed text-ink-soft">Choose the specific programme that matches the learner’s exam or communication goal.</p>
+          </div>
 
-      <CoursesFAQ />
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {otherProgrammeSlugs.map((slug) => {
+              const course = courses.find((item) => item.slug === slug)!;
+              const presentation = getCoursePresentation(slug);
+              return (
+                <article key={slug} className="flex min-w-0 flex-col rounded-xl border border-line bg-white p-6 sm:p-7">
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-teal">{presentation.typeLabel}</p>
+                  <h3 className="mb-3 text-xl font-semibold tracking-[-0.015em] text-ink">{course.name}</h3>
+                  <p className="mb-6 text-sm leading-relaxed text-ink-soft sm:text-base">{presentation.shortDescription}</p>
+                  <Link href={`/courses/${slug}`} className="mt-auto inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-teal underline decoration-sea-edge underline-offset-4 hover:text-sea-deep">
+                    {presentation.ctaLabel} <ArrowIcon />
+                  </Link>
+                </article>
+              );
+            })}
 
-      {/* One closing recommendation CTA */}
-      <CTASection
-        eyebrow="Need help choosing?"
-        title="Tell Aisha what you are preparing for."
-        subtitle="Share the learner's goal, current situation and preferred timeline to receive a suitable programme recommendation."
-        primaryLabel="Request a Free Course Recommendation"
-        primaryHref="/free-diagnostic-test"
-        secondaryLabel="Ask Aisha on WhatsApp"
-        whatsappMessage={CTA_WHATSAPP_MESSAGE}
-      />
+            <article className="flex min-w-0 flex-col rounded-xl border border-sea-edge bg-sea-wash p-6 sm:p-7">
+              <p className="mb-2 text-xs font-semibold uppercase tracking-[0.12em] text-teal">Enquiry-only service</p>
+              <h3 className="mb-3 text-xl font-semibold tracking-[-0.015em] text-ink">Professional English</h3>
+              <p className="mb-6 text-sm leading-relaxed text-ink-soft sm:text-base">{corporateEnquiry.body}</p>
+              <a href={PROFESSIONAL_ENQUIRY_HREF} target="_blank" rel="noopener noreferrer" className="mt-auto inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-teal underline decoration-sea-edge underline-offset-4 hover:text-sea-deep">
+                Discuss Your Goals <ArrowIcon />
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
     </>
   );
 }

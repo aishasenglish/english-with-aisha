@@ -443,10 +443,10 @@ export const ieltsPage = {
   },
 
   // IELTS Step 7: copy for components/ielts/IELTSAvailability.tsx. Keep `id` stable -- finalCta's
-  // secondaryHref links to "#ielts-availability" below. Both the no-intake enquiry state and the
+  // secondaryHref links to the availability section below. Both the no-intake enquiry state and the
   // verified scheduled state share the section id and eyebrow; only one H2 renders per state.
   availability: {
-    id: "ielts-availability",
+    id: "availability",
     eyebrow: "Current availability",
 
     // No-intake enquiry state (the one currently shown -- see content/batches.ts, which has no
@@ -473,7 +473,7 @@ export const ieltsPage = {
     scheduledBody: "Check the start date, schedule, format and time zone before asking about this intake.",
     timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
     intakeCtaLabel: "Ask About This IELTS Intake",
-    moreAvailabilityLabel: "View all IELTS availability",
+    moreAvailabilityLabel: "Ask about additional IELTS availability",
   },
 
   // IELTS Step 8: heading copy for components/ielts/IELTSFAQ.tsx. The eight question/answer

@@ -23,16 +23,16 @@ export default function CoachingProcess() {
 
         <div className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-10 sm:mt-12">
           <Link
-            href="/#finder"
+            href="/#courses"
             className="w-full sm:w-auto min-h-12 inline-flex items-center justify-center rounded-sm bg-coral hover:bg-amber-dark text-white font-serif font-medium uppercase tracking-wide text-sm px-6 py-3 transition-colors"
           >
             Find My Programme
           </Link>
           <Link
-            href="/how-it-works"
+            href="/#getting-started"
             className="font-serif text-sm font-medium uppercase tracking-wide border-b-2 border-coral min-h-11 hover:text-amber-dark inline-flex items-center"
           >
-            Read the Full Coaching Process
+            See How to Get Started
           </Link>
         </div>
       </div>

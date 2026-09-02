@@ -25,15 +25,12 @@ export default function CourseHero({ course }: Props) {
           ))}
         </ul>
         <div className="flex flex-col sm:flex-row sm:flex-wrap gap-3 sm:gap-4 justify-center">
-          <Button href="/free-diagnostic-test" variant="coral" size="lg" className="w-full sm:w-auto">
-            Request a Free Recommendation
-          </Button>
           <Button
             href={courseEnrollLink(course.name)}
-            variant="outline"
+            variant="coral"
             size="lg"
             external
-            className="border-ink text-ink hover:bg-ink hover:text-white w-full sm:w-auto"
+            className="w-full sm:w-auto"
           >
             Chat on WhatsApp
           </Button>

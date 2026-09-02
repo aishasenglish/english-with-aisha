@@ -846,7 +846,7 @@ export const englishWritingContent = {
     timezoneLabel: "Pakistan Standard Time (PKT, UTC+5)",
     intakeCtaLabel: "Ask about this writing option",
     intakeReservationNote: "Availability is confirmed by Aisha; sending an enquiry does not reserve a place.",
-    moreAvailabilityLabel: "View all English Writing availability",
+    moreAvailabilityLabel: "Ask about additional English Writing availability",
   },
 
   // Step 8: heading copy for components/english-writing/EnglishWritingFAQ.tsx. The eight

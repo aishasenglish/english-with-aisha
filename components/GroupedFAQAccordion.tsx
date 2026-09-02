@@ -3,6 +3,7 @@ export type FAQItem = {
   id: string;
   question: string;
   answer: string;
+  links?: { label: string; href: string }[];
 };
 
 export type FAQGroup = {
@@ -43,6 +44,15 @@ export default function GroupedFAQAccordion({ groups }: Props) {
                 </summary>
                 <div className="px-4 sm:px-6 pb-5">
                   <p className="text-muted leading-relaxed">{faq.answer}</p>
+                  {faq.links && faq.links.length > 0 && (
+                    <p className="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+                      {faq.links.map((link) => (
+                        <a key={link.href} href={link.href} className="font-medium text-teal underline underline-offset-2 hover:text-ink">
+                          {link.label}
+                        </a>
+                      ))}
+                    </p>
+                  )}
                 </div>
               </details>
             ))}

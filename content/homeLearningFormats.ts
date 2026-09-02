@@ -1,3 +1,5 @@
+import { IELTS_RECOMMENDATION_MESSAGE } from "@/content/homeCtas";
+
 export const homeLearningFormats = {
   eyebrow: "How you learn",
   heading: "Learn together. Or focus entirely on you.",
@@ -38,7 +40,6 @@ export const homeLearningFormats = {
     heading: "Not sure which format suits you?",
     body: "Tell Aisha your goal, deadline and availability.",
     ctaLabel: "Get My Free Recommendation",
-    whatsappMessage:
-      "Hi Aisha! I'd like a free recommendation on the most suitable learning format. My programme or goal, deadline and availability are: [details].",
+    whatsappMessage: IELTS_RECOMMENDATION_MESSAGE,
   },
 } as const;

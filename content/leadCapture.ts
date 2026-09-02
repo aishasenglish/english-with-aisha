@@ -25,7 +25,7 @@ export const leadCapture = {
       },
     ],
     primaryCta: "Request a Free Course Recommendation",
-    primaryHref: "/free-diagnostic-test",
+    primaryHref: "/contact",
     secondaryCta: "Ask Aisha on WhatsApp",
     whatsappMessage:
       "Hi Aisha! I would like help choosing an English programme. The learner is preparing for [goal/exam], their current level or situation is [details], and they hope to begin by [date].",

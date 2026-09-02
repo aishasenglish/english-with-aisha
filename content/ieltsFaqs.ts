@@ -68,7 +68,7 @@ export const ieltsFaqs: IeltsFaq[] = [
     links: [
       { label: "Learning format", href: "#ielts-learning-format" },
       { label: "Fee", href: "#ielts-pricing" },
-      { label: "Availability", href: "#ielts-availability" },
+      { label: "Availability", href: "#availability" },
     ],
   },
   {
